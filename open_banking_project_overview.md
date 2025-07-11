@@ -13,19 +13,7 @@ Das Open Banking Project Schweiz entwickelt eine branchenübergreifende API-Spez
 
 ## Projektarchitektur
 
-### Technologie-Stack
-- **API-Standard:** RESTful, JSON, OpenAPI 3.0
-- **Security:** OAuth2, OIDC, FAPI (basierend auf internationaler Marktanalyse)
-- **Governance:** Hybrid-Modell (dezentral + zentrale Standards)
-- **Compliance:** GwG, DSGVO, ISO-ready, eCH-kompatibel
-
-### Core API Endpoints (Version 2.0)
-
-| Endpoint | HTTP | Zweck | Request | Response |
-|----------|------|-------|---------|----------|
-| `/customer/check` | POST | Existenz + Identitätsgültigkeit prüfen | `{ sharedCustomerHash, name, vorname, geburtsdatum }` | `{ match: boolean, idDate: date }` |
-| `/customer/fullRequest` | POST | Vollständiges Dataset (65 Felder) | JWT Header + `{ sharedCustomerHash, purpose }` | Komplettes Kundenprofil inkl. PDF |
-| `/customer/identification` | POST | Nur Identifikationsdaten + PDF | `{ sharedCustomerHash }` | Ausweis-Daten + Scan-URL |
+tbd - noch nicht finalisiert
 
 **Granulare Endpoints:**
 - `/customer/basic` - Stammdaten (Name, Geburt, Nationalität)
@@ -121,15 +109,7 @@ Umfassende Analyse von 8 globalen Open Banking/Finance Standards:
 - **21.08.2025:** Open Banking Summit - Public Launch
 
 ### Phase II - Umsetzung (ab September 2025)
-**Voraussetzungen:**
-- Mindestens 3 Partner bestätigt (PostFinance, HBL, Intrum)
-- MVP mit mindestens 2 Partnern realisierbar
-
-**Geplante Workshops:**
-- **WS1:** Onboarding- und Pflegeschnittstelle
-- **WS2:** Veröffentlichung und Dokumentation
-- **WS3:** Repository und Sandbox
-- **WS4:** Ausbau und Community-Expansion
+tbd - noch nicht finalisiert
 
 ---
 
@@ -162,8 +142,7 @@ Umfassende Analyse von 8 globalen Open Banking/Finance Standards:
 
 ### Live Demos (Available from 15.08.2025)
 1. **Referenzprozess-Demo:** Interactive 10-Step Process Visualization
-2. **Use Case Workflows:** Side-by-side Efficiency Comparisons
-3. **Testing & Compliance:** Live Verification Scenarios
+2. **Testing & Compliance:** Live Verification Scenarios
 
 ### Research & Analysis
 - **Global Market Analysis:** 8 International Standards Comparison
@@ -247,15 +226,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Special thanks to all workshop participants, international Open Banking communities, and the Swiss financial services ecosystem for their valuable contributions to this standardization effort.
 
 The project builds upon extensive research of global Open Banking standards including UK Open Banking, Open Finance Brasil, Australian Consumer Data Rights, and other leading international initiatives. Workshop results from Phase I (March-June 2025) formed the foundation for the current API specification and implementation roadmap.
-
----
-
-<div align="center">
-
-**Powered by Swiss Innovation**
-
-*Building the Future of Open Financial Data in Switzerland*
-
-[![Switzerland](https://img.shields.io/badge/Made%20in-Switzerland-red?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjRkYwMDAwIi8+CjxyZWN0IHg9IjEzIiB5PSI2IiB3aWR0aD0iNiIgaGVpZ2h0PSIyMCIgZmlsbD0id2hpdGUiLz4KPHJlY3QgeD0iNiIgeT0iMTMiIHdpZHRoPSIyMCIgaGVpZ2h0PSI2IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K)](https://switzerland.ch)
-
-</div>
