@@ -4,7 +4,7 @@ Open API Kundenbeziehung - Complete File Structure
 Root Files
 ├── openapi.yaml                    # Complete OpenAPI specification
 ├── package.json                    # Node.js dependencies and scripts
-├── .env.example                    # Environment configuration template
+├── .env-config.sh                  # Environment configuration template
 ├── README.md                       # Complete project documentation
 ├── Dockerfile                      # Docker container configuration
 ├── docker-compose.yml              # Multi-service Docker setup
