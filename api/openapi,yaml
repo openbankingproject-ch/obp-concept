@@ -4,7 +4,7 @@ info:
   description: |
     Schweizer Standard für den branchenübergreifenden Austausch von Kundendaten zur Etablierung einer selbstbestimmten digitalen Kundenbeziehung.
     
-    Diese API implementiert das Basiskit der Open API Kundenbeziehung und ermöglicht standardisierten Datenaustausch zwischen Finanzdienstleistern, Versicherungen, Immobilienunternehmen und anderen Branchen.
+    Diese API implementiert das Basiskit der Open API Kundenbeziehung und ermöglicht standardisierten Datenaustausch zwischen Finanzdienstleistern und anderen Ecosystemen.
     
     **Implementierte Module:**
     - Basisdaten (Identität, Kontakt, Adresse)
