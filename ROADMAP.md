@@ -4,13 +4,6 @@
 
 Das Open Banking Project Schweiz entwickelt eine branchenübergreifende API-Spezifikation für Kundenbeziehungen, die den effizienten und sicheren Austausch von Kundendaten zwischen Finanzdienstleistern ermöglicht. Das Ziel ist die Schaffung eines föderierten Ökosystems durch Standardisierung und Interoperabilität.
 
-### Business Case
-- 10 Mrd. CHF Gesamtpotenzial "Open Financial Data Ökosystem Schweiz"
-- 37.5 Mio. CHF Einsparpotenzial bei Kundeneröffnungsprozessen
-- 2 Mio. CHF Einsparpotenzial bei Identifikations-Weitergabe
-
----
-
 ## Projektarchitektur
 
 tbd
