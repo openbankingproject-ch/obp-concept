@@ -13,19 +13,11 @@ Das Open Banking Project Schweiz entwickelt eine branchenübergreifende API-Spez
 
 ## Projektarchitektur
 
-tbd - noch nicht finalisiert
-
-**Granulare Endpoints:**
-- `/customer/basic` - Stammdaten (Name, Geburt, Nationalität)
-- `/customer/address` - Adressinformationen
-- `/customer/contact` - Kontaktdaten
-- `/customer/kyc` - KYC/AML-Attribute
-
----
+tbd
 
 ## Projektübersicht: 7 Themenbereiche
 
-### 01 Marktübersicht (Abgeschlossen: 18.07.2025)
+### 01 Marktübersicht
 Umfassende Analyse von 8 globalen Open Banking/Finance Standards:
 - UK Open Banking Standard, Open Finance Brasil, Australian CDR
 - Singapore Financial Data Exchange, NextGenPSD2, Open Wealth API
@@ -39,7 +31,7 @@ Umfassende Analyse von 8 globalen Open Banking/Finance Standards:
 5. Open Finance Evolution uneinheitlich
 6. Payment Initiation regional unterschiedlich ausgereift
 
-### 02 Anforderungen (Abgeschlossen: 18.07.2025)
+### 02 Anforderungen
 **5 Definierte Zielbilder für digitale Kundennähe:**
 1. **Direkt:** Kunde ↔ Individualist
 2. **Indirekt:** Kunde ↔ Integrator ↔ Produzent (Projektfokus)
@@ -53,7 +45,7 @@ Umfassende Analyse von 8 globalen Open Banking/Finance Standards:
 3. **Altersverifikation** (4 Punkte) - E-Commerce Integration
 4. **EVV Use Case** (4 Punkte) - Customer Lifecycle Management
 
-### 03 Referenzprozess (Abgeschlossen: 31.07.2025)
+### 03 Referenzprozess
 **10-Stufen Branchenübergreifender Prozess:**
 1. Initialisierung → 2. Produktauswahl → 3. Selbstdeklaration → 4. Basisdaten → 5. Erweiterte Daten → 6. Identifikation → 7. Background Checks → 8. Vertragsabschluss → 9. Signatur → 10. Verteilung
 
@@ -62,33 +54,24 @@ Umfassende Analyse von 8 globalen Open Banking/Finance Standards:
 - PSD2 und Open Finance Brasil Integration
 - E-ID-Kompatibilität für Zukunftssicherheit
 
-### 04 Vertrauensnetzwerk (Konzept fertig: 31.07.2025)
+### 04 Vertrauensnetzwerk
 **Föderiertes System mit Hybrid-Governance:**
 - Dezentrale Datenhoheit + Zentrale Standards
 - MVP-Ansatz: Start mit bilateralen Agreements
-- Skalierung: Übergang zu zentralen Governance-Komponenten
-- Evaluation: Optional zentrale Hub-Lösung für 20+ Teilnehmer
+- Skalierung: Übergang zu hybridem Ansatz
 
-### 05 Consent & Security Flow (In Entwicklung)
+### 05 Consent & Security Flow 
 **Generisches Security-Framework:**
 - Unabhängig vom Vertrauensnetzwerk-Modell
 - JWT-Token-Architektur für Consent-Management
 - FAPI, OAuth2, OIDC Standards-Evaluation
 - Integration von Finanzsektor-Security-Experten
 
-### 06 Regulatory & Compliance (In Entwicklung)
-**Swiss-First Approach:**
-- **GwG-Compliance:** Art. 3 & 4 Identifizierungs-Requirements
-- **Datenschutz:** Bankkundengeheimnis + DSGVO/DSG Integration
-- **FINMA-Stellungnahme:** Kritischer Pfad für Umsetzung
-- **eCH-Kompatibilität:** Behördliche Anerkennung sicherstellen
+### 06 Regulatory & Compliance: Rechtliche Rahmenbedingungen
+tbd
 
 ### 07 Testing & Verifikation (Fertigstellung: 08.08.2025)
-**Vollständiges Testing-Framework:**
-- Equivalence Class Partitioning für alle API-Endpoints
-- Security Testing: OWASP API Top 10, Penetration Testing
-- Performance: P95 < 500ms, P99 < 2s, 99.9% Availability
-- Community-Verifikation: Workshops + Peer-Review
+tbd
 
 ---
 
@@ -104,8 +87,9 @@ Umfassende Analyse von 8 globalen Open Banking/Finance Standards:
 
 ### Aktuelle Deliverables (Juli-August 2025)
 - **11.07.2025:** GitHub Repository-Struktur & Dokumentationskonzept
-- **08.08.2025:** Vollständige API-Spezifikation & Testing-Framework
-- **15.08.2025:** 3 Live-Demos + Open Banking Summit Präsentation
+- **15.08.2025:** Theoretische Aufbereitung der Konlusionen unserer bisherigen Research
+- **18.08.2025:** Vollständige API-Spezifikation & Testing-Framework
+- **20.08.2025:** 3 Live-Demos + Open Banking Summit Präsentation
 - **21.08.2025:** Open Banking Summit - Public Launch
 
 ### Phase II - Umsetzung (ab September 2025)
@@ -114,6 +98,8 @@ tbd - noch nicht finalisiert
 ---
 
 ## Projektpartner & Community
+
+bitte kontrollieren!
 
 ### Core Partners
 - **PostFinance** (Lead Implementation Partner)
@@ -130,72 +116,33 @@ tbd - noch nicht finalisiert
 **Business Engineering Institute St. Gallen (BEI)**
 - Thomas Bühlmann (Projektleitung)
 - Friedrich-Philipp Wazinski (Technical Lead)
+- Stefan Knaus
+- Jil Zerndt
 
 ---
 
 ## Documentation & Resources
 
 ### API Documentation
-- **OpenAPI 3.0 Specification:** [/docs/api-spec](./docs/api-spec)
-- **Implementation Guide:** [/docs/implementation](./docs/implementation)
-- **Security Guidelines:** [/docs/security](./docs/security)
+- **OpenAPI Alpha 1.0 Specification:** [api/docs/api-spec](./docs/api-spec)
+- **Implementation Guide:** [api/docs/implementation](./docs/implementation)
+- **Security Guidelines:** [api/docs/security](./docs/security)
 
-### Live Demos (Available from 15.08.2025)
+### Live Demos (Available from 18.08.2025)
 1. **Referenzprozess-Demo:** Interactive 10-Step Process Visualization
-2. **Testing & Compliance:** Live Verification Scenarios
+2. **Verifikationsprozess:** Live Verification Scenarios
+3. **MVP**
 
 ### Research & Analysis
-- **Global Market Analysis:** 8 International Standards Comparison
-- **Business Case:** ROI Analysis & Cost Savings Projections
-- **Regulatory Framework:** Swiss Compliance Requirements
+Konklusionen aus fachlicher und technischer Sicht:
 
----
-
-## Getting Started
-
-### For Developers
-```bash
-# Clone the repository
-git clone https://github.com/openbankingproject-ch/api-specs.git
-
-# Install dependencies
-npm install
-
-# Run local development server
-npm run dev
-
-# Validate API specification
-npm run validate
-```
-
-### For Financial Institutions
-1. Review the [Implementation Guide](./docs/implementation)
-2. Contact Project Team for Partnership Discussion
-3. Join Community Workshops and Testing Programs
-4. Implement MVP Use Cases with Support
-
-### For Regulators
-- **FINMA Engagement:** Ongoing dialogue for regulatory clarity
-- **eCH Integration:** Standards alignment with existing frameworks
-- **International Coordination:** Learning from global best practices
-
----
-
-## Contributing
-
-We welcome contributions from the financial services community:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
-
-### Community Guidelines
-- Follow OpenAPI 3.0 standards
-- Maintain Swiss regulatory compliance
-- Include comprehensive testing
-- Document all changes
+- **Markt Analyse**
+- **Anforderungen**
+- **Referenzprozess**
+- **Vertrauensnetzwerke** Föderiertes System
+- **Consent und Security Flow**
+- **Rechtliche Rahmenbedingungen**
+- **Verifikation und Testing**
 
 ---
 
