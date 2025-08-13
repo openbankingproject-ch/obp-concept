@@ -4,7 +4,9 @@ Conceptual Development of the Open Banking Project "Open API"
 ## About
 Die Open API Kundenbeziehung implementiert den schweizer Standard für den branchenübergreifenden Austausch von Kundendaten zur Etablierung einer selbstbestimmten digitalen Kundenbeziehung.
 
-### Kernfunktionen
+### Kernfunktionen 
+
+Ausstehend: Verifikation mit Partnern und Experten
 
 - **Consent Management**: DSGVO/nDSG-konforme Einwilligungsverwaltung
 - **Kundendatenaustausch**: Standardisierter Austausch von Basis- und erweiterten Kundendaten
@@ -15,10 +17,22 @@ Die Open API Kundenbeziehung implementiert den schweizer Standard für den branc
 
 ### Sicherheitsstandards
 
+Ausstehend: Verifikation mit Partnern und Experten
+
 - **FAPI 1.0 Advanced Compliance**: Höchste Sicherheitsstandards für Finanzdienstleistungen
 - **OAuth 2.0 / OpenID Connect**: Standardisierte Authentifizierung und Autorisierung
 - **Mutual TLS (mTLS)**: Beidseitige Zertifikatsvalidierung für kritische Services
 - **JWT-basierte Tokens**: Sichere Token-Verwaltung mit Consent-Claims
+
+## Technische Highlights:
+
+- **Modulare Architektur** für branchenübergreifende Nutzung
+- **Docker-basiertes Deployment** mit allen Services
+- **Comprehensive Testing** Suite
+- **Production-ready Monitoring** & Logging
+- **Security-by-Design** Implementierung
+- **Complete Documentation** & Developer Guide
+
 
 ## Dokumentation
 
