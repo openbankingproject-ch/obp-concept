@@ -305,6 +305,8 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 
 ## Implikationen für Schweizer Open API Kundenbeziehung
 
+(Verifizieren mit Experten und TZE)
+
 ### Best Practices
 
 #### Technische Best Practices
@@ -320,7 +322,9 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 
 ### Technologische Entscheidungen
 
-#### Empfohlener Tech-Stack für Schweizer Implementation
+(evtl. diesen Teil erst nach den Anforderungen einfügen vom Sinn her)
+
+#### Potenzieller Tech-Stack für Schweizer Implementation
 **Core Technologies:**
 - REST/JSON als API-Architektur
 - FAPI 1.0 Advanced für Security
@@ -344,7 +348,7 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 - Integration mit Swiss Banking Standards
 - E-ID Compatibility
 
-### Governance-Empfehlungen
+### Governance
 
 #### Organisationsstruktur
 **Steering Committee:** Strategic Direction mit Vertretern von SBA, Fintechs, Regulatoren.
@@ -360,71 +364,8 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 ---
 
 ## Fazit und Handlungsempfehlungen
+(macht TZE)
 
-### Strategische Positionierung im internationalen Kontext
-(draft - erfordert Überprüufung TZE)
-
-**Schweizer Unique Value Proposition:**
-Die Schweiz kann sich als führender Standort für sicheren, vertrauenswürdigen Datenaustausch positionieren. Die Kombination aus starkem Finanzplatz, ausgeprägter Privacy-Kultur und technologischer Innovation schafft ideale Voraussetzungen für einen wegweisenden Open API Standard.
-
-**Internationale Vernetzung:**
-Aktive Teilnahme an internationalen Standards-Entwicklung (ISO 20022, FAPI Working Group) sichert Interoperabilität und verhindert Isolation. Bilaterale Agreements mit EU (NextGenPSD2), UK und anderen führenden Märkten schaffen grenzüberschreitende Use Cases.
-
-### Nächste Schritte für Standardisierung
-
-### Technologie-Roadmap: Empfohlener Tech-Stack für Schweizer Implementation
-
-#### Core Architecture Decisions
-
-(evtl. als seperates File)
-
-**API Design Philosophy:**
-```
-RESTful APIs with JSON
-├── OpenAPI 3.0 Specification
-├── Semantic Versioning (MAJOR.MINOR.PATCH)
-├── Backward Compatibility Guarantees
-└── Hypermedia Controls (HATEOAS) für Advanced Use Cases
-```
-
-**Security Architecture:**
-```
-FAPI 1.0 Advanced Baseline
-├── OAuth 2.0 with PKCE
-├── OpenID Connect für Identity
-├── JWT for Token Management
-├── mTLS für High-Security Channels
-└── Hardware Security Module (HSM) Integration
-```
-
-**Data Architecture:**
-```
-JSON Schema Validation
-├── ISO 20022 Message Standards
-├── Swiss-specific Data Extensions
-├── Granular Consent Management
-└── GDPR/DSG Compliance by Design
-```
-
-#### Swiss-specific Considerations
-
-**Regulatory Compliance:**
-- **FINMA Guidelines:** Operational Risk Management für API-based Services
-- **DSG (Swiss Data Protection Act):** Privacy-by-Design Implementation
-- **Banking Law:** Outsourcing Regulations für API-Dependencies
-- **AML/KYC:** Enhanced Due Diligence für API-based Onboarding
-
-**Market Infrastructure Integration:**
-- **Swiss QR-Code:** Native Support für Payment References
-- **SIX Payment Services:** Integration mit bestehender Payment Infrastructure
-- **Swiss Post e-Finance:** Consideration für Mass-Market Adoption
-- **Kantonalbanken:** Föderation-friendly Architecture
-
-**Technical Infrastructure:**
-- **Swiss Cloud Requirements:** Data Residency und Sovereignty
-- **Cybersecurity Framework:** Alignment mit NCSC Guidelines
-- **E-ID Integration:** Future-ready für Swiss E-ID Implementation
-- **Multi-language Support:** Deutsch, English (evtl. mehr?)
 
 ## Datenquellen und Referenzen
 
