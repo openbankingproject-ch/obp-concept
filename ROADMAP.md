@@ -57,7 +57,7 @@ Umfassende Analyse von 8 globalen Open Banking/Finance Standards:
 **Generisches Security-Framework:**
 - Unabhängig vom Vertrauensnetzwerk-Modell
 - JWT-Token-Architektur für Consent-Management
-- FAPI, OAuth2, OIDC Standards-Evaluation
+- FAPI 2.0, OAuth 2.1, OIDC Standards-Implementation
 - Integration von Finanzsektor-Security-Experten
 
 ### 06 Regulatory & Compliance: Rechtliche Rahmenbedingungen

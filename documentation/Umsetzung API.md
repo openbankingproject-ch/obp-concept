@@ -17,11 +17,13 @@ RESTful APIs with JSON
 
 **Security Architecture:**
 ```
-FAPI 1.0 Advanced Baseline
-├── OAuth 2.0 with PKCE
+FAPI 2.0 Security Profile
+├── OAuth 2.1 with mandatory PKCE (S256)
 ├── OpenID Connect für Identity
-├── JWT for Token Management
-├── mTLS für High-Security Channels
+├── JWT for Token Management (PS256, ES256, EdDSA only)
+├── PAR (Pushed Authorization Requests)
+├── DPoP (Demonstrating Proof-of-Possession)
+├── mTLS oder private_key_jwt für Client Authentication
 └── Hardware Security Module (HSM) Integration
 ```
 

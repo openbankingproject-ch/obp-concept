@@ -19,10 +19,12 @@ Ausstehend: Verifikation mit Partnern und Experten
 
 Ausstehend: Verifikation mit Partnern und Experten
 
-- **FAPI 1.0 Advanced Compliance**: Höchste Sicherheitsstandards für Finanzdienstleistungen
-- **OAuth 2.0 / OpenID Connect**: Standardisierte Authentifizierung und Autorisierung
-- **Mutual TLS (mTLS)**: Beidseitige Zertifikatsvalidierung für kritische Services
-- **JWT-basierte Tokens**: Sichere Token-Verwaltung mit Consent-Claims
+- **FAPI 2.0 Security Profile Compliance**: Neueste Sicherheitsstandards für Finanzdienstleistungen
+- **OAuth 2.1 / OpenID Connect**: Standardisierte Authentifizierung und Autorisierung
+- **PAR (Pushed Authorization Requests)**: Sichere Übertragung von Autorisierungsparametern
+- **DPoP (Demonstrating Proof-of-Possession)**: Token-Binding für erweiterte Sicherheit
+- **Dual Client Authentication**: mTLS oder private_key_jwt für Clientauthentifizierung
+- **Enhanced JWT Security**: Nur PS256, ES256, EdDSA Algorithmen (FAPI 2.0 konform)
 
 ## Technische Highlights:
 
