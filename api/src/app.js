@@ -23,6 +23,7 @@ const checksRoutes = require('./routes/checks');
 const signatureRoutes = require('./routes/signature');
 const registryRoutes = require('./routes/registry');
 const healthRoutes = require('./routes/health');
+const parRoutes = require('./routes/par');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -94,6 +95,9 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
 
 // Health check (no authentication required)
 app.use('/health', healthRoutes);
+
+// FAPI 2.0 OAuth endpoints (require client authentication)
+app.use('/par', mtlsMiddleware, parRoutes);
 
 // API routes with authentication
 app.use('/v1/consent', authMiddleware.optional, consentRoutes);

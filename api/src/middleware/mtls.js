@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const { jwtVerify, importJWK, importX509 } = require('jose');
 const logger = require('../utils/logger');
 
 // Trusted institution certificates registry
@@ -80,7 +81,7 @@ const extractClientCertificate = (req) => {
 };
 
 /**
- * Validate client certificate
+ * Validate client certificate (FAPI 2.0 enhanced)
  */
 const validateClientCertificate = (cert, institutionId) => {
   if (!cert) {
@@ -93,7 +94,7 @@ const validateClientCertificate = (cert, institutionId) => {
     return { valid: false, reason: 'Institution not in trusted registry' };
   }
   
-  // Validate certificate properties
+  // FAPI 2.0: Enhanced certificate validation
   if (cert.subject && cert.subject.CN) {
     const commonName = cert.subject.CN;
     if (!commonName.includes(institutionId)) {
@@ -112,6 +113,11 @@ const validateClientCertificate = (cert, institutionId) => {
     }
   }
   
+  // FAPI 2.0: Validate minimum key strength
+  if (cert.modulus && cert.modulus.length < 256) { // RSA 2048-bit minimum
+    return { valid: false, reason: 'Certificate key strength insufficient (RSA 2048-bit minimum)' };
+  }
+  
   // Validate fingerprint if available
   if (cert.fingerprint) {
     const expectedFingerprint = trustedCert.fingerprint;
@@ -124,65 +130,170 @@ const validateClientCertificate = (cert, institutionId) => {
 };
 
 /**
- * mTLS middleware for high-security endpoints
+ * Validate private_key_jwt client authentication (FAPI 2.0)
  */
-const mtlsMiddleware = (req, res, next) => {
+const validatePrivateKeyJWT = async (jwtAssertion, clientId) => {
   try {
-    // Skip mTLS in development if explicitly disabled
-    if (process.env.NODE_ENV !== 'production' && process.env.SKIP_MTLS === 'true') {
-      logger.debug('Skipping mTLS validation in development mode');
+    if (!jwtAssertion) {
+      throw new Error('No JWT assertion provided');
+    }
+
+    // Get client's registered public key/certificate
+    const trustedCert = TRUSTED_CERTIFICATES.get(clientId);
+    if (!trustedCert) {
+      throw new Error('Client not in trusted registry');
+    }
+
+    // Import public key from certificate
+    const publicKey = await importX509(trustedCert.certificate, ['PS256', 'ES256', 'EdDSA']);
+    
+    // Verify JWT signature and get payload
+    const { payload } = await jwtVerify(jwtAssertion, publicKey, {
+      algorithms: ['PS256', 'ES256', 'EdDSA'] // FAPI 2.0 approved algorithms
+    });
+
+    // Validate required claims
+    const now = Math.floor(Date.now() / 1000);
+    
+    if (!payload.iss || !payload.sub || !payload.aud || !payload.jti || !payload.exp || !payload.iat) {
+      throw new Error('Missing required claims in JWT assertion');
+    }
+
+    // Validate issuer and subject match client_id
+    if (payload.iss !== clientId || payload.sub !== clientId) {
+      throw new Error('JWT assertion issuer/subject mismatch');
+    }
+
+    // Validate audience (should be token endpoint)
+    const expectedAudience = process.env.TOKEN_ENDPOINT || `${process.env.BASE_URL}/token`;
+    if (!Array.isArray(payload.aud) ? payload.aud !== expectedAudience : !payload.aud.includes(expectedAudience)) {
+      throw new Error('JWT assertion audience mismatch');
+    }
+
+    // Validate expiration (max 60 minutes as per FAPI 2.0)
+    if (payload.exp > now + (60 * 60)) {
+      throw new Error('JWT assertion expiration too far in future (max 60 minutes)');
+    }
+
+    if (payload.exp <= now) {
+      throw new Error('JWT assertion expired');
+    }
+
+    // Validate issued at time (allow 60 seconds clock skew)
+    if (payload.iat > now + 60 || payload.iat < now - 60) {
+      throw new Error('JWT assertion timestamp out of acceptable range');
+    }
+
+    return {
+      valid: true,
+      clientId: payload.sub,
+      jti: payload.jti,
+      exp: payload.exp
+    };
+
+  } catch (error) {
+    logger.warn('Private key JWT validation failed:', error.message);
+    return {
+      valid: false,
+      reason: error.message
+    };
+  }
+};
+
+/**
+ * Client authentication middleware (mTLS or private_key_jwt for FAPI 2.0)
+ */
+const mtlsMiddleware = async (req, res, next) => {
+  try {
+    // Skip client authentication in development if explicitly disabled
+    if (process.env.NODE_ENV !== 'production' && process.env.SKIP_CLIENT_AUTH === 'true') {
+      logger.debug('Skipping client authentication in development mode');
+      req.client = { id: 'dev-client', authMethod: 'none' };
       return next();
     }
-    
-    const institutionId = req.user?.institutionId;
-    if (!institutionId) {
-      return res.status(400).json({
-        error: 'BAD_REQUEST',
-        message: 'Institution ID required for mTLS validation',
-        timestamp: new Date().toISOString()
-      });
-    }
-    
+
+    let clientId = null;
+    let authMethod = null;
+    let authResult = null;
+
+    // Try mTLS first
     const clientCert = extractClientCertificate(req);
-    const validation = validateClientCertificate(clientCert, institutionId);
-    
-    if (!validation.valid) {
-      logger.warn('mTLS validation failed', {
-        institutionId,
-        reason: validation.reason,
+    if (clientCert) {
+      // Extract client ID from certificate or body
+      clientId = req.body?.client_id || req.user?.institutionId;
+      if (clientId) {
+        const mtlsValidation = validateClientCertificate(clientCert, clientId);
+        if (mtlsValidation.valid) {
+          authMethod = 'mTLS';
+          authResult = {
+            institutionId: clientId,
+            fingerprint: clientCert.fingerprint,
+            subject: clientCert.subject,
+            issuer: clientCert.issuer,
+            validatedAt: new Date()
+          };
+        }
+      }
+    }
+
+    // Try private_key_jwt if mTLS failed or not available
+    if (!authMethod) {
+      const clientAssertion = req.body?.client_assertion;
+      const clientAssertionType = req.body?.client_assertion_type;
+      
+      if (clientAssertion && clientAssertionType === 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer') {
+        clientId = req.body?.client_id;
+        if (clientId) {
+          const jwtValidation = await validatePrivateKeyJWT(clientAssertion, clientId);
+          if (jwtValidation.valid) {
+            authMethod = 'private_key_jwt';
+            authResult = {
+              clientId: jwtValidation.clientId,
+              jti: jwtValidation.jti,
+              exp: jwtValidation.exp,
+              validatedAt: new Date()
+            };
+          }
+        }
+      }
+    }
+
+    // Require either mTLS or private_key_jwt for FAPI 2.0
+    if (!authMethod) {
+      logger.warn('Client authentication failed', {
+        clientId: clientId || 'unknown',
         ip: req.ip,
-        userAgent: req.headers['user-agent']
+        userAgent: req.headers['user-agent'],
+        reason: 'Neither mTLS nor private_key_jwt authentication successful'
       });
       
       return res.status(401).json({
-        error: 'MTLS_VALIDATION_FAILED',
-        message: 'Client certificate validation failed',
+        error: 'unauthorized_client',
+        error_description: 'Client authentication failed. FAPI 2.0 requires mTLS or private_key_jwt',
         timestamp: new Date().toISOString()
       });
     }
     
-    // Attach certificate info to request
-    req.clientCertificate = {
-      institutionId,
-      fingerprint: clientCert.fingerprint,
-      subject: clientCert.subject,
-      issuer: clientCert.issuer,
-      validatedAt: new Date()
+    // Attach client info to request
+    req.client = {
+      id: clientId,
+      authMethod,
+      ...authResult
     };
     
-    logger.debug('mTLS validation successful', {
-      institutionId,
-      fingerprint: clientCert.fingerprint,
+    logger.debug('Client authentication successful', {
+      clientId,
+      authMethod,
       ip: req.ip
     });
     
     next();
   } catch (error) {
-    logger.error('mTLS middleware error:', error);
+    logger.error('Client authentication middleware error:', error);
     
     return res.status(500).json({
-      error: 'INTERNAL_ERROR',
-      message: 'Certificate validation error',
+      error: 'server_error',
+      error_description: 'Client authentication error',
       timestamp: new Date().toISOString()
     });
   }
@@ -269,3 +380,5 @@ module.exports.addTrustedCertificate = addTrustedCertificate;
 module.exports.removeTrustedCertificate = removeTrustedCertificate;
 module.exports.listTrustedInstitutions = listTrustedInstitutions;
 module.exports.getInstitutionCertificate = getInstitutionCertificate;
+module.exports.validatePrivateKeyJWT = validatePrivateKeyJWT;
+module.exports.validateClientCertificate = validateClientCertificate;

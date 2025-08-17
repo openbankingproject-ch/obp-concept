@@ -15,10 +15,11 @@ info:
     - Metadaten-Management
     
     **Sicherheitsstandards:**
-    - FAPI 1.0 Advanced Compliance
-    - OAuth 2.0 / OpenID Connect
-    - mTLS für kritische Services
-    - JWT-basierte Autorisierung
+    - FAPI 2.0 Security Profile Compliance
+    - OAuth 2.1 / OpenID Connect
+    - mTLS und DPoP für kritische Services
+    - JWT-basierte Autorisierung (PS256, ES256, EdDSA)
+    - PAR (Pushed Authorization Requests)
     
     **Regulatorische Compliance:**
     - DSGVO/nDSG konform
@@ -304,6 +305,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/ParticipantList'
 
+  # PUSHED AUTHORIZATION REQUESTS (PAR) - FAPI 2.0
+  /par:
+    post:
+      summary: Pushed Authorization Request
+      description: Submits authorization request parameters to the authorization server (FAPI 2.0 required)
+      operationId: createPushedAuthorizationRequest
+      tags:
+        - FAPI 2.0 OAuth
+      security:
+        - mTLS: []
+        - PrivateKeyJWT: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PARRequest'
+            examples:
+              consent_request:
+                summary: Consent Authorization Request
+                value:
+                  client_id: "CH-BANK-001"
+                  response_type: "code"
+                  scope: "consent:read consent:write customer:read"
+                  redirect_uri: "https://client.example.com/callback"
+                  state: "xyz"
+                  code_challenge: "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM"
+                  code_challenge_method: "S256"
+      responses:
+        '201':
+          description: PAR erfolgreich erstellt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PARResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
   # HEALTH CHECK
   /health:
     get:
@@ -327,10 +368,17 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: JWT-Token mit Consent-Claims für API-Zugriff
+      description: JWT-Token mit Consent-Claims für API-Zugriff (FAPI 2.0 compliant)
+    DPoP:
+      type: http
+      scheme: DPoP
+      description: DPoP (Demonstrating Proof-of-Possession) für sender-constrained tokens
     mTLS:
       type: mutualTLS
-      description: Mutual TLS für höchste Sicherheitsanforderungen
+      description: Mutual TLS für höchste Sicherheitsanforderungen (FAPI 2.0 compliant)
+    PrivateKeyJWT:
+      type: oauth2
+      description: Private Key JWT client authentication (alternative zu mTLS)
 
   responses:
     BadRequest:
@@ -1252,6 +1300,66 @@ components:
             validTo:
               type: string
               format: date-time
+
+    # PAR SCHEMAS - FAPI 2.0
+    PARRequest:
+      type: object
+      required:
+        - client_id
+        - response_type
+        - redirect_uri
+        - code_challenge
+        - code_challenge_method
+      properties:
+        client_id:
+          type: string
+          description: Client Identifier
+          maxLength: 255
+        response_type:
+          type: string
+          enum: [code]
+          description: OAuth 2.1 response type (only code allowed)
+        scope:
+          type: string
+          description: OAuth scopes
+          example: "consent:read consent:write customer:read"
+        redirect_uri:
+          type: string
+          format: uri
+          description: Client redirect URI
+        state:
+          type: string
+          description: OAuth state parameter
+          maxLength: 255
+        code_challenge:
+          type: string
+          description: PKCE code challenge (FAPI 2.0 required)
+          maxLength: 128
+        code_challenge_method:
+          type: string
+          enum: [S256]
+          description: PKCE code challenge method (S256 required)
+        nonce:
+          type: string
+          description: OpenID Connect nonce
+          maxLength: 255
+
+    PARResponse:
+      type: object
+      required:
+        - request_uri
+        - expires_in
+      properties:
+        request_uri:
+          type: string
+          format: uri
+          description: Request URI to use in authorization request
+          example: "urn:ietf:params:oauth:request_uri:6esc_11ACC5bwc014ltc14eY22c"
+        expires_in:
+          type: integer
+          description: Request URI lifetime in seconds (max 60 for FAPI 2.0)
+          maximum: 60
+          example: 60
 
     # REGISTRY SCHEMAS
     ParticipantList:
