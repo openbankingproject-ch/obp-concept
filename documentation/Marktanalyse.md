@@ -311,7 +311,7 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 
 #### Technische Best Practices
 **API-First Design:** Comprehensive API Design vor Implementation.
-**Security-by-Design:** FAPI 1.0 Advanced als Minimum für sensitive Data.
+**Security-by-Design:** FAPI 1.0 Advanced als Minimum für sensitive Data. Nach Verifikation mit Experten: FAPI 2.0 als Zielarchitektur.
 **Developer Experience:** Umfassende Dokumentation, Sandbox-Umgebungen, SDKs.
 **Performance:** SLA-basierte Service Level Agreements mit Monitoring.
 
@@ -327,7 +327,7 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 #### Potenzieller Tech-Stack für Schweizer Implementation
 **Core Technologies:**
 - REST/JSON als API-Architektur
-- FAPI 1.0 Advanced für Security
+- FAPI 2.0 für Security
 - OpenAPI 3.0 für Dokumentation
 - OAuth 2.0 mit PKCE für Authentication
 

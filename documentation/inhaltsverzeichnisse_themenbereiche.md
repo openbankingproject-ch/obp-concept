@@ -64,22 +64,31 @@
 #### **6.1 API-Technologie-Stack Analyse**
 #### **Datenformate und Serialisierung**
 - **JSON Dominanz:** 7 von 8 analysierten Standards nutzen JSON als primäres Format
+- **XML/YAML Fragmentierung:** Nur NextGenPSD2 und Open Wealth nutzen XML (führt zu Interoperabilitätsproblemen)
 - **REST-API Design:** Konsistente Verwendung von RESTful Prinzipien
 - **OpenAPI Spezifikationen:** Swagger/OpenAPI 3.0 als Dokumentationsstandard
+- **QR Code Integration:** Mobile-friendly consent flows mit qrcode library
+- **UUID Generation:** Standardized unique identifiers für transactions und sessions
 - **Versionierung:** Semantische Versionierung vs. URI-basierte Versionierung
 
 #### **Transport- und Protokoll-Standards**
 - **HTTPS/TLS 1.2+:** Universelle Anforderung für sichere Übertragung
 - **HTTP/2 Support:** Variiert zwischen Standards (UK: mandatory, Brasil: optional)
-- **Rate Limiting:** Unterschiedliche Ansätze (Token Bucket vs. Fixed Window)
-- **Compression:** GZIP-Unterstützung als Standard
+- **Enhanced Security Headers:** Helmet.js middleware integration (CSP, HSTS, etc.)
+- **Rate Limiting:** Unterschiedliche Ansätze (Token Bucket vs. Fixed Window), z.B. Adaptive throttling mit express-rate-limit
+- **CORS Optimization:** Fine-grained cross-origin resource sharing configuration
+- **Request Compression:** GZIP-Unterstützung als Standard
+- **Connection Management:** Express.js connection pooling und timeout handling
 
 #### **6.2 Authentifizierung und Autorisierung**
-#### **OAuth 2.0 Implementierungsvarianten**
+#### **OAuth 2.0/2.1 Implementierungsvarianten**
 - **Authorization Code Flow:** Universell implementiert
-- **PKCE (Proof Key for Code Exchange):** Mandatory in 6 von 8 Standards
+- **OAuth 2.1 Migration:** Mandatory PKCE, deprecated flows entfernt
+- **PKCE (Proof Key for Code Exchange):** pkce-challenge library für robuste Implementation, mandatory in 6 von 8 Standards
 - **Client Credentials Flow:** Für Machine-to-Machine Kommunikation
 - **Refresh Token Handling:** Unterschiedliche Lifecycle-Management Ansätze
+- **Token Binding:** DPoP-basierte sender-constrained tokens
+- **Enhanced Security:** Cryptographic proof für jeden API-Call
 
 #### **OpenID Connect (OIDC) Integration**
 - **ID Token Verwendung:** Variiert zwischen reiner Authentifizierung und Autorisierung
@@ -87,10 +96,18 @@
 - **Claim-basierte Autorisierung:** Unterschiedliche Granularitätslevel
 
 #### **FAPI (Financial-grade API) Compliance**
-- **FAPI 1.0 Baseline:** Mindestanforderung in regulierten Märkten
-- **FAPI 2.0 Migration:** Roadmap-Unterschiede zwischen Standards
+**FAPI 1.0 Baseline:** Mindestanforderung in regulierten Märkten (Legacy)
 - **MTLS (Mutual TLS):** Mandatory vs. optional Implementation
 - **JAR/JWE:** JSON Web Encryption für sensitive Daten
+
+**FAPI 2.0 Security Profile:** Final specification mit formaler Verifikation
+- **PAR (Pushed Authorization Requests):** Ersetzt JAR, 60-Sekunden Expiration mandatory
+- **DPoP (Demonstrating Proof-of-Possession):** Alternative zu mTLS für Token-Binding
+- **Enhanced Client Authentication:** Dual mTLS/private_key_jwt Support
+- **Algorithm Restrictions:** Nur PS256, ES256, EdDSA erlaubt (keine HS256/RS256)
+- **Short Token Lifetimes:** 15-Minuten vs. traditionelle Stunden/Tage
+- **MTLS (Mutual TLS):** Enhanced certificate validation mit 2048-bit minimum
+- **JWE Integration:** JSON Web Encryption für sensitive Consent-Daten
 
 #### **6.3 Datenmodelle und Schema-Design**
 #### **Standardisierte Datenstrukturen**
@@ -118,18 +135,37 @@
 - **CDN Integration:** Geographic Distribution für bessere Latency
 - **Cache Invalidation:** Event-driven vs. TTL-basierte Strategien
 
+#### **Database und Persistence Patterns**
+- **MongoDB Integration:** Flexible customer data models mit JSON-native storage
+- **Document-based Storage:** Schema-less data persistence für evolving data structures
+- **Audit Trail Storage:** Immutable transaction logs für compliance requirements
+- **Session Management:** Redis-based session storage für high availability
+- **Data Encryption:** At-rest und in-transit encryption für sensitive customer data
+
 #### **6.5 Error Handling und Monitoring**
 #### **Standardisierte Error Responses**
 - **RFC 7807 Problem Details:** Adoption in NextGenPSD2 und Open Wealth
+
 - **Proprietary Error Formats:** UK Open Banking, Brasil spezifische Schemas
 - **Error Code Hierarchies:** Functional vs. technical error categorization
 - **Localization Support:** Multi-language error messages
 
+- **FAPI 2.0 Error Codes:** Compliant error response format (invalid_request_uri, unauthorized_client)
+- **Enhanced Security Errors:** Detailed authentication/authorization failures ohne information disclosure
+- **Graceful Degradation:** Fallback mechanisms für partial failures (PAR timeout, DPoP validation)
+
 #### **Observability und Tracing**
+
 - **Request Correlation IDs:** X-Request-ID Header standardization
 - **OpenTelemetry Integration:** Distributed tracing zwischen API Providern
 - **SLA Monitoring:** Response time, availability, error rate tracking
 - **Business Metrics:** Transaction success rates, customer journey analytics
+
+**Logging Standards:**
+- **Winston Logging:** Multi-transport production logging (file, console, external services)
+- **Morgan HTTP Logging:** Structured request/response logging für audit trails
+- **Security Event Logging:** FAPI 2.0 compliant audit trails für authentication/authorization
+- **Real-time Monitoring:** DPoP validation, certificate events, consent lifecycle
 
 #### **6.6 Integration Patterns und Architectural Choices**
 #### **Synchronous vs. Asynchronous Patterns**
@@ -144,14 +180,23 @@
 - **Data Encryption:** At-rest und in-transit encryption standards
 - **Key Management:** Hardware Security Modules (HSM) vs. Cloud KMS
 
+#### **6.7 Modern Development und Testing Infrastructure**
+#### **Testing Framework**
+- **Jest Integration:** Comprehensive unit und integration testing mit coverage reporting
+- **Supertest:** HTTP assertion testing für API endpoints mit mock server capabilities
+- **Coverage Analysis:** Automated test coverage tracking (Standard: >90% line coverage target)
+- **Security Testing:** OWASP API security validation und penetration testing
+- **Contract Testing:** OpenAPI specification validation für request/response compliance
+- **Performance Testing:** Load testing für high-throughput scenarios
+
 ### **7. Implikationen für Schweizer Open API Kundenbeziehung**
 #### **7.1 Best Practices**
 - Übertragbare Erfolgsmodelle
 - Zu vermeidende Implementierungsfehler
 
 #### **7.2 Technologische Entscheidungen**
-- "Wir werden xy benutzen weil..." - Begründungen
-- Standard-Auswahl basierend auf Marktanalyse
+- **Technologie-Roadmap:** Empfohlener Tech-Stack für Schweizer Implementation: Standard-Auswahl basierend auf Marktanalyse und Verifikation mit Experten
+- **Begründungen:** "Wir werden xy benutzen weil..." 
 
 #### **7.3 Governance-Empfehlungen**
 - Optimales Modell für Schweizer Kontext
@@ -160,7 +205,6 @@
 ### **8. Fazit und Handlungsempfehlungen**
 - Strategische Positionierung im internationalen Kontext
 - Nächste Schritte für Standardisierung
-- **Technologie-Roadmap:** Empfohlener Tech-Stack für Schweizer Implementation
 
 ---
 
@@ -283,7 +327,7 @@
 - **Stufe 9: Signatur** - 2FA, Wallet, QES (produktabhängig)
 - **Stufe 10: Verteilung** - Metadaten, Prüfung, Verarbeitung
 
-### **4. API-Endpoint Design (Version 2.0)**
+### **4. API-Endpoint Design**
 #### **4.1 Hauptendpunkte**
 - `/customer/check` - Existenz + Identitätsgültigkeit
 - `/customer/fullRequest` - Vollständiges Dataset (≈65 Felder)
@@ -491,7 +535,7 @@
 - Fragmentierung der Security-Landschaft
 - Schweizer Kontext-spezifische Anforderungen
 
-#### **3.2 FAPI (Financial-grade API)**
+#### **3.2 FAPI 2.0 (Financial-grade API)**
 - **Anwendungsbereich:** Höchste Sicherheitsstufe für Finanzsektor
 - **Vorteile:** Regulatory Compliance, Bank-grade Security
 - **Nachteile:** Implementierungskomplexität, Performance Impact
@@ -936,14 +980,14 @@
 
 #### **7.3 Industrielle Validierung**
 **Banking Partner Validation:**
-- **PostFinance:** Pilot Implementation und Feedback
-- **HBL:** Risk und Compliance Perspective
-- **Intrum:** Operational Excellence Validation
+- Pilot Implementation und Feedback
+- Risk und Compliance Perspective
+- Operational Excellence Validation
 
 **Cross-Industry Testing:**
-- **Insurance Partners:** Use Case Validation
-- **FinTech Community:** Innovation und Usability Testing
-- **Academic Institutions:** Independent Research und Validation
+- Use Case Validation
+- Innovation und Usability Testing
+- Independent Research und Validation
 
 ### **8. Kontinuierliches Testing**
 #### **8.1 CI/CD Integration**
@@ -986,12 +1030,6 @@
 - **Test Case Coverage:** 100% Äquivalenzklassen-Abdeckung
 - **Defect Density:** <2 Defects per 1000 Lines of Code
 - **Test Execution Time:** <30 min für vollständige Test Suite
-
-#### **10.2 Business Impact Metriken**
-- **Process Efficiency:** 50%+ Reduktion der Onboarding-Zeit
-- **Error Rate Reduction:** 80%+ weniger manuelle Fehler
-- **Customer Satisfaction:** NPS-Improvement durch bessere UX
-- **Compliance Adherence:** 100% Regulatory Requirement Coverage
 
 ### **11. Fazit und Testing-Roadmap**
 - Vollständigkeits-Beweis durch systematische Äquivalenzklassen
