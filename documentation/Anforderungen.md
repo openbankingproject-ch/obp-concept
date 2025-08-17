@@ -671,36 +671,6 @@ sharedCustomerHash = SHA256(hash_input)
 - Improved Customer Lifetime Value
 - Cross-selling Opportunities
 
-### Business Case Quantifizierung
-
-#### **Kosteneinsparungen**
-
-**Operationale Effizienz:**
-- 60-80% Reduktion in Onboarding-Zeit
-- 40-60% Reduktion in manuellen Verifikationsprozessen
-- 30-50% Reduktion in Customer Support Anfragen
-- 20-40% Reduktion in Compliance-Kosten
-
-**Technische Effizienz:**
-- Wiederverwendung von 70-90% der Datenverifikation
-- Reduktion von Datensilos und redundanten Systemen
-- Standardisierte APIs reduzieren Integration Costs
-- Economies of Scale bei Security und Compliance
-
-#### **Revenue Opportunities**
-
-**Direkte Revenue:**
-- CHF 2-5 per completed Onboarding Transaction
-- CHF 0.10-0.50 per API Call (je nach Complexity)
-- CHF 10,000-50,000 annual Subscription Fees
-- CHF 50,000-200,000 für Enterprise White-label Solutions
-
-**Market Size Estimation:**
-- 1.2 Millionen Bankkonten eröffnet/Jahr in CH
-- 700,000 Umzüge/Jahr (Mietkautionskonten)
-- 500,000 Versicherungsabschlüsse/Jahr
-- Total Addressable Market: CHF 50-100 Millionen/Jahr
-
 ### ROI-Kalkulation
 
 **Break-even Analysis:**

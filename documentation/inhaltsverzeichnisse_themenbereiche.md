@@ -328,6 +328,8 @@
 - **Stufe 10: Verteilung** - Metadaten, Prüfung, Verarbeitung
 
 ### **4. API-Endpoint Design**
+Nur auf sehr theoretischer Ebene, Implementationsdetails folgen in späterem Kapitel. Kurzer Überblick über die API-Endpoints ohne genauere technische Details:
+
 #### **4.1 Hauptendpunkte**
 - `/customer/check` - Existenz + Identitätsgültigkeit
 - `/customer/fullRequest` - Vollständiges Dataset (≈65 Felder)
@@ -345,6 +347,8 @@
 - Purpose-spezifische Payload-Definitionen
 
 ### **5. Datenmodell und -strukturen**
+Tabellarische Übersicht der Datenfelder: (nicht Code, sondern nur Konzept)
+
 #### **5.1 Kern-Datenfelder (Basic Dataset)**
 - Identitäts-Informationen (Name, Geburt, Nationalität)
 - Identifikations-Metadaten (Datum, Methode, VSB-Status)
@@ -384,7 +388,7 @@
 
 ### **8. Fazit und Implementierungsleitfaden**
 - Best Practices für Referenzprozess-Umsetzung
-- Integration Roadmap für verschiedene Branchen
+- Integration Roadmap für verschiedene Ecosysteme
 
 ---
 
@@ -530,6 +534,8 @@
 - Compliance mit Finanzsektor-Standards
 
 ### **3. Security-Standards Evaluation**
+Bereits in der Marktanalyse identifizierte Standards, die für die Security-Architektur relevant sind - begründete Auswahl basierend auf Marktanalyse und Verifikation mit Experten.
+
 #### **3.1 Marktanalyse-basierte Auswahl**
 - Internationale Best Practices aus 8 analysierten Standards
 - Fragmentierung der Security-Landschaft
@@ -594,16 +600,16 @@
 - Minimal Disclosure Principle
 - Audit-Trail für Consent-Lifecycle
 
-### **6. Security Flow Implementation**
-#### **6.1 Authentifizierung**
-- **Multi-Factor Authentication:** SMS, App-Push, Biometrics
-- **Device Binding:** Hardware-basierte Sicherheit
-- **Risk-based Authentication:** Adaptive Security
+### **6. Authentication Flow Implementation**
+The authorization code flow must at least contain a user identifying step and a consent step. 
 
-#### **6.2 Autorisierung**
-- **Granulare Permissions:** Endpoint- und Datenfeld-Level
-- **Dynamic Scoping:** Runtime-basierte Berechtigung
-- **Privilege Escalation:** Step-up Authentication
+#### **6.1 Authentication**
+**Sequence Diagram des Authentifizierungsprozesses:**
+Diagramm zeigt den Ablauf von der Nutzeranmeldung über MFA bis zur Token-Ausstellung
+
+#### **6.2 Authorization Server**
+- **OAuth2 Authorization:** Standardisierte Autorisierung
+- **PKCE (Proof Key for Code Exchange):** Enhanced Security für Public Clients
 
 #### **6.3 Audit und Compliance**
 - **Comprehensive Logging:** Alle Security-Events
