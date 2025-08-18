@@ -271,7 +271,7 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Telemedicine Identity Verification
 
 ## Anforderungen im Kontext des Referenzprozesses
-[Konklusion Referenzprozess](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/03%20Referenzprozess.md)
+[Konklusion Referenzprozess](./03%20Referenzprozess.md)
 
 ### Ecosystem-spezifische Anforderungen
 
@@ -382,7 +382,7 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Legal Basis for Processing
 
 ## Technische Anforderungen
-[Marktanalyse: Beschreibung der existierenden Standards und Technologien](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/01%20Marktanalyse.md)
+[Marktanalyse: Beschreibung der existierenden Standards und Technologien](./01%20Marktanalyse.md)
 
 ### Modulare API-Architektur
 
@@ -971,4 +971,4 @@ TODO: TZE bitte verifizieren!!
 
 Die Anforderungsanalyse zeigt einen klaren Weg für die erfolgreiche Implementierung der Open API Kundenbeziehung mit fokussiertem Approach auf kurzfristig umsetzbare Lösungen und strategischer Perspektive für langfristige Marktführerschaft.
 
-[Quellen und Referenzen](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/04%20Quellen%20und%20Referenzen.md)
+[Quellen und Referenzen](./Quellen%20und%20Referenzen.md)

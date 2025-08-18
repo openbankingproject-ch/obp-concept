@@ -3,7 +3,7 @@
 ## Inhalt
 
 1. [Executive Summary](#executive-summary)
-2. [API-Architektur Übersicht](#api-architektur-übersicht)
+2. [API-Architektur Ãœbersicht](#api-architektur-Ã¼bersicht)
 3. [Hauptendpunkte](#hauptendpunkte)
 4. [Granulare Daten-Endpunkte](#granulare-daten-endpunkte)
 5. [Request/Response Strukturen](#requestresponse-strukturen)
@@ -13,44 +13,44 @@
 
 ## Executive Summary
 
-Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 Standards und etabliert eine klare, RESTful Architektur für den sicheren Austausch von Kundendaten. Die API-Spezifikation konzentriert sich auf konzeptionelle Strukturen, während detaillierte technische Implementierungen in der separaten [API Codebase Dokumentation](/documentation/Umsetzung%20und%20Implementierung/) behandelt werden.
+Das API Endpoint Design fï¿½r die Open API Kundenbeziehung folgt den OpenAPI 3.0 Standards und etabliert eine klare, RESTful Architektur fï¿½r den sicheren Austausch von Kundendaten. Die API-Spezifikation konzentriert sich auf konzeptionelle Strukturen, wï¿½hrend detaillierte technische Implementierungen in der separaten [API Codebase Dokumentation](/documentation/Umsetzung%20und%20Implementierung/) behandelt werden.
 
 **Zentrale Designprinzipien:**
-- OpenAPI 3.0 konforme Spezifikation für automatische Code-Generierung
+- OpenAPI 3.0 konforme Spezifikation fï¿½r automatische Code-Generierung
 - RESTful Design mit resource-orientierten URL-Strukturen  
-- FAPI 2.0 Security Integration für Finanzdienstleistungen
-- Modulare Endpunkt-Architektur für flexible Use Case-Abdeckung
+- FAPI 2.0 Security Integration fÃ¼r Finanzdienstleistungen â†’ [Siehe Conclusion Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
+- Modulare Endpunkt-Architektur fï¿½r flexible Use Case-Abdeckung
 
 ---
 
-## API-Architektur Übersicht
+## API-Architektur ï¿½bersicht
 
 ### Technische Grundlagen
 
 **API-Standard:** RESTful Design nach OpenAPI 3.0 Specification
-- JSON als primäres Datenformat für Interoperabilität
-- HTTPS/TLS 1.3 mandatory für Transport Security
-- HTTP/2 Support für Performance-Optimierung
-- Semantic Versioning für API Evolution
+- JSON als primï¿½res Datenformat fï¿½r Interoperabilitï¿½t
+- HTTPS/TLS 1.3 mandatory fï¿½r Transport Security
+- HTTP/2 Support fï¿½r Performance-Optimierung
+- Semantic Versioning fï¿½r API Evolution
 
 **Design-Prinzipien:**
 - **Resource-orientierte URLs:** Logische Datenstruktur-Mapping
 - **HTTP-Verben:** Standard CRUD Operations (GET, POST, PUT, DELETE)
-- **Statelessness:** Session-unabhängige Request/Response Cycles
-- **Idempotenz:** Sichere Wiederholbarkeit für kritische Operations
+- **Statelessness:** Session-unabhï¿½ngige Request/Response Cycles
+- **Idempotenz:** Sichere Wiederholbarkeit fï¿½r kritische Operations
 
 ### Sicherheitsarchitektur
 
-**Authentication & Authorization:**
-- FAPI 2.0 Security Profile für Financial APIs
-- OAuth 2.0/OpenID Connect für standardisierte Authentifizierung
+**Authentication & Authorization:** â†’ [Detaillierte Security-Implementierung siehe Conclusion Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
+- FAPI 2.0 Security Profile fÃ¼r Financial APIs
+- OAuth 2.0/OpenID Connect fÃ¼r standardisierte Authentifizierung
 - JWT-basierte Access Tokens mit granularen Scopes
-- Mutual TLS (mTLS) für kritische Partner-Integrationen
+- Mutual TLS (mTLS) fÃ¼r kritische Partner-Integrationen
 
 **API Gateway Integration:**
 - Rate Limiting mit adaptiver Throttling-Logik
 - Request Validation durch JSON Schema
-- Response Caching mit ETags für Effizienz
+- Response Caching mit ETags fï¿½r Effizienz
 - Comprehensive Monitoring und Audit Trails
 
 ---
@@ -60,7 +60,7 @@ Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 S
 ### Customer Check API
 
 #### `GET /customer/check`
-**Purpose:** Schnelle Existenz- und Gültigkeitsprüfung von Kundendaten
+**Purpose:** Schnelle Existenz- und Gï¿½ltigkeitsprï¿½fung von Kundendaten
 ```json
 {
   "endpoint": "/v1/customer/check",
@@ -72,8 +72,8 @@ Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 S
 
 **Request Parameters:**
 - `sharedCustomerHash` (required): Eindeutige anonyme Kundenidentifikation
-- `purpose` (required): Intended use case für Data Processing
-- `requestingInstitution` (required): Institution Identifier für Audit
+- `purpose` (required): Intended use case fï¿½r Data Processing
+- `requestingInstitution` (required): Institution Identifier fï¿½r Audit
 
 **Response Structure:**
 ```json
@@ -117,7 +117,7 @@ Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 S
 ### Customer Profile API
 
 #### `GET /customer/{customerId}/profile`
-**Purpose:** Vollständiges Kundenprofil für authentifizierte Requests
+**Purpose:** Vollstï¿½ndiges Kundenprofil fï¿½r authentifizierte Requests
 ```json
 {
   "endpoint": "/v1/customer/{customerId}/profile",
@@ -162,14 +162,14 @@ Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 S
 GET /v1/customer/{customerId}/identity
 PUT /v1/customer/{customerId}/identity
 ```
-**Data Scope:** Name, Geburtsdatum, Nationalität, Government IDs
+**Data Scope:** Name, Geburtsdatum, Nationalitï¿½t, Government IDs
 
 #### Contact Module  
 ```
 GET /v1/customer/{customerId}/contact
 PUT /v1/customer/{customerId}/contact
 ```
-**Data Scope:** E-Mail, Telefon, Adresse, Kommunikationspräferenzen
+**Data Scope:** E-Mail, Telefon, Adresse, Kommunikationsprï¿½ferenzen
 
 #### KYC Module
 ```
@@ -205,7 +205,7 @@ PUT /v1/customer/{customerId}/compliance
 ```
 
 #### `GET /consent/{consentId}/status`
-**Purpose:** Consent Status und Gültigkeitsprüfung
+**Purpose:** Consent Status und Gï¿½ltigkeitsprï¿½fung
 ```json
 {
   "endpoint": "/v1/consent/{consentId}/status",
@@ -287,10 +287,10 @@ Accept: application/json
 ### OpenAPI 3.0 Specification
 
 **Dokumentationsstandards:**
-- Vollständige API-Spezifikation in OpenAPI 3.0 YAML Format
-- Automatische Code-Generierung für Client SDKs
+- Vollstï¿½ndige API-Spezifikation in OpenAPI 3.0 YAML Format
+- Automatische Code-Generierung fï¿½r Client SDKs
 - Interactive API Documentation mit Swagger UI
-- Schema Validation für alle Request/Response Payloads
+- Schema Validation fï¿½r alle Request/Response Payloads
 
 **Beispiel OpenAPI Definition:**
 ```yaml
@@ -337,10 +337,10 @@ paths:
 
 **FAPI 2.0 Compliance Checklist:**
 - [ ] JWT Access Tokens mit Proof-of-Possession
-- [ ] Certificate-bound Tokens für High-Value Transactions
-- [ ] Request Object Encryption für Sensitive Data
-- [ ] MTLS Authentication für Partner APIs
-- [ ] PKCE für Public Client Applications
+- [ ] Certificate-bound Tokens fï¿½r High-Value Transactions
+- [ ] Request Object Encryption fï¿½r Sensitive Data
+- [ ] MTLS Authentication fï¿½r Partner APIs
+- [ ] PKCE fï¿½r Public Client Applications
 
 ### Performance Guidelines
 
@@ -359,22 +359,28 @@ paths:
 ### Development Best Practices
 
 **API Versioning Strategy:**
-- Semantic Versioning für API Evolution
-- Backward Compatibility für mindestens 2 Major Versions
+- Semantic Versioning fï¿½r API Evolution
+- Backward Compatibility fï¿½r mindestens 2 Major Versions
 - Deprecation Notice Period: 6 Monate minimum
-- Feature Flags für schrittweise Rollouts
+- Feature Flags fï¿½r schrittweise Rollouts
 
 **Testing Requirements:**
-- Unit Tests für alle API Endpoints (>90% Coverage)
+- Unit Tests fï¿½r alle API Endpoints (>90% Coverage)
 - Integration Tests mit Mock External Systems
 - Contract Testing zwischen Producer/Consumer
-- Load Testing für Performance Validation
-- Security Testing mit OWASP API Security Guidelines
+- Load Testing fï¿½r Performance Validation
+- Security Testing mit OWASP API Security Guidelines â†’ [Siehe Conclusion Testing und Verifikation](./08%20Testing%20und%20Verifikation.md)
 
-Diese konzeptionelle API-Spezifikation bietet die Grundlage für die technische Implementation und wird kontinuierlich mit der separaten technischen Dokumentation synchronisiert, um eine konsistente und wartbare API-Architektur zu gewährleisten.
+Diese konzeptionelle API-Spezifikation bietet die Grundlage fÃ¼r die technische Implementation und wird kontinuierlich mit der separaten technischen Dokumentation synchronisiert, um eine konsistente und wartbare API-Architektur zu gewÃ¤hrleisten.
+
+TODO: TZE bitte verifizieren!!
 
 ---
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Konzeptionelle Spezifikation für technische Implementation
+**Status:** Konzeptionelle Spezifikation fÃ¼r technische Implementation
+
+---
+
+[Quellen und Referenzen](./Quellen%20und%20Referenzen.md)

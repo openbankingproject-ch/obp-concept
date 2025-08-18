@@ -64,14 +64,24 @@ for all conclusions complete the following tasks:
 [] remove all emojis - they are not professional and do not fit the tone of the documentation
 [] complete TODOs in the conclusions where possible, but do not remove any TODOs about verification with someone!
 [] ensure that the letters ä/ö/ü are represented correctly - currently they are replaced by weird symbols -> ensure that all files are saved in UTF-8 encoding to avoid any issues with special characters
-[] for all sections with code snippets (except API-Endpoint Design): Create a new file in the folder "documentation/Umsetzung und Implementierung" and link it in the conclusion. The file should contain the code snippets and a detailed explanation of the code, but not the conclusion itself (link the conclusion at the specific section in the new file). In the conclusion file replace the previous content with a conceptual overview of the topic (find a different way to represent the data points, e.g. create tables). Do not remove mermaid diagrams.
 [] ensure that all files are linked correctly and that there are no broken links
 [] add a TODO in each conclusion file in the section Fazit/Implikationen/Handlungsempfehlungen/... that says: "TODO: TZE bitte verifizieren!!"
 [] at the end of each conclusion file add a link to the "Quellen und Referenzen" file, so that all sources and references are easily accessible
 [] ensure that the conclusion files are well-structured, easy to read and follow a consistent format
 [] ensure that all conclusions are written in a professional tone and style, avoiding any informal language or slang
-[] ensure that all conclusions are comprehensive and cover all relevant aspects of the topic, without being overly verbose or repetitive
 [] ensure that all conclusions are aligned with the overall goals and objectives of the Open Banking Platform project
+[] ensure that all conclusions are written in a way that is easy to understand for someone who is not familiar with the topic, but still contains all relevant information and is professionally worded
+
+Take a break to let me verify everything and then continue with the next steps:
+[] for all sections with code snippets (except API-Endpoint Design): Create a new file in the folder "documentation/Umsetzung und Implementierung" and link it in the conclusion. The file should contain the code snippets and a detailed explanation of the code, but not the conclusion itself (link the conclusion at the specific section in the new file). In the conclusion file replace the previous content with a conceptual overview of the topic (find a different way to represent the data points, e.g. create tables). Do not remove mermaid diagrams.
+[] add the newly created files to the file "Konklusion Open API Kundenbeziehung Overview.md" and link them there
+
+Take a break to let me verify everything and then continue with the next steps:
+[] ensure that all conclusions are comprehensive and cover all relevant aspects of the topic covered in the resources (check for completeness), without being overly verbose or repetitive. Also look at the implementation specification files for each chapter in the folder "documentation/Umsetzung und Implementierung" and ensure that the conclusions are aligned with the implementation specifications.
+[] ensure that the documentation aligns with the standard described here: https://spec.openapis.org/oas/v3.0.3.html 
+[] ensure that all conclusions and extra files are aligned with the overall goals and objectives of the Open Banking Platform project and that they provide a clear direction for the next steps in the project
+[] ensure that all conclusions are well-structured, easy to read and follow a consistent format
+[] ensure that all conclusions are linked correctly and that there are no broken links
 
 
 
