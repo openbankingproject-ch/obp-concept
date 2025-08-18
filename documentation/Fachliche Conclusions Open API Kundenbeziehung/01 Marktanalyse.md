@@ -540,7 +540,7 @@ TODO: TZE bitte verifizieren!!
 - Payment Initiation als separate Ausbaustufe
 - Internationale Interoperabilität (EU, UK Kompatibilität)
 
-TODO: @ThomasZerndt bitte verifizieren!!
+@jilzerndt bitte verifizieren!!
 
 ---
 
