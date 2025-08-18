@@ -735,7 +735,7 @@ Der Referenzprozess stellt das Herzstück der Open API Kundenbeziehung dar und b
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Final Draft für Stakeholder Review
+**Status:** Final Draft für Review
 
 ---
 
