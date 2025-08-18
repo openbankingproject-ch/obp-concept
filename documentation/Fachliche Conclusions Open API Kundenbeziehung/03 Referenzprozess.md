@@ -24,51 +24,51 @@ Der Open API Kundenbeziehung Referenzprozess definiert einen standardisierten, b
 
 ---
 
-## Branchen�bergreifender 10-Stufen Referenzprozess: Design und Ziel
+## Branchenübergreifender 10-Stufen Referenzprozess: Design und Ziel
 
 ### Konzeptionelles Design
 
-Der Referenzprozess wurde als **universeller Standard** f�r die digitale Kundenbeziehung entwickelt, der �ber verschiedene Branchen hinweg angewendet werden kann. Die Architektur folgt dem Prinzip der modularen Datenbausteine, die je nach Anwendungsfall kombiniert werden k�nnen.
+Der Referenzprozess wurde als **universeller Standard** für die digitale Kundenbeziehung entwickelt, der über verschiedene Branchen hinweg angewendet werden kann. Die Architektur folgt dem Prinzip der modularen Datenbausteine, die je nach Anwendungsfall kombiniert werden können.
 
 #### Kernprinzipien
 
-**1. Branchen�bergreifende Anwendbarkeit**
+**1. Branchenübergreifende Anwendbarkeit**
 - Einsetzbar in Finance, Insurance, Mobility, Retail, Education, Health
-- Modulare Architektur erm�glicht ecosystem-spezifische Erweiterungen
-- Standardisierte Basisdaten f�r alle Branchen
+- Modulare Architektur ermöglicht ecosystem-spezifische Erweiterungen
+- Standardisierte Basisdaten für alle Branchen
 
 **2. Selbstbestimmte Kundenbeziehung**
-- Kunden behalten Kontrolle �ber ihre Daten
+- Kunden behalten Kontrolle über ihre Daten
 - Granulare Consent-Mechanismen
 - Transparente Datenverwendung
 
-**3. Modulare "Bl�ckli"-Architektur**
-- **Basisdaten:** Branchen�bergreifend verwendbar
+**3. Modulare "Bläckli"-Architektur**
+- **Basisdaten:** Branchenäbergreifend verwendbar
 - **Erweiterte Daten:** Ecosystem-spezifische Erweiterungen
 - **Metadaten:** Prozess- und Compliance-Informationen
 
 ### Zielsetzung des Referenzprozesses
 
-**Prim�rziele:**
+**Primärziele:**
 - **Effizienzsteigerung:** Reduktion redundanter Datenerfassung um 70%
 - **Customer Experience:** Verbesserung der Onboarding-Zeit um 60%
-- **Compliance-Sicherheit:** Automatisierte regulatorische Konformit�t
+- **Compliance-Sicherheit:** Automatisierte regulatorische Konformität
 - **Kostenoptimierung:** Senkung der Customer Acquisition Costs um 40%
 
-**Sekund�rziele:**
+**Sekundärziele:**
 - Standardisierung der Schweizer Finanzbranche
-- Internationale Interoperabilit�t
-- Innovation-F�rderung durch offene Standards
+- Internationale Interoperabilität
+- Innovation-Färderung durch offene Standards
 - Datenschutz-by-Design Implementation
 
 ---
 
-## Detaillierte Erkl�rung der Referenzprozess-Schritte
+## Detaillierte Erklärung der Referenzprozess-Schritte
 
 ### Phase 1: Initialisierung (Stufen 1-2)
 
 #### Stufe 1: Service Discovery
-**Zweck:** Kunde entdeckt und w�hlt relevante Services aus
+**Zweck:** Kunde entdeckt und wählt relevante Services aus
 - Automatische Service-Empfehlungen basierend auf Customer Profile
 - Transparente Darstellung von Datenerfordernissen
 - Klare Kommunikation der Mehrwerte
@@ -82,20 +82,20 @@ Der Referenzprozess wurde als **universeller Standard** f�r die digitale Kunde
 ### Phase 2: Datenerfassung (Stufen 3-5)
 
 #### Stufe 3: Selbstdeklaration
-**Zweck:** Erste Kundenangaben und Pr�ferenzen
+**Zweck:** Erste Kundenangaben und Präferenzen
 - Intelligente Formulare mit progressiver Offenlegung
-- Plausibilit�tschecks in Echtzeit
+- Plausibilitätschecks in Echtzeit
 - Integration von Pre-filled Data aus vorhandenen Quellen
 
 #### Stufe 4: Basisdaten
 **Zweck:** Stammdaten-Erfassung (Core Identity)
 - Name, Adresse, Kontaktdaten
-- Geburtsdatum, Nationalit�t, Zivilstand
+- Geburtsdatum, Nationalität, Zivilstand
 - Grundlegende KYC-Informationen
 
 #### Stufe 5: Erweiterte Daten
-**Zweck:** Ecosystem-spezifische Datenerg�nzung
-- Berufliche Informationen und Einkommensverh�ltnisse
+**Zweck:** Ecosystem-spezifische Datenergänzung
+- Berufliche Informationen und Einkommensverhältnisse
 - Investment Experience und Risk Profiling
 - FATCA/CRS Classification und Tax Residency
 
@@ -111,7 +111,7 @@ Der Referenzprozess wurde als **universeller Standard** f�r die digitale Kunde
 **Zweck:** KYC/AML/CTF Compliance
 - PEP und Sanctions List Screening
 - Credit Checks und Source of Wealth Verification
-- Enhanced Due Diligence f�r High-Risk Customers
+- Enhanced Due Diligence fär High-Risk Customers
 
 ### Phase 4: Abschluss (Stufen 8-10)
 
@@ -122,7 +122,7 @@ Der Referenzprozess wurde als **universeller Standard** f�r die digitale Kunde
 - Service-spezifische Agreements
 
 #### Stufe 9: Digitale Signatur
-**Zweck:** Rechtsverbindliche Best�tigung
+**Zweck:** Rechtsverbindliche Bestätigung
 - Qualifizierte elektronische Signatur (QES)
 - Multi-Factor Authentication
 - Blockchain-basierte Audit Trails
@@ -139,27 +139,27 @@ Der Referenzprozess wurde als **universeller Standard** f�r die digitale Kunde
 
 ### Konzeptionelles Framework
 
-Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexibel kombiniert und wiederverwendet werden k�nnen. Jeder Baustein enth�lt:
+Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexibel kombiniert und wiederverwendet werden kännen. Jeder Baustein enthält:
 
 - **Core Data:** Minimale erforderliche Informationen
-- **Extended Data:** Zus�tzliche ecosystem-spezifische Daten
+- **Extended Data:** Zusätzliche ecosystem-spezifische Daten
 - **Metadata:** Governance, Consent und Quality Informationen
 
 ### Basisdaten-Bausteine
 
-#### Baustein "Identit�t"
-- **Core:** Name, Geburtsdatum, Nationalit�t
+#### Baustein "Identität"
+- **Core:** Name, Geburtsdatum, Nationalität
 - **Extended:** Titel, Aliases, Historische Namen
 - **Metadata:** Verification Level, Source, Last Update
 
 #### Baustein "Kontakt"
 - **Core:** E-Mail, Telefon, Adresse
-- **Extended:** Social Media, Pr�ferenzen, Zeitfenster
+- **Extended:** Social Media, Präferenzen, Zeitfenster
 - **Metadata:** Verification Status, Communication Consent
 
 #### Baustein "KYC-Basis"
 - **Core:** Beruf, Arbeitgeber, Grundeinkommen
-- **Extended:** Detaillierte Einkommensnachweise, Verm�gen
+- **Extended:** Detaillierte Einkommensnachweise, Vermägen
 - **Metadata:** Verification Method, Document References
 
 ### Erweiterte Daten-Bausteine (Ecosystem-spezifisch)
@@ -209,15 +209,15 @@ Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexi
 
 ### Referenz-Implementation Konzept
 
-Die Bankkonten-Er�ffnung dient als Referenz-Use Case f�r die praktische Anwendung des 10-Stufen Prozesses. Die konzeptionelle Implementation zeigt, wie die modularen Bausteine in der Praxis kombiniert werden.
+Die Bankkonten-Eräffnung dient als Referenz-Use Case fär die praktische Anwendung des 10-Stufen Prozesses. Die konzeptionelle Implementation zeigt, wie die modularen Bausteine in der Praxis kombiniert werden.
 
-### Prozess-Mapping f�r Bankkonten-Onboarding
+### Prozess-Mapping fär Bankkonten-Onboarding
 
 #### Phase 1: Customer Intent (Stufen 1-2)
-**Stufe 1:** Kunde besucht Bank-Website oder App, zeigt Interesse an Kontoer�ffnung
-- Service Discovery zeigt verf�gbare Kontomodelle
+**Stufe 1:** Kunde besucht Bank-Website oder App, zeigt Interesse an Kontoeräffnung
+- Service Discovery zeigt verfägbare Kontomodelle
 - Transparente Darstellung der Datenerfordernisse
-- Sch�tzung der Onboarding-Dauer (typisch: 15 Minuten)
+- Schätzung der Onboarding-Dauer (typisch: 15 Minuten)
 
 **Stufe 2:** Kontomodell-Selektion
 - Interaktiver Produktkonfigurator
@@ -226,30 +226,30 @@ Die Bankkonten-Er�ffnung dient als Referenz-Use Case f�r die praktische Anwe
 
 #### Phase 2: Data Collection (Stufen 3-5)
 **Stufe 3:** Selbstdeklaration
-- Grundlegende Informationen: Wunschprodukt, gesch�tztes Einkommen
-- Service-Pr�ferenzen: Digital vs. Branch, Communication Channels
+- Grundlegende Informationen: Wunschprodukt, geschätztes Einkommen
+- Service-Präferenzen: Digital vs. Branch, Communication Channels
 - Initial Risk Assessment: Investment Interest, Service Needs
 
-**Stufe 4:** Basisdaten-Import (falls verf�gbar)
+**Stufe 4:** Basisdaten-Import (falls verfägbar)
 - API-Call zu existierenden Datenquellen (andere Banken via Open Banking)
 - Import von: Name, Adresse, Kontaktdaten, Basis-KYC
-- Automated Duplicate Detection �ber sharedCustomerHash
+- Automated Duplicate Detection äber sharedCustomerHash
 
 **Stufe 5:** Erweiterte Banking-Daten
-- Beruf, Arbeitgeber, Einkommensverh�ltnisse
+- Beruf, Arbeitgeber, Einkommensverhältnisse
 - Tax Residency und FATCA Classification
 - Investment Experience Assessment
 
 #### Phase 3: Verification & Compliance (Stufen 6-7)
 **Stufe 6:** Identity Verification
-- E-ID Integration (falls verf�gbar) oder Video-Ident
+- E-ID Integration (falls verfägbar) oder Video-Ident
 - Government ID Validation
-- Biometric Matching f�r High-Value Accounts
+- Biometric Matching fär High-Value Accounts
 
 **Stufe 7:** Banking-spezifische Checks
-- PEP Screening gem�ss Banking Regulations
+- PEP Screening gemäss Banking Regulations
 - Credit Bureau Check (Creditreform/CRIF)
-- Source of Wealth Documentation f�r HNW Clients
+- Source of Wealth Documentation fär HNW Clients
 
 #### Phase 4: Account Setup (Stufen 8-10)
 **Stufe 8:** Banking Terms Acceptance
@@ -258,7 +258,7 @@ Die Bankkonten-Er�ffnung dient als Referenz-Use Case f�r die praktische Anwe
 - Data Processing Consent (GDPR/DSG compliant)
 
 **Stufe 9:** Digital Signature
-- QES f�r rechtsg�ltige Kontoer�ffnung
+- QES fär rechtsgältige Kontoeräffnung
 - Multi-Factor Authentication Setup
 - Signature Integration mit Core Banking System
 
@@ -271,21 +271,21 @@ Die Bankkonten-Er�ffnung dient als Referenz-Use Case f�r die praktische Anwe
 
 **Traditioneller Prozess:**
 - Durchschnittliche Dauer: 45-60 Minuten
-- Medienbr�che: 3-5 (Papier, PDF, System-Eingaben)
-- Fehlerrate: 15-20% (inkorrekte Daten, unvollst�ndige Angaben)
+- Medienbräche: 3-5 (Papier, PDF, System-Eingaben)
+- Fehlerrate: 15-20% (inkorrekte Daten, unvollständige Angaben)
 - Kosten pro Onboarding: CHF 120-150
 
 **Open API Referenzprozess:**
 - Durchschnittliche Dauer: 15-20 Minuten (67% Reduktion)
-- Medienbr�che: 0-1 (vollst�ndig digital)
+- Medienbräche: 0-1 (vollständig digital)
 - Fehlerrate: 3-5% (automatische Validierung)
 - Kosten pro Onboarding: CHF 40-60 (60% Reduktion)
 
 ---
 
-## Technische Integration und Kompatibilit�ts-Framework
+## Technische Integration und Kompatibilitäts-Framework
 
-### Interaktionsformen f�r Daten und Services
+### Interaktionsformen fär Daten und Services
 
 #### API-basierte Integration
 **Synchrone APIs:**
@@ -294,19 +294,19 @@ Die Bankkonten-Er�ffnung dient als Referenz-Use Case f�r die praktische Anwe
 - Interactive User Experiences
 
 **Asynchrone APIs:**
-- Background Processing f�r komplexe Verifikationen
-- Batch-Operations f�r Daten-Synchronisation
+- Background Processing fär komplexe Verifikationen
+- Batch-Operations fär Daten-Synchronisation
 - Event-driven Workflows
 
-#### Standards-basierte Kompatibilit�t
+#### Standards-basierte Kompatibilität
 
 **Bestehende Standards als Grundlage:**
 - **PSD2/NextGen:** Account Information und Payment Initiation Services
-- **FAPI 2.0:** Security Framework f�r Financial APIs
+- **FAPI 2.0:** Security Framework fär Financial APIs
 - **OpenAPI 3.0:** Service Documentation und Code Generation
 - **OAuth 2.0/OIDC:** Authentication und Authorization
 
-### Kompatibilit�ts-Framework
+### Kompatibilitäts-Framework
 
 #### Cross-Provider Interoperability
 **Standardisierte Schnittstellen:**
@@ -319,14 +319,14 @@ DELETE /customer/{customerId}/data
 
 **Common Data Models:**
 - ISO 20022 basierte Financial Messages
-- JSON Schema f�r strukturierte Datenvalidierung
-- Standard Error Codes f�r einheitliches Error Handling
+- JSON Schema fär strukturierte Datenvalidierung
+- Standard Error Codes fär einheitliches Error Handling
 
 #### Legacy System Integration
 **Core Banking Integration Patterns:**
 - **API Gateway Pattern:** Legacy System Abstraktion
-- **Event Sourcing:** Auditierbare Daten�nderungen
-- **CQRS:** Read/Write Operation Separation f�r Performance
+- **Event Sourcing:** Auditierbare Datenänderungen
+- **CQRS:** Read/Write Operation Separation fär Performance
 
 ### Service Orchestration
 
@@ -373,14 +373,14 @@ TODO: TZE bitte verifizieren!!
 **Best Practice:** Regulatorische Anforderungen von Anfang an eingebaut
 - Automatisierte GDPR/DSG Compliance
 - KYC/AML/CTF Requirements embedded
-- Audit Trails f�r vollst�ndige Nachverfolgbarkeit
+- Audit Trails fär vollständige Nachverfolgbarkeit
 
 ### Implementierungs-Roadmap
 
 #### Sofortige Massnahmen (0-3 Monate)
-- [ ] Stakeholder Alignment �ber Referenzprozess-Definition
+- [ ] Stakeholder Alignment äber Referenzprozess-Definition
 - [ ] Technical Architecture Review mit bestehenden Core Banking Systems
-- [ ] Pilot Partner Selection f�r MVP Implementation
+- [ ] Pilot Partner Selection fär MVP Implementation
 - [ ] Legal Framework Review und Compliance Assessment
 
 #### Kurze Frist (3-9 Monate)
@@ -395,10 +395,10 @@ TODO: TZE bitte verifizieren!!
 - [ ] Expansion zu weiteren Use Cases
 - [ ] Cross-border Integration (EU Markets)
 
-#### L�ngere Frist (18+ Monate)
+#### Längere Frist (18+ Monate)
 - [ ] Full Market Rollout mit allen relevanten Partnern
 - [ ] Cross-Industry Expansion (Insurance, Mobility)
-- [ ] AI/ML Enhancement f�r Personalized Experiences
+- [ ] AI/ML Enhancement fär Personalized Experiences
 - [ ] International Standards Contribution und Leadership
 
 ### Risiko-Mitigation
@@ -410,7 +410,7 @@ TODO: TZE bitte verifizieren!!
 
 **Data Quality und Consistency:**
 - **Mitigation:** Automated Validation und Cross-Reference Checks
-- **Contingency:** Human-in-the-Loop Processes f�r Edge Cases
+- **Contingency:** Human-in-the-Loop Processes fär Edge Cases
 
 #### Business Risiken
 **Partner Adoption Resistance:**
@@ -419,7 +419,7 @@ TODO: TZE bitte verifizieren!!
 
 **Regulatory Changes:**
 - **Mitigation:** Flexible Architecture mit Configuration-based Compliance
-- **Contingency:** Rapid Response Team f�r Regulatory Adaptations
+- **Contingency:** Rapid Response Team fär Regulatory Adaptations
 
 ### Messbarkeit und KPIs
 
@@ -436,6 +436,8 @@ TODO: TZE bitte verifizieren!!
 - Compliance Audit Results: 100% Pass Rate
 
 Der Referenzprozess stellt das Herzstück der Open API Kundenbeziehung dar und bietet ein bewährtes Framework für die Digitalisierung der Kundenbeziehung mit messbaren Effizienzgewinnen und verbesserter Customer Experience.
+
+---
 
 ---
 

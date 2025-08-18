@@ -13,31 +13,31 @@
 
 ## Executive Summary
 
-Das API Endpoint Design f�r die Open API Kundenbeziehung folgt den OpenAPI 3.0 Standards und etabliert eine klare, RESTful Architektur f�r den sicheren Austausch von Kundendaten. Die API-Spezifikation konzentriert sich auf konzeptionelle Strukturen, w�hrend detaillierte technische Implementierungen in der separaten [API Codebase Dokumentation](/documentation/Umsetzung%20und%20Implementierung/) behandelt werden.
+Das API Endpoint Design fär die Open API Kundenbeziehung folgt den OpenAPI 3.0 Standards und etabliert eine klare, RESTful Architektur fär den sicheren Austausch von Kundendaten. Die API-Spezifikation konzentriert sich auf konzeptionelle Strukturen, während detaillierte technische Implementierungen in der separaten [API Codebase Dokumentation](/documentation/Umsetzung%20und%20Implementierung/) behandelt werden.
 
 **Zentrale Designprinzipien:**
-- OpenAPI 3.0 konforme Spezifikation f�r automatische Code-Generierung
+- OpenAPI 3.0 konforme Spezifikation fär automatische Code-Generierung
 - RESTful Design mit resource-orientierten URL-Strukturen  
 - FAPI 2.0 Security Integration für Finanzdienstleistungen → [Siehe Conclusion Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
-- Modulare Endpunkt-Architektur f�r flexible Use Case-Abdeckung
+- Modulare Endpunkt-Architektur fär flexible Use Case-Abdeckung
 
 ---
 
-## API-Architektur �bersicht
+## API-Architektur äbersicht
 
 ### Technische Grundlagen
 
 **API-Standard:** RESTful Design nach OpenAPI 3.0 Specification
-- JSON als prim�res Datenformat f�r Interoperabilit�t
-- HTTPS/TLS 1.3 mandatory f�r Transport Security
-- HTTP/2 Support f�r Performance-Optimierung
-- Semantic Versioning f�r API Evolution
+- JSON als primäres Datenformat fär Interoperabilität
+- HTTPS/TLS 1.3 mandatory fär Transport Security
+- HTTP/2 Support fär Performance-Optimierung
+- Semantic Versioning fär API Evolution
 
 **Design-Prinzipien:**
 - **Resource-orientierte URLs:** Logische Datenstruktur-Mapping
 - **HTTP-Verben:** Standard CRUD Operations (GET, POST, PUT, DELETE)
-- **Statelessness:** Session-unabh�ngige Request/Response Cycles
-- **Idempotenz:** Sichere Wiederholbarkeit f�r kritische Operations
+- **Statelessness:** Session-unabhängige Request/Response Cycles
+- **Idempotenz:** Sichere Wiederholbarkeit fär kritische Operations
 
 ### Sicherheitsarchitektur
 
@@ -50,7 +50,7 @@ Das API Endpoint Design f�r die Open API Kundenbeziehung folgt den OpenAPI 3.0
 **API Gateway Integration:**
 - Rate Limiting mit adaptiver Throttling-Logik
 - Request Validation durch JSON Schema
-- Response Caching mit ETags f�r Effizienz
+- Response Caching mit ETags fär Effizienz
 - Comprehensive Monitoring und Audit Trails
 
 ---
@@ -60,7 +60,7 @@ Das API Endpoint Design f�r die Open API Kundenbeziehung folgt den OpenAPI 3.0
 ### Customer Check API
 
 #### `GET /customer/check`
-**Purpose:** Schnelle Existenz- und G�ltigkeitspr�fung von Kundendaten
+**Purpose:** Schnelle Existenz- und Gältigkeitspräfung von Kundendaten
 ```json
 {
   "endpoint": "/v1/customer/check",
@@ -72,8 +72,8 @@ Das API Endpoint Design f�r die Open API Kundenbeziehung folgt den OpenAPI 3.0
 
 **Request Parameters:**
 - `sharedCustomerHash` (required): Eindeutige anonyme Kundenidentifikation
-- `purpose` (required): Intended use case f�r Data Processing
-- `requestingInstitution` (required): Institution Identifier f�r Audit
+- `purpose` (required): Intended use case fär Data Processing
+- `requestingInstitution` (required): Institution Identifier fär Audit
 
 **Response Structure:**
 ```json
@@ -117,7 +117,7 @@ Das API Endpoint Design f�r die Open API Kundenbeziehung folgt den OpenAPI 3.0
 ### Customer Profile API
 
 #### `GET /customer/{customerId}/profile`
-**Purpose:** Vollst�ndiges Kundenprofil f�r authentifizierte Requests
+**Purpose:** Vollständiges Kundenprofil fär authentifizierte Requests
 ```json
 {
   "endpoint": "/v1/customer/{customerId}/profile",
@@ -162,14 +162,14 @@ Das API Endpoint Design f�r die Open API Kundenbeziehung folgt den OpenAPI 3.0
 GET /v1/customer/{customerId}/identity
 PUT /v1/customer/{customerId}/identity
 ```
-**Data Scope:** Name, Geburtsdatum, Nationalit�t, Government IDs
+**Data Scope:** Name, Geburtsdatum, Nationalität, Government IDs
 
 #### Contact Module  
 ```
 GET /v1/customer/{customerId}/contact
 PUT /v1/customer/{customerId}/contact
 ```
-**Data Scope:** E-Mail, Telefon, Adresse, Kommunikationspr�ferenzen
+**Data Scope:** E-Mail, Telefon, Adresse, Kommunikationspräferenzen
 
 #### KYC Module
 ```
@@ -205,7 +205,7 @@ PUT /v1/customer/{customerId}/compliance
 ```
 
 #### `GET /consent/{consentId}/status`
-**Purpose:** Consent Status und G�ltigkeitspr�fung
+**Purpose:** Consent Status und Gältigkeitspräfung
 ```json
 {
   "endpoint": "/v1/consent/{consentId}/status",
@@ -287,10 +287,10 @@ Accept: application/json
 ### OpenAPI 3.0 Specification
 
 **Dokumentationsstandards:**
-- Vollst�ndige API-Spezifikation in OpenAPI 3.0 YAML Format
-- Automatische Code-Generierung f�r Client SDKs
+- Vollständige API-Spezifikation in OpenAPI 3.0 YAML Format
+- Automatische Code-Generierung fär Client SDKs
 - Interactive API Documentation mit Swagger UI
-- Schema Validation f�r alle Request/Response Payloads
+- Schema Validation fär alle Request/Response Payloads
 
 **Beispiel OpenAPI Definition:**
 ```yaml
@@ -337,10 +337,10 @@ paths:
 
 **FAPI 2.0 Compliance Checklist:**
 - [ ] JWT Access Tokens mit Proof-of-Possession
-- [ ] Certificate-bound Tokens f�r High-Value Transactions
-- [ ] Request Object Encryption f�r Sensitive Data
-- [ ] MTLS Authentication f�r Partner APIs
-- [ ] PKCE f�r Public Client Applications
+- [ ] Certificate-bound Tokens fär High-Value Transactions
+- [ ] Request Object Encryption fär Sensitive Data
+- [ ] MTLS Authentication fär Partner APIs
+- [ ] PKCE fär Public Client Applications
 
 ### Performance Guidelines
 
@@ -359,21 +359,23 @@ paths:
 ### Development Best Practices
 
 **API Versioning Strategy:**
-- Semantic Versioning f�r API Evolution
-- Backward Compatibility f�r mindestens 2 Major Versions
+- Semantic Versioning fär API Evolution
+- Backward Compatibility fär mindestens 2 Major Versions
 - Deprecation Notice Period: 6 Monate minimum
-- Feature Flags f�r schrittweise Rollouts
+- Feature Flags fär schrittweise Rollouts
 
 **Testing Requirements:**
-- Unit Tests f�r alle API Endpoints (>90% Coverage)
+- Unit Tests fär alle API Endpoints (>90% Coverage)
 - Integration Tests mit Mock External Systems
 - Contract Testing zwischen Producer/Consumer
-- Load Testing f�r Performance Validation
+- Load Testing fär Performance Validation
 - Security Testing mit OWASP API Security Guidelines → [Siehe Conclusion Testing und Verifikation](./08%20Testing%20und%20Verifikation.md)
 
 Diese konzeptionelle API-Spezifikation bietet die Grundlage für die technische Implementation und wird kontinuierlich mit der separaten technischen Dokumentation synchronisiert, um eine konsistente und wartbare API-Architektur zu gewährleisten.
 
 TODO: TZE bitte verifizieren!!
+
+---
 
 ---
 

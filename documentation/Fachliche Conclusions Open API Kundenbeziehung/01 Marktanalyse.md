@@ -15,7 +15,7 @@
 
 ## Executive Summary
 
-Die Analyse von acht globalen Open Banking Standards zeigt deutliche Konvergenz bei technologischen Grundlagen trotz unterschiedlicher regulatorischer Ansätze. JSON und RESTful APIs haben sich als De-facto-Standard etabliert, während bei Consent- und Sicherheitsmodellen noch verschiedene Ansätze parallel existieren. Die Erkenntnisse bilden die Grundlage für die Entwicklung eines Schweizer Standards, der sowohl internationale Best Practices berücksichtigt als auch spezifische Anforderungen des Schweizer Marktes erfüllt.
+Die Analyse von acht globalen Open Banking Standards zeigt deutliche Konvergenz bei technologischen Grundlagen trotz unterschiedlicher regulatorischer Ansätze. JSON (ein standardisiertes Datenformat) und RESTful APIs (eine bewährte Architektur für Datenübertragung) haben sich als De-facto-Standard etabliert, während bei Consent- und Sicherheitsmodellen noch verschiedene Ansätze parallel existieren. Die Erkenntnisse bilden die Grundlage für die Entwicklung eines Schweizer Standards, der sowohl internationale Best Practices berücksichtigt als auch spezifische Anforderungen des Schweizer Marktes erfüllt.
 
 **Zentrale Erkenntnisse:**
 - Technologische Standardisierung bei API-Design und Datenformaten
@@ -540,11 +540,14 @@ TODO: TZE bitte verifizieren!!
 - Payment Initiation als separate Ausbaustufe
 - Internationale Interoperabilität (EU, UK Kompatibilität)
 
+TODO: TZE bitte verifizieren!!
+
 ---
 
-**Version:** 1.8  
+**Version:** 1.0  
 **Datum:** August 2025  
 **Status:** Final Draft für Stakeholder Review
 
+---
+
 [Quellen und Referenzen](./Quellen%20und%20Referenzen.md)
-inkl. Excel "Marktanalyse" Anhang
