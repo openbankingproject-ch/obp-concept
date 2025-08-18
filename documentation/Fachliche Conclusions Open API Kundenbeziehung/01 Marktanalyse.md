@@ -59,27 +59,21 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 
 #### UK Open Banking Standard (Open Banking Limited)
 
-**Governance:** Mandatorische Teilnahme der grossen Banken (CMA9), freiwillige Teilnahme für kleinere Institute mit starken Anreizen zur Adoption.
-
-**Technologie:** JSON/REST als Grundarchitektur, FAPI-basierte Sicherheit mit OAuth 2.0, standardisierte Consent-Flows mit granularer Berechtigung auf Datenpunkt-Ebene.
-
-**Erfolgsfaktoren und Innovation:** Starke regulatorische Durchsetzung kombiniert mit umfassender Ecosystem-Entwicklung. Comprehensive Developer Portal mit Sandbox-Umgebungen und detaillierter API-Dokumentation.
-
-**Status:** Vollständig operational seit 2019, über 4 Millionen aktive Nutzer, kontinuierliche Evolution mit Variable Recurring Payments (VRP) als nächster Ausbaustufe.
-
-**Key Takeaways:** Wichtigkeit von Developer-friendly Documentation, umfassende Sandbox-Umgebungen und klare Service Level Agreements für API-Performance.
+- **Governance:** Mandatorische Teilnahme der grossen Banken (CMA9), freiwillige Teilnahme für kleinere Institute mit starken Anreizen zur Adoption.
+- **Technologie:** JSON/REST als Grundarchitektur, FAPI-basierte Sicherheit mit OAuth 2.0, standardisierte Consent-Flows mit granularer Berechtigung auf Datenpunkt-Ebene.
+- **Erfolgsfaktoren und Innovation:** Starke regulatorische Durchsetzung kombiniert mit umfassender Ecosystem-Entwicklung. Comprehensive Developer Portal mit Sandbox-Umgebungen und detaillierter API-Dokumentation.
+- **Status:** Vollständig operational seit 2019, über 4 Millionen aktive Nutzer, kontinuierliche Evolution mit Variable Recurring Payments (VRP) als nächster Ausbaustufe.
+- **Key Takeaways:** Wichtigkeit von Developer-friendly Documentation, umfassende Sandbox-Umgebungen und klare Service Level Agreements für API-Performance.
 
 #### Open Finance Brasil (Brasilianische Zentralbank)
 
-**Governance:** Vollständig mandatorisch für alle lizenzierten Finanzinstitute mit phasenweisem Rollout und strengen Compliance-Anforderungen.
+- **Governance:** Vollständig mandatorisch für alle lizenzierten Finanzinstitute mit phasenweisem Rollout und strengen Compliance-Anforderungen.
+- **Technologie:** FAPI 1.0 Advanced als Sicherheitsstandard, umfassende Dynamic Client Registration (DCR), Integration mit nationaler digitaler Identität (CPF).
+- **Erfolgsfaktoren und Innovation:** Integration des PIX Payment Systems als nationales Instant-Payment-Backbone, phased Rollout über verschiedene Pr- oduktkategorien (Banking, Credit, Investments, Insurance).
+- **Status:** Phase 4 Implementation abgeschlossen, über 30 Millionen Consent-Erteilungen, führend in Lateinamerika für Open Finance Adoption.
+- **Key Takeaways:** Kombination von Open Banking mit nationaler Payment-Infrastructure schafft erhebliche Synergien und Nutzerakzeptanz.
 
-**Technologie:** FAPI 1.0 Advanced als Sicherheitsstandard, umfassende Dynamic Client Registration (DCR), Integration mit nationaler digitaler Identität (CPF).
-
-**Erfolgsfaktoren und Innovation:** Integration des PIX Payment Systems als nationales Instant-Payment-Backbone, phased Rollout über verschiedene Produktkategorien (Banking, Credit, Investments, Insurance).
-
-**Status:** Phase 4 Implementation abgeschlossen, über 30 Millionen Consent-Erteilungen, führend in Lateinamerika für Open Finance Adoption.
-
-**Key Takeaways:** Kombination von Open Banking mit nationaler Payment-Infrastructure schafft erhebliche Synergien und Nutzerakzeptanz.
+TODO: continue formatting the rest of the standards in this section
 
 #### Consumer Data Standards Australien (CSIRO)
 
@@ -277,9 +271,11 @@ Payment Initiation als separate Ausbaustufe planen.
 | Hong Kong  | Voluntary Phase 1&2, Mandatory Phase 3&4  | Account Info + PIS + Analytics | 48 Monate               |
 
 #### Mandatorische Modelle (UK, Brasilien, Australien)
-**Charakteristika:** Starke regulatorische Durchsetzung, klare Timelines, umfassende Compliance-Anforderungen.
-**Vorteile:** Schnelle Marktabdeckung, einheitliche Standards, starke Verbraucherschutzrechte.
-**Nachteile:** Hohe Implementierungskosten, wenig Flexibilität, potenzielle Innovation-Hemmung.
+- **Charakteristika:** Starke regulatorische Durchsetzung, klare Timelines, umfassende Compliance-Anforderungen.
+- **Vorteile:** Schnelle Marktabdeckung, einheitliche Standards, starke Verbraucherschutzrechte.
+- **Nachteile:** Hohe Implementierungskosten, wenig Flexibilität, potenzielle Innovation-Hemmung.
+
+TODO: Restliche Governance Ansätze auch mit Bullet Points formatieren
 
 #### Industriegetriebene Modelle (NextGenPSD2, Open Wealth)
 **Charakteristika:** Freiwillige Teilnahme, marktgetriebene Entwicklung, flexible Implementation.
@@ -329,9 +325,11 @@ Payment Initiation als separate Ausbaustufe planen.
 ### API-Technologie-Stack Analyse
 
 #### Datenformate und Serialisierung: REST-API/JSON Standardisierung
-**Universelle Adoption:** 7 von 8 analysierten Standards verwenden JSON als Basis-Architektur, alle implementieren das REST-API Design unter konsistenter Verwendung von RESTful Prinzipien.
-**Versionierung:** Unterschiedliche Ansätze von URL-basierter Versionierung (/v1/, /v2/) bis Header-basierter Versionierung.
-**Pagination:** Cursor-based Pagination setzt sich als Best Practice durch, Link-based Pagination für einfache Use Cases.
+- **Universelle Adoption:** 7 von 8 analysierten Standards verwenden JSON als Basis-Architektur, alle implementieren das REST-API Design unter konsistenter Verwendung von RESTful Prinzipien.
+- **Versionierung:** Unterschiedliche Ansätze von URL-basierter Versionierung (/v1/, /v2/) bis Header-basierter Versionierung.
+- **Pagination:** Cursor-based Pagination setzt sich als Best Practice durch, Link-based Pagination für einfache Use Cases.
+
+TODO: alles wie gerade oben zu bullet points formatieren in dieser section
 
 #### Documentation: OpenAPI Specification Usage
 **Dokumentation:** Swagger/OpenAPI 3.0 als Standard für API-Dokumentation.
@@ -426,8 +424,6 @@ Transport- und Protokoll-Standards
 
 ### Technologische Entscheidungen
 
-(evtl. diesen Teil erst nach den Anforderungen einfügen vom Sinn her)
-
 #### Potenzieller Tech-Stack für Schweizer Implementation
 **Core Technologies:**
 - REST/JSON als API-Architektur
@@ -455,9 +451,11 @@ Transport- und Protokoll-Standards
 ### Governance
 
 #### Organisationsstruktur
-**Steering Committee:** Strategic Direction mit Vertretern von SBA, Fintechs, Regulatoren.
-**Technical Working Groups:** Implementation Details mit Technical Experts.
-**User Advisory Board:** End-User Perspective und Use Case Validation.
+- **Steering Committee:** Strategic Direction mit Vertretern von SBA, Fintechs, Regulatoren.
+- **Technical Working Groups:** Implementation Details mit Technical Experts.
+- **User Advisory Board:** End-User Perspective und Use Case Validation.
+
+TODO: alles wie gerade oben zu bullet points formatieren in dieser Section
 
 #### Governance-Prinzipien
 **Transparenz:** Offene Dokumentation und Public Consultation Processes.
