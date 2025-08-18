@@ -126,6 +126,7 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 ---
 
 ## Sechs zentrale Key Takeaways
+*TODO: Inhalt dieses Kapitels bitte verifizieren!*
 
 ### 1. Technologische Standards sind nicht global vereinheitlicht
 
