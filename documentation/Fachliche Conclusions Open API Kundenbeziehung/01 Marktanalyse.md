@@ -540,7 +540,7 @@ TODO: TZE bitte verifizieren!!
 - Payment Initiation als separate Ausbaustufe
 - Internationale Interoperabilität (EU, UK Kompatibilität)
 
-@jilzerndt bitte verifizieren!!
+@openbankingproject-ch/jilzerndt bitte verifizieren!!
 
 ---
 
