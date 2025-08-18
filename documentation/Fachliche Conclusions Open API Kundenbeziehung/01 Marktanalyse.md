@@ -73,81 +73,55 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 - **Status:** Phase 4 Implementation abgeschlossen, über 30 Millionen Consent-Erteilungen, führend in Lateinamerika für Open Finance Adoption.
 - **Key Takeaways:** Kombination von Open Banking mit nationaler Payment-Infrastructure schafft erhebliche Synergien und Nutzerakzeptanz.
 
-TODO: continue formatting the rest of the standards in this section
-
 #### Consumer Data Standards Australien (CSIRO)
 
-**Governance:** Sektorübergreifender Ansatz (Banking, Energy, Telecommunications) unter der Consumer Data Right (CDR) Legislation.
-
-**Technologie:** FAPI 1.0 Advanced, standardisierte Error-Codes, umfassende Data Standards mit JSON Schema Validation.
-
-**Erfolgsfaktoren und Innovation:** Cross-industry Approach ermöglicht ganzheitliche Kundensicht, starke Consumer-Protection-Mechanismen mit detailliertem Consent-Management.
-
-**Status:** Banking Sector vollständig implementiert, Energy Sector in Rollout-Phase, Telecommunications Sector in Vorbereitung.
-
-**Key Takeaways:** Sektorübergreifende Standards schaffen erhebliche Skaleneffekte, erfordern aber extensive Koordination zwischen verschiedenen Aufsichtsbehörden.
+- **Governance:** Sektorübergreifender Ansatz (Banking, Energy, Telecommunications) unter der Consumer Data Right (CDR) Legislation.
+- **Technologie:** FAPI 1.0 Advanced, standardisierte Error-Codes, umfassende Data Standards mit JSON Schema Validation.
+- **Erfolgsfaktoren und Innovation:** Cross-industry Approach ermöglicht ganzheitliche Kundensicht, starke Consumer-Protection-Mechanismen mit detailliertem Consent-Management.
+- **Status:** Banking Sector vollständig implementiert, Energy Sector in Rollout-Phase, Telecommunications Sector in Vorbereitung.
+- **Key Takeaways:** Sektorübergreifende Standards schaffen erhebliche Skaleneffekte, erfordern aber extensive Koordination zwischen verschiedenen Aufsichtsbehörden.
 
 #### Open API Framework Hong Kong (HKMA)
 
-**Governance:** Phased Implementation mit voluntary Phase 1&2 (Account Information, Reference Data), mandatory Phase 3&4 (Payment Initiation, Advanced Services).
-
-**Technologie:** RESTful APIs mit OpenAPI 3.0 Specifications, OAuth 2.0 mit optionaler FAPI-Implementierung, Fokus auf API-First Design.
-
-**Erfolgsfaktoren und Innovation:** Fokus auf Greater Bay Area Integration mit Mainland China und Macau, starke Betonung von Cybersecurity und Risk Management.
-
-**Status:** Phase 3 Implementation läuft, erste grenzüberschreitende Use Cases in Pilotphase mit Mainland China.
-
-**Key Takeaways:** Grenzüberschreitende Interoperabilität erfordert erhebliche diplomatische und technische Koordination, bietet aber erhebliches wirtschaftliches Potenzial.
+- **Governance:** Phased Implementation mit voluntary Phase 1&2 (Account Information, Reference Data), mandatory Phase 3&4 (Payment Initiation, Advanced Services).
+- **Technologie:** RESTful APIs mit OpenAPI 3.0 Specifications, OAuth 2.0 mit optionaler FAPI-Implementierung, Fokus auf API-First Design.
+- **Erfolgsfaktoren und Innovation:** Fokus auf Greater Bay Area Integration mit Mainland China und Macau, starke Betonung von Cybersecurity und Risk Management.
+- **Status:** Phase 3 Implementation läuft, erste grenzüberschreitende Use Cases in Pilotphase mit Mainland China.
+- **Key Takeaways:** Grenzüberschreitende Interoperabilität erfordert erhebliche diplomatische und technische Koordination, bietet aber erhebliches wirtschaftliches Potenzial.
 
 ### Industriegetriebene Standards
 
 #### NextGenPSD2 (The Berlin Group)
 
-**Governance:** Industry-driven Standard für europäische PSD2-Compliance, entwickelt von einem Konsortium europäischer Banken und Payment Service Provider.
-
-**Technologie:** RESTful/JSON APIs, verschiedene Strong Customer Authentication (SCA) Approaches, Embedded und Redirect Flow Support.
-
-**Erfolgsfaktoren und Innovation:** Flexibilität bei der Implementation ermöglicht Bank-spezifische Anpassungen, während Interoperabilität gewährleistet bleibt.
-
-**Status:** Breite Verwendung in der EU mit über 3000 Banken, kontinuierliche Weiterentwicklung durch Working Groups.
-
-**Key Takeaways:** Industry-driven Standards benötigen starke Governance-Strukturen und kontinuierliche Abstimmung zwischen Marktteilnehmern.
+- **Governance:** Industry-driven Standard für europäische PSD2-Compliance, entwickelt von einem Konsortium europäischer Banken und Payment Service Provider.
+- **Technologie:** RESTful/JSON APIs, verschiedene Strong Customer Authentication (SCA) Approaches, Embedded und Redirect Flow Support.
+- **Erfolgsfaktoren und Innovation:** Flexibilität bei der Implementation ermöglicht Bank-spezifische Anpassungen, während Interoperabilität gewährleistet bleibt.
+- **Status:** Breite Verwendung in der EU mit über 3000 Banken, kontinuierliche Weiterentwicklung durch Working Groups.
+- **Key Takeaways:** Industry-driven Standards benötigen starke Governance-Strukturen und kontinuierliche Abstimmung zwischen Marktteilnehmern.
 
 #### Open Wealth API (Open Wealth Association)
 
-**Governance:** Industry Consortium mit Fokus auf Wealth Management und Private Banking, primär Swiss-based Initiative.
-
-**Technologie:** Customer Management APIs, Portfolio-Daten-Standards, Integration mit bestehenden Core Banking Systems.
-
-**Erfolgsfaktoren und Innovation:** Spezialisierung auf High-Net-Worth Individual (HNWI) Use Cases, starke Fokussierung auf Privacy und Data Protection.
-
-**Status:** Pilot-Implementierungen bei mehreren Schweizer Private Banks, schrittweise Expansion in deutsche und österreichische Märkte.
-
-**Key Takeaways:** Besonders relevant für Schweizer Wealth Management Sektor, zeigt Potenzial für Domain-spezifische API-Standards.
+- **Governance:** Industry Consortium mit Fokus auf Wealth Management und Private Banking, primär Swiss-based Initiative.
+- **Technologie:** Customer Management APIs, Portfolio-Daten-Standards, Integration mit bestehenden Core Banking Systems.
+- **Erfolgsfaktoren und Innovation:** Spezialisierung auf High-Net-Worth Individual (HNWI) Use Cases, starke Fokussierung auf Privacy und Data Protection.
+- **Status:** Pilot-Implementierungen bei mehreren Schweizer Private Banks, schrittweise Expansion in deutsche und österreichische Märkte.
+- **Key Takeaways:** Besonders relevant für Schweizer Wealth Management Sektor, zeigt Potenzial für Domain-spezifische API-Standards.
 
 #### SFTI Mortgage API (Swiss Fintech Innovation)
 
-**Governance:** Schweizer Initiative für Hypothekar-APIs, entwickelt in Zusammenarbeit mit Schweizer Banken und Fintech-Unternehmen.
-
-**Technologie:** Domain-spezifische API-Standards für Mortgage Origination, Integration mit Schweizer Property Valuation Systems.
-
-**Erfolgsfaktoren und Innovation:** Fokus auf den komplexen Schweizer Hypothekarmarkt mit spezifischen regulatorischen Anforderungen.
-
-**Status:** Pilot-Phase mit ausgewählten Partnern, Integration mit bestehenden Mortgage Brokers und Comparison Platforms.
-
-**Key Takeaways:** Domain-spezifische Standards können erhebliche Effizienzgewinne schaffen, erfordern aber enge Zusammenarbeit mit Regulatoren.
+- **Governance:** Schweizer Initiative für Hypothekar-APIs, entwickelt in Zusammenarbeit mit Schweizer Banken und Fintech-Unternehmen.
+- **Technologie:** Domain-spezifische API-Standards für Mortgage Origination, Integration mit Schweizer Property Valuation Systems.
+- **Erfolgsfaktoren und Innovation:** Fokus auf den komplexen Schweizer Hypothekarmarkt mit spezifischen regulatorischen Anforderungen.
+- **Status:** Pilot-Phase mit ausgewählten Partnern, Integration mit bestehenden Mortgage Brokers und Comparison Platforms.
+- **Key Takeaways:** Domain-spezifische Standards können erhebliche Effizienzgewinne schaffen, erfordern aber enge Zusammenarbeit mit Regulatoren.
 
 #### Singapore Financial Data Exchange (MAS/SNDGG)
 
-**Governance:** Public-Private Partnership unter Führung der Monetary Authority of Singapore, Smart Nation Digital Government Group Involvement.
-
-**Technologie:** API-Gateway-basierte Architektur, Integration mit nationaler digitaler Identität (SingPass), Cloud-native Design.
-
-**Erfolgsfaktoren und Innovation:** Integration mit nationaler Digital Government Initiative, starke Betonung von Innovation und Fintech-Förderung.
-
-**Status:** Pilot-Phase mit ausgewählten Financial Institutions, geplante Ausweitung auf ASEAN-Region.
-
-**Key Takeaways:** Government-backed Initiativen können erhebliche Innovationsschübe schaffen, erfordern aber langfristige politische Unterstützung.
+- **Governance:** Public-Private Partnership unter Führung der Monetary Authority of Singapore, Smart Nation Digital Government Group Involvement.
+- **Technologie:** API-Gateway-basierte Architektur, Integration mit nationaler digitaler Identität (SingPass), Cloud-native Design.
+- **Erfolgsfaktoren und Innovation:** Integration mit nationaler Digital Government Initiative, starke Betonung von Innovation und Fintech-Förderung.
+- **Status:** Pilot-Phase mit ausgewählten Financial Institutions, geplante Ausweitung auf ASEAN-Region.
+- **Key Takeaways:** Government-backed Initiativen können erhebliche Innovationsschübe schaffen, erfordern aber langfristige politische Unterstützung.
 
 ---
 
@@ -275,17 +249,15 @@ Payment Initiation als separate Ausbaustufe planen.
 - **Vorteile:** Schnelle Marktabdeckung, einheitliche Standards, starke Verbraucherschutzrechte.
 - **Nachteile:** Hohe Implementierungskosten, wenig Flexibilität, potenzielle Innovation-Hemmung.
 
-TODO: Restliche Governance Ansätze auch mit Bullet Points formatieren
-
 #### Industriegetriebene Modelle (NextGenPSD2, Open Wealth)
-**Charakteristika:** Freiwillige Teilnahme, marktgetriebene Entwicklung, flexible Implementation.
-**Vorteile:** Kosteneffizienz, Marktrelevanz, schnelle Innovation.
-**Nachteile:** Fragmentierte Adoption, potenzielle Interoperabilitätsprobleme.
+- **Charakteristika:** Freiwillige Teilnahme, marktgetriebene Entwicklung, flexible Implementation.
+- **Vorteile:** Kosteneffizienz, Marktrelevanz, schnelle Innovation.
+- **Nachteile:** Fragmentierte Adoption, potenzielle Interoperabilitätsprobleme.
 
 #### Hybrid-Modelle (Hong Kong, Singapur)
-**Charakteristika:** Regulatorische Rahmensetzung mit Industry-getriebener Ausgestaltung.
-**Vorteile:** Balance zwischen Standardisierung und Flexibilität, marktrelevante Innovation.
-**Nachteile:** Komplexe Governance, potenzielle Verzögerungen in der Entscheidungsfindung.
+- **Charakteristika:** Regulatorische Rahmensetzung mit Industry-getriebener Ausgestaltung.
+- **Vorteile:** Balance zwischen Standardisierung und Flexibilität, marktrelevante Innovation.
+- **Nachteile:** Komplexe Governance, potenzielle Verzögerungen in der Entscheidungsfindung.
 
 #### Sanktionsmechanismen und Compliance
 - UK: Financial Conduct Authority Penalties (bis £10M oder 10% Jahresumsatz)
@@ -329,85 +301,82 @@ TODO: Restliche Governance Ansätze auch mit Bullet Points formatieren
 - **Versionierung:** Unterschiedliche Ansätze von URL-basierter Versionierung (/v1/, /v2/) bis Header-basierter Versionierung.
 - **Pagination:** Cursor-based Pagination setzt sich als Best Practice durch, Link-based Pagination für einfache Use Cases.
 
-TODO: alles wie gerade oben zu bullet points formatieren in dieser section
-
 #### Documentation: OpenAPI Specification Usage
-**Dokumentation:** Swagger/OpenAPI 3.0 als Standard für API-Dokumentation.
-**Code Generation:** Automatische Client-SDK-Generierung aus OpenAPI Specs.
-**Testing:** Schema-basierte Validation und automated Testing.
+- **Dokumentation:** Swagger/OpenAPI 3.0 als Standard für API-Dokumentation.
+- **Code Generation:** Automatische Client-SDK-Generierung aus OpenAPI Specs.
+- **Testing:** Schema-basierte Validation und automated Testing.
 
 ### Authentifizierung und Autorisierung
 
 #### OAuth 2.0 Implementierungsvarianten
-**Authorization Code Flow:** Universal Standard für Web-basierte Applications.
-**PKCE (Proof Key for Code Exchange):** Mandatory in 6 von 8 Standards für Public Clients.
-**Client Credentials Flow:** B2B API Access Pattern für Server-to-Server Communication.
-**Refresh Token Handling:** Unterschiedliche Lifecycle-Management Ansätze von 24h bis 90 Tage.
+- **Authorization Code Flow:** Universal Standard für Web-basierte Applications.
+- **PKCE (Proof Key for Code Exchange):** Mandatory in 6 von 8 Standards für Public Clients.
+- **Client Credentials Flow:** B2B API Access Pattern für Server-to-Server Communication.
+- **Refresh Token Handling:** Unterschiedliche Lifecycle-Management Ansätze von 24h bis 90 Tage.
 
 #### OpenID Connect (OIDC) Integration
-**ID Token Verwendung:** Variiert zwischen reiner Authentifizierung und erweiterten Claims für Autorisierung.
-**Discovery Endpoints:** .well-known/openid_configuration Support für automatische Client-Konfiguration.
-**Claim-basierte Autorisierung:** Unterschiedliche Granularitätslevel von Account-Level bis Datenpunkt-Level.
+- **ID Token Verwendung:** Variiert zwischen reiner Authentifizierung und erweiterten Claims für Autorisierung.
+- **Discovery Endpoints:** .well-known/openid_configuration Support für automatische Client-Konfiguration.
+- **Claim-basierte Autorisierung:** Unterschiedliche Granularitätslevel von Account-Level bis Datenpunkt-Level.
 
 #### FAPI (Financial-grade API) Compliance
-**FAPI 1.0 Baseline:** Entry-level Security für Low-risk Use Cases, Mindestanforderung in regulierten Märkten.
-**FAPI 1.0 Advanced:** High Security für Payment Initiation und sensitive Data Access.
-**FAPI 2.0:** Next Generation Standard in Development, vereinfachte Implementation bei erhöhter Security.
+- **FAPI 1.0 Baseline:** Entry-level Security für Low-risk Use Cases, Mindestanforderung in regulierten Märkten.
+- **FAPI 1.0 Advanced:** High Security für Payment Initiation und sensitive Data Access.
+- **FAPI 2.0:** Next Generation Standard in Development, vereinfachte Implementation bei erhöhter Security.
 
 ### Datenmodelle und Schema-Design
 
 #### Standardisierte Datenstrukturen
-**ISO 20022 Mapping:** Unterschiedliche Adoption-Grade von vollständiger Integration (Brasilien) bis partieller Nutzung (UK).
-**JSON Schema Validation:** Comprehensive Schema Definition für Request/Response Validation.
-**Data Type Standardization:** Einheitliche Verwendung von ISO Standards für Currency, Country, Date/Time.
+- **ISO 20022 Mapping:** Unterschiedliche Adoption-Grade von vollständiger Integration (Brasilien) bis partieller Nutzung (UK).
+- **JSON Schema Validation:** Comprehensive Schema Definition für Request/Response Validation.
+- **Data Type Standardization:** Einheitliche Verwendung von ISO Standards für Currency, Country, Date/Time.
 
 #### Referenzdatenmanagement
-**Currency Codes:** ISO 4217 universal adoptiert.
-**Country Codes:** ISO 3166-1 als Standard mit regionalen Erweiterungen.
-**Institution Identifiers:** BIC, LEI als internationale Standards, lokale Identifiers (Sortcodes, Routing Numbers) für nationale Systeme.
+- **Currency Codes:** ISO 4217 universal adoptiert.
+- **Country Codes:** ISO 3166-1 als Standard mit regionalen Erweiterungen.
+- **Institution Identifiers:** BIC, LEI als internationale Standards, lokale Identifiers (Sortcodes, Routing Numbers) für nationale Systeme.
 
 ### API Gateway und Infrastructure Patterns
 Transport- und Protokoll-Standards
 
 #### Rate Limiting und Throttling
-**Token Bucket Algorithm:** Most common für granulare Rate Control.
-**Fixed Window vs Sliding Window:** Unterschiedliche Implementierungsansätze.
-**Adaptive Rate Limiting:** Dynamic Adjustment basierend auf API Performance und Client Behaviour.
+- **Token Bucket Algorithm:** Most common für granulare Rate Control.
+- **Fixed Window vs Sliding Window:** Unterschiedliche Implementierungsansätze.
+- **Adaptive Rate Limiting:** Dynamic Adjustment basierend auf API Performance und Client Behaviour.
 
 #### Monitoring und Analytics
-**Request/Response Logging:** Comprehensive Audit Trails für Compliance.
-**Performance Monitoring:** SLA Monitoring mit automated Alerting.
-**Usage Analytics:** API Usage Patterns für Business Intelligence.
+- **Request/Response Logging:** Comprehensive Audit Trails für Compliance.
+- **Performance Monitoring:** SLA Monitoring mit automated Alerting.
+- **Usage Analytics:** API Usage Patterns für Business Intelligence.
 
 ### Error Handling und Monitoring
 
 #### Standardisierte Error Responses
-**HTTP Status Codes:** Konsistente Verwendung von 4xx für Client Errors, 5xx für Server Errors.
-**Error Message Structure:** Structured Error Objects mit Error Codes, Messages und Details.
-**Localization:** Multi-language Error Messages für internationale Usage.
+- **HTTP Status Codes:** Konsistente Verwendung von 4xx für Client Errors, 5xx für Server Errors.
+- **Error Message Structure:** Structured Error Objects mit Error Codes, Messages und Details.
+- **Localization:** Multi-language Error Messages für internationale Usage.
 
 #### Performance Monitoring
-**Response Time SLAs:** Typical 95th percentile unter 1000ms für Account Information, unter 2000ms für Payment Initiation.
-**Availability Requirements:** 99.5% als Minimum, 99.9% als Target für Production Systems.
-**Capacity Planning:** Automatic Scaling basierend auf API Usage Patterns.
+- **Response Time SLAs:** Typical 95th percentile unter 1000ms für Account Information, unter 2000ms für Payment Initiation.
+- **Availability Requirements:** 99.5% als Minimum, 99.9% als Target für Production Systems.
+- **Capacity Planning:** Automatic Scaling basierend auf API Usage Patterns.
 
 ### Integration Patterns und Architectural Choices
 
 #### Microservices vs Monolithic APIs
-**Microservices Trend:** Granulare Services für bessere Skalierung und Maintenance.
-**API Composition:** Gateway-Pattern für komplexe Business Logic.
-**Data Consistency:** Eventual Consistency Models für distributed Systems.
+- **Microservices Trend:** Granulare Services für bessere Skalierung und Maintenance.
+- **API Composition:** Gateway-Pattern für komplexe Business Logic.
+- **Data Consistency:** Eventual Consistency Models für distributed Systems.
 
 #### Event-Driven Architectures
-**Webhook Support:** Real-time Notifications für Account Changes und Payment Status.
-**Message Queues:** Asynchronous Processing für non-critical Operations.
-**Event Sourcing:** Comprehensive Audit Trails und System Reproducibility.
+- **Webhook Support:** Real-time Notifications für Account Changes und Payment Status.
+- **Message Queues:** Asynchronous Processing für non-critical Operations.
+- **Event Sourcing:** Comprehensive Audit Trails und System Reproducibility.
 
 ---
 
 ## Implikationen für Schweizer Open API Kundenbeziehung
-
-(Verifizieren mit Experten und TZE)
+*TODO: Inhalt dieses Kapitels bitte verifizieren!*
 
 ### Best Practices
 
@@ -455,13 +424,11 @@ Transport- und Protokoll-Standards
 - **Technical Working Groups:** Implementation Details mit Technical Experts.
 - **User Advisory Board:** End-User Perspective und Use Case Validation.
 
-TODO: alles wie gerade oben zu bullet points formatieren in dieser Section
-
 #### Governance-Prinzipien
-**Transparenz:** Offene Dokumentation und Public Consultation Processes.
-**Inklusivität:** Berücksichtigung aller Marktteilnehmer unabhängig von Grösse.
-**Proportionalität:** Risk-based Approach für verschiedene Use Case Kategorien.
-**Innovation-Förderung:** Sandbox-Umgebungen für experimentelle Implementierungen.
+- **Transparenz:** Offene Dokumentation und Public Consultation Processes.
+- **Inklusivität:** Berücksichtigung aller Marktteilnehmer unabhängig von Grösse.
+- **Proportionalität:** Risk-based Approach für verschiedene Use Case Kategorien.
+- **Innovation-Förderung:** Sandbox-Umgebungen für experimentelle Implementierungen.
 
 ### E-ID Integration und strategische Überlegungen
 
@@ -486,8 +453,7 @@ Eine Open API Kundenbeziehung als wirtschaftlich sinnvolle Zwischenlösung, die 
 ---
 
 ## Fazit und Handlungsempfehlungen
-
-TODO: TZE bitte verifizieren!!
+*TODO: Inhalt dieses Kapitels bitte verifizieren!*
 
 ### Übertragbare Erfolgsmodelle
 
@@ -538,13 +504,12 @@ TODO: TZE bitte verifizieren!!
 - Payment Initiation als separate Ausbaustufe
 - Internationale Interoperabilität (EU, UK Kompatibilität)
 
-TODO: TZE bitte verifizieren!!
 
 ---
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Final Draft für Stakeholder Review
+**Status:** Final Draft für Review
 
 ---
 
