@@ -14,7 +14,21 @@
 
 ## Executive Summary
 
-Der Open API Kundenbeziehung Referenzprozess definiert einen standardisierten, branchenübergreifenden 10-Stufen-Prozess für das digitale Customer Onboarding. Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compliance-by-Design Prinzipien. Der Fokus liegt auf einer selbstbestimmten digitalen Kundenbeziehung, die Effizienzsteigerungen von 70% bei der Datenerfassung und 60% bei der Onboarding-Zeit erreicht.
+Der Open API Kundenbeziehung Referenzprozess definiert einen standardisierten, branchenübergreifenden **10-Stufen-Prozess** für das digitale Customer Onboarding:
+
+**Referenzprozess-Schritte:**
+1. **Initialisierung** - Information des Kunden
+2. **Produktauswahl** - Bedürfnisbefriedigung  
+3. **Selbstdeklaration** - Information bzgl. FATCA, MIFID
+4. **Basisdaten** - Erfassung von Kontaktangaben
+5. **Erweiterte Daten** - Risiko-/Potenzialermittlung
+6. **Identifikation** - Identifikation der Vertragspartei
+7. **Background Checks** - Know-Your-Customer (KYC)
+8. **Vertragsabschluss** - Akzeptanz Geschäftsbedingungen
+9. **Signatur** - Vertragsunterzeichnung
+10. **Metadaten/Verteilung** - Erfassung und Verarbeitung
+
+Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compliance-by-Design Prinzipien. Der Fokus liegt auf einer selbstbestimmten digitalen Kundenbeziehung mit messbaren Effizienzsteigerungen.
 
 **Zentrale Erkenntnisse:**
 - Modulare Prozessbausteine ermöglichen branchenübergreifende Wiederverwendung
@@ -67,71 +81,315 @@ Der Referenzprozess wurde als **universeller Standard** für die digitale Kunden
 
 ### Phase 1: Initialisierung (Stufen 1-2)
 
-#### Stufe 1: Service Discovery
-**Zweck:** Kunde entdeckt und wählt relevante Services aus
+#### Stufe 1: Initialisierung
+**Beschreibung:** Kunde entdeckt und wählt relevante Services aus
 - Automatische Service-Empfehlungen basierend auf Customer Profile
 - Transparente Darstellung von Datenerfordernissen
 - Klare Kommunikation der Mehrwerte
 
+**Owner:** Kunde  
+**Zweck:** Information des Kunden und initiale Consent-Abgabe  
+**Level of Assurance:** Self-declared  
+
+**Event:**
+Webseite oder App der Bank/des Anbieters; Abgabe des initialen Consent für den Onboarding-Prozess.
+
+**Relevante Datenpunkte:**
+- Cookies [Ja/Nein]
+- Consent [Ja/Nein]  
+- Länderauswahl
+- Initial Service Selection
+
+**Rechtliche Anforderungen:** Datenschutzkonformität, Cookie Policy  
+**Bank Policy:** Standardisierte Consent-Abfrage
+
 #### Stufe 2: Produktauswahl
-**Zweck:** Spezifische Produktkonfiguration und Eligibility Check
+**Beschreibung:** Spezifische Produktkonfiguration und Eligibility Check
 - Interaktive Produktkonfiguratoren
 - Automatische Suitability Assessment
 - Risiko-Rendite-Matching basierend auf Customer Profil
 
+**Owner:** Kunde  
+**Zweck:** Bedürfnisbefriedigung  
+**Level of Assurance:** Self-declared  
+**Status:** Out of Scope für MVP
+
+**Event:**
+Auswählen der gewünschten Produkte z.B. Konto, Karte, Versicherung, Services.
+
+**Relevante Datenpunkte:**
+- Kontotyp [Privat, Sparen, Jugend, Business]
+- Bankpaket [Student, Jugend, Premium, Private Banking]
+- Zusatzprodukte [Kreditkarte, Debitkarte, Mobile Payment]
+- Service Level [Basic, Advanced, Premium]
+
+**Ecosystem-spezifische Erweiterungen:**
+- **Finance:** Konto-/Kartentypen, Anlageprodukte
+- **Insurance:** Versicherungsarten, Deckungssummen  
+- **Mobility:** Fahrzeugtypen, Finanzierungsoptionen
+
 ### Phase 2: Datenerfassung (Stufen 3-5)
 
 #### Stufe 3: Selbstdeklaration
-**Zweck:** Erste Kundenangaben und Präferenzen
+**Beschreibung:** Erste Kundenangaben und Präferenzen
 - Intelligente Formulare mit progressiver Offenlegung
 - Plausibilitätschecks in Echtzeit
 - Integration von Pre-filled Data aus vorhandenen Quellen
 
-#### Stufe 4: Basisdaten
-**Zweck:** Stammdaten-Erfassung (Core Identity)
-- Name, Adresse, Kontaktdaten
-- Geburtsdatum, Nationalität, Zivilstand
-- Grundlegende KYC-Informationen
+**Owner:** Kunde  
+**Zweck:** Information bzgl. FATCA, MIFID, Compliance  
+**Level of Assurance:** Self-declared  
 
-#### Stufe 5: Erweiterte Daten
-**Zweck:** Ecosystem-spezifische Datenergänzung
+**Event:**
+Angaben zu wirtschaftlicher Berechtigung, Steuerdomizil, US Person Status und anderen regulatorischen Anforderungen.
+
+**Relevante Datenpunkte:**
+- Wirtschaftliche Berechtigung [Ja/Nein]
+- (Abweichendes) Steuerdomizil [Schweiz, Deutschland, USA, ...]
+- US-Steuerpflicht [Ja/Nein]
+- FATCA-Selbstdeklaration
+- TIN (Schweiz: AHV-Nummer)
+- Herkunft der Gelder [Erwerbstätigkeit, Erbschaft, Schenkung, ...]
+- Selbstdeklaration Steuerkonformität
+- Nationalität(en) [Multiple Citizenship möglich]
+
+**Rechtliche Anforderungen:** GwG Art. 4 Feststellung der wirtschaftlich berechtigten Person  
+**Bank Policy:** FATCA/CRS Compliance, AML/KYC Requirements
+
+#### Stufe 4: Erhebung Basisdaten
+**Beschreibung:** Stammdaten-Erfassung (Core Identity)
+- Name, Adresse, Kontaktdaten
+
+**Owner:** Kunde  
+**Zweck:** Erfassung von Kontaktangaben und Personalien  
+**Level of Assurance:** Self-declared  
+
+**Event:**
+Erfassung von Personalien, Wohnadresse und Kontaktdaten als Grundlage für die Kundenbeziehung.
+
+**Relevante Datenpunkte:**
+- **Personalien:** Name, Vorname, Anrede, Gender
+- **Geburtsinformationen:** Geburtsdatum, Geburtsort, Bürgerort  
+- **Adressdaten:** Strasse, Hausnummer, PLZ, Ort, Land, Kanton/Region/Staat/Provinz
+- **Identität:** Nationalität, Zivilstand
+- **Kontakt:** Telefonnummer, Mobiltelefonnummer, E-Mailadresse
+- **Alternativen:** Abweichende Korrespondenzadresse
+- **Digital Identity:** ID (z.B. Google, Apple, Samsung, Swiss ID)
+- Grundlegende KYC-Daten wie Beruf, Arbeitgeber, Grundeinkommen
+
+**Bank Policy:** Vollständige Kontaktdaten erforderlich für Kommunikation
+
+#### Stufe 5: Erweiterte Daten  
+**Beschreibung:** Ecosystem-spezifische Datenergänzung
 - Berufliche Informationen und Einkommensverhältnisse
 - Investment Experience und Risk Profiling
 - FATCA/CRS Classification und Tax Residency
 
+**Owner:** Kunde  
+**Zweck:** Risiko-/Potenzialermittlung des Kunden  
+**Level of Assurance:** Self-declared  
+**Status:** Out of Scope für MVP
+
+**Event:**
+Produktspezifische erweiterte Daten für Risikobewertung und Beratung.
+
+**Relevante Datenpunkte:**
+- **Finanziell:** Gesamtvermögen, Einkommen, Vermögensquellen
+- **Beruflich:** Ausbildung, Beruf, Arbeitgeber, Position
+- **Investment:** Anlageerfahrung, Risikotoleranz, Anlagehorizont
+- **Zusätzlich:** Familienstand Details, Anzahl Kinder, Wohnsituation
+
+**Ecosystem-spezifische Erweiterungen:**
+- **Finance:** Kreditwürdigkeit, Vermögenssituation, Anlageerfahrung
+- **Insurance:** Gesundheitsdaten, Risikofaktoren, Schadenhistorie
+- **Mobility:** Fahrerfahrung, Unfallhistorie, Fahrzeugnutzung
+
 ### Phase 3: Verifikation (Stufen 6-7)
 
 #### Stufe 6: Identifikation
-**Zweck:** QEAA/EAA Level of Assurance Verification
-- Video-Identifikation oder E-ID Integration
-- Biometrische Verifikation wo erforderlich
-- Government ID Validation
+**Beschreibung:** QEAA/EAA Level of Assurance Verification
+- z.B. Video-Identifikation oder E-ID Integration
+
+**Owner:** Provider (Identity Service Provider)  
+**Zweck:** Identifikation der Vertragspartei  
+**Level of Assurance:** QEAA (Qualified Entity-Assured-Assurance)  
+
+**Event:**
+Professionelle Identitätsverifikation durch spezialisierte Provider mittels verschiedener Methoden:
+- Videoidentifikation (gleichgesetzt persönlicher Vorsprache)
+- Online-Identifikation ("AutoIdent" plus Adresscheck)  
+- QES (gleichgesetzt Korrespondenzeröffnung)
+
+**Relevante Datenpunkte:**
+- **Biometrische Verifikation:** Liveness-Check (Score), Gesichtsverifikation (Score)
+- **Dokumentendaten:** Name, Vorname, Gender aus Ausweisdokument
+- **Dokument-Metadaten:** Ausweisnummer, Art des Dokuments [Pass, ID, Personalausweis]
+- **Gültigkeitsdaten:** Ausstellungsdatum, Ausstellungsort, Gültigkeitsdatum
+- **Technische Daten:** MRZ (Machine Readable Zone), NFC (biometrische Daten)
+- **Sicherheitsfeatures:** Sicherheitsmerkmale (Anzahl geprüft und Score)
+- **Audit Trail:** Tonspur/Video [mp3, mp4] für Compliance
+
+**Rechtliche Anforderungen:** GwG Art. 3 Identifizierung der Vertragspartei  
+**Provider Standards:** RegTech-zertifizierte Identity Verification Services
 
 #### Stufe 7: Background Checks
-**Zweck:** KYC/AML/CTF Compliance
+**Beschreibung:** KYC/AML/CTF Compliance
 - PEP und Sanctions List Screening
 - Credit Checks und Source of Wealth Verification
 - Enhanced Due Diligence für High-Risk Customers
 
+**Owner:** Provider (Compliance Service Provider)  
+**Zweck:** Know-Your-Customer (KYC) und Compliance  
+**Level of Assurance:** QEAA oder EAA (Entity-Assured-Assurance)  
+
+**Event:**
+Umfassende Hintergrundprüfungen zur Risikobewertung und Compliance-Sicherstellung.
+
+**Obligatorische Checks:**
+- **Sanction List Check:** [ok/nok] - Prüfung gegen internationale Sanktionslisten
+- **PEP Check:** [ok/nok] - Politically Exposed Persons Screening  
+- **Crime Check:** [ok/nok] - Kriminalitätshintergrund
+- **Adverse Media Check:** Negative Medienberichterstattung
+
+**Fakultative/Produktspezifische Checks:**
+- **Kreditwürdigkeit:** Bonität, ZEK/IKO-Abfrage, Betreibungsauskunft
+- **Adressverifikation:** Wohnsitzbetätigung, Melderegisterabgleich
+- **Kontaktverifikation:** Mobilnummercheck, E-Mail-Verifikation
+- **Device Intelligence:** Wallet Check, Geräte-ID, Fraud Detection
+
+**Bank Policy:** Risikobasierte Checks abhängig von Kundenrisiko und Produkten
+
 ### Phase 4: Abschluss (Stufen 8-10)
 
 #### Stufe 8: Vertragsabschluss
-**Zweck:** Rechtliche Vereinbarungen und Consent Management
+**Beschreibung:** Rechtliche Vereinbarungen und Consent Management
 - Terms & Conditions Akzeptanz
 - Privacy Policy und Data Processing Consent
-- Service-spezifische Agreements
 
-#### Stufe 9: Digitale Signatur
-**Zweck:** Rechtsverbindliche Bestätigung
-- Qualifizierte elektronische Signatur (QES)
-- Multi-Factor Authentication
-- Blockchain-basierte Audit Trails
+**Owner:** Kunde  
+**Zweck:** Akzeptanz Geschäftsbedingungen  
+**Level of Assurance:** Self-declared  
 
-#### Stufe 10: Aktivierung
-**Zweck:** Service-Activation und Welcome Process
+**Event:**
+Formelle Annahme der Vertrags- und Geschäftsbedingungen durch den Kunden.
+
+**Relevante Datenpunkte:**
+- **AGB-Akzeptanz:** Allgemeine Geschäftsbedingungen [Akzeptiert/Datum]
+- **Produktbedingungen:** Spezifische Terms & Conditions  
+- **Datenschutzerklärung:** Privacy Policy Acceptance
+- **Marketing Consent:** Einwilligung für Marketingkommunikation
+- **Zusatzvereinbarungen:** Service-spezifische Agreements
+
+**Rechtliche Anforderungen:** Vertragsrecht, AGB-Kontrolle  
+**Bank Policy:** Vollständige und nachweisbare Consent-Dokumentation
+
+#### Stufe 9: Signatur
+**Beschreibung:** Rechtsverbindliche Bestätigung
+
+**Owner:** Kunde  
+**Zweck:** Vertragsunterzeichnung  
+**Level of Assurance:** QEAA  
+
+**Event:**
+Rechtsgültige Unterzeichnung des Vertrags mittels verschiedener Signaturverfahren.
+
+**Signaturmethoden:**
+- **Qualifizierte Elektronische Signatur (QES):** Höchste Rechtssicherheit
+- **2FA (Two-Factor Authentication):** Sichere Authentifizierung
+- **Wallet-basierte Signatur:** Mobile/Digital Wallet Integration
+- **Biometrische Signatur:** Fingerprint, Face-ID
+
+**Relevante Datenpunkte:**
+- **Signatur-Typ:** QES, 2FA, Biometric, etc.
+- **Timestamp:** Exakter Zeitpunkt der Signatur
+- **Device Information:** Signatur-Device Details
+- **Certificate Chain:** Digitale Zertifikatskette
+
+**Anmerkungen:** Abhängig von Produktauswahl (z.B. Kreditkarte, Hypothek erfordern QES)  
+**Rechtliche Anforderungen:** ZertES (Zertifikate-Services-Gesetz), eIDAS-Kompatibilität
+
+#### Stufe 10: Metadaten/Verteilung
+**Beschreibung:** Service-Activation und Welcome Process
 - Account Provisioning
 - Initial Service Configuration
 - Welcome Package und Onboarding Support
+
+**Owner:** System  
+**Zweck:** Erfassung von Metadaten und Verarbeitung  
+**Level of Assurance:** Self-declared  
+
+**Event:**
+Automatische Erfassung von Prozess-Metadaten für Audit, Compliance und Qualitätssicherung, gefolgt von finaler Systemintegration.
+
+**Relevante Datenpunkte:**
+- **Prozess-Timestamps:** Start-/Endzeiten jedes Schritts, Zeitstempel, Originator
+- **System-Informationen:** API-Versionen, Service-Provider
+- **Qualitäts-Metriken:** Completion Rate, Error Rate, Processing Time
+- **Compliance-Daten:** Regulatory Check Results, Audit Trail
+- **Verteilung:** Verarbeitung der Eröffnung durch die Bank
+- **Integration Status:** Core Banking System Integration
+- **Notification Status:** Customer und Internal Notifications
+
+---
+
+## Regulatorische und rechtliche Fragestellungen
+Spezifisch im Kontext zum Referenzprozess, detaillierte Betrachtung der regulatorischen und rechtlichen Herausforderungen sind hier beschrieben: [Konklusion Rechtliche Rahmenbedingungen](documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md)
+
+### Identifikation offener Herausforderungen
+
+Die Implementation des Referenzprozesses wirft verschiedene regulatorische und rechtliche Fragen auf, die für eine erfolgreiche Umsetzung geklärt werden müssen.
+
+#### Regulatorische Fragestellungen
+
+**Prinzipielle Regelungen:**
+- Wird das Prinzip einer "Identifikation auf Vorrat" grundsätzlich erlaubt? (das bedeutet, ein neues Onboarding mit allenfalls nicht mehr gültigen Dokumenten wäre erlaubt - z.B. bei Ausweis gestohlen, Namensänderung bei Heirat etc.)
+
+**Arten der Identifikation:**
+- Welche Arten der Identifikation sollen weitergegeben werden können (z.B. nur Online / Video Ident?)
+
+**Zeitliche Beschränkungen:**
+- Definition Dauer, wie lange eine Identifikation wiederverwendet werden kann
+
+**Ausweisdokumentation:**
+- Details zu Ausweisen:
+  - Gültigkeit für Wiederverwendung relevant?
+  - Zugelassene Ausweisarten
+  - Umgang mit Ausländern / Ausländerausweis nötig?
+
+**Scope-Definitionen:**
+- Festlegung von "out of Scope" Kundengruppen (z.B. Workout/Recovery Positionen, Kunden mit MROS Meldungen, etc.) vor Datenweitergabe, oder danach durch neue Bank?
+
+#### Rechtliche Fragestellungen
+
+**Delegation und Haftung:**
+- Regelung der Delegation (Beispiel: HBL gibt ein Onboarding der Intrum an eine Drittbank weiter. Wem kommt welche Rolle und Haftbarkeit zu?)
+- Haftung bei Online Ident. im Zusammenhang mit Ersteinzahlungen: Wer haftet wofür (da Identifikation aus Bestandteilen von Drittanbieter und Bank besteht)
+
+**Wiederverwendung und Outsourcing:**
+- Wie müssen wiederverwendete Identifikationen im Zusammenhang mit der Beurteilung von Outsourcing behandelt werden?
+
+**Legal Einschätzung:**
+- Ersteinschätzung Legal: Weitergabe nur mit Disclaimer/ohne Haftbarkeit
+
+#### Zentrale Herausforderungen
+
+**Datenaktualität und Haftung:**
+- Aktualität der Daten kann nicht garantiert werden:
+  1. Darf man diese dann verwenden, oder nur mit Bestätigung Korrektheit durch Kunde?
+  2. Möchte man diese als neue Bank überhaupt für ein neues Onboarding verwenden? (insbesondere Use Case Bank zu Bank)
+- Haftung, wenn nicht durch den Kunden direkt bestätigt? (für Korrektheit, Aktualität, Falscherfassungen, etc.)
+
+**Praktische Überlegung:** Automatisches Ausfüllen aber Daten müssen vom Kunden noch bestätigt werden
+
+### KYC-Standardisierung als zentrale Fragestellung
+
+Eine zentrale Fragestellung am Bankenplatz betrifft die mögliche Vereinheitlichung von KYC-Prozessen. Angesichts der bestehenden Vielfalt an bankindividuellen Standards und regulatorischen Auslegungen stellt sich die Frage, wie sich dies auf die Konzeption der Open API Kundenbeziehung auswirkt.
+
+**Empfehlung:** Sinnvollerweise sollte ein Minimalstandard definiert werden, welcher individuell erweitert werden kann.
+
+**Historische Herausforderungen:**
+- Im Bankenmarkt bestehen historisch gewachsene Unterschiede in den Onboarding-Standards, insbesondere hinsichtlich der erhobenen Datenpunkte und Prozessausgestaltung
+- Diese Heterogenität ist auch auf sich wandelnde regulatorische Anforderungen zurückzuführen – so galten beispielsweise im Jahr 2015 andere KYC-Vorgaben als heute im Jahr 2024
 
 ---
 
@@ -266,21 +524,6 @@ Die Bankkonten-Eröffnung dient als Referenz-Use Case für die praktische Anwend
 - Core Banking System Integration
 - IBAN Assignment und Card Issuance
 - Welcome Package mit Digital Banking Access
-
-### Effizienzgewinne durch Referenz-Implementation
-
-**Traditioneller Prozess:**
-- Durchschnittliche Dauer: 45-60 Minuten
-- Medienbräche: 3-5 (Papier, PDF, System-Eingaben)
-- Fehlerrate: 15-20% (inkorrekte Daten, unvollständige Angaben)
-- Kosten pro Onboarding: CHF 120-150
-
-**Open API Referenzprozess:**
-- Durchschnittliche Dauer: 15-20 Minuten (67% Reduktion)
-- Medienbräche: 0-1 (vollständig digital)
-- Fehlerrate: 3-5% (automatische Validierung)
-- Kosten pro Onboarding: CHF 40-60 (60% Reduktion)
-
 ---
 
 ## Technische Integration und Kompatibilitäts-Framework
@@ -308,19 +551,61 @@ Die Bankkonten-Eröffnung dient als Referenz-Use Case für die praktische Anwend
 
 ### Kompatibilitäts-Framework
 
+#### Swiss Market Integration
+
+**Integration bestehender Standards:**
+Die Open API Kundenbeziehung integriert und erweitert bestehende nationale und internationale Datenstandards:
+
+**SFTI (Swiss Fintech Innovations):**
+- **SFTI Mortgage API:** Hypotheken-spezifische Datenstrukturen
+- **Integration:** Verwendung bestehender Schemas wo möglich
+- **Erweiterung:** Zusätzliche Datenfelder für branchenübergreifende Nutzung
+
+**Open Wealth Association:**
+- **Customer Management API:** Wealth Management Datenstrukturen  
+- **Integration:** Portfolio- und Investment-bezogene Daten
+- **Harmonisierung:** Angleichung an Open API Kundenbeziehung Standards
+
+**Internationale Standards:**
+- **ISO 20022:** Financial Messaging Standards
+- **FHIR:** Health Information Exchange Standards
+- **Schema.org:** Structured Data Markup
+
 #### Cross-Provider Interoperability
-**Standardisierte Schnittstellen:**
+
+**API-Endpoint-Übersicht (Version 2.0)**
+
+**Vollständige Datenabfrage:**
 ```
-GET /customer/{customerId}/identity
-POST /customer/{customerId}/verification
-PUT /customer/{customerId}/consent
-DELETE /customer/{customerId}/data
+POST /customer/identification
+POST /customer/fullRequest
 ```
+
+**Granulare Daten-Endpunkte (nur Teilmengen):**
+```
+POST /customer/basic       # Nur Stammdaten (Name, Vorname, Geburtsdatum, Nationalität)
+POST /customer/address     # Nur Adressdaten (Haupt- & Korrespondenzadresse)
+POST /customer/contact     # Nur Kontaktdaten (Telefon, E-Mail)
+POST /customer/kyc         # Nur KYC-Attribute ohne Ausweis
+POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
+```
+
+**Datenpunkte – Basic Dataset (Version 1.0):**
+- customerId (String): Interne Referenznummer der Bank
+- firstName (String): Vorname des Kunden
+- lastName (String): Nachname des Kunden
+- dateOfBirth (Date): Geburtsdatum im Format YYYY-MM-DD
+- identificationDate (Date): Datum der durchgeführten Identifikation
+- identificationMethod (String): Methode der Identifikation (z.B. VideoIdent)
+- vsbStatus (Object): VSB-Status (Version, erfüllt/ausstehend)
+- customerConsent (Boolean): Zustimmung zur Weitergabe
+- consentValidUntil (Date): Gültigkeit der Zustimmung
 
 **Common Data Models:**
 - ISO 20022 basierte Financial Messages
 - JSON Schema für strukturierte Datenvalidierung
 - Standard Error Codes für einheitliches Error Handling
+- OpenAPI 3.0 Specifications für vollständige API-Dokumentation
 
 #### Legacy System Integration
 **Core Banking Integration Patterns:**
@@ -353,7 +638,6 @@ DELETE /customer/{customerId}/data
 
 ## Fazit und Best Practices für Referenzprozess-Umsetzung
 
-TODO: bitte verifizieren!!
 
 ### Strategische Erfolgsfaktoren
 
@@ -424,16 +708,24 @@ TODO: bitte verifizieren!!
 ### Messbarkeit und KPIs
 
 #### Quantitative Erfolgs-Metriken
-- **Effizienz:** 70% Reduktion redundanter Datenerfassung erreicht
-- **Customer Experience:** 60% Verbesserung der Onboarding-Zeit
-- **Kosten:** 40% Senkung der Customer Acquisition Costs
-- **Qualität:** <5% Fehlerrate bei automatisierten Prozessen
+- **Effizienz:** Erhebliche Reduktion redundanter Datenerfassung
+- **Customer Experience:** Signifikante Verbesserung der Onboarding-Zeit
+- **Qualität:** Reduzierte Fehlerrate bei automatisierten Prozessen
+- **Conversion Rate:** Verbesserte Erfolgsraten im Onboarding-Prozess
 
 #### Qualitative Bewertungen
-- Customer Satisfaction Score: >4.5/5.0
-- Partner NPS: >50
-- Developer Experience Rating: >4.0/5.0
+- Customer Satisfaction Score: Zielwert >4.5/5.0
+- Partner NPS: Zielwert >50
+- Developer Experience Rating: Zielwert >4.0/5.0
 - Compliance Audit Results: 100% Pass Rate
+
+#### Zentrale Vorteile des föderierten Systems
+- **Das Kundenerlebnis** wird einfacher, sicherer und schneller, während die Onboarding-Kosten pro Neukunde sinken
+- **Die regulatorische Konformität** im Kontext des revidierten Datenschutzgesetzes (Datenportabilität) wird hergestellt
+- **Ein nationaler Standard** zur Weitergabe von digitalen Kundendaten kann mitgestaltet werden
+- **Erschließung von neuen Ertragsmöglichkeiten** im Kontext der Datennutzung im Netzwerk
+- **Steigerung der Integrations- und Abwicklungseffizienz** zwischen den involvierten Parteien
+- **Banken können ihre Kompetenzen branchenübergreifend platzieren** und sich als Vertrauensanker gegenüber ihren Kunden positionieren
 
 Der Referenzprozess stellt das Herzstück der Open API Kundenbeziehung dar und bietet ein bewährtes Framework für die Digitalisierung der Kundenbeziehung mit messbaren Effizienzgewinnen und verbesserter Customer Experience.
 
