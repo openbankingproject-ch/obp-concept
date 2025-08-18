@@ -118,41 +118,22 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - **Marktrelevanz:** Mittel-Hoch (strategische Zukunftsperspektive)
 
 #### **Zielbild 5: Dezentral**
-**Struktur:** Trust Network Integration
-
-**Charakteristika:**
-- Dezentrale Identitätsverwaltung
-- Blockchain/DLT-basierte Trust-Mechanismen
-- Hohe Autonomie der Teilnehmer
-- Neue Paradigmen für Data Ownership
-
-**Use Cases:**
-- Eröffnung Bankkonto mit Schweizer E-ID (ab 2026)
-- Self-Sovereign Identity (SSI) Implementation
-- Decentralized Finance (DeFi) Integration
-- Cross-border Identity Verification
-
-**Bewertung:**
-- **Machbarkeit:** Niedrig (24+ Monate, abhängig von E-ID)
-- **Innovationspotenzial:** Disruptiv
-- **Marktrelevanz:** Mittel (technologiegetrieben)
+**Out of Scope:** Nicht relevant für die Umsetzung der Open API Kundenbeziehung
 
 ### Zielbild-Bewertung und Fokussierung
 
 **Aktuelle Marktperspektiven:**
 - Markt fokussiert sich auf Zielbild 3 (bLink als technische Plattform)
-- Internationale Tech-Konzerne verfolgen Zielbild 5 (dezentrale Ansätze)
+- Internationale Tech-Konzerne verfolgen Zielbild 5 (dezentrale Ansätze), für Schweizer Markt eher ungeeignet
 - Zielbilder 1 & 2 bieten höchste kurzfristige Erfolgswahrscheinlichkeit
 
 **Projektfokussierung (nächste 3 Monate):**
 - **Primär:** Zielbilder 1 & 2 (schnelle Umsetzbarkeit)
 - **Sekundär:** Evaluation von Erweiterungen zu Zielbild 3 & 4
-- **Monitoring:** Zielbild 5 als strategische Option (ausserhalb aktuellem Scope)
 
 **Unterscheidung E-ID vs. Open API Kundenbeziehung:**
 - E-ID: Identitätszentrierte Datenhaltungsansätze
 - Open API Kundenbeziehung: Service-zentrierte Integration
-- Zielbild 5 liegt theoretisch ausserhalb des Open API Scope
 
 ## Use Case Analyse und Priorisierung
 
@@ -262,7 +243,7 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 
 ### Zusätzliche Use Cases
 
-**Branchenspezifische Use Cases:**
+**Ecosystem-Spezifische Use Cases:**
 
 **Mobility Sector:**
 - Fahrzeug-Leasing mit integrierter Versicherung
@@ -289,7 +270,8 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Cross-provider Medical Record Access
 - Telemedicine Identity Verification
 
-## Anforderungsanalyse je Teilschritt
+## Anforderungen im Kontext des Referenzprozesses
+[Konklusion Referenzprozess](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/03%20Referenzprozess.md)
 
 ### Ecosystem-spezifische Anforderungen
 
@@ -400,6 +382,7 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Legal Basis for Processing
 
 ## Technische Anforderungen
+[Marktanalyse: Beschreibung der existierenden Standards und Technologien](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/01%20Marktanalyse.md)
 
 ### Modulare API-Architektur
 
@@ -506,6 +489,7 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Performance Analytics
 
 ### MVP-Datenmodell
+TODO: Konzeptionelle Beschreibung hier, detaillierte Implementierungs doc zu Implementation Alpha Version 1.0 packen
 
 #### **Core Data Structures**
 
@@ -671,15 +655,8 @@ sharedCustomerHash = SHA256(hash_input)
 - Improved Customer Lifetime Value
 - Cross-selling Opportunities
 
-### ROI-Kalkulation
-
-**Break-even Analysis:**
-- Initial Investment: CHF 5-10 Millionen (Platform Development)
-- Operational Costs: CHF 2-4 Millionen/Jahr
-- Break-even bei 10,000-20,000 Transactions/Monat
-- Projected ROI: 150-300% nach 3 Jahren
-
 ## E-ID Integration und Abgrenzung
+TODO: SKN bitte verifizieren!!
 
 ### Konzeptionelle Unterschiede
 
@@ -748,7 +725,7 @@ E-ID Consent Framework ← → Open API Consent Tokens ← → Service Permissio
 - Pilot Programs mit ausgewählten Partners
 - Public Acceptance Building Phase
 
-#### **Integration Timeline**
+#### **Mögliche Integration Timeline**
 - **2025:** Open API Standard Development (unabhängig von E-ID)
 - **2026:** E-ID Launch → Integration Planning
 - **2027:** Productive E-ID Integration → Enhanced Services
@@ -761,6 +738,7 @@ E-ID Consent Framework ← → Open API Consent Tokens ← → Service Permissio
 - Consent Frameworks interoperable mit E-ID Frameworks
 
 ## Strategische Herangehensweise: "Vom Kleinen ins Grosse"
+TODO: TZE bitte verifizieren!!
 
 ### Quick Wins Identifikation
 
@@ -894,6 +872,7 @@ E-ID Consent Framework ← → Open API Consent Tokens ← → Service Permissio
 - **Contingency:** Differentiation Strategy, Acquisition Opportunities, Market Consolidation
 
 ### Success Measurement Framework
+TODO: TZE bitte verifizieren!!
 
 #### **Technical KPIs**
 
@@ -924,6 +903,7 @@ E-ID Consent Framework ← → Open API Consent Tokens ← → Service Permissio
 - International Inquiries (Target: 100+ by Month 18)
 
 ## Fazit und Roadmap
+TODO: TZE bitte verifizieren!!
 
 ### Strategische Empfehlungen
 

@@ -1,4 +1,4 @@
-# 01 Marktübersicht - Inhaltsverzeichnis
+# 01 Marktübersicht - Inhaltsübersicht
 
 ## **Executive Summary**
 - Analyse von 8 globalen Open Banking Standards zeigt technologische Konvergenz
