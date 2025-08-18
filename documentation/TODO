@@ -4,36 +4,45 @@ careful: differentiate between technical code documentation and the professional
 **complete professional documentation: conclusions in 8 topics**
 The conclusions should be kept on a conceptual level (except 04 API Endpoint Design) and NOT contain any code snippets. Any Implementation specifics need to be outlined conceptually in the conclusion and for each detailed/technical explanation create a new file in the folder: "documentation/Umsetzung und Implementierung" and linked in the conclusion. Also link references to other conclusions to avoid too much redundancy. 
 
-The conclusions are almost complete, just add any crucial missing information from the resources but do not change the structure (chapters, subchapters,...) of the documents without asking me first - if you think the structure needs to be changed, please discuss it with me first. (I am grateful for any criticism and suggestions for improvement, but I want to be involved in the decision making process.) Also after every topic please stop and let me verify.
+The conclusions are almost complete, just add any crucial missing information from the resources but do not change the structure (chapters, subchapters,...) of the documents without asking me first - if you think the structure needs to be changed, please discuss it with me first. (I am grateful for any criticism and suggestions for improvement, but I want to be involved in the decision making process.) Also complete the TODOs in the files.
+
+**TODO for each conclusion:** keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original resources" and complete the TODOs in the files.
 [] 01 Marktanalyse:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/01 Marktanalyse.md"
-    - TODO: keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+    - the TODOs in this file were added by an expert who verified the content of the file and added some missing information, so please make sure to also take their general suggestions into account for the other conclusions 
 [] 02 Anforderungen: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md"
-    - TODO: keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
 [] 03 Referenzprozess: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/03 Referenzprozess.md"
-    - TODO: keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+    - create mermaid diagrams for the reference process and the corresponding flows
 [] 04 API-Endpoint Design:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
-    - TODO: keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+    - make sure to use the exact data fields defined in the resources where applicable (1:1 mapping) and add any missing fields that are necessary for the API Endpoint Design
+    - also create mermaid diagrams for the API Endpoint Design and the corresponding flows (see example in the resources: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original sources/grafische_darstellung_open_api_prozess.md")
+    - include a section about the implemenation of the use case onboarding bank
 [] 05 Vertrauensnetzwerk:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
-    - TODO: keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+    - also create mermaid diagrams for the trust network architectures and the corresponding trust network flows
 [] 06 Consent und Security Flow:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/06 Consent und Security Flow.md"
     - additional resource that shows a great example of how this topic can be explained and documented: https://docs.airlock.com/iam/latest/index/1639690251538.html
-    - TODO: keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+    - instead of the specific example about postifinance, create generic flows that are applicable to any of the trust network architectures and the corresponding trust network flows
+    - also create mermaid diagrams for the generic consent and security flows, example of a good sequence diagram: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original sources/sequence_diagram_consent_flow.md" (adjust to fit our context)
 [] 07 Rechtliche Rahmenbedingungen:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md"
-    - TODO: keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+    - content needs to be anonymized, so that it is not possible to identify the author or the company. replace names with generic terms like "Bank X","Financial Institution Y", etc. (it should still be clear where the perspective comes from so make sure to choose the terms wisely)
 [] 08 Testing und Verifikation:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
-    - TODO: keep structure as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+    - create a mermaid diagram for the testing and verification process each
 
 for each conclusion:
 - make sure to add all sources and references to the file "Quellen und Referenzen"
 - no emojis or slang - this is a professional documentation
+- everything should be anonymized, so that it is not possible to identify the author or the company. replace names with generic terms like "Bank X","Financial Institution Y", etc. (it should still be clear where the perspective comes from so make sure to choose the terms wisely)
+- no exact numbers about use cases, those are classified and should not be disclosed
+- keep roadmaps and timelines generic, not too many details 
+- verify added content with the original sources and the resources in the folder "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original resources" and make sure to keep the content consistent with the resources
+- if some information is not available in the resources, please use professional and reliable sources to fill the gaps, and make sure to document the sources properly
 - if necessary update the file "Konklusion Open API Kundenbeziehung Overview.md" where all the final conclusions are linked and each files structure and content is outlined briefly
 
 also for everything use the following sources as inspiration for best practice implementations and for the structure of the documentation:
