@@ -17,15 +17,15 @@
 
 ## Executive Summary
 
-Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Security-Architektur fär Open API Kundenbeziehung, die generisch und unabhängig vom gewählten Vertrauensnetzwerk-Modell funktioniert. Das Framework basiert auf bewährten Standards (FAPI 2.0, OAuth 2.0, OpenID Connect) und bietet robuste Sicherheitsmechanismen mit granularer Consent-Verwaltung.
+Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Security-Architektur für Open API Kundenbeziehung, die generisch und unabhängig vom gewählten Vertrauensnetzwerk-Modell funktioniert. Das Framework basiert auf bewährten Standards (FAPI 2.0, OAuth 2.0, OpenID Connect) und bietet robuste Sicherheitsmechanismen mit granularer Consent-Verwaltung.
 
 **Zentrale Designprinzipien:**
-- Network-agnostisches Security Framework fär alle Architektur-Modelle
-- FAPI 2.0 compliance fär Financial-grade API Security
+- Network-agnostisches Security Framework für alle Architektur-Modelle
+- FAPI 2.0 compliance für Financial-grade API Security
 - Granulare Consent-Management mit Customer Control
-- Sequence Diagram-basierte Implementation fär Business Stakeholder Verständnis
+- Sequence Diagram-basierte Implementation für Business Stakeholder Verständnis
 
-**Referenz-Implementation:** Orientierung an [Airlock IAM FAPI Implementation](https://docs.airlock.com/iam/latest/index/1639690251538.html) fär bewährte Patterns
+**Referenz-Implementation:** Orientierung an [Airlock IAM FAPI Implementation](https://docs.airlock.com/iam/latest/index/1639690251538.html) für bewährte Patterns
 
 ---
 
@@ -38,7 +38,7 @@ Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Securit
 - **Hybrid:** Zentrale Standards mit dezentraler Security-Implementation  
 - **Zentral:** Hub-basierte Security mit zentraler Policy Enforcement
 
-**Universal Application Scope:** Einheitliche Security fär alle Use Cases:
+**Universal Application Scope:** Einheitliche Security für alle Use Cases:
 - Bankkonten-Onboarding mit KYC-Level Security
 - Re-Identifikation mit minimaler Data Exposure
 - Altersverifikation mit Attribute-based Consent
@@ -59,7 +59,7 @@ Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Securit
 - **Data Protection:** Purpose-based Data Processing mit Privacy Controls
 
 #### Trust Anchor Security Role
-- **PKI Management:** Certificate Authority Services fär Mutual TLS
+- **PKI Management:** Certificate Authority Services für Mutual TLS
 - **Policy Enforcement:** Central Security Policies mit Federation Support
 - **Compliance Monitoring:** Security Audit und Incident Response
 
@@ -96,18 +96,18 @@ Data Producer APIs
 
 **FAPI 1.0 Baseline:**
 - **Adoption:** UK Open Banking, Singapore SGFINEX (teilweise)
-- **Security Level:** Medium - suitable fär Low-Risk Account Information
+- **Security Level:** Medium - suitable für Low-Risk Account Information
 - **Pros:** Etabliert, broad Tool Support, einfachere Implementation  
-- **Cons:** Begrenzte Security fär High-Value Transactions
+- **Cons:** Begrenzte Security für High-Value Transactions
 
 **FAPI 1.0 Advanced:**
 - **Adoption:** Brasil Open Finance, Australia CDR (mandatory)
-- **Security Level:** High - suitable fär Payment Initiation und Sensitive Data
+- **Security Level:** High - suitable für Payment Initiation und Sensitive Data
 - **Pros:** Bewährt in Production, comprehensive Security Controls
-- **Cons:** Complex Implementation, hähere Development Costs
+- **Cons:** Complex Implementation, höhere Development Costs
 
 **FAPI 2.0 (Current Recommendation):**
-- **Adoption:** Emerging Standard, Expert-recommended fär neue Implementations
+- **Adoption:** Emerging Standard, Expert-recommended für neue Implementations
 - **Security Level:** Very High - Next Generation Financial API Security
 - **Pros:** Modernste Security, vereinfachte Developer Experience, Future-proof
 - **Cons:** Newer Standard, begrenzte Tool-Unterstätzung currently
@@ -120,9 +120,9 @@ Data Producer APIs
 - **Swiss Context:** FAPI 2.0 baut auf OAuth 2.1 auf (Enhanced Security)
 
 **OpenID Connect:**
-- **Identity Layer:** Standardisierte Identity Claims fär Customer Information
+- **Identity Layer:** Standardisierte Identity Claims für Customer Information
 - **Integration:** Seamless Integration mit E-ID durch OIDC Claims
-- **Multi-Factor:** Native Support fär MFA und Step-up Authentication
+- **Multi-Factor:** Native Support für MFA und Step-up Authentication
 
 ### Detailed Security Standards Comparison
 
@@ -133,13 +133,13 @@ Data Producer APIs
 | **FAPI 1.0 Advanced** | Very High | High | Moderate | Good |
 | **FAPI 2.0** | Maximum | Medium-High | Limited | Excellent |
 
-**Recommendation:** FAPI 2.0 fär neue Implementation mit Fallback zu FAPI 1.0 Advanced fär Legacy Integration
+**Recommendation:** FAPI 2.0 für neue Implementation mit Fallback zu FAPI 1.0 Advanced für Legacy Integration
 
 ---
 
 ## Consent-Flow-Architekturen
 
-### äbersicht existierender Consent-Flow-Modelle
+### übersicht existierender Consent-Flow-Modelle
 
 #### App-to-App Redirect Flow (UK Standard)
 **Architektur:**
@@ -157,7 +157,7 @@ Customer App ä Bank App ä Customer App (with consent)
 - Platform-spezifische Implementation (iOS/Android)
 - Begrenzte Cross-Platform Kompatibilität
 
-**Use Cases:** Ideal fär Mobile-First Customer Journeys mit hoher App-Adoption
+**Use Cases:** Ideal für Mobile-First Customer Journeys mit hoher App-Adoption
 
 #### Browser Redirect Flow (PSD2 Standard)
 **Architektur:**
@@ -168,7 +168,7 @@ Customer Browser ä Authorization Server ä Customer Browser (with code)
 **Vorteile:**
 - Universal Browser-Kompatibilität
 - Keine App-Installation erforderlich
-- Einfachste Implementation fär Web Services
+- Einfachste Implementation für Web Services
 
 **Nachteile:**
 - Potentielle UX-Bräche durch Redirects
@@ -186,10 +186,10 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 **Vorteile:**
 - Flexible Multi-Device Authentication
 - Enhanced Security durch Device Separation
-- Support fär verschiedene Customer Contexts
+- Support für verschiedene Customer Contexts
 
 **Nachteile:**
-- Hähere Komplexität fär Customers
+- Hähere Komplexität für Customers
 - Zusätzliche Infrastructure Requirements
 - Complex Error Handling
 
@@ -211,7 +211,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 ```
 
 **Pros:** Maximum Customer Control, Privacy-by-Design
-**Cons:** Complex UX, Potentially overwhelming fär Customers
+**Cons:** Complex UX, Potentially overwhelming für Customers
 
 #### Category-Based Consent  
 **Definition:** Consent auf Datenkategorie-Ebene (Identity, Contact, Financial)
@@ -246,14 +246,14 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 ### Recommended Hybrid Consent Approach
 
 **Multi-Layer Consent Strategy:**
-1. **Primary Layer:** Purpose-Based Consent fär Customer Understanding
-2. **Secondary Layer:** Category-Based Granularity fär Privacy Control  
-3. **Advanced Layer:** Field-Level Control fär Power Users (optional)
+1. **Primary Layer:** Purpose-Based Consent für Customer Understanding
+2. **Secondary Layer:** Category-Based Granularity für Privacy Control  
+3. **Advanced Layer:** Field-Level Control für Power Users (optional)
 
 **Benefits:**
 - Accommodates verschiedene Customer Sophistication Levels
 - Legal Compliance durch Purpose Limitation
-- Skalierbar fär verschiedene Use Cases
+- Skalierbar für verschiedene Use Cases
 
 ---
 
@@ -261,7 +261,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 
 ### JWT Access Token Structure
 
-**Standard JWT Claims fär Open API Kundenbeziehung:**
+**Standard JWT Claims für Open API Kundenbeziehung:**
 ```json
 {
   "iss": "https://auth.obp.ch",
@@ -277,7 +277,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 
 ### Custom Consent Claims Definition
 
-**OBP-Specific Claims fär Enhanced Consent Management:**
+**OBP-Specific Claims für Enhanced Consent Management:**
 ```json
 {
   "consent": {
@@ -337,35 +337,35 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 **Marktanalyse Erkenntnisse aus [01 Marktanalyse](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/01%20Marktanalyse.md):**
 - 7 von 8 Standards nutzen OAuth 2.0 als Basis
 - FAPI wird zunehmend mandatory in regulierten Märkten
-- OIDC ermäglicht nahtlose E-ID Integration
+- OIDC ermöglicht nahtlose E-ID Integration
 
 ### Experten-Verifikation Results
 
 **Security Expert Consensus:**
-- **FAPI 2.0:** Recommended fär neue Financial API Implementations
-- **OAuth 2.1:** Solid Foundation mit Enhanced Security äber OAuth 2.0
-- **OIDC:** Essential fär Identity Federation und E-ID Integration
+- **FAPI 2.0:** Recommended für neue Financial API Implementations
+- **OAuth 2.1:** Solid Foundation mit Enhanced Security über OAuth 2.0
+- **OIDC:** Essential für Identity Federation und E-ID Integration
 
 **Technical Expert Input:**
 - FAPI 2.0 vereinfacht Implementation vs. FAPI 1.0 Advanced
 - Airlock IAM Reference Implementation bietet Production-Ready Pattern
-- Community Support fär FAPI 2.0 wächst rapidly
+- Community Support für FAPI 2.0 wächst rapidly
 
 ### Swiss Context Specific Rationale
 
 **Regulatory Alignment:**
 - **FINMA Compatibility:** FAPI 2.0 exceeds FINMA Security Expectations
 - **EU Equivalence:** Compatible mit PSD2/PSD3 Security Requirements
-- **E-ID Integration:** OIDC Claims mapping fär Swiss E-ID Attributes
+- **E-ID Integration:** OIDC Claims mapping für Swiss E-ID Attributes
 
 **Technical Advantages:**
 - **Developer Experience:** Simplified Integration vs. proprietary Approaches
 - **International Compatibility:** Seamless Integration mit EU/UK Systems
-- **Future-Proof:** Anticipated Standard fär next-generation Financial APIs
+- **Future-Proof:** Anticipated Standard für next-generation Financial APIs
 
 **Risk Mitigation:**
 - **Security-by-Design:** FAPI 2.0 beinhaltet lessons learned from FAPI 1.0
-- **Compliance-Ready:** Built-in Support fär GDPR, PSD2, DSG Requirements
+- **Compliance-Ready:** Built-in Support für GDPR, PSD2, DSG Requirements
 - **Audit-Friendly:** Comprehensive Logging und Monitoring Integration
 
 ---
@@ -374,7 +374,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 
 ### Authentication/Authorization Sequence
 
-**Complete Authentication Flow fär Business Stakeholders:**
+**Complete Authentication Flow für Business Stakeholders:**
 
 #### Phase 1: Customer Initiation
 ```
@@ -400,7 +400,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 9. Strong Customer Authentication (SCA) required:
    - Primary factor: Password/PIN/Biometric
    - Secondary factor: SMS/App/Hardware Token
-10. Optional: E-ID integration fär enhanced verification
+10. Optional: E-ID integration für enhanced verification
 ```
 
 #### Phase 4: Consent Management
@@ -431,9 +431,9 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 20. Audit event logged at all systems
 ```
 
-### Sequence Diagram fär Finanzmenschen
+### Sequence Diagram für Finanzmenschen
 
-**Vereinfachte Darstellung fär Business Stakeholders:**
+**Vereinfachte Darstellung für Business Stakeholders:**
 
 ```
 Customer Journey Perspective:
@@ -452,25 +452,25 @@ Customer Journey Perspective:
 ```
 
 **Technical Implementation Perspective:**
-- Detaillierte Sequence Diagrams fär Implementation sind in [Technische Implementierung](/documentation/Umsetzung%20und%20Implementierung/) dokumentiert
+- Detaillierte Sequence Diagrams für Implementation sind in [Technische Implementierung](/documentation/Umsetzung%20und%20Implementierung/) dokumentiert
 - Business Stakeholders fokussieren auf Customer Experience und Control
-- Technical Teams nutzen vollständige FAPI 2.0 Spezifikation fär Implementation
+- Technical Teams nutzen vollständige FAPI 2.0 Spezifikation für Implementation
 
 ### Security Controls Implementation
 
 **Transport Security:**
-- TLS 1.3 mandatory fär alle Client-Server Connections
-- Certificate Pinning fär Mobile Applications
-- HSTS Headers fär Web Applications
+- TLS 1.3 mandatory für alle Client-Server Connections
+- Certificate Pinning für Mobile Applications
+- HSTS Headers für Web Applications
 
 **API Security:**  
-- Mutual TLS (mTLS) fär Server-to-Server Communication
-- DPoP (Demonstration of Proof-of-Possession) fär Token Binding
-- PAR (Pushed Authorization Request) fär Request Integrity
+- Mutual TLS (mTLS) für Server-to-Server Communication
+- DPoP (Demonstration of Proof-of-Possession) für Token Binding
+- PAR (Pushed Authorization Request) für Request Integrity
 
 **Data Protection:**
-- Field-level Encryption fär PII in Transit und at Rest
-- Tokenization fär Sensitive Data Storage
+- Field-level Encryption für PII in Transit und at Rest
+- Tokenization für Sensitive Data Storage
 - Data Minimization basierend auf Consent Scope
 
 ---
@@ -514,7 +514,7 @@ Modern FAPI 2.0 Client ä API Gateway ä Legacy System Adapter ä Core Banking
 **Implementation Strategy:**
 - Legacy Systems bleiben unverändert
 - API Gateway transformiert modern protocols zu legacy protocols
-- Gradual Migration Path äber mehrere Jahre
+- Gradual Migration Path über mehrere Jahre
 
 ### Mobile App Integration Pattern
 
@@ -524,10 +524,10 @@ Mobile App ä System Browser (ASWebAuthenticationSession) ä Auth Server ä Mobi
 ```
 
 **Security Features:**
-- App-to-App Redirect wo verfägbar
-- System Browser fär enhanced Security
+- App-to-App Redirect wo verfügbar
+- System Browser für enhanced Security
 - Biometric Authentication Integration
-- Certificate Pinning fär API Calls
+- Certificate Pinning für API Calls
 
 ---
 
@@ -540,9 +540,9 @@ Mobile App ä System Browser (ASWebAuthenticationSession) ä Auth Server ä Mobi
 - **Data Protection:** Swiss DSG compliance durch Privacy-by-Design
 - **AML/KYC:** Integration mit bestehenden Compliance Processes
 
-**Technical Controls fär FINMA Compliance:**
-- Comprehensive Audit Trails fär alle API Calls
-- Data Residency Controls fär Swiss Banking Data
+**Technical Controls für FINMA Compliance:**
+- Comprehensive Audit Trails für alle API Calls
+- Data Residency Controls für Swiss Banking Data
 - Incident Response Integration mit FINMA Reporting
 
 ### GDPR/DSG Compliance
@@ -570,9 +570,9 @@ Mobile App ä System Browser (ASWebAuthenticationSession) ä Auth Server ä Mobi
 ### PSD2 Equivalence
 
 **Strong Customer Authentication (SCA):**
-- Multi-Factor Authentication mandatory fär alle sensitive Operations
-- Dynamic Linking fär Payment-related Use Cases
-- Transaction Risk Analysis fär adaptive Authentication
+- Multi-Factor Authentication mandatory für alle sensitive Operations
+- Dynamic Linking für Payment-related Use Cases
+- Transaction Risk Analysis für adaptive Authentication
 
 **Technical SCA Implementation:**
 - Something you know: PIN/Password
@@ -582,9 +582,9 @@ Mobile App ä System Browser (ASWebAuthenticationSession) ä Auth Server ä Mobi
 ### Cross-Border Compliance
 
 **International Data Transfers:**
-- **EU Adequacy:** Switzerland als adequate Country fär GDPR Transfers
-- **UK Data Bridge:** Post-Brexit adequacy fär UK Open Banking Integration
-- **US Data Transfers:** Standard Contractual Clauses fär US FinTech Integration
+- **EU Adequacy:** Switzerland als adequate Country für GDPR Transfers
+- **UK Data Bridge:** Post-Brexit adequacy für UK Open Banking Integration
+- **US Data Transfers:** Standard Contractual Clauses für US FinTech Integration
 
 ---
 
@@ -596,21 +596,21 @@ Mobile App ä System Browser (ASWebAuthenticationSession) ä Auth Server ä Mobi
 - **Future-Proof Security:** FAPI 2.0 als next-generation Standard
 - **International Compatibility:** Seamless Integration mit globalen Standards
 - **Customer Trust:** Transparent und granular Consent Management
-- **Regulatory Compliance:** Built-in Compliance fär multiple Jurisdictions
+- **Regulatory Compliance:** Built-in Compliance für multiple Jurisdictions
 
 ### Implementation Roadmap
 
 #### Phase 1: Foundation (Monate 1-6)
 **Security Infrastructure Setup:**
 - [ ] Authorization Server Implementation (FAPI 2.0 compliant)
-- [ ] PKI Infrastructure fär Mutual TLS
+- [ ] PKI Infrastructure für Mutual TLS
 - [ ] Consent Management Engine Development
 - [ ] API Gateway Security Policy Configuration
 
 **Testing und Validation:**
 - [ ] Security Penetration Testing
 - [ ] FAPI 2.0 Conformance Testing
-- [ ] Load Testing fär Production Readiness
+- [ ] Load Testing für Production Readiness
 - [ ] Regulatory Compliance Validation
 
 #### Phase 2: Integration (Monate 6-12)  
@@ -635,7 +635,7 @@ Mobile App ä System Browser (ASWebAuthenticationSession) ä Auth Server ä Mobi
 
 **Continuous Improvement:**
 - [ ] Security Controls Optimization basierend auf Usage Patterns
-- [ ] Performance Tuning fär High-Volume Scenarios
+- [ ] Performance Tuning für High-Volume Scenarios
 - [ ] Additional Use Cases Integration
 - [ ] International Market Expansion Preparation
 

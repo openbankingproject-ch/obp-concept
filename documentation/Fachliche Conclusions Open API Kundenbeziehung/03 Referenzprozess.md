@@ -43,7 +43,7 @@ Der Referenzprozess wurde als **universeller Standard** für die digitale Kunden
 - Transparente Datenverwendung
 
 **3. Modulare "Bläckli"-Architektur**
-- **Basisdaten:** Branchenäbergreifend verwendbar
+- **Basisdaten:** Branchenübergreifend verwendbar
 - **Erweiterte Daten:** Ecosystem-spezifische Erweiterungen
 - **Metadaten:** Prozess- und Compliance-Informationen
 
@@ -111,7 +111,7 @@ Der Referenzprozess wurde als **universeller Standard** für die digitale Kunden
 **Zweck:** KYC/AML/CTF Compliance
 - PEP und Sanctions List Screening
 - Credit Checks und Source of Wealth Verification
-- Enhanced Due Diligence fär High-Risk Customers
+- Enhanced Due Diligence für High-Risk Customers
 
 ### Phase 4: Abschluss (Stufen 8-10)
 
@@ -139,7 +139,7 @@ Der Referenzprozess wurde als **universeller Standard** für die digitale Kunden
 
 ### Konzeptionelles Framework
 
-Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexibel kombiniert und wiederverwendet werden kännen. Jeder Baustein enthält:
+Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexibel kombiniert und wiederverwendet werden können. Jeder Baustein enthält:
 
 - **Core Data:** Minimale erforderliche Informationen
 - **Extended Data:** Zusätzliche ecosystem-spezifische Daten
@@ -209,13 +209,13 @@ Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexi
 
 ### Referenz-Implementation Konzept
 
-Die Bankkonten-Eräffnung dient als Referenz-Use Case fär die praktische Anwendung des 10-Stufen Prozesses. Die konzeptionelle Implementation zeigt, wie die modularen Bausteine in der Praxis kombiniert werden.
+Die Bankkonten-Eröffnung dient als Referenz-Use Case für die praktische Anwendung des 10-Stufen Prozesses. Die konzeptionelle Implementation zeigt, wie die modularen Bausteine in der Praxis kombiniert werden.
 
-### Prozess-Mapping fär Bankkonten-Onboarding
+### Prozess-Mapping für Bankkonten-Onboarding
 
 #### Phase 1: Customer Intent (Stufen 1-2)
 **Stufe 1:** Kunde besucht Bank-Website oder App, zeigt Interesse an Kontoeräffnung
-- Service Discovery zeigt verfägbare Kontomodelle
+- Service Discovery zeigt verfügbare Kontomodelle
 - Transparente Darstellung der Datenerfordernisse
 - Schätzung der Onboarding-Dauer (typisch: 15 Minuten)
 
@@ -230,10 +230,10 @@ Die Bankkonten-Eräffnung dient als Referenz-Use Case fär die praktische Anwend
 - Service-Präferenzen: Digital vs. Branch, Communication Channels
 - Initial Risk Assessment: Investment Interest, Service Needs
 
-**Stufe 4:** Basisdaten-Import (falls verfägbar)
+**Stufe 4:** Basisdaten-Import (falls verfügbar)
 - API-Call zu existierenden Datenquellen (andere Banken via Open Banking)
 - Import von: Name, Adresse, Kontaktdaten, Basis-KYC
-- Automated Duplicate Detection äber sharedCustomerHash
+- Automated Duplicate Detection über sharedCustomerHash
 
 **Stufe 5:** Erweiterte Banking-Daten
 - Beruf, Arbeitgeber, Einkommensverhältnisse
@@ -242,14 +242,14 @@ Die Bankkonten-Eräffnung dient als Referenz-Use Case fär die praktische Anwend
 
 #### Phase 3: Verification & Compliance (Stufen 6-7)
 **Stufe 6:** Identity Verification
-- E-ID Integration (falls verfägbar) oder Video-Ident
+- E-ID Integration (falls verfügbar) oder Video-Ident
 - Government ID Validation
-- Biometric Matching fär High-Value Accounts
+- Biometric Matching für High-Value Accounts
 
 **Stufe 7:** Banking-spezifische Checks
 - PEP Screening gemäss Banking Regulations
 - Credit Bureau Check (Creditreform/CRIF)
-- Source of Wealth Documentation fär HNW Clients
+- Source of Wealth Documentation für HNW Clients
 
 #### Phase 4: Account Setup (Stufen 8-10)
 **Stufe 8:** Banking Terms Acceptance
@@ -258,7 +258,7 @@ Die Bankkonten-Eräffnung dient als Referenz-Use Case fär die praktische Anwend
 - Data Processing Consent (GDPR/DSG compliant)
 
 **Stufe 9:** Digital Signature
-- QES fär rechtsgältige Kontoeräffnung
+- QES für rechtsgültige Kontoeräffnung
 - Multi-Factor Authentication Setup
 - Signature Integration mit Core Banking System
 
@@ -285,7 +285,7 @@ Die Bankkonten-Eräffnung dient als Referenz-Use Case fär die praktische Anwend
 
 ## Technische Integration und Kompatibilitäts-Framework
 
-### Interaktionsformen fär Daten und Services
+### Interaktionsformen für Daten und Services
 
 #### API-basierte Integration
 **Synchrone APIs:**
@@ -294,15 +294,15 @@ Die Bankkonten-Eräffnung dient als Referenz-Use Case fär die praktische Anwend
 - Interactive User Experiences
 
 **Asynchrone APIs:**
-- Background Processing fär komplexe Verifikationen
-- Batch-Operations fär Daten-Synchronisation
+- Background Processing für komplexe Verifikationen
+- Batch-Operations für Daten-Synchronisation
 - Event-driven Workflows
 
 #### Standards-basierte Kompatibilität
 
 **Bestehende Standards als Grundlage:**
 - **PSD2/NextGen:** Account Information und Payment Initiation Services
-- **FAPI 2.0:** Security Framework fär Financial APIs
+- **FAPI 2.0:** Security Framework für Financial APIs
 - **OpenAPI 3.0:** Service Documentation und Code Generation
 - **OAuth 2.0/OIDC:** Authentication und Authorization
 
@@ -319,14 +319,14 @@ DELETE /customer/{customerId}/data
 
 **Common Data Models:**
 - ISO 20022 basierte Financial Messages
-- JSON Schema fär strukturierte Datenvalidierung
-- Standard Error Codes fär einheitliches Error Handling
+- JSON Schema für strukturierte Datenvalidierung
+- Standard Error Codes für einheitliches Error Handling
 
 #### Legacy System Integration
 **Core Banking Integration Patterns:**
 - **API Gateway Pattern:** Legacy System Abstraktion
 - **Event Sourcing:** Auditierbare Datenänderungen
-- **CQRS:** Read/Write Operation Separation fär Performance
+- **CQRS:** Read/Write Operation Separation für Performance
 
 ### Service Orchestration
 
@@ -373,14 +373,14 @@ TODO: TZE bitte verifizieren!!
 **Best Practice:** Regulatorische Anforderungen von Anfang an eingebaut
 - Automatisierte GDPR/DSG Compliance
 - KYC/AML/CTF Requirements embedded
-- Audit Trails fär vollständige Nachverfolgbarkeit
+- Audit Trails für vollständige Nachverfolgbarkeit
 
 ### Implementierungs-Roadmap
 
 #### Sofortige Massnahmen (0-3 Monate)
-- [ ] Stakeholder Alignment äber Referenzprozess-Definition
+- [ ] Stakeholder Alignment über Referenzprozess-Definition
 - [ ] Technical Architecture Review mit bestehenden Core Banking Systems
-- [ ] Pilot Partner Selection fär MVP Implementation
+- [ ] Pilot Partner Selection für MVP Implementation
 - [ ] Legal Framework Review und Compliance Assessment
 
 #### Kurze Frist (3-9 Monate)
@@ -398,7 +398,7 @@ TODO: TZE bitte verifizieren!!
 #### Längere Frist (18+ Monate)
 - [ ] Full Market Rollout mit allen relevanten Partnern
 - [ ] Cross-Industry Expansion (Insurance, Mobility)
-- [ ] AI/ML Enhancement fär Personalized Experiences
+- [ ] AI/ML Enhancement für Personalized Experiences
 - [ ] International Standards Contribution und Leadership
 
 ### Risiko-Mitigation
@@ -410,7 +410,7 @@ TODO: TZE bitte verifizieren!!
 
 **Data Quality und Consistency:**
 - **Mitigation:** Automated Validation und Cross-Reference Checks
-- **Contingency:** Human-in-the-Loop Processes fär Edge Cases
+- **Contingency:** Human-in-the-Loop Processes für Edge Cases
 
 #### Business Risiken
 **Partner Adoption Resistance:**
@@ -419,7 +419,7 @@ TODO: TZE bitte verifizieren!!
 
 **Regulatory Changes:**
 - **Mitigation:** Flexible Architecture mit Configuration-based Compliance
-- **Contingency:** Rapid Response Team fär Regulatory Adaptations
+- **Contingency:** Rapid Response Team für Regulatory Adaptations
 
 ### Messbarkeit und KPIs
 
