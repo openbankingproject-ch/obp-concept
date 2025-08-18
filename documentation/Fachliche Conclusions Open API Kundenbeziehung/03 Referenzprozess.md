@@ -353,7 +353,7 @@ DELETE /customer/{customerId}/data
 
 ## Fazit und Best Practices für Referenzprozess-Umsetzung
 
-TODO: TZE bitte verifizieren!!
+TODO: bitte verifizieren!!
 
 ### Strategische Erfolgsfaktoren
 
@@ -443,7 +443,7 @@ Der Referenzprozess stellt das Herzstück der Open API Kundenbeziehung dar und b
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Final Draft für Stakeholder Review
+**Status:** Final Draft für Review
 
 ---
 
