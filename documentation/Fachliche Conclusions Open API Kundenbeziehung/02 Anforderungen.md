@@ -224,22 +224,27 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Kostenreduktion durch Wiederverwendbarkeit
 - Compliance-Sicherheit für verschiedene Branchen
 
-#### **UC4: EVV Use Case (4 Punkte)**
+#### **UC4: CLM von EVV-Endkunden (4 Punkte)**
 
 **Ausgangslage:**
 - Customer Lifecycle Management über verschiedene Touchpoints
 - Fragmentierte Kundendaten bei verschiedenen Providern
 - Ineffiziente Datenpflege und -synchronisation
+- Komplexe Onboarding-Prozesse bei verschiedenen Depotbanken
+- Redundante KYC-Prozesse für bereits verifizierte Kunden
 
 **Umsetzung:**
 - Integriertes Customer Lifecycle Management
 - Standardisierte Datenpflege-Prozesse
 - Cross-Provider Datenabgleich
+- Wiederverwendung von Datenbausteinen für das Onboarding von Endkunden bei verschiedenen Depotbanken
+- Effiziente Aktualisierung von KYC-Informationen
 
 **Mehrwerte:**
 - Verbesserte Datenqualität durch zentrale Datenpflege
 - Effizienzsteigerung in der Kundenbetreuung
 - Reduzierte Compliance-Risiken durch aktuellere Daten
+- Vereinfachte EVV-Onboarding-Prozesse
 
 ### Zusätzliche Use Cases
 
@@ -257,6 +262,9 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 
 **Real Estate:**
 - Mietprozess/Mietkautionskonto (700.000 Umzüge/Jahr CH)
+  * Besonderheit: Für ein reines Mietkautionskonto ist keine vollständige Identifikation notwendig
+  * Reduzierte regulatorische Hürden und technische Komplexität
+  * Langfristiges Optimierungspotenzial für Mietprozesse
 - Hypothekarvergleich und -vermittlung
 - Property Investment Verification
 
@@ -429,10 +437,11 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 #### **Performance und Skalierung**
 
 **Response Time Requirements:**
-- Authentication: < 500ms
-- Data Retrieval: < 2000ms
+- Authentication: < 2 seconds (< 500ms optimiert)
+- Data Retrieval: < 5 seconds (< 2000ms optimiert)
 - Data Submission: < 3000ms
-- Bulk Operations: < 10000ms
+- Bulk Operations: < 30 seconds (< 10000ms optimiert)
+- Real-time Notifications: < 1 second
 
 **Throughput Requirements:**
 - Minimum 1000 requests/second per API endpoint
@@ -489,8 +498,24 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Performance Analytics
 
 ### MVP-Datenmodell
+*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
 Das MVP-Datenmodell konzentriert sich auf die wesentlichen Datenstrukturen für die Implementierung des Bausteins "Identifikation". Die konzeptionelle Beschreibung definiert die Kernkomponenten, während detaillierte Implementierungsdetails in den technischen Dokumenten [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) ausgearbeitet werden.
+
+#### **MVP Scope Definition**
+Das Minimum Viable Product der Open API Kundenbeziehung fokussiert auf die grundlegenden Funktionalitäten für den **Use Case 1: Kontoeröffnung resp. Bankwechsel**.
+
+**MVP Kernfunktionalitäten:**
+1. Basisdaten-Transfer: Name, Adresse, Kontaktdaten
+2. Identitätsdaten-Übertragung: Bereits verifizierte Identitätsinformationen
+3. Consent Management: Kundeneinwilligung für Datenübertragung
+4. Basic Security: FAPI 2.0 konforme Sicherheitsimplementierung
+
+**MVP Ausschlüsse:**
+- Erweiterte Daten: Vermögen, Einkommen, Beruf
+- Payment Initiation: Zahlungsauslösung
+- Cross-Industry: Andere Ecosystems außer Finance
+- Advanced Analytics: KI-basierte Datenanalyse
 
 #### **Core Data Structures**
 
@@ -656,8 +681,19 @@ sharedCustomerHash = SHA256(hash_input)
 - Improved Customer Lifetime Value
 - Cross-selling Opportunities
 
+#### **Quantitativer Business Case**
+**Conversion Rate Improvements:**
+- Videoidentifikation Success Rate: 80%
+- MVP Identifikation Success Rate: 90%
+- Gewinnsteigerung durch Open API: 10-15%
+
+**Financial Impact (pro Bank/Jahr):**
+- Beispiel HBL: CHF 891,000 zusätzlicher Gewinn
+- Beispiel PostFinance: CHF 1,094,500 zusätzlicher Gewinn
+- 20 größte Banken: CHF 9,900,000 Gesamtpotenzial
+
 ## E-ID Integration und Abgrenzung
-TODO: SKN bitte verifizieren!!
+*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
 ### Konzeptionelle Unterschiede
 
@@ -739,10 +775,9 @@ E-ID Consent Framework ← → Open API Consent Tokens ← → Service Permissio
 - Consent Frameworks interoperable mit E-ID Frameworks
 
 ## Strategische Herangehensweise: "Vom Kleinen ins Grosse"
+*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
 Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen Aufbaus, beginnend mit schnell realisierbaren Erfolgen und systematischer Expansion zu komplexeren Anwendungsfällen.
-
-TODO: TZE bitte verifizieren!!
 
 ### Quick Wins Identifikation
 
@@ -879,7 +914,6 @@ TODO: TZE bitte verifizieren!!
 
 Ein umfassendes Messystem für den Erfolg der Open API Kundenbeziehung umfasst sowohl technische als auch geschäftliche Kennzahlen, die kontinuierlich überwacht und optimiert werden.
 
-TODO: TZE bitte verifizieren!!
 
 #### **Technical KPIs**
 
@@ -910,10 +944,10 @@ TODO: TZE bitte verifizieren!!
 - International Inquiries (Target: 100+ by Month 18)
 
 ## Fazit und Roadmap
+*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
 Die umfassende Anforderungsanalyse zeigt eine klare Strategie für die erfolgreiche Implementierung der Open API Kundenbeziehung mit fokussiertem Ansatz auf schnell umsetzbare Lösungen und strategischer Perspektive für langfristige Marktführerschaft.
 
-TODO: TZE bitte verifizieren!!
 
 ### Strategische Empfehlungen
 
@@ -971,13 +1005,12 @@ TODO: TZE bitte verifizieren!!
 
 Die Anforderungsanalyse zeigt einen klaren Weg für die erfolgreiche Implementierung der Open API Kundenbeziehung mit fokussiertem Approach auf kurzfristig umsetzbare Lösungen und strategischer Perspektive für langfristige Marktführerschaft.
 
-TODO: TZE bitte verifizieren!!
 
 ---
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Final Draft für Stakeholder Review
+**Status:** Final Draft für Review
 
 ---
 
