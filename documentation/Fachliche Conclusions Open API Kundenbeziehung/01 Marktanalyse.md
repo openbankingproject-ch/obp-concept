@@ -55,6 +55,8 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 
 ## Detailanalyse globaler Open Banking Standards
 
+[Gesamtauswertung der Analyse als Excel](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/Resources/20250324%20Overview%20Market%20Analysis.xlsx)
+
 ### Regulatorisch getriebene Standards
 
 #### UK Open Banking Standard (Open Banking Limited)
@@ -382,15 +384,15 @@ Transport- und Protokoll-Standards
 ### Best Practices
 
 #### Technische Best Practices
-**API-First Design:** Comprehensive API Design vor Implementation.
-**Security-by-Design:** FAPI 1.0 Advanced als Minimum für sensitive Data. Nach Verifikation mit Experten: FAPI 2.0 als Zielarchitektur.
-**Developer Experience:** Umfassende Dokumentation, Sandbox-Umgebungen, SDKs.
-**Performance:** SLA-basierte Service Level Agreements mit Monitoring.
+- **API-First Design:** Comprehensive API Design vor Implementation.
+- **Security-by-Design:** FAPI 1.0 Advanced als Minimum für sensitive Data. Nach Verifikation mit Experten: FAPI 2.0 als Zielarchitektur.
+- **Developer Experience:** Umfassende Dokumentation, Sandbox-Umgebungen, SDKs.
+- **Performance:** SLA-basierte Service Level Agreements mit Monitoring.
 
 #### Governance Best Practices
-**Multi-Stakeholder Approach:** Einbeziehung von Banken, Fintechs, Regulatoren und Verbrauchern.
-**Phased Rollout:** Schrittweise Einführung beginnend mit Low-Risk Use Cases.
-**Continuous Evolution:** Regular Reviews und Updates basierend auf Market Feedback.
+- **Multi-Stakeholder Approach:** Einbeziehung von Banken, Fintechs, Regulatoren und Verbrauchern.
+- **Phased Rollout:** Schrittweise Einführung beginnend mit Low-Risk Use Cases.
+- **Continuous Evolution:** Regular Reviews und Updates basierend auf Market Feedback.
 
 ### Technologische Entscheidungen
 
