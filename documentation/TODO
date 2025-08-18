@@ -1,29 +1,60 @@
-DOCUMENTATION: (part 1)
+DOCUMENTATION:
 careful: differentiate between technical code documentation and the professional documentation (conclusions) written from the perspective of an economics institute.
 
 [] complete professional documentation: conclusions in 8 topics
-[] make sure conclusions and corresponding table of contents match up
+The conclusions should be kept on a conceptual level (except 04 API Endpoint Design) and NOT contain any code snippets. Any Implementation specifics need to be outlined conceptually in the conclusion and for each detailed/technical explanation create a new file in the folder: "documentation/Umsetzung und Implementierung" and linked in the conclusion. Also link references to other conclusions to avoid too much redundancy. 
+Write the conclusions in 2 parts:
+    [] Part 1 - almost done: here the conclusions are almost complete, just add any crucial missing information from the resources but do not change the structure (chapters, subchapters,...) of the documents.
+        [] 01 Marktanalyse:
+        - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/01 Marktanalyse.md"
+        - TODO: keep structure exactly as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+        [] 02 Anforderungen: 
+        - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md"
+        - TODO: keep structure exactly as is, add missing information from the files in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+    [] Part 2 - needs more work: for each conclusion there is a draft for the document structure (Inhaltsverzeichnis) and each chapters contents in the folder: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Inhaltsverzeichnisse"
+    That structure is too complex though, and needs to be simplified a bit. In the file documentation/OBP Topics and Content.md the most important points for each conclusion are listed. Create texts that are nice to read, easy to understand, but still contain all relevant information and are professionally worded.
+        [] 03 Referenzprozess: 
+        - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/03 Referenzprozess.md"
+        - overly complex draft (Inhaltsverzeichnis): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Inhaltsverzeichnisse/03_referenzprozess_inhaltsverzeichnis.md"
+        - TODO: 
+            [] create new document structure based on Inhaltsverzeichnis and simplified "OBP Topics and content.md"
+            [] write a complete conclusion as described above, all relevant information, resources and files can be found in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+        [] 04 API-Endpoint Design:
+        - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
+        - overly complex draft (Inhaltsverzeichnis): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Inhaltsverzeichnisse/04_api_spezifikationen_inhaltsverzeichnis.md"
+        - TODO: 
+            [] create new document structure based on Inhaltsverzeichnis and simplified "OBP Topics and content.md". 
+            [] write a complete conclusion as described above, all relevant information, resources and files can be found in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+        [] 05 Vertrauensnetzwerk:
+        - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
+        - overly complex draft: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Inhaltsverzeichnisse/05_vertrauensnetzwerk_inhaltsverzeichnis.md"
+        - TODO: 
+            [] create new document structure based on Inhaltsverzeichnis and simplified "OBP Topics and content.md"
+            [] write a complete conclusion as described above, all relevant information, resources and files can be found in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+        [] 06 Consent und Security Flow:
+        - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/06 Consent und Security Flow.md"
+        - overly complex draft: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Inhaltsverzeichnisse/06_consent_security_flow_inhaltsverzeichnis.md"
+        - additional resource that shows a great example of how this topic can be explained and documented: https://docs.airlock.com/iam/latest/index/1639690251538.html
+        - TODO: 
+            [] create new document structure based on Inhaltsverzeichnis and simplified "OBP Topics and content.md"
+            [] write a complete conclusion as described above, all relevant information, resources and files can be found in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+        [] 07 Rechtliche Rahmenbedingungen:
+        - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md"
+        - overly complex draft: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Inhaltsverzeichnisse/07_rechtliche_rahmenbedingungen_inhaltsverzeichnis.md"
+        - TODO: 
+            [] create new document structure based on Inhaltsverzeichnis and simplified "OBP Topics and content.md" 
+            [] write a complete conclusion as described above, all relevant information, resources and files can be found in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
+        [] 08 Testing und Verifikation:
+        - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
+        - overly complex draft: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Inhaltsverzeichnisse/08_testing_verifikation_inhaltsverzeichnis.md"
+        - TODO: 
+            [] create new document structure based on Inhaltsverzeichnis and simplified "OBP Topics and content.md" 
+            [] write a complete conclusion as described above, all relevant information, resources and files can be found in the folder (files are in the subfolders "original sources" and "structured by topic"): "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources"
 
-[] use the following sources as inspiration for best practice implementations and for the structure of the documentation:
+[] create a file "Konklusion Open API Kundenbeziehung Overview.md" where all the final conclusions are linked and outline each files structure and content briefly 
+[] make sure to add all sources and references to the file "Quellen und Referenzen"
+
+use the following sources as inspiration for best practice implementations and for the structure of the documentation:
 - https://spec.openapis.org/oas/v3.0.3.html
 - https://docs.airlock.com/iam/latest/index/1639690251538.html
 
-[] update documentation (technical and professional) to be coherent with implementation
-
-
-IMPLEMENTATION:
-create an alpha version of an "Open API Kundenbeziehung" that will serve as a basis for a swiss standard
-
-[] update current implementation to the content of 
-
-DOCUMENTATION: (part 2)
-careful: differentiate between technical code documentation and the professional documentation (conclusions) written from the perspective of an economics institute.
-
-[] complete professional documentation: conclusions in 8 topics
-[] make sure conclusions and corresponding table of contents match up
-
-[] check if documentation (technical and professional) is up to established standards, using the following sources:
-- https://spec.openapis.org/oas/v3.0.3.html
-- https://docs.airlock.com/iam/latest/index/1639690251538.html
-
-[] update documentation (technical and professional) to be coherent with implementation

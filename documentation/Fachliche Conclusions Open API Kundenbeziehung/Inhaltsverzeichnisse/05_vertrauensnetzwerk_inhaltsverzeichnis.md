@@ -15,7 +15,7 @@
 - **Abgrenzung:** Vertrauensnetzwerk vs. zentrale Plattform vs. bilaterale Lösungen
 - **Swiss Context:** Anpassung an Schweizer Bankensektor und Regulierung
 
-### **1.2 Stakeholder-Ökosystem**
+### **1.2 Stakeholder-Ecosystem**
 - **Primäre Akteure:** Banken, FinTechs, InsurTechs, Payment Providers
 - **Sekundäre Akteure:** Regulatoren, Technologie-Provider, Beratungsunternehmen
 - **Support-Akteure:** Standards-Organisationen, Branchenverbände, Forschungsinstitute
