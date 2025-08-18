@@ -10,7 +10,6 @@
 6. [Detailanalyse existierender Technologien und Standards](#detailanalyse-existierender-technologien-und-standards)
 7. [Implikationen für Schweizer Open API Kundenbeziehung](#implikationen-für-schweizer-open-api-kundenbeziehung)
 8. [Fazit und Handlungsempfehlungen](#fazit-und-handlungsempfehlungen)
-9. [Datenquellen und Referenzen](#datenquellen-und-referenzen)
 
 ---
 
@@ -204,6 +203,7 @@ Von regulatorisch vorgegebenen Modellen (UK, Brasilien, Australien) bis zu indus
 - Regulatorische Rahmensetzung mit industrieller Detail-Ausarbeitung
 - Klare Timelines mit Flexibilität bei Implementation-Details
 - Starke Industry Engagement und Stakeholder Consultation
+- Bottom-up Approach mit Industry-led Standards vor regulatorischen Vorgaben
 
 ### 4. Produkte & Services stark fragmentiert
 
@@ -222,6 +222,17 @@ Modularer Ansatz beginnend mit Identifikationsdaten, schrittweise Expansion. Opp
 - Customer Relationship Management als Differentiator
 - Integration mit E-ID-Infrastruktur als Competitive Advantage
 - Branchenübergreifende Applicability (nicht nur Banking)
+
+#### Priorisierte Use Cases für Schweizer Implementation
+Basierend auf Marktanalyse und Stakeholder-Bewertung wurden 16 Use Cases identifiziert und 4 prioritäre Use Cases vertieft analysiert:
+TODO: Link zu Conclusion Anforderungen!
+
+1. **Bankverhältnis/Kontoeröffnung (13 Punkte):** Wiederverwendung von sämtlichen, für eine Kundeneröffnung bei einer Bank relevanten Datenpunkte
+2. **Re-Identifikation (7 Punkte):** Wiederverwendung von relevanten Identifikationsdaten
+3. **Altersverifikation (4 Punkte):** Wiederverwendung des Datenpunkts «Geburtsdatum» für E-Commerce und Services
+4. **EWV Use Case (4 Punkte):** Wiederverwendung von relevanten Datenpunkten aus der externen Vermögensverwaltung
+
+**MVP "Identifikation"** wurde als fokussierter Startpunkt zur Umsetzung definiert.
 
 ### 5. Open Finance Evolution ist im Kommen – aber uneinheitlich
 
@@ -454,21 +465,85 @@ Transport- und Protokoll-Standards
 **Proportionalität:** Risk-based Approach für verschiedene Use Case Kategorien.
 **Innovation-Förderung:** Sandbox-Umgebungen für experimentelle Implementierungen.
 
+### E-ID Integration und strategische Überlegungen
+
+#### Zusammenspiel zwischen E-ID und Open API
+Die Integration der Schweizer E-ID mit der Open API Kundenbeziehung stellt einen strategischen Vorteil dar. Während die Daten bei den Banken liegen, liegt die Datenhoheit beim Kunden, insbesondere beim Consent-Prozess.
+
+**Hybrid-Lösung Ansatz:** 
+- E-ID-Kompatibilität von Beginn an sicherstellen
+- Parallele Lösung während E-ID-Einführungsphase
+- Vermeidung "unnötiger Verifizierungen" durch modulare Identifikationsdaten-Wiederverwendung
+
+#### Herausforderungen und Lösungsansätze
+**Einführungshürden der E-ID:**
+- Biometrische Ausweis-Voraussetzung könnte Adoption erschweren
+- Bedarf an "Killer Use Cases" (z.B. digitales Wahlrecht)
+- Regulatorische Unklarheiten bezüglich FINMA-Anforderungen
+- Haftungs- und Sicherheitsfaktoren noch nicht definiert
+
+**Strategische Antwort:** 
+Eine Open API Kundenbeziehung als wirtschaftlich sinnvolle Zwischenlösung, die später nahtlos in die E-ID-Infrastruktur integriert werden kann.
+
 ---
 
 ## Fazit und Handlungsempfehlungen
-TODO: **!!macht TZE!!**
+TODO: **!!Verifikation TZE!!**
 
 ### Übertragbare Erfolgsmodelle
-Was können wir als Standard und Best Practice adoptieren?
+
+#### Bewährte Governance-Praktiken
+**UK Open Banking Erfolgsmodell:** Kombination aus regulatorischer Rahmensetzung mit umfassender Industry-Unterstützung durch Developer Portal, Sandbox-Umgebungen und detaillierte API-Dokumentation zeigt den Weg für erfolgreiche Implementierung.
+
+**Brasil Open Finance Integration:** Die Verbindung von Open Banking mit nationaler Payment-Infrastructure (PIX) schafft erhebliche Synergien und Nutzerakzeptanz - ein Modell, das für die Schweiz mit Swiss QR-Code und bestehender E-Banking-Infrastruktur adaptiert werden kann.
+
+**Singapore Public-Private Partnership:** Government-backed Initiativen unter Führung der MAS zeigen, wie politische Unterstützung Innovationsschübe schaffen kann, ohne die Marktdynamik zu behindern.
+
+#### Technische Best Practices
+- **FAPI 2.0 + OAuth2/OIDC** als bewährte Security-Architektur mit internationaler Interoperabilität
+- **JSON/RESTful APIs** mit OpenAPI 3.0 Spezifikationen für optimale Developer Experience
+- **Phasenweise Implementation** beginnend mit Low-Risk Use Cases (Account Information) vor Payment Initiation
+- **Comprehensive Testing und Sandbox-Umgebungen** als kritische Erfolgsfaktoren
 
 ### Zu vermeidende Implementierungsfehler
-Was können wir besser machen?
-Finanzen und Versicherungen werden oft als gängiges „Einstiegs-Ecosystem“ verwendet. 
-Beispiel Australien tat dies nicht und scheiterte an der zu grossen Scope des Projektes.
+
+#### Scope-Management Herausforderungen
+**Australien Consumer Data Right Lessons:** Der Versuch, sofortig sektorübergreifend (Banking, Energy, Telecommunications) zu starten, führte zu erheblichen Verzögerungen und Implementierungsproblemen. Finanzen und Versicherungen werden oft als gängiges „Einstiegs-Ecosystem" verwendet - ein bewährter Ansatz.
+
+**Empfehlung:** Start mit Banking-Sektor, schrittweise Expansion zu Insurance und weiteren Sektoren.
+
+#### Governance-Struktur Herausforderungen
+- **Vermeidung von Pure Regulation:** Brasil's rein mandatorisches Modell schränkt Innovation ein
+- **Vermeidung von Pure Industry-Leadership:** Ohne regulatorische Unterstützung entstehen Fragmentierung und langsame Adoption
+- **Balance finden:** Hybrid-Modelle mit regulatorischer Rahmensetzung und Industry-getriebener Detail-Ausarbeitung zeigen beste Resultate
+
+#### Technische Implementation Fallstricke
+- **Legacy-System-Integration unterschätzen:** Ausreichend Zeit und Ressourcen für Core-Banking-System-Integration einplanen
+- **Performance-Anforderungen frühzeitig definieren:** 95th percentile unter 1000ms für Account Information, unter 2000ms für Payment Initiation
+- **Security-by-Design vernachlässigen:** FAPI-Compliance von Beginn an, nicht als nachträgliches Add-on
+
+### Strategische Roadmap für Schweizer Implementation
+
+#### Phase 1: Foundation (6-12 Monate)
+- Pilot-Community mit 3-4 führenden Schweizer Banken
+- MVP-Implementation mit Identifikationsdaten (Use Case: Bankverhältnis/Kontoeröffnung)
+- FINMA-Engagement für regulatorische Klarstellung
+
+#### Phase 2: Expansion (12-24 Monate)
+- Erweiterte Use Cases (Re-Identifikation, Altersverifikation)
+- Integration mit E-ID-Infrastruktur als Competitive Advantage
+- Community-Expansion zu Fintech-Ecosystem
+
+#### Phase 3: Scale-up (24-36 Monate)
+- Full Open Finance-Funktionalität mit Insurance und Investment
+- Payment Initiation als separate Ausbaustufe
+- Internationale Interoperabilität (EU, UK Kompatibilität)
 
 ---
 
 **Version:** 1.8  
 **Datum:** August 2025  
 **Status:** Final Draft für Stakeholder Review
+
+TODO: Link zu Quellen und Referenzen!
+inkl. Excel "Marktanalyse" Anhang
