@@ -1,0 +1,29 @@
+DOCUMENTATION: (part 1)
+careful: differentiate between technical code documentation and the professional documentation (conclusions) written from the perspective of an economics institute.
+
+[] complete professional documentation: conclusions in 8 topics
+[] make sure conclusions and corresponding table of contents match up
+
+[] use the following sources as inspiration for best practice implementations and for the structure of the documentation:
+- https://spec.openapis.org/oas/v3.0.3.html
+- https://docs.airlock.com/iam/latest/index/1639690251538.html
+
+[] update documentation (technical and professional) to be coherent with implementation
+
+
+IMPLEMENTATION:
+create an alpha version of an "Open API Kundenbeziehung" that will serve as a basis for a swiss standard
+
+[] update current implementation to the content of 
+
+DOCUMENTATION: (part 2)
+careful: differentiate between technical code documentation and the professional documentation (conclusions) written from the perspective of an economics institute.
+
+[] complete professional documentation: conclusions in 8 topics
+[] make sure conclusions and corresponding table of contents match up
+
+[] check if documentation (technical and professional) is up to established standards, using the following sources:
+- https://spec.openapis.org/oas/v3.0.3.html
+- https://docs.airlock.com/iam/latest/index/1639690251538.html
+
+[] update documentation (technical and professional) to be coherent with implementation

@@ -38,15 +38,23 @@ Ausstehend: Verifikation mit Partnern und Experten
 
 ## Dokumentation
 
-Konklusionen aus fachlicher und technischer Sicht:
+### Konklusionen aus fachlicher und technischer Sicht:
+TODO: alles Verlinken!
 
-- **Markt Analyse**
-- **Anforderungen**
-- **Referenzprozess**
-- **Vertrauensnetzwerke** Föderiertes System
-- **Consent und Security Flow**
-- **Rechtliche Rahmenbedingungen**
-- **Verifikation und Testing**
+- **Inhaltsübersicht aller Themenbereiche**
+
+- **01 Markt Analyse**
+- **02 Anforderungen**
+- **03 Referenzprozess**
+- **04 API-Endpoint Design** basierend auf Referenzprozess
+- **05 Vertrauensnetzwerke** Föderiertes System
+- **06 Consent und Security Flow**
+- **07 Rechtliche Rahmenbedingungen**
+- **08 Verifikation und Testing**
+
+### Umsetzung und Implementations Details:
+- **Verwendete Standards und Technologien**
+- **Implementation Alpha Version 1.0** 
 
 ### Demos 
 

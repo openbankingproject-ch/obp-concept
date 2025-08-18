@@ -162,33 +162,108 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 
 ### 1. Technologische Standards sind nicht global vereinheitlicht
 
-JSON als Dateiformat und RESTful APIs als Architekturstandard sind de facto etabliert. Die Nutzung von XML oder YAML ist hingegen stark verteilt. Einzig Consumer Data Standards (Australien) verwendet alle Formate konsistent. **Empfehlung:** JSON/REST als Basis für Schweizer Standard, mit optionaler XML-Unterstützung für Legacy-Systeme.
+JSON als Dateiformat (in 7 von 8 analysierten Standards verwendet) und RESTful APIs als Architekturstandard sind de facto etabliert. Die Nutzung von XML oder YAML ist hingegen stark verteilt. Einzig Consumer Data Standards (Australien) verwendet alle Formate konsistent. OpenAPI 3.0 Spezifikationen sind global als Dokumentationsstandard etabliert. 
+
+#### Empfehlungen für CH-Standard:
+- **JSON/REST** als Basis für Schweizer Standard, mit optionaler XML-Unterstützung für Legacy-Systeme.
+- **OpenAPI 3.0** basierte Spezifikationen ermöglichen bessere Developer-Experience.
+- Backward-Compatibility mit XML nur wo legacy-Systeme dies erfordern.
 
 ### 2. Consent- und Sicherheitsmodelle variieren stark
 
-Von App-to-App bis Decoupled Flows – es gibt keinen eindeutigen globalen Consent-Standard. Auch bei Sicherheitsmodellen (z.B. FAPI, OAuth, OIDC) sind grosse Unterschiede erkennbar. **Empfehlung:** FAPI 1.0 Advanced als Basis mit flexiblen Consent-Flow-Optionen.
+Von App-to-App bis Decoupled Flows – es gibt keinen eindeutigen globalen Consent-Standard. Auch bei Sicherheitsmodellen (z.B. FAPI, OAuth, OIDC) sind grosse Unterschiede erkennbar.
+
+#### Vielfalt der Implementierungsansätze:
+- App-to-App Redirect: UK Standard, optimiert für Mobile-First
+- Browser Redirect: NextGenPSD2 Default, universelle Kompatibilität
+- Decoupled Flow: Brasil Implementation, bessere UX für bestimmte Use Cases
+- Embedded Flow: Vereinzelt genutzt, regulatorische Bedenken
+
+#### Unterschiedliche Sicherheitsstandards-Adoption:
+- FAPI 1.0 Advanced: Brasil, Australien (mandatory)
+- FAPI 1.0 Baseline + Extensions: UK Implementation
+- FAPI 2.0: Von konsultierten Experten empfohlen
+- OAuth 2.0 + Custom Extensions: Hong Kong, Singapore
+- OAuth 2.0 + OIDC: Von konsultierten Experten empfohlen
+
+#### Empfehlungen für CH-Standard:
+- Basierend auf Marktanalyse: FAPI 1.0 Advanced als Basis mit flexiblen Consent-Flow-Optionen wird von den meisten analysierten Standards verwendet.
+- Basierend auf Verifikation mit Experten: **FAPI 2.0** wird aktuell noch weiterentwickelt und kann sich evtl. noch ändern - ist aber zukunftsorientiert die bessere Lösung.
+- **OAuth 2.0 + OIDC** für Authentication und Authorization Flow.
+- Flexible Flow-Unterstützung je nach Use Case und starke Emphasis auf **Consumer Consent Transparency**.
 
 ### 3. Unterschiedliche Governance-Modelle prägen die Umsetzung
 
-Von regulatorisch vorgegebenen Modellen (UK, Brasilien, Australien) bis zu industriegetriebenen Standards (Open Wealth, SFTI): Die Steuerung variiert erheblich. **Empfehlung:** Hybrid-Modell mit regulatorischer Rahmensetzung und Industry-getriebener Detailausarbeitung.
+Von regulatorisch vorgegebenen Modellen (UK, Brasilien, Australien) bis zu industriegetriebenen Standards (Open Wealth, SFTI): Die Steuerung variiert erheblich. 
+- Rein regulatorisch: Schnelle Adoption, aber weniger Innovation (Brasil)
+- Rein industriell: Höhere Innovation, aber langsamere Adoption (Berlin Group)
+- Hybrid: Beste Balance zwischen Compliance und Innovation (UK, Singapore)
+
+#### Empfehlungen für CH-Standard: 
+**Hybrid-Modell** mit regulatorischer Rahmensetzung und Industry-getriebener Detailausarbeitung. Erfolgsfaktoren von Hybrid-Modellen:
+- Regulatorische Rahmensetzung mit industrieller Detail-Ausarbeitung
+- Klare Timelines mit Flexibilität bei Implementation-Details
+- Starke Industry Engagement und Stakeholder Consultation
 
 ### 4. Produkte & Services stark fragmentiert
 
-Die Abdeckung von Finanzprodukten ist sehr unterschiedlich. Nur wenige Standards decken Lending, Investments und Versicherungen ab. Die meisten bleiben bei Kernprodukten wie Girokonten und Kreditkarten. **Empfehlung:** Modularer Ansatz beginnend mit Identifikationsdaten, schrittweise Expansion.
+Die Abdeckung von Finanzprodukten ist sehr unterschiedlich. Nur wenige Standards decken Lending, Investments und Versicherungen ab. Die meisten bleiben bei Kernprodukten wie Girokonten und Kreditkarten. 
+- Gut abgedeckt: Account Information, Payment Initiation, Basic Customer Data
+- Unterentwickelt: Lending APIs, Investment Services, Insurance Products
+- Customer Management: Besonders schwach entwickelter Bereich trotz hoher Relevanz
 
-### 5. Open Finance ist im Kommen – aber uneinheitlich
+#### Aktuelle Marktsituation:
+- Nur 3 von 8 Standards adressieren Customer Onboarding/Management explizit
+- Fokus liegt primär auf bereits bestehenden Kundenbeziehungen
+- KYC/AML-Compliance-Anforderungen noch nicht standardisiert
 
-Während einige Initiativen (z.B. Open Finance Brasil, NextGenPSD2, Singapore Financial Data Exchange) bereits umfangreiche Open Finance-Funktionen abdecken, fokussieren sich andere noch stark auf reines Open Banking. **Empfehlung:** Open Finance Roadmap von Beginn an mitdenken.
+#### Empfehlungen für CH-Standard: 
+Modularer Ansatz beginnend mit Identifikationsdaten, schrittweise Expansion. Opportunity für den CH-Standard:
+- Customer Relationship Management als Differentiator
+- Integration mit E-ID-Infrastruktur als Competitive Advantage
+- Branchenübergreifende Applicability (nicht nur Banking)
+
+### 5. Open Finance Evolution ist im Kommen – aber uneinheitlich
+
+Während einige Initiativen (z.B. Open Finance Brasil, NextGenPSD2, Singapore Financial Data Exchange) bereits umfangreiche Open Finance-Funktionen abdecken, fokussieren sich andere noch stark auf reines Open Banking. 
+- UK: Expansion zu Variable Recurring Payments (VRP), Credit/Lending
+- Brasil: Comprehensive approach von Beginn an (Credit, Investment, Insurance)
+- EU: Fragmentierter Ansatz, PSD3 bringt möglicherweise Harmonisierung
+
+#### Empfehlungen für CH-Standard: 
+Open Finance Roadmap von Beginn an mitdenken und zukunftsorientiert planen.
 
 ### 6. Payment Initiation unterschiedlich ausgereift
 
-Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bulk, File & Variable Recurring Payments unterstützen, bieten andere Standards (z.B. Open API Hong Kong, Consumer Data Standards, Singapore Financial Data Exchange) kaum oder keine Funktionen in diesem Bereich. **Empfehlung:** Payment Initiation als separate Ausbaustufe planen.
+Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bulk, File & Variable Recurring Payments unterstützen, bieten andere Standards (z.B. Open API Hong Kong, Consumer Data Standards, Singapore Financial Data Exchange) kaum oder keine Funktionen in diesem Bereich. 
+
+**Entwicklungstrends:**
+- Bulk Payments: Standard in fortgeschrittenen Märkten
+•	File-based Payments: B2B-Fokus, noch nicht universell
+•	Variable Recurring Payments (VRP): UK Innovation, hohe Industry Adoption
+•	Real-time Payment Integration: Brasil (PIX), Singapore (PayNow)
+
+**Technical Implementation Patterns:**
+•	Request/Response Patterns vs. Webhook-based Status Updates
+•	Idempotency und Error Handling Standardisierung
+•	Multi-Currency und Cross-Border Considerations
+
+#### Empfehlungen für CH-Standard: 
+Payment Initiation als separate Ausbaustufe planen.
 
 ---
 
 ## Regulatorische Rahmenbedingungen
 
 ### Governance-Ansätze im Vergleich
+
+| **Markt**  | **Approach**                              | **Scope**                      | **Compliance Timeline** |
+| ---------- | ----------------------------------------- | ------------------------------ | ----------------------- |
+| UK         | Mandatory für Top 9, Voluntary für andere | Account Info + PIS             | 24 Monate               |
+| Brasil     | Fully Mandatory                           | Comprehensive Open Finance     | 18 Monate (phased)      |
+| EU/PSD2    | Mandatory für Payment Service Providers   | Account Info + PIS             | 24 Monate               |
+| Australien | Mandatory (phased rollout)                | Cross-sector (Banking+)        | 36 Monate               |
+| Hong Kong  | Voluntary Phase 1&2, Mandatory Phase 3&4  | Account Info + PIS + Analytics | 48 Monate               |
 
 #### Mandatorische Modelle (UK, Brasilien, Australien)
 **Charakteristika:** Starke regulatorische Durchsetzung, klare Timelines, umfassende Compliance-Anforderungen.
@@ -205,13 +280,14 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 **Vorteile:** Balance zwischen Standardisierung und Flexibilität, marktrelevante Innovation.
 **Nachteile:** Komplexe Governance, potenzielle Verzögerungen in der Entscheidungsfindung.
 
-### Technische Standards und Zertifizierung
+#### Sanktionsmechanismen und Compliance
+•	UK: Financial Conduct Authority Penalties (bis £10M oder 10% Jahresumsatz)
+•	Brasil: Central Bank Administrative Sanctions
+•	EU/PSD2: National Competent Authority Enforcement (variiert stark)
+•	Australien: ACCC Consumer Protection Powers
+•	Hong Kong: tbd
 
-#### Zertifizierungsmodelle
-- **UK:** Comprehensive Conformance Testing durch OBIE-akkreditierte Testing Houses
-- **Brasilien:** Zentralisierte Zertifizierung durch Brazilian Central Bank
-- **Australien:** Self-Assessment mit regulatorischer Supervision
-- **EU/NextGenPSD2:** Market-driven Testing und Certification
+### Technische Standards und Zertifizierung
 
 #### Common Technical Requirements
 - **Transport Security:** TLS 1.2+ universal requirement
@@ -219,19 +295,35 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 - **Data Formats:** JSON als Standard, XML als Legacy-Support
 - **Error Handling:** Standardisierte HTTP Status Codes und Error Messages
 
+#### Verwendete Zertifizierungsmodelle von analysierten Standards
+- **UK:** Comprehensive Conformance Testing durch OBIE-akkreditierte Testing Houses
+- **Brasilien:** Zentralisierte Zertifizierung durch Brazilian Central Bank
+- **Australien:** Self-Assessment mit regulatorischer Supervision
+- **EU/NextGenPSD2:** Market-driven Testing und Certification
+
+**ISO 20022 Implementierung:**
+•	Status Quo: Noch nicht vollständig harmonisiert zwischen Standards
+•	Migration Path: Verschiedene Approaches für Legacy-System-Integration
+•	CH Opportunity: Early Adoption als Competitive Advantage
+
+**Sicherheitsanforderungen und Audit-Prozesse:**
+•	Penetration Testing: Mandatory in UK/Brasil, Recommended in anderen
+•	Security Monitoring: Real-time Incident Reporting Requirements
+•	Third-Party Security Assessment: Variiert zwischen Self-Certification und External Audit
+
 ---
 
 ## Detailanalyse existierender Technologien und Standards
 
 ### API-Technologie-Stack Analyse
 
-#### REST/JSON Standardisierung
-**Universelle Adoption:** Alle analysierten Standards verwenden REST/JSON als Basis-Architektur.
+#### Datenformate und Serialisierung: REST-API/JSON Standardisierung
+**Universelle Adoption:** 7 von 8 analysierten Standards verwenden JSON als Basis-Architektur, alle implementieren das REST-API Design unter konsistenter Verwendung von RESTful Prinzipien.
 **Versionierung:** Unterschiedliche Ansätze von URL-basierter Versionierung (/v1/, /v2/) bis Header-basierter Versionierung.
 **Pagination:** Cursor-based Pagination setzt sich als Best Practice durch, Link-based Pagination für einfache Use Cases.
 
-#### OpenAPI Specification Usage
-**Dokumentation:** OpenAPI 3.0 als Standard für API-Dokumentation.
+#### Documentation: OpenAPI Specification Usage
+**Dokumentation:** Swagger/OpenAPI 3.0 als Standard für API-Dokumentation.
 **Code Generation:** Automatische Client-SDK-Generierung aus OpenAPI Specs.
 **Testing:** Schema-basierte Validation und automated Testing.
 
@@ -266,6 +358,7 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 **Institution Identifiers:** BIC, LEI als internationale Standards, lokale Identifiers (Sortcodes, Routing Numbers) für nationale Systeme.
 
 ### API Gateway und Infrastructure Patterns
+Transport- und Protokoll-Standards
 
 #### Rate Limiting und Throttling
 **Token Bucket Algorithm:** Most common für granulare Rate Control.
@@ -364,8 +457,15 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 ---
 
 ## Fazit und Handlungsempfehlungen
-(macht TZE)
+TODO: **!!macht TZE!!**
 
+### Übertragbare Erfolgsmodelle
+Was können wir als Standard und Best Practice adoptieren?
+
+### Zu vermeidende Implementierungsfehler
+Was können wir besser machen?
+Finanzen und Versicherungen werden oft als gängiges „Einstiegs-Ecosystem“ verwendet. 
+Beispiel Australien tat dies nicht und scheiterte an der zu grossen Scope des Projektes.
 
 ## Datenquellen und Referenzen
 
@@ -414,6 +514,7 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 - REST API Design Guidelines - Microsoft, Google, GitHub Standards
 - JSON Schema Best Practices - Implementation Patterns
 - OAuth 2.0 Threat Model and Security Considerations - RFC 6819
+- FAPI 2.0 Security Profile - Documentation and Details: https://openid.net/specs/fapi-2_0-security-02.html 
 
 **Regulatory Frameworks:**
 - European Union - PSD2 Directive and RTS Technical Standards
@@ -422,8 +523,6 @@ Während UK, Brasilien und NextGenPSD2 umfassende Zahlungsinitiationen inkl. Bul
 - Swiss Financial Market Supervisory Authority - FINMA Circulars
 
 ---
-
-*Dieses Dokument wurde erstellt basierend auf der umfassenden Analyse von acht globalen Open Banking Standards und repräsentiert den aktuellen Stand der internationalen Best Practices für die Entwicklung eines Schweizer Open API Kundenbeziehung Standards.*
 
 **Version:** 1.8  
 **Datum:** August 2025  
