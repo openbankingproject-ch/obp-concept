@@ -55,6 +55,8 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 
 ## Detailanalyse globaler Open Banking Standards
 
+[Gesamtauswertung der Analyse als Excel](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/Resources/20250324%20Overview%20Market%20Analysis.xlsx)
+
 ### Regulatorisch getriebene Standards
 
 #### UK Open Banking Standard (Open Banking Limited)
