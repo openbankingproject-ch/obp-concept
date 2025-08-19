@@ -26,44 +26,40 @@ professional documentation (conclusions) written from the perspective of an econ
 
 
 **context and TODO for each conclusion:**
-[] 01 Marktanalyse:
+01 Marktanalyse:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/01 Marktanalyse.md"
-    - complete the TODOs in the file
-[x] 02 Anforderungen: 
+    - remove section about the E-ID as it's already covered in conclusion 02 Anforderungen
+
+02 Anforderungen: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md"
-    - complete the TODOs in the file
-[x] 03 Referenzprozess: 
+
+03 Referenzprozess: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/03 Referenzprozess.md"
-    - complete the TODOs in the file
     - make sure to use the exact definition of the 10 steps of the Referenzprozess as defined in the resources!
-[x] 04 API-Endpoint Design:
+
+04 API-Endpoint Design:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
-    - complete the TODOs in the file
     - make sure to use the exact data fields defined in the resources where applicable (1:1 mapping) and add any missing fields that are necessary for the API Endpoint Design
     - needs to be coherent with the Referenzprozess and the data fields defined there, make sure structure matches and that everything described conceptually in the Referenzprozess is then described in detail in the API Endpoint Design conclusion
-[] 05 Vertrauensnetzwerk:
+
+05 Vertrauensnetzwerk:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
-    - complete the TODOs in the file
-[x] 06 Consent und Security Flow:
+
+06 Consent und Security Flow:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/06 Consent und Security Flow.md"
-    - complete the TODOs in the file
     - define generic flows for our API that are applicable to any of the trust network architectures and the corresponding trust network flows
-[] 07 Rechtliche Rahmenbedingungen:
+
+07 Rechtliche Rahmenbedingungen:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md"
-    - complete the TODOs in the file
-[x] 08 Testing und Verifikation:
+
+08 Testing und Verifikation:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
-    - complete the TODOs in the file
 
 **TODOs concerning all conclusions:**
-[] for each conclusion seperately: evaluate structure and content, focus on coherency and no redundancy and check grammar and general language, make sure it is professional and coherent
+[] for each conclusion seperately: evaluate structure and content, focus on coherency and no redundancy and check grammar and general language, make sure it is professional and coherent. After extensive review, give me feedback and suggestions for improvements for each conclusion.
 [] check for redundancies and coherency across all conclusions: instead of duplicate content link to relevant sections in other conclusions
 [] make sure to add all sources and references to the file "Quellen und Referenzen"
 [] update the file "Konklusion Open API Kundenbeziehung.md" that it matches the conclusions and the structure of the documentation
 [] complete the file "Navigation Documentation"
 
-**Priority list and order of task completion:**
-1. Specific changes in conclusions 01, 05 and 07
-2. first TODO concerning all conclusions: evaluate structure and content, focus on coherency and no redundancy and check grammar and general language, make sure it is professional and coherent
-3. remaining TODOs concerning all conclusions
 
