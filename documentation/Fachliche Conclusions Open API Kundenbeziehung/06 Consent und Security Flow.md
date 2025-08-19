@@ -7,7 +7,7 @@
 3. [Security Standards Evaluation](#security-standards-evaluation)
 4. [Consent-Flow-Architekturen](#consent-flow-architekturen)
 5. [JWT-Token Architektur und Consent Claims](#jwt-token-architektur-und-consent-claims)
-6. [Begrändete Standard-Auswahl: FAPI 2.0, OAuth2, OIDC](#begrändete-standard-auswahl-fapi-20-oauth2-oidc)
+6. [Begründete Standard-Auswahl: FAPI 2.0, OAuth2, OIDC](#begründete-standard-auswahl-fapi-20-oauth2-oidc)
 7. [Consent und Security Flow Implementation](#consent-und-security-flow-implementation)
 8. [Integration Patterns](#integration-patterns)
 9. [Compliance und Regulatory Alignment](#compliance-und-regulatory-alignment)
@@ -25,59 +25,9 @@ Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Securit
 - Granulare Consent-Management mit Customer Control
 - Sequence Diagram-basierte Implementation für Business Stakeholder Verständnis
 
-**Referenz-Implementation:** Orientierung an bewährten FAPI 2.0 Implementation Patterns für robuste Security-Architektur
-
 ---
 
 ## Consent und Security Flow Diagramme
-
-### Überblick: Complete IAM Flow
-
-```mermaid
-sequenceDiagram
-    participant Client as Client Application
-    participant Browser as System Browser (User-Agent)
-    participant Gateway as Gateway/Microgateway  
-    participant AuthServer as Authorization Server (AS)
-    participant FlowEngine as Flow Engine/Processor
-    participant LoginUI as Loginapp UI
-    participant TokenEndpoint as Token Endpoint
-    participant Resource as Protected Resource
-
-    Note over Client,Resource: Phase 1: Initial Request & Authorization Start
-    Client->>Gateway: Request to protected resource
-    Gateway->>Client: 401 Unauthorized (insufficient credentials)
-    
-    Client->>Browser: Create authorization request
-    Browser->>AuthServer: Authorization request
-    
-    Note over Client,Resource: Phase 2: Flow Determination & Authentication
-    AuthServer->>AuthServer: Determine target app & flow
-    AuthServer->>Browser: 302 Redirect to authentication flow
-    Browser->>FlowEngine: Start authentication flow
-    
-    FlowEngine->>LoginUI: User credentials required
-    LoginUI->>LoginUI: Present login screen
-    LoginUI->>FlowEngine: Submit user credentials
-    
-    Note over Client,Resource: Phase 3: Consent Management
-    FlowEngine->>LoginUI: Consent required
-    LoginUI->>LoginUI: Present consent screen
-    LoginUI->>FlowEngine: Submit user consent
-    
-    Note over Client,Resource: Phase 4: Authorization Response & Token Exchange
-    FlowEngine->>AuthServer: Request authorization response
-    AuthServer->>FlowEngine: Authorization response
-    FlowEngine->>Browser: Authorization response
-    Browser->>Client: Forward authorization response
-    
-    Client->>TokenEndpoint: Token exchange (authorization code)
-    TokenEndpoint->>Client: Access tokens (based on identity propagation config)
-    
-    Note over Client,Resource: Phase 5: Resource Access
-    Client->>Resource: Request with access token
-    Resource->>Client: Protected resource data
-```
 
 ### Generic Consent Management Flow
 
@@ -342,12 +292,17 @@ Die Security-Komponenten sind in einer hierarchischen Schicht-Architektur organi
 ### übersicht existierender Consent-Flow-Modelle
 
 #### App-to-App Redirect Flow (UK Standard)
-**Architektur:**
-TODO: fix mermaid diagram
+**Konzeptionelle Architektur:**
 
-```
-Customer App ä Bank App ä Customer App (with consent)
-```
+Der App-to-App Flow ermöglicht native Mobile Experience ohne Browser-Umleitung:
+
+**Customer App** → **Bank App** → **Customer App (with consent)**
+
+**Flow-Charakteristika:**
+- **Phase 1:** Customer startet Service in Integrator App
+- **Phase 2:** Automatische Weiterleitung zur Bank App
+- **Phase 3:** Authentifizierung und Consent in nativer Bank App
+- **Phase 4:** Rückleitung zur Integrator App mit Authorization Code
 
 **Vorteile:**
 - Native Mobile Experience mit optimaler UX
@@ -362,12 +317,17 @@ Customer App ä Bank App ä Customer App (with consent)
 **Use Cases:** Ideal für Mobile-First Customer Journeys mit hoher App-Adoption
 
 #### Browser Redirect Flow (PSD2 Standard)
-**Architektur:**
-TODO: fix mermaid diagram
+**Konzeptionelle Architektur:**
 
-```
-Customer Browser ä Authorization Server ä Customer Browser (with code)
-```
+Der Browser Redirect Flow nutzt Standard-Web-Mechanismen für universelle Kompatibilität:
+
+**Customer Browser** → **Authorization Server** → **Customer Browser (with code)**
+
+**Flow-Charakteristika:**
+- **Phase 1:** Customer startet Service im Browser
+- **Phase 2:** Redirect zum Authorization Server
+- **Phase 3:** Authentifizierung und Consent im Authorization Server
+- **Phase 4:** Redirect zurück mit Authorization Code
 
 **Vorteile:**
 - Universal Browser-Kompatibilität
@@ -375,19 +335,24 @@ Customer Browser ä Authorization Server ä Customer Browser (with code)
 - Einfachste Implementation für Web Services
 
 **Nachteile:**
-- Potentielle UX-Bräche durch Redirects
+- Potentielle UX-Brüche durch Redirects
 - Browser Security Limitations
 - Mobile Experience oft suboptimal
 
 **Use Cases:** Web-basierte Services, Legacy System Integration
 
 #### Decoupled Flow (Brasil Model)
-**Architektur:**
-TODO: fix mermaid diagram
+**Konzeptionelle Architektur:**
 
-```
-Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
-```
+Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherheit:
+
+**Customer Device 1** → **Authorization** + **Customer Device 2** → **Consent Completion**
+
+**Flow-Charakteristika:**
+- **Phase 1:** Customer startet Service auf Device 1
+- **Phase 2:** Push Notification oder QR Code für Device 2
+- **Phase 3:** Authentifizierung und Consent auf Device 2
+- **Phase 4:** Completion Notification an Device 1
 
 **Vorteile:**
 - Flexible Multi-Device Authentication
@@ -395,7 +360,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 - Support für verschiedene Customer Contexts
 
 **Nachteile:**
-- Hähere Komplexität für Customers
+- Höhere Komplexität für Customers
 - Zusätzliche Infrastructure Requirements
 - Complex Error Handling
 
@@ -536,7 +501,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 
 ---
 
-## Begrändete Standard-Auswahl: FAPI 2.0, OAuth2, OIDC
+## Begründete Standard-Auswahl: FAPI 2.0, OAuth2, OIDC
 
 ### Auswahl basierend auf Marktanalyse
 
@@ -554,8 +519,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 
 **Technical Expert Input:**
 - FAPI 2.0 vereinfacht Implementation vs. FAPI 1.0 Advanced
-- Airlock IAM Reference Implementation bietet Production-Ready Pattern
-- Community Support für FAPI 2.0 wächst rapidly
+- Community Support für FAPI 2.0 steigt kontinuierlich
 
 ### Swiss Context Specific Rationale
 
@@ -1152,8 +1116,6 @@ graph TB
 - **Legacy Compatibility:** Gradual Migration Support
 
 Das Consent und Security Flow Framework positioniert die Open API Kundenbeziehung mit modernsten Security Standards und etabliert Vertrauen bei Kunden, Partnern und Regulatoren durch transparente, sichere und konforme Datenverarbeitung.
-
-TODO: TZE bitte verifizieren!!
 
 ---
 
