@@ -30,29 +30,14 @@ Das Vertrauensnetzwerk für die Open API Kundenbeziehung definiert eine föderie
 
 ### Abgrenzung verschiedener Systemansätze
 
-TODO: als Tabelle darstellen
-
-#### Vertrauensnetzwerk vs. Zentrale Plattform
-**Vertrauensnetzwerk (Föderiert):**
-- Daten bleiben bei originären Anbietern
-- Gemeinsame Standards, dezentrale Ausführung
-- Multi-Provider Governance-Modell
-
-**Zentrale Plattform:**
-- Daten werden zentral gesammelt und gespeichert
-- Single Provider kontrolliert Zugang und Regeln
-- Erhöhte Abhängigkeitsrisiken
-
-#### Vertrauensnetzwerk vs. Bilaterale Lösungen
-**Vertrauensnetzwerk:**
-- Standardisierte APIs für n:n Konnektivität
-- Gemeinsame Governance und Compliance-Frameworks
-- Skaleneffekte durch Netzwerkeffekte
-
-**Bilaterale Lösungen:**
-- Individual-Integrationen zwischen jeweils 2 Partnern
-- Fragmentierte Standards und Governance
-- Exponentieller Integrationsaufwand
+| **Aspekt** | **Vertrauensnetzwerk (Föderiert)** | **Zentrale Plattform** | **Bilaterale Lösungen** |
+|------------|-----------------------------------|------------------------|-------------------------|
+| **Datenhaltung** | Bei originären Anbietern | Zentral gesammelt und gespeichert | Bei jedem Anbieter separat |
+| **Standards** | Gemeinsame Standards, dezentrale Ausführung | Single Provider kontrolliert Standards | Fragmentierte Standards |
+| **Governance** | Multi-Provider Governance-Modell | Single Provider kontrolliert Zugang und Regeln | Fragmentierte Governance |
+| **Konnektivität** | Standardisierte APIs für n:n Konnektivität | Zentral vermittelte Konnektivität | Individual-Integrationen zwischen jeweils 2 Partnern |
+| **Risiken** | Verteiltes Risiko durch Dezentralität | Erhöhte Abhängigkeitsrisiken | Exponentieller Integrationsaufwand |
+| **Skalierung** | Skaleneffekte durch Netzwerkeffekte | Zentrale Skalierung mit Single Point of Failure | Quadratisches Wachstum der Integrationen |
 
 ### Swiss Context Anpassungen
 
@@ -72,7 +57,7 @@ TODO: als Tabelle darstellen
 
 ## Architektur-Modelle Übersicht
 
-*TODO: Bilder einfügen*
+**Grafische Darstellung:** Die vollständigen Architektur-Diagramme für alle drei Modelle sind verfügbar in der Dokumentation "Grafische Darstellung Open API Prozess" → [Siehe Resources/original sources/grafische_darstellung_open_api_prozess.md]
 
 ### Modell 1: Dezentrale Architektur (Peer-to-Peer)
 
@@ -90,12 +75,10 @@ Die dezentrale P2P-Architektur organisiert sich als vollständig vernetztes Syst
 
 **Charakteristika:**
 
-*TODO: als Tabelle darstellen*
-
-- **Vorteil:** Maximale Autonomie für jeden Teilnehmer
-- **Vorteil:** Keine Single Points of Failure
-- **Nachteil:** Exponentiell steigende Integrationskosten (n²)
-- **Nachteil:** Fragmentierte Standards ohne Koordination
+| **Vorteile** | **Nachteile** |
+|---------------|----------------|
+| **Hohe Autonomie**: Maximale Autonomie für jeden Teilnehmer | **Komplexe Integration**: Exponentiell steigende Integrationskosten (n²) |
+| **Robustheit**: Keine Single Points of Failure | **Koordinationsprobleme**: Fragmentierte Standards ohne Koordination |
 
 ### Modell 2: Hybrid-Architektur (Präferierte Lösung)
 
@@ -118,12 +101,10 @@ Die gleichen Akteure wie im P2P-Modell (Banken, FinTech, InsurTech, Mobility, Re
 
 **Charakteristika:**
 
-*TODO: als Tabelle darstellen*
-
-- **Vorteil:** Zentrale Standards mit dezentraler Ausführung
-- **Vorteil:** Multi-Stakeholder Governance  
-- **Vorteil:** Skalierbare Koordination
-- **Vorteil:** Balance zwischen Autonomie und Standards
+| **Vorteile** | **Herausforderungen** |
+|---------------|----------------------|
+| **Standards-Koordination**: Zentrale Standards mit dezentraler Ausführung | **Governance-Komplexität**: Multi-Stakeholder Entscheidungsfindung erfordert Koordination |
+| **Skalierbare Architektur**: Effiziente Koordination bei wachsender Teilnehmerzahl | **Implementierungs-Vielfalt**: Balance zwischen Standards und individueller Umsetzung |
 
 ### Modell 3: Zentrale Hub-Architektur
 
@@ -149,12 +130,10 @@ Alle Akteure (Banken A-B, FinTech C, InsurTech D, Mobility E, Retail F) sind aus
 
 **Charakteristika:**
 
-*TODO: als Tabelle darstellen*
-
-- **Vorteil:** Maximale Standardisierung und Kontrolle
-- **Vorteil:** Zentrale Compliance und Audit
-- **Nachteil:** Single Point of Failure Risiko
-- **Nachteil:** Abhängigkeit von zentraler Organisation
+| **Vorteile** | **Nachteile** |
+|---------------|----------------|
+| **Umfassende Kontrolle**: Maximale Standardisierung und zentrale Steuerung | **Systemrisiko**: Single Point of Failure gefährdet gesamtes Netzwerk |
+| **Einheitliche Compliance**: Zentrale Überwachung und Audit-Funktionen | **Abhängigkeitsrisiko**: Hohe Dependenz von zentraler Organisation |
 
 ---
 
@@ -367,9 +346,9 @@ sequenceDiagram
 
 #### Multi-Stakeholder Decision Making
 **Voting Structure:** Weighted Voting basierend auf:
-- Market Share (30%): Berücksichtigung der Systemrelevanz
-- Stakeholder Category (40%): Equal representation verschiedener Kategorien
-- Technical Contribution (30%): Berücksichtigung der technischen Beiträge
+- Market Share: Berücksichtigung der Systemrelevanz
+- Stakeholder Category: Equal representation verschiedener Kategorien
+- Technical Contribution: Berücksichtigung der technischen Beiträge
 
 **Consensus Building:**
 - 2/3 Majority für Standards Changes
@@ -405,7 +384,13 @@ sequenceDiagram
 ---
 
 ## Existierende Beispiele und Best Practices
-*TODO: War ursprünglich angedacht, zusätzlich zur Marktanalyse hier spezifisch auf bestehende Vertrauensnetzwerke einzugehen, kann ich noch machen aber ist eine Frage der Priorität.*
+
+Die detaillierte Analyse existierender Standards ist in der umfassenden internationalen Marktanalyse enthalten → [Siehe Conclusion Marktanalyse](./01%20Marktanalyse.md). 
+
+**Referenz-Implementierungen für föderierte Systeme:**
+- **UK Open Banking:** Hybrid-Modell mit zentralen Standards und dezentraler Ausführung
+- **European PSD2/Berlin Group:** Industry-getriebenes föderiertes System
+- **Singapore Financial Data Exchange:** Public-Private Partnership Ansatz
 
 ## Konzeptionelle Ausarbeitung - Definition und Scope
 
@@ -458,11 +443,12 @@ Die Architektur-Evolution folgt einem systematischen Pfad mit definierten Entsch
 - Ermöglicht internationale Interoperabilität
 - Skalierbar für verschiedene Branchen-Segmente
 
-**Implementation Roadmap:**
-1. **Phase 1 (6 Monate):** Standards Development Organisation etablieren
-2. **Phase 2 (12 Monate):** Core Standards finalisieren und Testing beginnen
-3. **Phase 3 (18 Monate):** Pilot Implementation mit 5-8 Participants
-4. **Phase 4 (24+ Monate):** Market Rollout und kontinuierliche Evolution
+**Implementation Roadmap:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
+
+**Governance-spezifische Phasen:**
+- **Phase 1:** Standards Development Organisation etablieren, Governance Framework
+- **Phase 2:** Core Standards finalisieren, Pilot Implementation  
+- **Phase 3:** Market Rollout mit kontinuierlicher Governance Evolution
 
 #### Governance-Struktur für Schweizer Kontext
 
@@ -486,11 +472,10 @@ Die Architektur-Evolution folgt einem systematischen Pfad mit definierten Entsch
 - **Quality Brand:** "Swiss Standards" für Financial Data Exchange
 - **Innovation Hub:** Attraktion internationaler FinTech Investment
 
-TODO: speziell bei dem nachfolgenden Stichpunkt versuchen die Mischung aus deutschen und englischen Begriffen zu reduzieren: wie in stichpunkt drei statt shared, geteilt nutzen und statt overall network security eher die gesamte Netzwerksicherheit" - gilt für das gesamte dokument
 #### Operational Benefits
-- **Reduced Integration Costs:** Standardisierte APIs eliminieren custom Integrations
-- **Faster Time-to-Market:** Neue Services können rapid auf established Network aufbauen
-- **Enhanced Security:** Shared Security Standards erhöhen overall Network Security
+- **Reduced Integration Costs:** Standardisierte APIs eliminieren individuelle Integrationen
+- **Faster Time-to-Market:** Neue Services können schnell auf etabliertes Netzwerk aufbauen
+- **Enhanced Security:** Geteilte Sicherheitsstandards erhöhen die gesamte Netzwerksicherheit
 
 ### Risiko-Mitigation Strategien
 
