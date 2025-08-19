@@ -7,10 +7,9 @@
 3. [Use Case Analyse und Priorisierung](#use-case-analyse-und-priorisierung)
 4. [Anforderungen im Kontext des Referenzprozesses](#anforderungen-im-kontext-des-referenzprozesses)
 5. [Technische Anforderungen](#technische-anforderungen)
-6. [Business Case und Monetarisierung](#business-case-und-monetarisierung)
-7. [E-ID Integration und Abgrenzung](#e-id-integration-und-abgrenzung)
-8. [Strategische Herangehensweise: "Vom Kleinen ins Grosse"](#strategische-herangehensweise-vom-kleinen-ins-grosse)
-9. [Fazit und Roadmap](#fazit-und-roadmap)
+6. [E-ID Integration und Abgrenzung](#e-id-integration-und-abgrenzung)
+7. [Strategische Herangehensweise: "Vom Kleinen ins Grosse"](#strategische-herangehensweise-vom-kleinen-ins-grosse)
+8. [Fazit und Roadmap](#fazit-und-roadmap)
 
 ## Executive Summary
 
@@ -700,45 +699,6 @@ Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung 
 - Investment Experience
 - Compliance Status (PEP, Sanctions)
 
-## Business Case und Monetarisierung
-
-### Herausforderungen bei Open Finance Initiativen
-
-**Typische Probleme:**
-- Schwierige Formulierung tragfähiger Business Cases
-- Motivation kommt primär aus regulatorischem Druck
-- Kundenwünschbarkeit vs. wirtschaftliche Tragfähigkeit
-- Network Effects erst bei kritischer Masse erreicht
-
-### Monetarisierungsmodelle
-
-#### **Direkte Monetarisierung**
-
-**Transaction-based Fees:**
-- Per-API-Call Pricing (Tiered Structure)
-- Success-based Fees für completed Customer Onboardings
-- Premium Features für erweiterte Datensets
-- SLA-based Pricing für guaranteed Performance
-
-**Subscription Models:**
-- Basic/Premium/Enterprise Tiers
-- Volume-based Pricing Tiers
-- White-label Solutions für kleinere Provider
-- Platform-as-a-Service Offerings
-
-#### **Indirekte Monetarisierung**
-
-**Datenmonetarisierung:**
-- Anonymisierte Market Insights
-- Benchmarking Services für Industry
-- Aggregated Analytics Products
-- Compliance Reporting Services
-
-**Ecosystem-Vorteile:**
-- Erhöhte Customer Acquisition durch bessere UX
-- Reduzierte Customer Acquisition Costs
-- Improved Customer Lifetime Value
-- Cross-selling Opportunities
 ## E-ID Integration und Abgrenzung
 *TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
