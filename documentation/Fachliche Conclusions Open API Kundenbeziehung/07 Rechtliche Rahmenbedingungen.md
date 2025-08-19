@@ -83,7 +83,7 @@ Basierend auf den durchgeführten Workshops und dem Austausch mit Fachexperten w
 | **Regulatorisch** | Identifikation (Arten)           | Welche Arten der Identifikation sollen weitergegeben werden können (z.B. nur Online / Video Ident.)?                                                                                                                    |
 | **Regulatorisch** | Identifikation & Ausweisdokument | Umgang mit Ausländern / Ausländerausweis nötig?                                                                                                                                                                         |
 
-Disclaimer: Die Beantwortung der Fragen bezieht sich speziell auf die Eröffnung einer Kundenbeziehung im Banking.
+**Wichtiger Disclaimer:** *Die Beantwortung der nachfolgenden Schlüsselfragen bezieht sich speziell auf die Eröffnung einer Kundenbeziehung im Banking.*
 
 
 ## Welche Mindestanforderungen gelten an die Herausgabe von Datensätzen in Bezug auf Aktualität, Qualität und den Umgang mit Risikoprofilen wie PEP, Sanktionslisten und Hochrisikokunden?​
