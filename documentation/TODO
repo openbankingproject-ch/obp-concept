@@ -12,7 +12,7 @@ I will tell you which file to work on next, so please do not start working on th
 [] 01 Marktanalyse:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/01 Marktanalyse.md"
     - change last part according to the TODOs in the file
-[] 02 Anforderungen: 
+[x] 02 Anforderungen: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md"
     - complete the TODOs in the file
     - MVP-Datenmodell should be described in 03 Referenzprozess, here only conceptual description "MVP Definition"
