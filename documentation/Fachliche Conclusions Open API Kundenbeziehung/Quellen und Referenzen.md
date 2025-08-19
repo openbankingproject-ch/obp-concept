@@ -55,6 +55,13 @@
 
 ## Schweizer Kontext und Projektspezifische Quellen
 
+**Primäre Projektquelle:**
+- **Open Banking Project Gesamtunterlage** - Comprehensive Workshop Findings and Project Documentation (2024/2025)
+  - Zentrale Quelle für alle Use Cases, API Specifications, Architectural Models
+  - Workshop-basierte Expertenstellungnahmen und Marktanalyse
+  - Regulatorische Fragestellungen und Compliance-Framework Entwicklung
+  - Technical Specifications für FAPI 2.0 Implementation
+
 **FINMA und Schweizer Regulierung:**
 - FINMA-Rundschreiben RS 2008/7 "Outsourcing Banken"
 - FINMA-Rundschreiben RS 2016/7 "Video- und Online-Identifikation"
@@ -71,11 +78,11 @@
 - Bundeskanzlei - "Bausteine von Datenräumen – Datenökosystem Schweiz"
 
 **Projektpartner-Stellungnahmen und Experteninterviews:**
-- Hypothekarbank Lenzburg (HBL) - Position zu Haftung und Outsourcing
-- PostFinance AG - Stellungnahme zu Datenschutz und Kundeneinwilligung  
-- Intrum Justitia - Rechtliche Einschätzung zu Compliance-Anforderungen
+- Bank A - Position zu Haftung und Outsourcing
+- Bank B - Stellungnahme zu Datenschutz und Kundeneinwilligung  
+- Third-Party Service Provider F - Rechtliche Einschätzung zu Compliance-Anforderungen
 - Bank für Internationalen Zahlungsausgleich (BIZ) - Beratung zu Standards
-- YUH - Praxiserfahrungen mit FINMA-konformer API-Implementation
+- Digital Platform G - Praxiserfahrungen mit FINMA-konformer API-Implementation
 
 ## Technische Referenzen und Implementation-Guides
 
