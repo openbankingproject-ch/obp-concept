@@ -34,61 +34,35 @@ Das Testing und Verifikations-Framework für die Open API Kundenbeziehung etabli
 
 ### Multi-Layer Testing Strategy
 
-```mermaid
-graph TB
-    subgraph "Layer 1: Unit Testing"
-        Unit1[API Endpoint Tests]
-        Unit2[Business Logic Tests]
-        Unit3[Data Model Tests]
-        Unit4[Security Function Tests]
-    end
-    
-    subgraph "Layer 2: Integration Testing"
-        Int1[API Contract Testing]
-        Int2[Database Integration]
-        Int3[External Service Integration]
-        Int4[Security Integration Tests]
-    end
-    
-    subgraph "Layer 3: System Testing"
-        Sys1[End-to-End API Flows]
-        Sys2[Performance Testing]
-        Sys3[Security Testing]
-        Sys4[Compliance Testing]
-    end
-    
-    subgraph "Layer 4: Acceptance Testing"
-        Acc1[Use Case Validation]
-        Acc2[Stakeholder Acceptance]
-        Acc3[Business Process Validation]
-        Acc4[User Experience Testing]
-    end
-    
-    Unit1 --> Int1
-    Unit2 --> Int2
-    Unit3 --> Int3
-    Unit4 --> Int4
-    
-    Int1 --> Sys1
-    Int2 --> Sys2
-    Int3 --> Sys3
-    Int4 --> Sys4
-    
-    Sys1 --> Acc1
-    Sys2 --> Acc2
-    Sys3 --> Acc3
-    Sys4 --> Acc4
-    
-    classDef unit fill:#e3f2fd
-    classDef integration fill:#f3e5f5
-    classDef system fill:#e8f5e8
-    classDef acceptance fill:#fff3e0
-    
-    class Unit1,Unit2,Unit3,Unit4 unit
-    class Int1,Int2,Int3,Int4 integration
-    class Sys1,Sys2,Sys3,Sys4 system
-    class Acc1,Acc2,Acc3,Acc4 acceptance
-```
+**Konzeptionelles Testing-Framework:**
+
+Das Testing-Framework organisiert sich in vier aufeinander aufbauenden Schichten:
+
+**Layer 1: Unit Testing**
+- API Endpoint Tests für einzelne Funktionsmodule
+- Business Logic Tests für Geschäftsregeln
+- Data Model Tests für Datenstrukturen
+- Security Function Tests für Sicherheitsfunktionen
+
+**Layer 2: Integration Testing**
+- API Contract Testing zwischen Systemkomponenten
+- Database Integration für Datenpersistierung
+- External Service Integration für Drittanbieter-Services
+- Security Integration Tests für Ende-zu-Ende-Sicherheit
+
+**Layer 3: System Testing**
+- End-to-End API Flows für komplette Geschäftsprozesse
+- Performance Testing für Skalierbarkeit und Response-Zeiten
+- Security Testing für Penetration und Vulnerability Assessment
+- Compliance Testing für regulatorische Anforderungen
+
+**Layer 4: Acceptance Testing**
+- Use Case Validation mit realen Anwendungsfällen
+- Stakeholder Acceptance durch Fachbereiche
+- Business Process Validation für Geschäftsabläufe
+- User Experience Testing für Anwenderfreundlichkeit
+
+**Hierarchischer Aufbau:** Jede Schicht baut auf den Ergebnissen der vorhergehenden auf, wodurch eine systematische Qualitätssicherung vom kleinsten Funktionsmodul bis zum vollständigen Geschäftsprozess gewährleistet wird.
 
 ### Automated Testing Pipeline
 
@@ -792,7 +766,6 @@ const processDemo = {
 
 ## Fazit und Roadmap
 
-TODO: TZE bitte verifizieren!!
 
 ### Testing Excellence als Competitive Advantage
 
@@ -903,7 +876,7 @@ Das Testing und Verifikations-Framework positioniert die Open API Kundenbeziehun
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Final Draft für Stakeholder Review
+**Status:** Final Draft für Review
 
 ---
 
