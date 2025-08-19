@@ -7,7 +7,7 @@ Die Open API Kundenbeziehung implementiert den schweizer Standard für den branc
 ## Unsere Vision:
 **Das Unternehmensnetzwerk im Kontext von Open Banking zu sein**
   
-![Unsere Vision](Vision.png)
+![Vision der Open API Kundenbeziehung](documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/Resources/images/README/Vision.png)
 
 
 ### Kernfunktionen 
