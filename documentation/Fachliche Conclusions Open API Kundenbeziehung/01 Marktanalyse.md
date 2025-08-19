@@ -46,12 +46,11 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 - **UK Open Banking Standard** (Open Banking Limited)
 - **Open Finance Brasil** (Brasilianische Zentralbank)
 - **Consumer Data Standards Australien** (CSIRO)
-- **Open API Framework Hong Kong** (HKMA)
+- **Open API Framework Hong Kong** (Hong Kong Monetary Authority)
 - **NextGenPSD2** (The Berlin Group)
 - **Open Wealth API** (Open Wealth Association)
 - **SFTI Mortgage API** (Swiss Fintech Innovation)
 - **Singapore Financial Data Exchange** (MAS/SNDGG)
-- **Open API Framework Hong Kong** (Hong Kong Monetary Authority)
 
 ---
 
