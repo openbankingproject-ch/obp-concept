@@ -17,6 +17,10 @@
 
 Die Anforderungsanalyse definiert ein strukturiertes Framework für die Umsetzung der Open API Kundenbeziehung basierend auf fünf Zielbildern der digitalen Kundennähe. Der Fokus liegt auf kurzfristig umsetzbaren Lösungen (Zielbilder 1 & 2) mit strategischer Perspektive für erweiterte Szenarien. Use Case 1 "Bankwechsel/Kontoeröffnung" wurde als prioritärer Implementierungskandidat identifiziert, wobei der Baustein "Identifikation" als MVP-Einstieg definiert wird.
 
+
+TODO: Generelle Änderung
+Use Case 1 "Bankwechsel/Kontoeröffnung" wurde in Use Case "Kundenbeziehungseröffnung" umbenannt
+
 **Zentrale Erkenntnisse:**
 - Klare Priorisierung auf Zielbilder 1 & 2 für MVP-Phase
 - 4 priorisierte Use Cases mit quantitativer Bewertung
@@ -681,12 +685,14 @@ sharedCustomerHash = SHA256(hash_input)
 - Improved Customer Lifetime Value
 - Cross-selling Opportunities
 
+TODO: nachfolgenden Teil löschen
 #### **Quantitativer Business Case**
 **Conversion Rate Improvements:**
 - Videoidentifikation Success Rate: 80%
 - MVP Identifikation Success Rate: 90%
 - Gewinnsteigerung durch Open API: 10-15%
 
+TODO: keine Zahlen aus dem Business Case verwenden - nachfolgende Stichpunkte löschen
 **Financial Impact (pro Bank/Jahr):**
 - Beispiel HBL: CHF 891,000 zusätzlicher Gewinn
 - Beispiel PostFinance: CHF 1,094,500 zusätzlicher Gewinn
@@ -695,6 +701,7 @@ sharedCustomerHash = SHA256(hash_input)
 ## E-ID Integration und Abgrenzung
 *TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
+TODO: E-ID Anteil in der Marktanalyse könnte man löscen, da dieser Redunancen mit dem folgenden Teil aufweist und tendenziell hier besser aufgehoben ist 
 ### Konzeptionelle Unterschiede
 
 #### **E-ID Paradigma**
