@@ -158,6 +158,17 @@ Die enge Zusammenarbeit zwischen technischen und rechtlichen Experten sowie der 
 
 TODO: TZE bitte verifizieren!!
 
+---
+
+**Version:** 1.0  
+**Datum:** August 2025  
+**Status:** Final Draft für Legal Review  
+**Wichtiger Hinweis:** *Dieses Dokument enthält keine Rechtsberatung. Für verbindliche rechtliche Einschätzungen ist qualifizierte juristische Beratung erforderlich.*
+
+---
+
+[Quellen und Referenzen](./Quellen%20und%20Referenzen.md)
+
 TODO: Ende neue Struktur - als davor bitte in das neue File integrieren - der Rest kann gelöscht werden 
 
 
