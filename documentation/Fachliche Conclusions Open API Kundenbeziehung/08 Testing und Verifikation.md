@@ -30,6 +30,294 @@ Das Testing und Verifikations-Framework für die Open API Kundenbeziehung etabli
 
 ---
 
+## Testing und Verifikations-Diagramme
+
+### Multi-Layer Testing Strategy
+
+```mermaid
+graph TB
+    subgraph "Layer 1: Unit Testing"
+        Unit1[API Endpoint Tests]
+        Unit2[Business Logic Tests]
+        Unit3[Data Model Tests]
+        Unit4[Security Function Tests]
+    end
+    
+    subgraph "Layer 2: Integration Testing"
+        Int1[API Contract Testing]
+        Int2[Database Integration]
+        Int3[External Service Integration]
+        Int4[Security Integration Tests]
+    end
+    
+    subgraph "Layer 3: System Testing"
+        Sys1[End-to-End API Flows]
+        Sys2[Performance Testing]
+        Sys3[Security Testing]
+        Sys4[Compliance Testing]
+    end
+    
+    subgraph "Layer 4: Acceptance Testing"
+        Acc1[Use Case Validation]
+        Acc2[Stakeholder Acceptance]
+        Acc3[Business Process Validation]
+        Acc4[User Experience Testing]
+    end
+    
+    Unit1 --> Int1
+    Unit2 --> Int2
+    Unit3 --> Int3
+    Unit4 --> Int4
+    
+    Int1 --> Sys1
+    Int2 --> Sys2
+    Int3 --> Sys3
+    Int4 --> Sys4
+    
+    Sys1 --> Acc1
+    Sys2 --> Acc2
+    Sys3 --> Acc3
+    Sys4 --> Acc4
+    
+    classDef unit fill:#e3f2fd
+    classDef integration fill:#f3e5f5
+    classDef system fill:#e8f5e8
+    classDef acceptance fill:#fff3e0
+    
+    class Unit1,Unit2,Unit3,Unit4 unit
+    class Int1,Int2,Int3,Int4 integration
+    class Sys1,Sys2,Sys3,Sys4 system
+    class Acc1,Acc2,Acc3,Acc4 acceptance
+```
+
+### Automated Testing Pipeline
+
+```mermaid
+flowchart LR
+    Developer[Developer<br/>Code Commit] --> SCM[Source Control<br/>Git Repository]
+    
+    SCM --> CI[CI/CD Pipeline<br/>Triggered]
+    
+    CI --> Build[Build & Package<br/>API Services]
+    Build --> UnitTest[Unit Tests<br/>95% Coverage Target]
+    
+    UnitTest -->|Pass| IntTest[Integration Tests<br/>Contract & Service Tests]
+    UnitTest -->|Fail| Notify1[Notify Developer<br/>Fix Required]
+    
+    IntTest -->|Pass| Security[Security Tests<br/>FAPI 2.0 Compliance]
+    IntTest -->|Fail| Notify2[Integration Issues<br/>Fix Required]
+    
+    Security -->|Pass| Deploy[Deploy to<br/>Test Environment]
+    Security -->|Fail| Notify3[Security Issues<br/>Fix Required]
+    
+    Deploy --> E2E[End-to-End Tests<br/>Use Case Validation]
+    
+    E2E -->|Pass| Staging[Deploy to<br/>Staging Environment]
+    E2E -->|Fail| Notify4[E2E Issues<br/>Fix Required]
+    
+    Staging --> Manual[Manual Testing<br/>& Stakeholder Review]
+    
+    Manual -->|Approved| Production[Production<br/>Deployment]
+    Manual -->|Issues| Notify5[Manual Issues<br/>Fix Required]
+    
+    classDef process fill:#e3f2fd
+    classDef test fill:#e8f5e8
+    classDef deploy fill:#f3e5f5
+    classDef notify fill:#ffebee
+    
+    class Developer,SCM,CI,Build process
+    class UnitTest,IntTest,Security,E2E,Manual test
+    class Deploy,Staging,Production deploy
+    class Notify1,Notify2,Notify3,Notify4,Notify5 notify
+```
+
+### Use Case Verification Process
+
+```mermaid
+sequenceDiagram
+    participant Stakeholder as Business Stakeholder
+    participant TestTeam as Test Team
+    participant API as API System
+    participant TestData as Test Data
+    participant Validator as Use Case Validator
+
+    Note over Stakeholder,Validator: Use Case 1: Bank Account Opening
+    Stakeholder->>TestTeam: Define acceptance criteria
+    TestTeam->>TestData: Setup test customer data
+    TestData->>API: Initialize test scenarios
+    
+    TestTeam->>API: Execute customer check API
+    API->>TestTeam: Return customer exists
+    
+    TestTeam->>API: Execute consent management flow
+    API->>TestTeam: Consent granted
+    
+    TestTeam->>API: Execute data retrieval API
+    API->>TestTeam: Customer data returned
+    
+    TestTeam->>Validator: Submit test results
+    Validator->>Stakeholder: Present validation results
+    
+    Stakeholder->>Validator: Approve/Request changes
+    Validator->>TestTeam: Update test scenarios if needed
+    
+    Note over Stakeholder,Validator: Repeat for Use Cases 2-4
+    TestTeam->>TestTeam: Document test results
+    TestTeam->>Stakeholder: Final validation report
+```
+
+### Security Testing Flow
+
+```mermaid
+flowchart TD
+    Start([Security Testing Start]) --> AuthTest[Authentication Testing]
+    
+    AuthTest --> FAPI[FAPI 2.0 Compliance Tests]
+    FAPI --> OAuth[OAuth 2.0/OIDC Flow Tests]
+    OAuth --> JWT[JWT Token Validation Tests]
+    
+    JWT --> API_Security[API Security Tests]
+    API_Security --> Rate_Limit[Rate Limiting Tests]
+    API_Security --> Input_Valid[Input Validation Tests]
+    API_Security --> SQL_Inject[SQL Injection Tests]
+    
+    Rate_Limit --> Data_Security[Data Security Tests]
+    Input_Valid --> Data_Security
+    SQL_Inject --> Data_Security
+    
+    Data_Security --> Encryption[Encryption Tests]
+    Data_Security --> Access_Control[Access Control Tests]
+    Data_Security --> Data_Masking[Data Masking Tests]
+    
+    Encryption --> Compliance[Compliance Tests]
+    Access_Control --> Compliance
+    Data_Masking --> Compliance
+    
+    Compliance --> GDPR[GDPR/DSG Compliance]
+    Compliance --> FINMA[FINMA Requirements]
+    Compliance --> Audit[Audit Trail Validation]
+    
+    GDPR --> SecurityReport[Security Test Report]
+    FINMA --> SecurityReport
+    Audit --> SecurityReport
+    
+    SecurityReport --> Pass{All Tests Pass?}
+    Pass -->|Yes| Success([Security Validated])
+    Pass -->|No| Fix[Fix Security Issues]
+    Fix --> AuthTest
+    
+    classDef security fill:#ffebee,stroke:#d32f2f
+    classDef compliance fill:#fff3e0,stroke:#f57c00
+    classDef process fill:#e8f5e8,stroke:#388e3c
+    classDef decision fill:#e3f2fd,stroke:#1976d2
+    
+    class AuthTest,FAPI,OAuth,JWT,API_Security,Rate_Limit,Input_Valid,SQL_Inject security
+    class Data_Security,Encryption,Access_Control,Data_Masking security
+    class Compliance,GDPR,FINMA,Audit compliance
+    class Start,SecurityReport,Success,Fix process
+    class Pass decision
+```
+
+### Performance and Load Testing Flow
+
+```mermaid
+graph TB
+    subgraph "Performance Test Setup"
+        TestPlan[Performance Test Plan<br/>- Load Scenarios<br/>- Performance Targets<br/>- Test Data]
+        TestEnv[Test Environment<br/>- Production-like Setup<br/>- Monitoring Tools<br/>- Load Generators]
+    end
+    
+    subgraph "Load Testing Phases"
+        Baseline[Baseline Testing<br/>Single User<br/>Response Time Baseline]
+        Load[Load Testing<br/>Expected Volume<br/>Concurrent Users]
+        Stress[Stress Testing<br/>Peak Load<br/>Breaking Point]
+        Spike[Spike Testing<br/>Sudden Load Increases<br/>Auto-scaling]
+        Volume[Volume Testing<br/>Large Data Sets<br/>Database Performance]
+        Endurance[Endurance Testing<br/>Extended Duration<br/>Memory Leaks]
+    end
+    
+    subgraph "Performance Metrics Collection"
+        ResponseTime[Response Time<br/>< 200ms API calls<br/>< 2s complex operations]
+        Throughput[Throughput<br/>1000+ req/sec<br/>Concurrent API calls]
+        ResourceUsage[Resource Usage<br/>CPU, Memory, I/O<br/>Database connections]
+        ErrorRate[Error Rate<br/>< 0.1% under load<br/>Graceful degradation]
+    end
+    
+    subgraph "Analysis & Reporting"
+        Analysis[Performance Analysis<br/>Bottleneck Identification<br/>Optimization Recommendations]
+        Report[Test Report<br/>SLA Compliance<br/>Production Readiness]
+    end
+    
+    TestPlan --> Baseline
+    TestEnv --> Baseline
+    
+    Baseline --> Load
+    Load --> Stress
+    Stress --> Spike
+    Spike --> Volume
+    Volume --> Endurance
+    
+    Baseline --> ResponseTime
+    Load --> Throughput
+    Stress --> ResourceUsage
+    Volume --> ErrorRate
+    
+    ResponseTime --> Analysis
+    Throughput --> Analysis
+    ResourceUsage --> Analysis
+    ErrorRate --> Analysis
+    
+    Analysis --> Report
+    
+    classDef setup fill:#e3f2fd
+    classDef testing fill:#e8f5e8
+    classDef metrics fill:#fff3e0
+    classDef analysis fill:#f3e5f5
+    
+    class TestPlan,TestEnv setup
+    class Baseline,Load,Stress,Spike,Volume,Endurance testing
+    class ResponseTime,Throughput,ResourceUsage,ErrorRate metrics
+    class Analysis,Report analysis
+```
+
+### Community Validation Process
+
+```mermaid
+sequenceDiagram
+    participant Community as Industry Community
+    participant TestTeam as Internal Test Team
+    participant Partners as Bank Partners
+    participant Regulators as Regulatory Bodies
+    participant Feedback as Feedback System
+
+    Note over Community,Feedback: Community-Driven Validation Cycle
+    
+    TestTeam->>Community: Release testing framework & documentation
+    Community->>TestTeam: Review test scenarios & provide feedback
+    
+    TestTeam->>Partners: Invite to participate in validation
+    Partners->>TestTeam: Confirm participation & resources
+    
+    TestTeam->>Partners: Provide sandbox access & test data
+    Partners->>Partners: Execute partner-specific test scenarios
+    
+    Partners->>TestTeam: Submit test results & findings
+    TestTeam->>Feedback: Aggregate community feedback
+    
+    TestTeam->>Regulators: Present validation results
+    Regulators->>TestTeam: Provide regulatory feedback
+    
+    TestTeam->>Community: Share updated test results
+    Community->>Feedback: Provide additional validation
+    
+    Feedback->>TestTeam: Consolidated community validation
+    TestTeam->>TestTeam: Update testing framework based on feedback
+    
+    Note over Community,Feedback: Continuous improvement cycle
+```
+
+---
+
 ## Vorgehen und Ziele zu Testing und Verifikation
 
 ### Testing Framework Konzept
@@ -239,7 +527,7 @@ describe('Bankkonten-Onboarding Use Case', () => {
 ```
 
 **Partner Validation:**
-- **Source Banks:** HBL, PostFinance validation of data export functionality
+- **Source Banks:** Bank A, Bank B validation of data export functionality
 - **Target Banks:** Successful account creation with imported data
 - **Regulators:** FINMA-approved KYC process validation
 
