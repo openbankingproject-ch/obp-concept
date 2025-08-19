@@ -637,7 +637,74 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 20. Audit event logged at all systems
 ```
 
-TODO: add mermaid diagram (sequence diagram of complete authentication/authorization sequence)
+**Detailed Authentication/Authorization Sequence Diagram:**
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant Integrator as Integrator App/Service
+    participant AuthServer as Authorization Server
+    participant Producer as Data Producer
+    participant ConsentMgmt as Consent Management
+    participant AuditLog as Audit System
+
+    Note over Customer,AuditLog: Phase 1: Customer Initiation
+    Customer->>Integrator: Request service (account opening)
+    Integrator->>Customer: Explain data requirements & purpose
+    Customer->>Integrator: Agree to proceed with data sharing
+    
+    Note over Customer,AuditLog: Phase 2: Authorization Request (PAR)
+    Integrator->>Integrator: Generate PKCE code_verifier & code_challenge
+    Integrator->>AuthServer: POST /par (Pushed Authorization Request)
+    Note right of AuthServer: client_id, scope, code_challenge,<br/>purpose, data_categories
+    AuthServer->>AuthServer: Validate client credentials & request
+    AuthServer->>Integrator: Return request_uri (60s expiry)
+    
+    Note over Customer,AuditLog: Phase 3: Customer Authentication
+    Integrator->>Customer: Redirect to authorization endpoint
+    Customer->>AuthServer: GET /authorize?request_uri=...
+    AuthServer->>Customer: Present authentication challenge
+    Customer->>AuthServer: Primary factor (password/PIN/biometric)
+    AuthServer->>Customer: Secondary factor (SMS/App/Hardware token)
+    Customer->>AuthServer: Complete strong authentication
+    AuthServer->>AuthServer: Validate authentication factors
+    
+    Note over Customer,AuditLog: Phase 4: Consent Management
+    AuthServer->>ConsentMgmt: Check existing consents
+    ConsentMgmt->>AuthServer: No valid consent / consent expired
+    AuthServer->>Customer: Present detailed consent screen
+    Note right of Customer: Granular data permissions:<br/>- Basic identity data<br/>- Contact information<br/>- KYC attributes<br/>- Purpose & retention period
+    Customer->>AuthServer: Grant specific data permissions
+    AuthServer->>ConsentMgmt: Record consent with granular scope
+    ConsentMgmt->>AuditLog: Log consent decision with full details
+    
+    Note over Customer,AuditLog: Phase 5: Token Exchange
+    AuthServer->>Customer: Redirect with authorization code
+    Customer->>Integrator: Authorization code received
+    Integrator->>AuthServer: POST /token (via mTLS)
+    Note right of AuthServer: authorization_code,<br/>code_verifier, client_cert
+    AuthServer->>AuthServer: Verify mTLS certificate
+    AuthServer->>AuthServer: Validate PKCE code_verifier
+    AuthServer->>AuthServer: Generate tokens with consent scope
+    AuthServer->>Integrator: Access token + ID token + Refresh token
+    
+    Note over Customer,AuditLog: Phase 6: Data Access
+    Integrator->>Producer: GET /customer/data (with access token)
+    Producer->>AuthServer: Introspect access token & validate consent
+    AuthServer->>Producer: Token valid + consent scope details
+    Producer->>ConsentMgmt: Verify consent is still active
+    ConsentMgmt->>Producer: Consent active for requested data
+    Producer->>Producer: Apply data minimization based on consent
+    Producer->>AuditLog: Log data access with consent reference
+    Producer->>Integrator: Return requested customer data (minimized)
+    
+    Integrator->>Customer: Service delivered with imported data
+    
+    Note over Customer,AuditLog: Ongoing Consent Management
+    ConsentMgmt->>Customer: Periodic consent status notifications
+    Customer->>ConsentMgmt: Modify/extend/revoke consent as needed
+    ConsentMgmt->>AuditLog: Log all consent lifecycle events
+```
 
 ### Security Flow aus der Perspektive der Finanzindustrie
 
@@ -849,14 +916,61 @@ sequenceDiagram
 ### Multi-Provider Integration Pattern
 
 **Hub-and-Spoke Integration:**
-TODO: fix broken diagram!
+```mermaid
+graph TB
+    subgraph "Integrator Hub"
+        IntegratorApp[Integrator Application<br/>FinTech/New Bank]
+        APIGateway[API Gateway<br/>Security & Routing]
+        TokenMgmt[Token Management<br/>OAuth 2.0/FAPI 2.0]
+        ConsentEngine[Consent Engine<br/>Permission Management]
+    end
+    
+    subgraph "Data Producers"
+        BankA[Bank A<br/>Primary Banking Data]
+        BankB[Bank B<br/>Investment Data]
+        InsurTech[InsurTech Provider<br/>Risk Assessment Data]
+        IdentityProvider[Identity Provider<br/>KYC/Verification Data]
+    end
+    
+    subgraph "Customer Interface"
+        Customer[Customer<br/>Mobile/Web App]
+        ConsentUI[Consent Management UI<br/>Granular Permissions]
+    end
+    
+    Customer -->|1. Service Request| IntegratorApp
+    IntegratorApp -->|2. Authentication| TokenMgmt
+    TokenMgmt -->|3. Consent Collection| ConsentEngine
+    ConsentEngine -->|4. Consent UI| ConsentUI
+    ConsentUI -->|5. Grant Permissions| ConsentEngine
+    
+    APIGateway -->|FAPI 2.0 + mTLS| BankA
+    APIGateway -->|FAPI 2.0 + mTLS| BankB
+    APIGateway -->|FAPI 2.0 + mTLS| InsurTech
+    APIGateway -->|FAPI 2.0 + mTLS| IdentityProvider
+    
+    IntegratorApp -->|6. Data Requests| APIGateway
+    ConsentEngine -->|Permission Validation| APIGateway
+    
+    BankA -->|Customer Banking Data| APIGateway
+    BankB -->|Investment Portfolio| APIGateway
+    InsurTech -->|Risk Profile| APIGateway
+    IdentityProvider -->|KYC Status| APIGateway
+    
+    APIGateway -->|7. Aggregated Data| IntegratorApp
+    IntegratorApp -->|8. Service Delivery| Customer
+    
+    classDef hub fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef producer fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef customer fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef security fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    
+    class IntegratorApp,APIGateway hub
+    class TokenMgmt,ConsentEngine security
+    class BankA,BankB,InsurTech,IdentityProvider producer
+    class Customer,ConsentUI customer
+```
 
-```
-Integrator System
-       Producer A (Bank 1) via FAPI 2.0
-       Producer B (Bank 2) via FAPI 2.0  
-       Producer C (InsurTech) via FAPI 2.0
-```
+**Integration-Architektur:** Das Hub-and-Spoke Modell zentralisiert Security, Consent Management und API-Routing im Integrator Hub. Alle Data Producers werden über standardisierte FAPI 2.0 APIs mit mTLS angebunden, wodurch einheitliche Sicherheits- und Datenstandards gewährleistet werden.
 
 **Benefits:**
 - Consistent Security Model across all Producers
