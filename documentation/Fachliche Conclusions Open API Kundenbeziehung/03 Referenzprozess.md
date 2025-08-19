@@ -38,6 +38,169 @@ Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compl
 
 ---
 
+## Referenzprozess Flow-Diagramme
+
+### Überblick: 10-Stufen-Referenzprozess
+
+```mermaid
+flowchart TD
+    A[1. Initialisierung<br/>Information des Kunden] --> B[2. Produktauswahl<br/>Bedürfnisbefriedigung]
+    B --> C[3. Selbstdeklaration<br/>FATCA, MIFID Abfragen]
+    C --> D[4. Basisdaten<br/>Kontaktangaben erfassen]
+    D --> E[5. Erweiterte Daten<br/>Risiko-/Potenzialermittlung]
+    E --> F[6. Identifikation<br/>Vertragspartei identifizieren]
+    F --> G[7. Background Checks<br/>Know-Your-Customer KYC]
+    G --> H[8. Vertragsabschluss<br/>AGB akzeptieren]
+    H --> I[9. Signatur<br/>Vertragsunterzeichnung]
+    I --> J[10. Metadaten/Verteilung<br/>Erfassung und Verarbeitung]
+    J --> K[✅ Kunde onboarded]
+    
+    classDef phase1 fill:#e3f2fd
+    classDef phase2 fill:#f3e5f5  
+    classDef phase3 fill:#e8f5e8
+    classDef phase4 fill:#fff3e0
+    
+    class A,B,C phase1
+    class D,E,F phase2
+    class G,H phase3
+    class I,J,K phase4
+```
+
+### Detaillierter Prozessflow mit Akteuren
+
+```mermaid
+sequenceDiagram
+    participant K as Kunde
+    participant B as Bank/Anbieter
+    participant API as Open API System
+    participant KYC as KYC Services
+    participant ID as Identity Provider
+
+    Note over K,ID: Phase 1: Initialisierung & Produktauswahl
+    K->>B: 1. Initialisierung - Service Discovery
+    B->>K: Verfügbare Services anzeigen
+    K->>B: 2. Produktauswahl - Gewünschte Services
+    B->>K: Produktkonfiguration bestätigt
+    
+    Note over K,ID: Phase 2: Datenerfassung
+    K->>B: 3. Selbstdeklaration - FATCA/MIFID
+    K->>B: 4. Basisdaten - Kontaktinformationen
+    K->>B: 5. Erweiterte Daten - Risikoprofil
+    
+    Note over K,ID: Phase 3: Verifikation & Compliance
+    B->>API: 6. Identifikation über Open API
+    API->>ID: Identity Verification Request
+    ID->>API: Identity Verified
+    API->>B: Verified Identity Data
+    
+    B->>KYC: 7. Background Checks - KYC Prozess
+    KYC->>B: KYC Assessment Complete
+    
+    Note over K,ID: Phase 4: Vertragsabschluss
+    B->>K: 8. Vertragsabschluss - AGB präsentieren  
+    K->>B: AGB akzeptiert
+    B->>K: 9. Signatur - Vertrag signieren
+    K->>B: Digitale Signatur erteilt
+    B->>B: 10. Metadaten/Verteilung - Verarbeitung
+    B->>K: ✅ Onboarding abgeschlossen
+```
+
+### Modulare "Blöckli"-Architektur
+
+```mermaid
+graph TB
+    subgraph "Phase 1: Setup"
+        Init[Initialisierung<br/>Cookie Consent<br/>Service Discovery]
+        Product[Produktauswahl<br/>Konfiguration<br/>Eligibility Check]
+    end
+    
+    subgraph "Phase 2: Datensammlung"
+        SelfDecl[Selbstdeklaration<br/>FATCA Status<br/>MIFID II Kategorisierung]
+        Basic[Basisdaten<br/>Name, Adresse<br/>Kontaktdaten]
+        Extended[Erweiterte Daten<br/>Einkommen<br/>Investmenterfahrung]
+    end
+    
+    subgraph "Phase 3: Verifikation"
+        Identity[Identifikation<br/>VideoIdent<br/>E-ID Integration]
+        KYC[Background Checks<br/>PEP Screening<br/>Sanktionslisten]
+    end
+    
+    subgraph "Phase 4: Abschluss"
+        Contract[Vertragsabschluss<br/>AGB Zustimmung<br/>Risiko-Disclaimer]
+        Signature[Signatur<br/>Digitale Signatur<br/>Qualified Signature]
+        Meta[Metadaten<br/>Dokumentenarchivierung<br/>Prozessabschluss]
+    end
+    
+    Init --> Product
+    Product --> SelfDecl
+    SelfDecl --> Basic
+    Basic --> Extended
+    Extended --> Identity
+    Identity --> KYC
+    KYC --> Contract
+    Contract --> Signature
+    Signature --> Meta
+    
+    classDef setup fill:#e3f2fd
+    classDef data fill:#f3e5f5
+    classDef verify fill:#e8f5e8
+    classDef complete fill:#fff3e0
+    
+    class Init,Product setup
+    class SelfDecl,Basic,Extended data
+    class Identity,KYC verify
+    class Contract,Signature,Meta complete
+```
+
+### Branchenübergreifende Anwendung
+
+```mermaid
+graph LR
+    subgraph "Banking"
+        B1[Kontoeröffnung]
+        B2[Kreditantrag]
+        B3[Investment Services]
+    end
+    
+    subgraph "Insurance"
+        I1[Versicherungsabschluss]
+        I2[Schadensmeldung]
+        I3[Portfolio Review]
+    end
+    
+    subgraph "Mobility"
+        M1[Car Sharing]
+        M2[Leasing Contract]
+        M3[Insurance Package]
+    end
+    
+    subgraph "10-Step Reference Process"
+        REF[1. Initialisierung<br/>2. Produktauswahl<br/>3. Selbstdeklaration<br/>4. Basisdaten<br/>5. Erweiterte Daten<br/>6. Identifikation<br/>7. Background Checks<br/>8. Vertragsabschluss<br/>9. Signatur<br/>10. Metadaten/Verteilung]
+    end
+    
+    B1 --> REF
+    B2 --> REF  
+    B3 --> REF
+    I1 --> REF
+    I2 --> REF
+    I3 --> REF
+    M1 --> REF
+    M2 --> REF
+    M3 --> REF
+    
+    classDef banking fill:#e3f2fd
+    classDef insurance fill:#f3e5f5
+    classDef mobility fill:#e8f5e8
+    classDef reference fill:#fff3e0
+    
+    class B1,B2,B3 banking
+    class I1,I2,I3 insurance
+    class M1,M2,M3 mobility
+    class REF reference
+```
+
+---
+
 ## Branchenübergreifender 10-Stufen Referenzprozess: Design und Ziel
 
 ### Konzeptionelles Design
@@ -403,6 +566,111 @@ Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexi
 - **Extended Data:** Zusätzliche ecosystem-spezifische Daten
 - **Metadata:** Governance, Consent und Quality Informationen
 
+### Prozess-State-Machine
+
+```mermaid
+stateDiagram-v2
+    [*] --> Initialized: Customer starts process
+    
+    Initialized --> ProductSelected: Select products/services
+    ProductSelected --> SelfDeclared: Complete regulatory forms
+    
+    SelfDeclared --> BasicDataCollected: Provide contact information
+    BasicDataCollected --> ExtendedDataCollected: Risk assessment data
+    
+    ExtendedDataCollected --> PendingIdentification: Start identity verification
+    
+    state PendingIdentification {
+        [*] --> VideoIdent
+        [*] --> EID_Integration  
+        [*] --> BiometricVerification
+        VideoIdent --> IdentityVerified
+        EID_Integration --> IdentityVerified
+        BiometricVerification --> IdentityVerified
+    }
+    
+    IdentityVerified --> KYC_Processing: Background checks
+    
+    state KYC_Processing {
+        [*] --> PEP_Check
+        [*] --> Sanctions_Check
+        [*] --> AML_Assessment
+        PEP_Check --> KYC_Complete
+        Sanctions_Check --> KYC_Complete
+        AML_Assessment --> KYC_Complete
+    }
+    
+    KYC_Complete --> ContractAccepted: Customer accepts terms
+    ContractAccepted --> PendingSignature: Prepare signature
+    
+    state PendingSignature {
+        [*] --> QES_Signature
+        [*] --> TwoFA_Signature
+        [*] --> Biometric_Signature
+        QES_Signature --> DocumentSigned
+        TwoFA_Signature --> DocumentSigned
+        Biometric_Signature --> DocumentSigned
+    }
+    
+    DocumentSigned --> AccountActivated: Process metadata & distribution
+    AccountActivated --> [*]: Customer onboarded
+    
+    %% Error states
+    ProductSelected --> Failed: Eligibility check failed
+    BasicDataCollected --> Failed: Data validation error
+    ExtendedDataCollected --> Failed: Risk assessment failed
+    PendingIdentification --> Failed: Identity verification failed
+    KYC_Processing --> Failed: KYC checks failed
+    PendingSignature --> Failed: Signature process failed
+    
+    Failed --> [*]: Process terminated
+```
+
+### Entscheidungspunkte und Rollbacks
+
+```mermaid
+flowchart TD
+    Start([Process Start]) --> Check1{Eligibility Check}
+    Check1 -->|Pass| Step3[Collect Basic Data]
+    Check1 -->|Fail| End1([Process End - Ineligible])
+    
+    Step3 --> Check2{Data Validation}
+    Check2 -->|Pass| Step5[Extended Data Collection]
+    Check2 -->|Fail| Rollback1[Request Data Correction]
+    Rollback1 --> Step3
+    
+    Step5 --> Check3{Risk Assessment}
+    Check3 -->|Pass| Step6[Identity Verification]
+    Check3 -->|Fail| Manual1[Manual Review Required]
+    Manual1 -->|Approved| Step6
+    Manual1 -->|Rejected| End2([Process End - High Risk])
+    
+    Step6 --> Check4{Identity Verified?}
+    Check4 -->|Pass| Step7[KYC Processing]
+    Check4 -->|Fail| Rollback2[Alternative ID Method]
+    Rollback2 --> Step6
+    
+    Step7 --> Check5{KYC Clear?}
+    Check5 -->|Pass| Step8[Contract & Signature]
+    Check5 -->|Fail| Manual2[Compliance Review]
+    Manual2 -->|Approved with Conditions| Step8
+    Manual2 -->|Rejected| End3([Process End - Compliance])
+    
+    Step8 --> Success([Account Activated])
+    
+    classDef process fill:#e3f2fd
+    classDef decision fill:#fff3e0
+    classDef rollback fill:#ffebee
+    classDef manual fill:#f3e5f5
+    classDef endpoint fill:#e8f5e8
+    
+    class Step3,Step5,Step6,Step7,Step8 process
+    class Check1,Check2,Check3,Check4,Check5 decision
+    class Rollback1,Rollback2 rollback
+    class Manual1,Manual2 manual
+    class End1,End2,End3,Success endpoint
+```
+
 ### Basisdaten-Bausteine
 
 #### Baustein "Identität"
@@ -438,6 +706,7 @@ Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexi
 - **Insurance Integration:** Coverage, Risk Assessment
 
 ### Metadaten-Framework
+TODO: conceptual definition of metadata framework here, details in 04 API Endpoint Design
 
 #### Consent Management
 ```json
@@ -574,6 +843,7 @@ Die Open API Kundenbeziehung integriert und erweitert bestehende nationale und i
 #### Cross-Provider Interoperability
 
 **API-Endpoint-Übersicht (Version 2.0)**
+TODO: detailed API endpoint design in 04 API Endpoint Design coherent with content here!
 
 **Vollständige Datenabfrage:**
 ```
@@ -622,6 +892,8 @@ POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
 - Exception Handling und Human Intervention Workflows
 
 **Process State Management:**
+TODO: only conceptual definition of process state management here, details in 04 API Endpoint Design
+
 ```json
 {
   "processId": "onboarding_2025081801",
@@ -637,7 +909,7 @@ POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
 ---
 
 ## Fazit und Best Practices für Referenzprozess-Umsetzung
-
+*TODO: bitte verifizieren: soll ich diesen Teil (oder zumindest teilweise) zu den Anforderungen packen? passt evtl besser...*
 
 ### Strategische Erfolgsfaktoren
 
