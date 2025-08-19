@@ -15,18 +15,9 @@
 
 ## Executive Summary
 
-Die Analyse von acht globalen Open Banking Standards zeigt deutliche Konvergenz bei technologischen Grundlagen trotz unterschiedlicher regulatorischer Ansätze. JSON (ein standardisiertes Datenformat) und RESTful APIs (eine bewährte Architektur für Datenübertragung) haben sich als De-facto-Standard etabliert, während bei Consent- und Sicherheitsmodellen noch verschiedene Ansätze parallel existieren. Die Erkenntnisse bilden die Grundlage für die Entwicklung eines Schweizer Standards, der sowohl internationale Best Practices berücksichtigt als auch spezifische Anforderungen des Schweizer Marktes erfüllt.
-
-TODO: folgenden Text nutzen
 Die internationale Analyse von acht Open-Banking-Standards – darunter Vorreiter wie Brasilien, das Vereinigte Königreich und Singapur – zeigt klare Muster: JSON und RESTful APIs haben sich global als technologische Basis etabliert, während bei Einwilligungs- und Sicherheitsmodellen noch unterschiedliche Ansätze bestehen. Erfolgreiche Initiativen kombinieren einen klaren regulatorischen Rahmen mit praktikablen Standards und spürbarem Kundennutzen. Länder mit starkem zentralem Setup, wie Brasilien oder UK, konnten rasch hohe Nutzerzahlen erzielen. Gleichzeitig belegt Singapur, dass auch hybride Modelle erfolgreich sein können, sofern die Rahmenbedingungen stimmig sind. Die gewonnenen Erkenntnisse bilden die Grundlage für die Entwicklung der Open-API-Kundenbeziehung in der Schweiz, die internationale Best Practices integriert und zugleich die spezifischen Anforderungen des heimischen Marktes berücksichtigt.
 
 **Zentrale Erkenntnisse:**
-- Technologische Standardisierung bei API-Design und Datenformaten
-- Hybride Governance-Modelle zeigen höchste Erfolgsraten
-- Evolution von Open Banking zu Open Finance als erkennbarer Trend
-- Customer Management APIs sind unterentwickelter Bereich mit hohem Potenzial
-
-TODO: diese vier Stichpunkte nutzen
 - Technologische Standardisierung bei API-Design und Datenformaten
 - Regulatorisch vorgegebene Governance-Modelle zeigen die höchsten Erfolgsraten
 - Evolution von Open Banking hin zu Open Finance als erkennbarer Trend
@@ -48,8 +39,6 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 - **Regulatorische Vorreiterrolle oder innovative Ansätze:** Verschiedene Governance-Modelle
 - **Technologische Führerschaft:** Fortschrittliche API-Design-Patterns
 - **Relevanz für den Schweizer Finanzplatz:** Ähnliche Marktstrukturen und regulatorische Umfelder
-
-TO DO: folgenden Stichpunkt ergänzen
 - **Erfolgsmodelle mit hohen Nutzerzahlen:** hohe Nutzerakzeptanz und deutliche Marktdurchdringung
 
 ### Analysierte Märkte und Initiativen
@@ -62,10 +51,10 @@ TO DO: folgenden Stichpunkt ergänzen
 - **Open Wealth API** (Open Wealth Association)
 - **SFTI Mortgage API** (Swiss Fintech Innovation)
 - **Singapore Financial Data Exchange** (MAS/SNDGG)
+- **Open API Framework Hong Kong** (Hong Kong Monetary Authority)
 
 ---
-TODO: Stichpunkt anpassen oder die Tabelle nachfolgende Tabelle nutzen
-- **Open API Framework Hong Kong** (Hong Kong Monetary Authority)
+
 | Initiative                         | Owner                                                                         | Land/Region            |
 | ---------------------------------- | ----------------------------------------------------------------------------- | ---------------------- |
 | UK Open Banking Standard           | Open Banking Limited                                                          | Vereinigtes Königreich |
@@ -91,11 +80,8 @@ TODO: Stichpunkt anpassen oder die Tabelle nachfolgende Tabelle nutzen
 - **Governance:** Mandatorische Teilnahme der grossen Banken (CMA9), freiwillige Teilnahme für kleinere Institute mit starken Anreizen zur Adoption.
 - **Technologie:** JSON/REST als Grundarchitektur, FAPI-basierte Sicherheit mit OAuth 2.0, standardisierte Consent-Flows mit granularer Berechtigung auf Datenpunkt-Ebene.
 - **Erfolgsfaktoren und Innovation:** Starke regulatorische Durchsetzung kombiniert mit umfassender Ecosystem-Entwicklung. Comprehensive Developer Portal mit Sandbox-Umgebungen und detaillierter API-Dokumentation.
-- **Status:** Vollständig operational seit 2019, über 4 Millionen aktive Nutzer, kontinuierliche Evolution mit Variable Recurring Payments (VRP) als nächster Ausbaustufe.
-- **Key Takeaways:** Wichtigkeit von Developer-friendly Documentation, umfassende Sandbox-Umgebungen und klare Service Level Agreements für API-Performance.
-
-TODO: Korrektur des 4.Stichpunktes 
 - **Status:** Vollständig operational seit 2019, über 13,5 Millionen aktive Nutzer (Mai 2025), knapp zwei Milliarden monatliche API-Aufrufe (Mai 2025), gesetzliche Verankerung und Ausweitung auf weitere Sektoren im Rahmen des Data Use and Access Bill.
+- **Key Takeaways:** Wichtigkeit von Developer-friendly Documentation, umfassende Sandbox-Umgebungen und klare Service Level Agreements für API-Performance.
 
 #### Open Finance Brasil (Brasilianische Zentralbank)
 
@@ -107,29 +93,15 @@ TODO: Korrektur des 4.Stichpunktes
 
 #### Consumer Data Standards Australien (CSIRO)
 
-- **Governance:** Sektorübergreifender Ansatz (Banking, Energy, Telecommunications) unter der Consumer Data Right (CDR) Legislation.
-- **Technologie:** FAPI 1.0 Advanced, standardisierte Error-Codes, umfassende Data Standards mit JSON Schema Validation.
-- **Erfolgsfaktoren und Innovation:** Cross-industry Approach ermöglicht ganzheitliche Kundensicht, starke Consumer-Protection-Mechanismen mit detailliertem Consent-Management.
-- **Status:** Banking Sector vollständig implementiert, Energy Sector in Rollout-Phase, Telecommunications Sector in Vorbereitung.
-- **Key Takeaways:** Sektorübergreifende Standards schaffen erhebliche Skaleneffekte, erfordern aber extensive Koordination zwischen verschiedenen Aufsichtsbehörden.
-
-TODO: CSIRO ist kein Erfolg 
 - **Governance:** Initial als sektorübergreifender Ansatz (Banking, Energy, Telecommunications) unter der Consumer Data Right (CDR) Legislation geplant. 
 - **Technologie:** FAPI 1.0 Advanced, standardisierte Error-Codes, umfassende Data Standards mit JSON Schema Validation.
 - **Erfolgsfaktoren und Innovation:** Cross-industry Approach mit sektorenübergreifendem Data Sharing galt als innovativ, konnte sich in der Praxis jedoch nicht als Erfolgsfaktor etablieren.
-- **Status:** 2024 wurde ein „Reset“ angekündigt, um Rechtsgrundlagen zu straffen, Kosten zu senken und umsatzstarke Use Cases zu priorisieren – der sektorübergreifende Ansatz war zum Start zu ambitioniert.
+- **Status:** 2024 wurde ein „Reset" angekündigt, um Rechtsgrundlagen zu straffen, Kosten zu senken und umsatzstarke Use Cases zu priorisieren – der sektorübergreifende Ansatz war zum Start zu ambitioniert.
 - **Key Takeaways:** Australien hat sich mit dem sofortigen sektorübergreifenden Standard übernommen; ein schrittweiser Ausbau wie in UK oder Brasilien erscheint erfolgversprechender.
 
 #### Open API Framework Hong Kong (HKMA)
 
-- **Governance:** Phased Implementation mit voluntary Phase 1&2 (Account Information, Reference Data), mandatory Phase 3&4 (Payment Initiation, Advanced Services).
-- **Technologie:** RESTful APIs mit OpenAPI 3.0 Specifications, OAuth 2.0 mit optionaler FAPI-Implementierung, Fokus auf API-First Design.
-- **Erfolgsfaktoren und Innovation:** Fokus auf Greater Bay Area Integration mit Mainland China und Macau, starke Betonung von Cybersecurity und Risk Management.
-- **Status:** Phase 3 Implementation läuft, erste grenzüberschreitende Use Cases in Pilotphase mit Mainland China.
-- **Key Takeaways:** Grenzüberschreitende Interoperabilität erfordert erhebliche diplomatische und technische Koordination, bietet aber erhebliches wirtschaftliches Potenzial.
-
-TODO: Status schwierig abzuschätzen- bitte folgende Punkte nutzen
-- **Governance:** Vierstufige, freiwillige Umsetzung unter HKMA-Aufsicht; Phasen 1 & 2 abgeschlossen, Phase 3 im Rollout, Phase 4 in Planun
+- **Governance:** Vierstufige, freiwillige Umsetzung unter HKMA-Aufsicht; Phasen 1 & 2 abgeschlossen, Phase 3 im Rollout, Phase 4 in Planung.
 - **Technologie:** RESTful APIs mit empfohlenem OpenAPI-Standard, OAuth 2.0, keine verpflichtende FAPI-Implementierung.
 - **Erfolgsfaktoren und Innovation:** Fokus auf Datenschutz, Cybersecurity und API-Governance (Common Baseline).
 - **Status:** Phase 3 (Interbank Account Data Sharing) aktiv.
@@ -139,30 +111,18 @@ TODO: Status schwierig abzuschätzen- bitte folgende Punkte nutzen
 
 #### NextGenPSD2 (The Berlin Group)
 
-- **Governance:** Industry-driven Standard für europäische PSD2-Compliance, entwickelt von einem Konsortium europäischer Banken und Payment Service Provider.
+- **Governance:** Regulatorischer Rahmen durch PSD2 (seit 2018); technische Standardisierung nicht vorgeschrieben, aber NextGenPSD2 der Berlin Group hat sich als marktprägender Industriestandard etabliert.
 - **Technologie:** RESTful/JSON APIs, verschiedene Strong Customer Authentication (SCA) Approaches, Embedded und Redirect Flow Support.
 - **Erfolgsfaktoren und Innovation:** Flexibilität bei der Implementation ermöglicht Bank-spezifische Anpassungen, während Interoperabilität gewährleistet bleibt.
-- **Status:** Breite Verwendung in der EU mit über 3000 Banken, kontinuierliche Weiterentwicklung durch Working Groups.
+- **Status:** Breite Verwendung in der EU mit über 3600 Instituten, kontinuierliche Weiterentwicklung durch Working Groups.
 - **Key Takeaways:** Industry-driven Standards benötigen starke Governance-Strukturen und kontinuierliche Abstimmung zwischen Marktteilnehmern.
-
-  TODO: ändern in 
-- **Governance:** Governance: Regulatorischer Rahmen durch PSD2 (seit 2018); technische Standardisierung nicht vorgeschrieben, aber NextGenPSD2 der Berlin Group hat sich als marktprägender Industriestandard etabliert.
-- **Technologie:** RESTful/JSON APIs, verschiedene Strong Customer Authentication (SCA) Approaches, Embedded und Redirect Flow Support.
-- **Erfolgsfaktoren und Innovation:** Flexibilität bei der Implementation ermöglicht Bank-spezifische Anpassungen, während Interoperabilität gewährleistet bleibt.
- - **Status:** Breite Verwendung in der EU mit über 3600 Instituten, kontinuierliche Weiterentwicklung durch Working Groups.
- - **Key Takeaways:** Industry-driven Standards benötigen starke Governance-Strukturen und kontinuierliche Abstimmung zwischen Marktteilnehmern.
 
 #### Open Wealth API (Open Wealth Association)
 
-- **Governance:** Industry Consortium mit Fokus auf Wealth Management und Private Banking, primär Swiss-based Initiative.
+- **Governance:** Industry Consortium mit Fokus auf Wealth Management und Private Banking.
 - **Technologie:** Customer Management APIs, Portfolio-Daten-Standards, Integration mit bestehenden Core Banking Systems.
 - **Erfolgsfaktoren und Innovation:** Spezialisierung auf High-Net-Worth Individual (HNWI) Use Cases, starke Fokussierung auf Privacy und Data Protection.
-- **Status:** Pilot-Implementierungen bei mehreren Schweizer Private Banks, schrittweise Expansion in deutsche und österreichische Märkte.
-- **Key Takeaways:** Besonders relevant für Schweizer Wealth Management Sektor, zeigt Potenzial für Domain-spezifische API-Standards.
-
-TODO: folgende Punkte anpassen 
-- **Governance:** Industry Consortium mit Fokus auf Wealth Management und Private Banking.
-- **Status:** Implementierungen bei mehreren Schweizer Banken und verfügbare Sandbox
+- **Status:** Implementierungen bei mehreren Schweizer Banken und verfügbare Sandbox.
 - **Key Takeaways:** Zeigt Potenzial für Domain-spezifische API-Standards.
   
 #### SFTI Mortgage API (Swiss Fintech Innovation)
@@ -193,10 +153,7 @@ JSON als Dateiformat (in 7 von 8 analysierten Standards verwendet) und RESTful A
 #### Empfehlungen für CH-Standard:
 - **JSON/REST** als Basis für Schweizer Standard, mit optionaler XML-Unterstützung für Legacy-Systeme.
 - **OpenAPI 3.0** basierte Spezifikationen ermöglichen bessere Developer-Experience.
-- Backward-Compatibility mit XML nur wo legacy-Systeme dies erfordern.
-
-TODO: Formatierung des folgenden Punktes
-- Backward-Compatibility mit XML nur wo legacy-Systeme dies erfordern.
+- Backward-Compatibility mit XML nur wo Legacy-Systeme dies erfordern.
 ### 2. Consent- und Sicherheitsmodelle variieren stark
 
 Von App-to-App bis Decoupled Flows – es gibt keinen eindeutigen globalen Consent-Standard. Auch bei Sicherheitsmodellen (z.B. FAPI, OAuth, OIDC) sind grosse Unterschiede erkennbar.
@@ -222,16 +179,10 @@ Von App-to-App bis Decoupled Flows – es gibt keinen eindeutigen globalen Conse
 
 ### 3. Unterschiedliche Governance-Modelle prägen die Umsetzung
 
-Von regulatorisch vorgegebenen Modellen (UK, Brasilien, Australien) bis zu industriegetriebenen Standards (Open Wealth, SFTI): Die Steuerung variiert erheblich. 
-- Rein regulatorisch: Schnelle Adoption, aber weniger Innovation (Brasil)
-- Rein industriell: Höhere Innovation, aber langsamere Adoption (Berlin Group)
-- Hybrid: Beste Balance zwischen Compliance und Innovation (UK, Singapore)
-
-TODO: ist inhaltlich nicht ganz korrekt daher eher
-Von regulatorisch vorgegebenen Modellen (UK, Brasilien, Australien) bis zu industriegetriebenen Standards (Open Wealth, SFTI): Die Steuerung variiert erheblich und kann in drei Kategorieren unterteilt werden: 
-- Regulator-mandated (UK Open Banking Standard (initial), Open Finance Brasil) 
-- Industry-driven (SFTI Mortgage API, Open Wealth API)
-- Hybrid (Singapore Financial Exchange, Open API Framework Hong Kong)
+Von regulatorisch vorgegebenen Modellen (UK, Brasilien, Australien) bis zu industriegetriebenen Standards (Open Wealth, SFTI): Die Steuerung variiert erheblich und kann in drei Kategorien unterteilt werden: 
+- **Regulator-mandated:** UK Open Banking Standard (initial), Open Finance Brasil
+- **Industry-driven:** SFTI Mortgage API, Open Wealth API
+- **Hybrid:** Singapore Financial Exchange, Open API Framework Hong Kong
 
 #### Empfehlungen für CH-Standard: 
 **Hybrid-Modell** mit regulatorischer Rahmensetzung und Industry-getriebener Detailausarbeitung. Erfolgsfaktoren von Hybrid-Modellen:
@@ -259,28 +210,34 @@ Modularer Ansatz beginnend mit Identifikationsdaten, schrittweise Expansion. Opp
 - Branchenübergreifende Applicability (nicht nur Banking)
 
 
-#### Priorisierte Use Cases für Schweizer Implementation
-Basierend auf Marktanalyse und Stakeholder-Bewertung wurden 16 Use Cases identifiziert und 4 prioritäre Use Cases vertieft analysiert:
-[Siehe Conclusion Anforderungen](./02%20Anforderungen.md)
+#### Use Cases für Schweizer Implementation
+Basierend auf systematischer Marktanalyse und Workshop-basierter Stakeholder-Bewertung wurden 16 Use Cases identifiziert und priorisiert:
+[Detaillierte Analyse siehe Conclusion Anforderungen](./02%20Anforderungen.md)
 
-1. **Bankverhältnis/Kontoeröffnung (13 Punkte):** Wiederverwendung von sämtlichen, für eine Kundeneröffnung bei einer Bank relevanten Datenpunkte
-2. **Re-Identifikation (7 Punkte):** Wiederverwendung von relevanten Identifikationsdaten
-3. **Altersverifikation (4 Punkte):** Wiederverwendung des Datenpunkts «Geburtsdatum» für E-Commerce und Services
-4. **EWV Use Case (4 Punkte):** Wiederverwendung von relevanten Datenpunkten aus der externen Vermögensverwaltung
+**Top-prioritäre Use Cases:**
+1. **Bankwechsel/Kontoeröffnung:** Wiederverwendung von sämtlichen, für eine Kundeneröffnung bei einer Bank relevanten Datenpunkte
+2. **Re-Identifikation:** Wiederverwendung von relevanten Identifikationsdaten
+3. **Altersverifikation:** Wiederverwendung des Datenpunkts «Geburtsdatum» für E-Commerce und Services
+4. **CLM von EVV-Endkunden:** Wiederverwendung von relevanten Datenpunkten aus der externen Vermögensverwaltung
 
-**MVP "Identifikation"** wurde als fokussierter Startpunkt zur Umsetzung definiert.
-TODO: hier eventuell die Tabelle aus Slide 26 Gesamtunterlage ergänzen, da diese alle 16 Use Cases aufzeigt. Zusätzlich keine Punktebewertung angeben und " 4 prioritäre Use Cases vertieft analysiert:" löschen
+**Weitere analysierte Use Cases umfassen:**
+- Mietvertrag und Mietkautionskonto
+- Leasing und Privatkredit
+- Hypothekenablösung und -vermittlung
+- Arzt/Spital-Services
+- Behördenleistungen mit vorausgefüllten Formularen
+- Mobility-as-a-Service und Fahrzeug-Leasing
+- Age-gated Product Sales (Alkohol, Tabak)
+- Cross-platform Loyalty Programs
+
+**MVP "Identifikation"** wurde als fokussierter Startpunkt zur Umsetzung definiert, da dieser Baustein die höchste Wiederverwendbarkeit über alle Use Cases hinweg bietet.
 
 ### 5. Open Finance Evolution ist im Kommen – aber uneinheitlich
 
 Während einige Initiativen (z.B. Open Finance Brasil, NextGenPSD2, Singapore Financial Data Exchange) bereits umfangreiche Open Finance-Funktionen abdecken, fokussieren sich andere noch stark auf reines Open Banking. 
 - UK: Expansion zu Variable Recurring Payments (VRP), Credit/Lending
 - Brasil: Comprehensive approach von Beginn an (Credit, Investment, Insurance)
-- EU: Fragmentierter Ansatz, PSD3 bringt möglicherweise Harmonisierung
-
-TODO: folgenden Punkt ändern in 
-- EU: Ziel ist die Erweiterung des Datenzugangs über Zahlungsinformationen hinaus auf weitere Finanzprodukte, darunter Kredite, Hypotheken, Sparanlagen und Versicherungen.
-- 
+- EU: Ziel ist die Erweiterung des Datenzugangs über Zahlungsinformationen hinaus auf weitere Finanzprodukte, darunter Kredite, Hypotheken, Sparanlagen und Versicherungen. 
 #### Empfehlungen für CH-Standard: 
 Open Finance Roadmap von Beginn an mitdenken und zukunftsorientiert planen.
 
@@ -584,7 +541,7 @@ Eine Open API Kundenbeziehung als wirtschaftlich sinnvolle Zwischenlösung, die 
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Final Draft für Review
+**Status:** Reviewed and Approved
 
 ---
 
