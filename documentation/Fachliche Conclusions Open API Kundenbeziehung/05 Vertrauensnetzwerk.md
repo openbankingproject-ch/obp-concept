@@ -24,6 +24,194 @@ Das Vertrauensnetzwerk für die Open API Kundenbeziehung definiert eine föderie
 
 ---
 
+## Architektur-Modelle Übersicht
+
+### Modell 1: Dezentrale Architektur (Peer-to-Peer)
+
+```mermaid
+graph TB
+    subgraph "Dezentrale P2P Architektur"
+        A[Bank A<br/>Producer]
+        B[Bank B<br/>Integrator] 
+        C[FinTech C<br/>Producer/Integrator]
+        D[InsurTech D<br/>Integrator]
+        E[Mobility E<br/>Producer]
+        F[Retail F<br/>Integrator]
+    end
+    
+    A <==> B
+    A <==> C
+    A <==> D
+    A <==> E
+    B <==> C
+    B <==> D
+    B <==> F
+    C <==> D
+    C <==> E
+    C <==> F
+    D <==> E
+    D <==> F
+    E <==> F
+    
+    classDef bank fill:#e3f2fd
+    classDef fintech fill:#f3e5f5
+    classDef insurance fill:#e8f5e8
+    classDef mobility fill:#fff3e0
+    classDef retail fill:#fce4ec
+    
+    class A,B bank
+    class C fintech
+    class D insurance  
+    class E mobility
+    class F retail
+```
+
+**Charakteristika:**
+- ✅ Maximale Autonomie für jeden Teilnehmer
+- ✅ Keine Single Points of Failure
+- ❌ Exponentiell steigende Integrationskosten (n²)
+- ❌ Fragmentierte Standards ohne Koordination
+
+### Modell 2: Hybrid-Architektur (Präferierte Lösung)
+
+```mermaid
+graph TB
+    subgraph "Zentrale Koordination"
+        Standards[Standards Body<br/>& Registry]
+        Gov[Multi-Stakeholder<br/>Governance]
+        Cert[Certification<br/>Authority]
+    end
+    
+    subgraph "Dezentrale Teilnehmer"
+        A[Bank A<br/>Producer]
+        B[Bank B<br/>Integrator]
+        C[FinTech C<br/>Producer/Integrator] 
+        D[InsurTech D<br/>Integrator]
+        E[Mobility E<br/>Producer]
+        F[Retail F<br/>Integrator]
+    end
+    
+    Standards -.-> A
+    Standards -.-> B
+    Standards -.-> C
+    Standards -.-> D
+    Standards -.-> E
+    Standards -.-> F
+    
+    Gov -.-> Standards
+    Cert -.-> Standards
+    
+    A <==> B
+    A <==> C
+    B <==> D
+    C <==> E
+    D <==> F
+    E <==> A
+    F <==> B
+    
+    classDef central fill:#ffeb3b,stroke:#f57f17,stroke-width:3px
+    classDef bank fill:#e3f2fd
+    classDef fintech fill:#f3e5f5
+    classDef insurance fill:#e8f5e8
+    classDef mobility fill:#fff3e0
+    classDef retail fill:#fce4ec
+    
+    class Standards,Gov,Cert central
+    class A,B bank
+    class C fintech
+    class D insurance
+    class E mobility
+    class F retail
+```
+
+**Charakteristika:**
+- ✅ Zentrale Standards mit dezentraler Ausführung
+- ✅ Multi-Stakeholder Governance  
+- ✅ Skalierbare Koordination
+- ✅ Balance zwischen Autonomie und Standards
+
+### Modell 3: Zentrale Hub-Architektur
+
+```mermaid
+graph TB
+    subgraph "Zentraler Hub"
+        Hub[Central Trust Hub]
+        Data[Centralized<br/>Data Store]
+        Policy[Policy<br/>Engine]
+        Audit[Audit &<br/>Compliance]
+        Gateway[API Gateway]
+    end
+    
+    subgraph "Angeschlossene Teilnehmer" 
+        A[Bank A]
+        B[Bank B]
+        C[FinTech C]
+        D[InsurTech D]
+        E[Mobility E]
+        F[Retail F]
+    end
+    
+    Hub --> Data
+    Hub --> Policy
+    Hub --> Audit
+    Hub --> Gateway
+    
+    A --> Gateway
+    B --> Gateway
+    C --> Gateway
+    D --> Gateway
+    E --> Gateway
+    F --> Gateway
+    
+    Gateway -.-> A
+    Gateway -.-> B
+    Gateway -.-> C
+    Gateway -.-> D
+    Gateway -.-> E
+    Gateway -.-> F
+    
+    classDef hub fill:#ff5722,stroke:#bf360c,stroke-width:3px
+    classDef participants fill:#e0e0e0
+    
+    class Hub,Data,Policy,Audit,Gateway hub
+    class A,B,C,D,E,F participants
+```
+
+**Charakteristika:**
+- ✅ Maximale Standardisierung und Kontrolle
+- ✅ Zentrale Compliance und Audit
+- ❌ Single Point of Failure Risiko
+- ❌ Abhängigkeit von zentraler Organisation
+
+### Evolution Path: Skalierbare Architektur-Entwicklung
+
+```mermaid
+flowchart LR
+    Start([Start]) --> P2P[Dezentrale P2P<br/>Pilotprojekte<br/>Schneller Go-Live]
+    
+    P2P --> Decision1{Standards<br/>harmonisieren?}
+    Decision1 -->|Ja| Hybrid[Hybrid-Architektur<br/>Zentrale Standards<br/>Dezentrale Daten]
+    Decision1 -->|Nein| P2P
+    
+    Hybrid --> Decision2{Vollständige<br/>Zentralisierung?}
+    Decision2 -->|Ja| Central[Zentrale Hub<br/>Maximum Control<br/>Single Authority]
+    Decision2 -->|Nein| Hybrid
+    
+    Central --> End([Mature Ecosystem])
+    Hybrid --> End
+    
+    classDef start fill:#e8f5e8
+    classDef arch fill:#e3f2fd
+    classDef decision fill:#fff3e0
+    classDef end fill:#f3e5f5
+    
+    class Start,End start
+    class P2P,Hybrid,Central arch
+    class Decision1,Decision2 decision
+```
+
+---
+
 ## Konzeptionelle Ausarbeitung - Definition und Scope
 
 ### Vertrauensnetzwerk Definition
@@ -251,6 +439,149 @@ Bank A Bank B FinTech C InsurTech D
 | **Data Consumer** | Direkte P2P Integration | Standard APIs via Registry | APIs zu Central Hub |
 | **Trust Anchor** | Nicht vorhanden | Multi-Stakeholder Body | Central Platform Operator |
 | **Technical Provider** | Bilateral Services | Standards-compliant Services | Hub-integrierte Services |
+
+### Datenfluss-Diagramme für alle Architektur-Modelle
+
+#### Dezentrale P2P Datenflüsse
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant BankB as Bank B (Integrator)
+    participant BankA as Bank A (Producer)
+
+    Note over Customer,BankA: Dezentraler P2P Flow - Direkte Verbindung
+    Customer->>BankB: Request account opening
+    BankB->>Customer: Request consent for data from Bank A
+    Customer->>BankB: Grant consent
+    
+    BankB->>BankA: Direct API call with consent
+    Note over BankB,BankA: Bilateral security agreement<br/>Custom API implementation
+    BankA->>BankA: Validate consent & prepare data
+    BankA->>BankB: Return customer data
+    BankB->>Customer: Account opened
+    
+    Note over Customer,BankA: No central oversight<br/>Bilateral compliance only
+```
+
+#### Hybrid-Architektur Datenflüsse
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer  
+    participant BankB as Bank B (Integrator)
+    participant Standards as Standards Body
+    participant Registry as Participant Registry
+    participant BankA as Bank A (Producer)
+    participant Audit as Audit System
+
+    Note over Customer,Audit: Hybrid Flow - Zentrale Standards, dezentrale Daten
+    Customer->>BankB: Request service
+    BankB->>Registry: Discover Bank A endpoints
+    Registry->>BankB: Return standardized API endpoints
+    
+    BankB->>Customer: Request consent (standardized form)
+    Customer->>BankB: Grant consent
+    
+    BankB->>BankA: API call with standard FAPI 2.0 security
+    Note over BankB,BankA: Standardized API contract<br/>Certified implementation
+    
+    BankA->>Standards: Validate consent format
+    Standards->>BankA: Consent valid
+    BankA->>BankB: Return data (standard format)
+    
+    BankB->>Audit: Log transaction
+    BankA->>Audit: Log data sharing
+    
+    BankB->>Customer: Service delivered
+```
+
+#### Zentrale Hub Datenflüsse
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant BankB as Bank B (Integrator)
+    participant Hub as Central Trust Hub
+    participant Policy as Policy Engine
+    participant BankA as Bank A (Producer)
+    participant DataStore as Central Data Store
+
+    Note over Customer,DataStore: Zentraler Hub Flow - Vollständige zentrale Kontrolle
+    Customer->>BankB: Request service
+    BankB->>Hub: Submit data request
+    Hub->>Customer: Present unified consent interface
+    Customer->>Hub: Grant consent
+    
+    Hub->>Policy: Validate request against policies
+    Policy->>Hub: Request approved
+    
+    Hub->>BankA: Request customer data
+    BankA->>DataStore: Store data in central repository
+    DataStore->>Hub: Data available
+    
+    Hub->>Policy: Apply data processing rules
+    Policy->>Hub: Processed data ready
+    Hub->>BankB: Deliver processed data
+    
+    BankB->>Customer: Service completed
+    Hub->>Hub: Comprehensive audit logging
+```
+
+### Governance-Flow Diagramme
+
+#### Multi-Stakeholder Governance (Hybrid Model)
+
+```mermaid
+graph TB
+    subgraph "Governance Structure"
+        Board[Governance Board<br/>Multi-Stakeholder]
+        Standards[Standards Committee]
+        Compliance[Compliance Committee]
+        Technical[Technical Committee]
+    end
+    
+    subgraph "Stakeholder Groups"
+        Banks[Large Banks<br/>30% Weight]
+        FinTech[FinTech Companies<br/>25% Weight]
+        Insurance[Insurance Companies<br/>20% Weight]  
+        Others[Other Financial Services<br/>15% Weight]
+        Tech[Technology Providers<br/>10% Weight]
+    end
+    
+    subgraph "Decision Making Process"
+        Proposal[Standards Proposal]
+        Review[Committee Review]
+        Vote[Weighted Voting]
+        Implement[Implementation]
+    end
+    
+    Banks --> Board
+    FinTech --> Board
+    Insurance --> Board
+    Others --> Board
+    Tech --> Board
+    
+    Board --> Standards
+    Board --> Compliance
+    Board --> Technical
+    
+    Standards --> Proposal
+    Compliance --> Proposal
+    Technical --> Proposal
+    
+    Proposal --> Review
+    Review --> Vote
+    Vote --> Implement
+    
+    classDef governance fill:#ffeb3b,stroke:#f57f17,stroke-width:2px
+    classDef stakeholders fill:#e3f2fd
+    classDef process fill:#e8f5e8
+    
+    class Board,Standards,Compliance,Technical governance
+    class Banks,FinTech,Insurance,Others,Tech stakeholders
+    class Proposal,Review,Vote,Implement process
+```
 
 ### Onboarding-Prozesse
 
