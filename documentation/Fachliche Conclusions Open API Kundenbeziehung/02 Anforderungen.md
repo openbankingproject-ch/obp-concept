@@ -685,7 +685,6 @@ sharedCustomerHash = SHA256(hash_input)
 - Improved Customer Lifetime Value
 - Cross-selling Opportunities
 
-TODO: nachfolgenden Teil löschen
 #### **Quantitativer Business Case**
 **Conversion Rate Improvements:**
 - Videoidentifikation Success Rate: 80%
@@ -937,7 +936,7 @@ Ein umfassendes Messystem für den Erfolg der Open API Kundenbeziehung umfasst s
 - Developer Satisfaction (Target: 4.5/5.0)
 
 #### **Business KPIs**
-
+TODO: die Zahlen bitte nochmals mit Thö challengen
 **Financial Metrics:**
 - Revenue per Transaction (Target: CHF 3-5)
 - Customer Acquisition Cost (Target: < CHF 100)
@@ -969,6 +968,9 @@ Die umfassende Anforderungsanalyse zeigt eine klare Strategie für die erfolgrei
 2. **Business Model Validation:** Sustainable Revenue Generation
 3. **Ecosystem Development:** 15+ aktive Partner
 4. **International Preparation:** EU Market Entry Vorbereitung
+
+TODO: Punkt 4 anpassen 
+4. **International Preparation:** Sicherstellung der internationalen Anschlussfähigkeit
 
 #### **Langfristige Vision (24+ Monate)**
 1. **Market Leadership:** Führende Position im Swiss Market
