@@ -4,6 +4,11 @@ Conceptual Development of the Open Banking Project "Open API"
 ## About
 Die Open API Kundenbeziehung implementiert den schweizer Standard für den branchenübergreifenden Austausch von Kundendaten zur Etablierung einer selbstbestimmten digitalen Kundenbeziehung.
 
+### Unsere Vision: **Das Unternehmensnetzwerk im Kontext von Open Banking zu sein**
+  
+![Vision der Open API Kundenbeziehung](documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/Resources/images/README/Vision.png)
+
+
 ### Kernfunktionen 
 
 Ausstehend: Verifikation mit Partnern und Experten
