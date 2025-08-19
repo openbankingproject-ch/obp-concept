@@ -27,154 +27,6 @@ Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Securit
 
 ---
 
-## Consent und Security Flow Diagramme
-
-### Generic Consent Management Flow
-
-```mermaid
-sequenceDiagram
-    participant Customer as Customer
-    participant Bank as Bank/Service Provider
-    participant ConsentMgmt as Consent Management
-    participant DataProvider as Data Provider
-    participant AuditLog as Audit & Compliance
-
-    Note over Customer,AuditLog: Phase 1: Consent Request Initiation
-    Customer->>Bank: Initiate service request
-    Bank->>ConsentMgmt: Check existing consents
-    ConsentMgmt->>Bank: No valid consent found
-    
-    Bank->>ConsentMgmt: Create consent request
-    ConsentMgmt->>Customer: Present consent form
-    Note over Customer: Granular consent options:<br/>- Basic data access<br/>- Extended KYC data<br/>- Purpose limitation<br/>- Time restrictions
-    
-    Note over Customer,AuditLog: Phase 2: Consent Granting & Validation
-    Customer->>ConsentMgmt: Grant specific consents
-    ConsentMgmt->>ConsentMgmt: Validate consent completeness
-    ConsentMgmt->>AuditLog: Log consent decision
-    
-    ConsentMgmt->>Bank: Consent granted with scope
-    Bank->>DataProvider: Request data with consent token
-    
-    Note over Customer,AuditLog: Phase 3: Data Access & Usage
-    DataProvider->>ConsentMgmt: Verify consent validity
-    ConsentMgmt->>DataProvider: Consent valid for scope
-    DataProvider->>Bank: Provide requested data
-    DataProvider->>AuditLog: Log data access
-    
-    Bank->>Customer: Service delivered
-    
-    Note over Customer,AuditLog: Phase 4: Ongoing Consent Management
-    ConsentMgmt->>Customer: Consent expiry notification (if applicable)
-    Customer->>ConsentMgmt: Renew/modify/revoke consent
-    ConsentMgmt->>AuditLog: Log consent updates
-```
-
-### FAPI 2.0 Security Implementation
-
-```mermaid
-sequenceDiagram
-    participant Client as Client App
-    participant AuthServer as Authorization Server
-    participant ResourceServer as Resource Server
-    participant Customer as Customer
-
-    Note over Client,Customer: FAPI 2.0 Security Flow with PKCE + mTLS
-    
-    Client->>Client: Generate PKCE code_verifier & code_challenge
-    Client->>Client: Create authorization request with security parameters
-    
-    Client->>AuthServer: Authorization request<br/>(client_id, scope, code_challenge, state, nonce)
-    AuthServer->>Customer: Authenticate customer
-    Customer->>AuthServer: Authentication successful
-    
-    AuthServer->>Customer: Present consent screen<br/>(granular data permissions)
-    Customer->>AuthServer: Grant consent
-    
-    AuthServer->>Client: Authorization code + state
-    
-    Note over Client,Customer: Token Exchange with Enhanced Security
-    Client->>AuthServer: Token request via mTLS<br/>(code, code_verifier, client_cert)
-    AuthServer->>AuthServer: Verify mTLS certificate
-    AuthServer->>AuthServer: Validate PKCE code_verifier
-    AuthServer->>Client: Access token + ID token (JWT)
-    
-    Note over Client,Customer: Resource Access with Financial-Grade Security
-    Client->>ResourceServer: API request + access token via mTLS
-    ResourceServer->>ResourceServer: Validate mTLS client certificate
-    ResourceServer->>AuthServer: Introspect access token
-    AuthServer->>ResourceServer: Token valid + scope information
-    ResourceServer->>Client: Protected resource data
-```
-
-### JWT Token Architecture & Claims
-
-```mermaid
-graph TB
-    subgraph "JWT Token Structure"
-        Header[Header<br/>alg: RS256<br/>typ: JWT<br/>kid: key-id]
-        Payload[Payload<br/>Standard Claims<br/>Custom Claims<br/>Consent Claims]
-        Signature[Signature<br/>RSA256<br/>Private Key Signed]
-    end
-    
-    subgraph "Standard Claims"
-        ISS[iss: issuer]
-        SUB[sub: subject]  
-        AUD[aud: audience]
-        EXP[exp: expiration]
-        IAT[iat: issued at]
-        JTI[jti: JWT ID]
-    end
-    
-    subgraph "Consent Claims"
-        PURPOSE[purpose: account_opening]
-        SCOPE[scope: basic_data kyc_data]
-        CUSTOMER[customer_hash: sha256_hash]
-        CONSENT_ID[consent_id: unique_id]
-        CONSENT_EXP[consent_expires: timestamp]
-    end
-    
-    subgraph "Custom Claims"
-        INSTITUTION[requesting_institution: bank_id]
-        USE_CASE[use_case: customer_onboarding]
-        DATA_RETENTION[data_retention_period: duration]
-        PROCESSING_PURPOSE[processing_purpose: specific_purpose]
-    end
-    
-    Header --> Payload
-    Payload --> Signature
-    
-    Payload --> ISS
-    Payload --> SUB
-    Payload --> AUD
-    Payload --> EXP
-    Payload --> IAT
-    Payload --> JTI
-    
-    Payload --> PURPOSE
-    Payload --> SCOPE
-    Payload --> CUSTOMER
-    Payload --> CONSENT_ID
-    Payload --> CONSENT_EXP
-    
-    Payload --> INSTITUTION
-    Payload --> USE_CASE
-    Payload --> DATA_RETENTION
-    Payload --> PROCESSING_PURPOSE
-    
-    classDef header fill:#e3f2fd
-    classDef standard fill:#f3e5f5
-    classDef consent fill:#e8f5e8  
-    classDef custom fill:#fff3e0
-    
-    class Header,Signature header
-    class ISS,SUB,AUD,EXP,IAT,JTI standard
-    class PURPOSE,SCOPE,CUSTOMER,CONSENT_ID,CONSENT_EXP consent
-    class INSTITUTION,USE_CASE,DATA_RETENTION,PROCESSING_PURPOSE custom
-```
-
----
-
 ## Grundlagen und Scope des Security-Frameworks
 
 ### Generisches Security-Framework
@@ -289,7 +141,48 @@ Die Security-Komponenten sind in einer hierarchischen Schicht-Architektur organi
 
 ## Consent-Flow-Architekturen
 
-### übersicht existierender Consent-Flow-Modelle
+### Generic Consent Management Flow
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant Bank as Bank/Service Provider
+    participant ConsentMgmt as Consent Management
+    participant DataProvider as Data Provider
+    participant AuditLog as Audit & Compliance
+
+    Note over Customer,AuditLog: Phase 1: Consent Request Initiation
+    Customer->>Bank: Initiate service request
+    Bank->>ConsentMgmt: Check existing consents
+    ConsentMgmt->>Bank: No valid consent found
+    
+    Bank->>ConsentMgmt: Create consent request
+    ConsentMgmt->>Customer: Present consent form
+    Note over Customer: Granular consent options:<br/>- Basic data access<br/>- Extended KYC data<br/>- Purpose limitation<br/>- Time restrictions
+    
+    Note over Customer,AuditLog: Phase 2: Consent Granting & Validation
+    Customer->>ConsentMgmt: Grant specific consents
+    ConsentMgmt->>ConsentMgmt: Validate consent completeness
+    ConsentMgmt->>AuditLog: Log consent decision
+    
+    ConsentMgmt->>Bank: Consent granted with scope
+    Bank->>DataProvider: Request data with consent token
+    
+    Note over Customer,AuditLog: Phase 3: Data Access & Usage
+    DataProvider->>ConsentMgmt: Verify consent validity
+    ConsentMgmt->>DataProvider: Consent valid for scope
+    DataProvider->>Bank: Provide requested data
+    DataProvider->>AuditLog: Log data access
+    
+    Bank->>Customer: Service delivered
+    
+    Note over Customer,AuditLog: Phase 4: Ongoing Consent Management
+    ConsentMgmt->>Customer: Consent expiry notification (if applicable)
+    Customer->>ConsentMgmt: Renew/modify/revoke consent
+    ConsentMgmt->>AuditLog: Log consent updates
+```
+
+### Übersicht existierender Consent-Flow-Modelle
 
 #### App-to-App Redirect Flow (UK Standard)
 **Konzeptionelle Architektur:**
@@ -430,6 +323,72 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 
 ## JWT-Token Architektur und Consent Claims
 
+### JWT Token Architecture & Claims
+
+```mermaid
+graph TB
+    subgraph "JWT Token Structure"
+        Header[Header<br/>alg: RS256<br/>typ: JWT<br/>kid: key-id]
+        Payload[Payload<br/>Standard Claims<br/>Custom Claims<br/>Consent Claims]
+        Signature[Signature<br/>RSA256<br/>Private Key Signed]
+    end
+    
+    subgraph "Standard Claims"
+        ISS[iss: issuer]
+        SUB[sub: subject]  
+        AUD[aud: audience]
+        EXP[exp: expiration]
+        IAT[iat: issued at]
+        JTI[jti: JWT ID]
+    end
+    
+    subgraph "Consent Claims"
+        PURPOSE[purpose: account_opening]
+        SCOPE[scope: basic_data kyc_data]
+        CUSTOMER[customer_hash: sha256_hash]
+        CONSENT_ID[consent_id: unique_id]
+        CONSENT_EXP[consent_expires: timestamp]
+    end
+    
+    subgraph "Custom Claims"
+        INSTITUTION[requesting_institution: bank_id]
+        USE_CASE[use_case: customer_onboarding]
+        DATA_RETENTION[data_retention_period: duration]
+        PROCESSING_PURPOSE[processing_purpose: specific_purpose]
+    end
+    
+    Header --> Payload
+    Payload --> Signature
+    
+    Payload --> ISS
+    Payload --> SUB
+    Payload --> AUD
+    Payload --> EXP
+    Payload --> IAT
+    Payload --> JTI
+    
+    Payload --> PURPOSE
+    Payload --> SCOPE
+    Payload --> CUSTOMER
+    Payload --> CONSENT_ID
+    Payload --> CONSENT_EXP
+    
+    Payload --> INSTITUTION
+    Payload --> USE_CASE
+    Payload --> DATA_RETENTION
+    Payload --> PROCESSING_PURPOSE
+    
+    classDef header fill:#e3f2fd
+    classDef standard fill:#f3e5f5
+    classDef consent fill:#e8f5e8  
+    classDef custom fill:#fff3e0
+    
+    class Header,Signature header
+    class ISS,SUB,AUD,EXP,IAT,JTI standard
+    class PURPOSE,SCOPE,CUSTOMER,CONSENT_ID,CONSENT_EXP consent
+    class INSTITUTION,USE_CASE,DATA_RETENTION,PROCESSING_PURPOSE custom
+```
+
 ### JWT Access Token Structure
 
 **Standard JWT Claims für Open API Kundenbeziehung:**
@@ -543,6 +502,43 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 ---
 
 ## Consent und Security Flow Implementation
+
+### FAPI 2.0 Security Implementation
+
+```mermaid
+sequenceDiagram
+    participant Client as Client App
+    participant AuthServer as Authorization Server
+    participant ResourceServer as Resource Server
+    participant Customer as Customer
+
+    Note over Client,Customer: FAPI 2.0 Security Flow with PKCE + mTLS
+    
+    Client->>Client: Generate PKCE code_verifier & code_challenge
+    Client->>Client: Create authorization request with security parameters
+    
+    Client->>AuthServer: Authorization request<br/>(client_id, scope, code_challenge, state, nonce)
+    AuthServer->>Customer: Authenticate customer
+    Customer->>AuthServer: Authentication successful
+    
+    AuthServer->>Customer: Present consent screen<br/>(granular data permissions)
+    Customer->>AuthServer: Grant consent
+    
+    AuthServer->>Client: Authorization code + state
+    
+    Note over Client,Customer: Token Exchange with Enhanced Security
+    Client->>AuthServer: Token request via mTLS<br/>(code, code_verifier, client_cert)
+    AuthServer->>AuthServer: Verify mTLS certificate
+    AuthServer->>AuthServer: Validate PKCE code_verifier
+    AuthServer->>Client: Access token + ID token (JWT)
+    
+    Note over Client,Customer: Resource Access with Financial-Grade Security
+    Client->>ResourceServer: API request + access token via mTLS
+    ResourceServer->>ResourceServer: Validate mTLS client certificate
+    ResourceServer->>AuthServer: Introspect access token
+    AuthServer->>ResourceServer: Token valid + scope information
+    ResourceServer->>Client: Protected resource data
+```
 
 ### Authentication/Authorization Sequence
 
