@@ -20,7 +20,7 @@ I will tell you which file to work on next, so please do not start working on th
     - complete the TODOs in the file
     - make sure to use the exact definition of the 10 steps of the Referenzprozess as defined in the resources!
     - no code snippets to describe data fields, only conceptual description of the data fields and their purpose (details will be in the API Endpoint Design: wherever code snippets are removed add a link to the file "documentation/Umsetzung und Implementierung/04 API Endpoint Design.md" )
-[] 04 API-Endpoint Design:
+[x] 04 API-Endpoint Design:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
     - complete the TODOs in the file
     - make sure to use the exact data fields defined in the resources where applicable (1:1 mapping) and add any missing fields that are necessary for the API Endpoint Design
@@ -39,7 +39,7 @@ I will tell you which file to work on next, so please do not start working on th
 [x] 07 Rechtliche Rahmenbedingungen:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md"
     - complete the TODOs in the file
-[] 08 Testing und Verifikation:
+[x] 08 Testing und Verifikation:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
     - complete the TODOs in the file
     - no code snippets, just conceptual description of the testing and verification process
