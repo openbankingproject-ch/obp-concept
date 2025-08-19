@@ -40,27 +40,13 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 
 #### **Zielbild 1: Direkt (Klassisch)**
 
-```mermaid
-graph LR
-    subgraph "Zielbild 1: Direkt (Klassisch)"
-        Customer[👤 Kunde] <==> Bank[🏦 Bank/Anbieter]
-    end
-    
-    subgraph "Charakteristika"
-        Direct[✅ Direkte Kundenbeziehung]
-        Classic[📊 Klassische Geschäftsmodelle]
-        Simple[⚡ Niedrige Komplexität]
-        Control[🎯 Hohe Kontrolle]
-    end
-    
-    classDef customer fill:#e3f2fd
-    classDef provider fill:#e8f5e8
-    classDef feature fill:#fff3e0
-    
-    class Customer customer
-    class Bank provider
-    class Direct,Classic,Simple,Control feature
-```
+**Konzeptionelle Struktur:** Direkte Kundenbeziehung zwischen Kunde und Finanzdienstleister ohne Intermediäre.
+
+**Zentrale Charakteristika:**
+- Direkte Kundenbeziehung ohne vermittelnde Instanzen
+- Klassische Geschäftsmodelle mit API-Enhancement zur Effizienzsteigerung
+- Niedrige technische Komplexität durch bewährte Strukturen
+- Hohe Kontrolle über die gesamte Customer Journey
 
 **Struktur:** Kunde ↔ Individualist
 
@@ -82,38 +68,15 @@ graph LR
 
 #### **Zielbild 2: Indirekt**
 
-```mermaid
-graph LR
-    subgraph "Zielbild 2: Indirekt"
-        Customer[👤 Kunde] <==> Integrator[🔗 Integrator<br/>Service Aggregator] <==> Producer[🏭 Produzent<br/>Service Provider]
-    end
-    
-    subgraph "API-Layer"
-        API1[Customer API]
-        API2[Provider API]
-        Integrator -.-> API1
-        Integrator -.-> API2
-    end
-    
-    subgraph "Charakteristika"
-        Intermediary[🔗 Service-Aggregatoren]
-        APIBased[⚙️ API-basierte Integration]
-        Network[🌐 Partner-Netzwerke]
-        Shared[🤝 Shared Customer Journey]
-    end
-    
-    classDef customer fill:#e3f2fd
-    classDef integrator fill:#f3e5f5
-    classDef producer fill:#e8f5e8
-    classDef api fill:#ffeb3b
-    classDef feature fill:#fff3e0
-    
-    class Customer customer
-    class Integrator integrator
-    class Producer producer
-    class API1,API2 api
-    class Intermediary,APIBased,Network,Shared feature
-```
+**Konzeptionelle Struktur:** Vermittelte Kundenbeziehung über Service-Aggregatoren, die als Integratoren zwischen Kunden und Service-Produzenten fungieren.
+
+**API-Integration:** Doppelte API-Struktur mit Customer API für Endkundeninteraktion und Provider API für Backend-Integration.
+
+**Zentrale Charakteristika:**
+- Intermediäre als Service-Aggregatoren ermöglichen erweiterte Serviceangebote
+- API-basierte Integration schafft flexible, skalierbare Verbindungen
+- Partner-Netzwerke erhöhen Reichweite und Servicespektrum
+- Shared Customer Journey durch koordinierte Serviceerfahrung
 
 **Struktur:** Kunde ↔ Integrator ↔ Produzent
 
@@ -136,50 +99,15 @@ graph LR
 
 #### **Zielbild 3: Intermediär**
 
-```mermaid
-graph LR
-    subgraph "Zielbild 3: Intermediär"
-        Customer[👤 Kunde] <==> Integrator[🔗 Integrator]
-        Integrator <==> Producer[🏭 Produzent]
-        Integrator <==> Intermediary[🏢 Intermediär<br/>Spezialist]
-        Producer <==> Intermediary
-    end
-    
-    subgraph "Multi-API Layer"
-        API1[Integration API]
-        API2[Production API]
-        API3[Specialist API]
-        API4[Cross-Service API]
-        
-        Integrator -.-> API1
-        Producer -.-> API2
-        Intermediary -.-> API3
-        API1 -.-> API4
-        API2 -.-> API4
-        API3 -.-> API4
-    end
-    
-    subgraph "Charakteristika"
-        MultiPlayer[👥 Multi-Player-Konstellationen]
-        Specialized[🎯 Spezialisierte Services]
-        Coordination[🔄 Erhöhte Koordination]
-        Innovation[💡 Service-Kombinationen]
-    end
-    
-    classDef customer fill:#e3f2fd
-    classDef integrator fill:#f3e5f5
-    classDef producer fill:#e8f5e8
-    classDef intermediary fill:#fce4ec
-    classDef api fill:#ffeb3b
-    classDef feature fill:#fff3e0
-    
-    class Customer customer
-    class Integrator integrator
-    class Producer producer
-    class Intermediary intermediary
-    class API1,API2,API3,API4 api
-    class MultiPlayer,Specialized,Coordination,Innovation feature
-```
+**Konzeptionelle Struktur:** Erweiterte Multi-Player-Konstellation mit spezialisierten Intermediären, die zwischen Integratoren und Produzenten vermitteln.
+
+**Multi-API-Architektur:** Vier-schichtige API-Struktur mit Integration API, Production API, Specialist API und Cross-Service API für umfassende Service-Orchestrierung.
+
+**Zentrale Charakteristika:**
+- Multi-Player-Konstellationen ermöglichen komplexe Servicezusammenstellungen
+- Spezialisierte Intermediäre bieten Fachexpertise für komplexe Anforderungen
+- Erhöhte Koordinationsanforderungen durch mehrschichtige Architektur
+- Innovationspotential durch neue Service-Kombinationen und Cross-Industry-Integration
 
 **Struktur:** Kunde ↔ Integrator ↔ Produzent + Intermediär
 
@@ -202,73 +130,19 @@ graph LR
 
 #### **Zielbild 4: Plattform**
 
-```mermaid
-graph TB
-    subgraph "Zielbild 4: Plattform (Hub-basierte Architektur)"
-        Customer[👤 Kunde]
-        
-        subgraph "Central Platform Hub"
-            Hub[🏢 Central Platform]
-            Services[🛠️ Service Engine]
-            Analytics[📊 Analytics Layer]
-            Governance[⚖️ Governance Layer]
-            
-            Hub --> Services
-            Hub --> Analytics
-            Hub --> Governance
-        end
-        
-        subgraph "Connected Providers"
-            Bank1[🏦 Bank A]
-            Bank2[🏦 Bank B]
-            FinTech[💻 FinTech]
-            Insurance[🛡️ Insurance]
-            Investment[📈 Investment]
-            Payment[💳 Payment]
-        end
-        
-        Customer <==> Hub
-        
-        Hub <==> Bank1
-        Hub <==> Bank2
-        Hub <==> FinTech
-        Hub <==> Insurance
-        Hub <==> Investment
-        Hub <==> Payment
-    end
-    
-    subgraph "Platform APIs"
-        ConsumerAPI[Consumer API]
-        ProviderAPI[Provider API]
-        MarketplaceAPI[Marketplace API]
-        AnalyticsAPI[Analytics API]
-    end
-    
-    subgraph "Charakteristika"
-        Central[🎯 Zentrale Plattform]
-        Network[🌐 Netzwerkeffekte]
-        Complex[⚙️ Hohe Komplexität]
-        Disruptive[💥 Disruptive Modelle]
-    end
-    
-    Hub -.-> ConsumerAPI
-    Hub -.-> ProviderAPI
-    Hub -.-> MarketplaceAPI
-    Hub -.-> AnalyticsAPI
-    
-    classDef customer fill:#e3f2fd
-    classDef hub fill:#ff5722,stroke:#bf360c,stroke-width:3px
-    classDef providers fill:#e0e0e0
-    classDef api fill:#ffeb3b
-    classDef feature fill:#fff3e0
-    classDef platform fill:#f3e5f5
-    
-    class Customer customer
-    class Hub,Services,Analytics,Governance hub
-    class Bank1,Bank2,FinTech,Insurance,Investment,Payment providers
-    class ConsumerAPI,ProviderAPI,MarketplaceAPI,AnalyticsAPI api
-    class Central,Network,Complex,Disruptive feature
-```
+**Konzeptionelle Struktur:** Hub-basierte Plattformarchitektur mit zentraler Plattform als Service-Hub für alle angeschlossenen Anbieter.
+
+**Central Platform Hub:** Integrierte Plattform mit Service Engine für Serviceverarbeitung, Analytics Layer für Datenanalyse und Governance Layer für Regelwerk und Compliance.
+
+**Connected Providers:** Umfassendes Anbieter-Ecosystem mit Banken, FinTechs, Versicherungen, Investment- und Payment-Anbietern, alle zentral über den Hub verbunden.
+
+**Platform APIs:** Vier spezialisierte API-Schichten - Consumer API für Endkunden, Provider API für Anbieterintegration, Marketplace API für Service-Discovery und Analytics API für Dateneinblicke.
+
+**Zentrale Charakteristika:**
+- Zentrale Plattform als Service-Hub ermöglicht einheitliche Customer Experience
+- Netzwerkeffekte durch Ecosystem-Approach schaffen exponentiellen Mehrwert
+- Hohe technische Komplexität durch umfassende Integration aller Services
+- Potenzial für disruptive Geschäftsmodelle durch Plattform-Ökonomie
 
 **Struktur:** Hub-basierte Architektur
 
@@ -294,102 +168,51 @@ graph TB
 
 ### Zielbild-Vergleich und Evolution
 
-```mermaid
-graph TB
-    subgraph "Zielbilder Evolution und Bewertung"
-        Z1[Zielbild 1: Direkt<br/>👤↔🏦<br/>Machbarkeit: ⭐⭐⭐⭐⭐<br/>Innovation: ⭐⭐⭐<br/>Komplexität: ⭐]
-        
-        Z2[Zielbild 2: Indirekt<br/>👤↔🔗↔🏭<br/>Machbarkeit: ⭐⭐⭐⭐<br/>Innovation: ⭐⭐⭐⭐<br/>Komplexität: ⭐⭐]
-        
-        Z3[Zielbild 3: Intermediär<br/>👤↔🔗↔🏭+🏢<br/>Machbarkeit: ⭐⭐⭐<br/>Innovation: ⭐⭐⭐⭐⭐<br/>Komplexität: ⭐⭐⭐]
-        
-        Z4[Zielbild 4: Plattform<br/>👤↔🏢↔Multiple<br/>Machbarkeit: ⭐⭐<br/>Innovation: ⭐⭐⭐⭐⭐<br/>Komplexität: ⭐⭐⭐⭐⭐]
-        
-        Z5[Zielbild 5: Dezentral<br/>❌ Out of Scope<br/>Blockchain-basiert<br/>Nicht relevant]
-    end
-    
-    subgraph "Implementation Timeline"
-        Phase1[Phase 1<br/>0-6 Monate<br/>Zielbild 1&2]
-        Phase2[Phase 2<br/>6-12 Monate<br/>Zielbild 2&3]
-        Phase3[Phase 3<br/>12-24 Monate<br/>Zielbild 3&4]
-    end
-    
-    subgraph "Strategic Focus"
-        Primary[🎯 Primärer Fokus<br/>Zielbilder 1 & 2<br/>Schnelle Umsetzbarkeit]
-        Secondary[🔍 Sekundärer Fokus<br/>Zielbilder 3 & 4<br/>Strategische Erweiterung]
-    end
-    
-    Z1 --> Phase1
-    Z2 --> Phase1
-    Z2 --> Phase2
-    Z3 --> Phase2
-    Z3 --> Phase3
-    Z4 --> Phase3
-    
-    Z1 --> Primary
-    Z2 --> Primary
-    Z3 --> Secondary
-    Z4 --> Secondary
-    
-    classDef high_feasibility fill:#e8f5e8,stroke:#4caf50,stroke-width:3px
-    classDef medium_feasibility fill:#fff3e0,stroke:#ff9800,stroke-width:2px
-    classDef low_feasibility fill:#ffebee,stroke:#f44336,stroke-width:2px
-    classDef outofscope fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray: 5 5
-    classDef phase fill:#e3f2fd
-    classDef focus fill:#f3e5f5
-    
-    class Z1,Z2 high_feasibility
-    class Z3 medium_feasibility
-    class Z4 low_feasibility
-    class Z5 outofscope
-    class Phase1,Phase2,Phase3 phase
-    class Primary,Secondary focus
-```
+**Zielbilder Evolution und Bewertung:**
+
+**Machbarkeits- und Innovationsbewertung:**
+- **Zielbild 1 (Direkt):** Höchste Machbarkeit (95%), moderate Innovation (60%), minimale Komplexität
+- **Zielbild 2 (Indirekt):** Hohe Machbarkeit (85%), hohe Innovation (80%), moderate Komplexität
+- **Zielbild 3 (Intermediär):** Mittlere Machbarkeit (65%), höchste Innovation (95%), mittlere Komplexität
+- **Zielbild 4 (Plattform):** Niedrige Machbarkeit (35%), höchste Innovation (95%), höchste Komplexität
+- **Zielbild 5 (Dezentral):** Außer Scope - Blockchain-basierte Lösungen sind für den Schweizer Finanzmarkt nicht relevant
+
+**Implementation Timeline:**
+- **Phase 1 (0-6 Monate):** Fokus auf Zielbilder 1 & 2 für schnelle Markteinführung
+- **Phase 2 (6-12 Monate):** Erweiterung zu Zielbild 2 & 3 mit erweiterten Services
+- **Phase 3 (12-24 Monate):** Strategische Entwicklung zu Zielbildern 3 & 4
+
+**Strategic Focus:**
+- **Primärer Fokus:** Zielbilder 1 & 2 aufgrund hoher kurzfristiger Umsetzbarkeit
+- **Sekundärer Fokus:** Zielbilder 3 & 4 als strategische Erweiterungsoptionen
 
 ### Zielbild-Bewertung und Fokussierung
 
-```mermaid
-graph LR
-    subgraph "Bewertungsmatrix"
-        subgraph "Machbarkeit"
-            M1[Zielbild 1: 95%]
-            M2[Zielbild 2: 85%]
-            M3[Zielbild 3: 65%]
-            M4[Zielbild 4: 35%]
-        end
-        
-        subgraph "Innovationspotenzial"
-            I1[Zielbild 1: 60%]
-            I2[Zielbild 2: 80%]
-            I3[Zielbild 3: 95%]
-            I4[Zielbild 4: 95%]
-        end
-        
-        subgraph "Marktrelevanz"
-            R1[Zielbild 1: 80%]
-            R2[Zielbild 2: 90%]
-            R3[Zielbild 3: 85%]
-            R4[Zielbild 4: 70%]
-        end
-        
-        subgraph "Zeitrahmen"
-            T1[Zielbild 1: 0-3 Monate]
-            T2[Zielbild 2: 6-12 Monate]
-            T3[Zielbild 3: 12-18 Monate]
-            T4[Zielbild 4: 18-24+ Monate]
-        end
-    end
-    
-    classDef high fill:#e8f5e8
-    classDef medium fill:#fff3e0
-    classDef low fill:#ffebee
-    classDef timeline fill:#e3f2fd
-    
-    class M1,M2,R2,I3,I4 high
-    class M3,I2,R1,R3 medium
-    class M4,I1,R4 low
-    class T1,T2,T3,T4 timeline
-```
+**Quantitative Bewertungsmatrix:**
+
+**Machbarkeit (Kurzfristige Umsetzbarkeit):**
+- Zielbild 1: 95% - Sofort umsetzbar mit bestehender Infrastruktur
+- Zielbild 2: 85% - Hohe Machbarkeit mit moderatem API-Entwicklungsaufwand
+- Zielbild 3: 65% - Mittlere Machbarkeit, erfordert erweiterte Koordination
+- Zielbild 4: 35% - Niedrige kurzfristige Machbarkeit aufgrund hoher Komplexität
+
+**Innovationspotenzial (Strategischer Mehrwert):**
+- Zielbild 1: 60% - Moderate Innovation durch Prozessoptimierung
+- Zielbild 2: 80% - Hohe Innovation durch Service-Integration
+- Zielbild 3: 95% - Höchste Innovation durch Multi-Player-Konstellationen
+- Zielbild 4: 95% - Höchste Innovation durch Plattform-Ökonomie
+
+**Marktrelevanz (Gegenwärtige Nachfrage):**
+- Zielbild 1: 80% - Hohe Relevanz für bestehende Geschäftsmodelle
+- Zielbild 2: 90% - Höchste Marktrelevanz durch PSD2-Compliance
+- Zielbild 3: 85% - Hohe Zukunftsrelevanz für Marktentwicklung
+- Zielbild 4: 70% - Mittlere aktuelle Relevanz, hohe strategische Bedeutung
+
+**Implementierungs-Zeitrahmen:**
+- Zielbild 1: 0-3 Monate - Sofortige Umsetzung möglich
+- Zielbild 2: 6-12 Monate - Mittelfristige Entwicklung erforderlich
+- Zielbild 3: 12-18 Monate - Langfristige strategische Entwicklung
+- Zielbild 4: 18-24+ Monate - Langfristige Transformation erforderlich
 
 **Aktuelle Marktperspektiven:**
 - Markt fokussiert sich auf Zielbild 3 (bLink als technische Plattform)
@@ -793,83 +616,39 @@ Das Minimum Viable Product der Open API Kundenbeziehung fokussiert auf die grund
 
 #### **Core Data Structures**
 
-**Customer Identity:**
-```json
-{
-  "customerId": "string",
-  "sharedCustomerHash": "string",
-  "personalInfo": {
-    "firstName": "string",
-    "lastName": "string",
-    "dateOfBirth": "date",
-    "placeOfBirth": "string",
-    "nationality": ["string"],
-    "gender": "string",
-    "civilStatus": "string"
-  },
-  "contactInfo": {
-    "email": {
-      "primary": "string",
-      "secondary": "string",
-      "verified": "boolean"
-    },
-    "phone": {
-      "mobile": "string",
-      "landline": "string",
-      "verified": "boolean"
-    },
-    "preferredCommunicationChannel": "string"
-  },
-  "addressInfo": {
-    "residential": {
-      "street": "string",
-      "city": "string",
-      "postalCode": "string",
-      "country": "string",
-      "validFrom": "date",
-      "validTo": "date"
-    },
-    "mailing": {
-      "same_as_residential": "boolean",
-      "address": "AddressObject"
-    }
-  }
-}
-```
+**Customer Identity Structure:**
+Konzeptionelle Datenstruktur umfasst customerId als interne Referenz, sharedCustomerHash für anonyme providerübergreifende Identifikation sowie drei Hauptkategorien:
 
-**Consent Management:**
-```json
-{
-  "consentId": "string",
-  "customerId": "string",
-  "purpose": "string",
-  "dataCategories": ["string"],
-  "grantedAt": "timestamp",
-  "expiresAt": "timestamp",
-  "granularity": {
-    "dataFields": ["string"],
-    "permissions": ["read", "write", "delete"]
-  },
-  "legalBasis": "string",
-  "withdrawnAt": "timestamp",
-  "auditTrail": ["ConsentEvent"]
-}
-```
+- **Personal Information:** Grundlegende Identitätsdaten wie Vor-/Nachname, Geburtsdatum und -ort, Nationalität(en), Geschlecht und Zivilstand
+- **Contact Information:** Primäre und sekundäre E-Mail-Adressen, Mobil- und Festnetznummern mit Verifikationsstatus, bevorzugte Kommunikationskanäle
+- **Address Information:** Wohnadresse und abweichende Korrespondenzadresse mit Gültigkeitszeiträumen, strukturierte Adresskomponenten
 
-**Verification Status:**
-```json
-{
-  "verificationId": "string",
-  "customerId": "string",
-  "dataField": "string",
-  "verificationMethod": "string",
-  "verificationLevel": "string",
-  "verifiedAt": "timestamp",
-  "verifiedBy": "string",
-  "validUntil": "timestamp",
-  "documents": ["DocumentReference"]
-}
-```
+Detaillierte Datenstrukturen sind in [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) spezifiziert.
+
+**Consent Management Structure:**
+Konzeptionelles Framework für granulare Einwilligungsverwaltung umfasst:
+
+- **Consent Identification:** Eindeutige ConsentId und Kunden-Zuordnung
+- **Purpose Definition:** Explizite Zweckangabe für Datenverwendung (z.B. Kontoeröffnung, KYC-Prüfung)
+- **Data Categories:** Spezifikation der betroffenen Datenkategorien (Identity, Contact, Financial)
+- **Temporal Management:** Erteilungs-, Ablauf- und Widerrufszeitpunkte
+- **Granularity Control:** Feldspezifische Berechtigung mit Read/Write/Delete-Permissions
+- **Legal Framework:** Rechtsgrundlage für Datenverarbeitung (Einwilligung, Vertrag, rechtliche Verpflichtung)
+- **Audit Trail:** Vollständige Nachverfolgbarkeit aller Consent-Änderungen
+
+Detaillierte Implementierungsrichtlinien sind in [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) dokumentiert.
+
+**Verification Status Structure:**
+Konzeptionelles System zur Dokumentation von Verifikationsstatus umfasst:
+
+- **Verification Identity:** Eindeutige VerificationId mit Kunden-Zuordnung
+- **Data Field Specification:** Spezifikation des verifizierten Datenfeldes (z.B. Identität, Adresse)
+- **Method Documentation:** Verifikationsmethode (VideoIdent, E-ID, Dokument-Upload)
+- **Assurance Level:** Verifikationslevel gemäß regulatorischen Standards (QEAA, EAA, self-declared)
+- **Temporal Tracking:** Verifikationszeitpunkt, durchführende Instanz, Gültigkeitsdauer
+- **Document References:** Sichere Referenzen zu Verifikationsdokumenten ohne direkte Speicherung
+
+Detaillierte Verifikationsrichtlinien sind in [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) spezifiziert.
 
 #### **sharedCustomerHash-Konzept**
 
@@ -884,14 +663,8 @@ Das Minimum Viable Product der Open API Kundenbeziehung fokussiert auf die grund
 - Reversibility nur durch authorisierte Key-Holder
 - GDPR-konform durch Pseudonymisierung
 
-**Data Sources für Hash:**
-```
-hash_input = normalize(
-  firstName + lastName + dateOfBirth + 
-  placeOfBirth + nationality + salt
-)
-sharedCustomerHash = SHA256(hash_input)
-```
+**Hash-Generierung:**
+Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung standardisierter Identitätsdaten (Vorname, Nachname, Geburtsdatum, Geburtsort, Nationalität) mit einem Sicherheits-Salt generiert und über SHA-256 gehasht. Die Implementierungsdetails sind in [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) dokumentiert.
 
 #### **Granularitäts-Level Definition**
 
@@ -994,20 +767,13 @@ sharedCustomerHash = SHA256(hash_input)
 #### **Technische Integration Points**
 TODO: mermaid diagramme
 
-**Authentication Layer:**
-```
-E-ID Authentication → Open API Authorization → Service Access
-```
+**Integration-Architektur:**
 
-**Data Flow:**
-```
-E-ID Identity Claims → Customer Data Mapping → Service-specific Processing
-```
+**Authentication Layer:** E-ID Authentication führt zu Open API Authorization und ermöglicht anschließend Service Access. Dies schafft eine durchgängige Authentifizierungskette mit höchsten Sicherheitsstandards.
 
-**Consent Management:**
-```
-E-ID Consent Framework ← → Open API Consent Tokens ← → Service Permissions
-```
+**Data Flow:** E-ID Identity Claims werden auf Customer Data Mapping abgebildet und in Service-specific Processing überführt. Dies ermöglicht nahtlose Integration staatlicher Identitätsnachweise in kommerzielle Services.
+
+**Consent Management:** Bidirektionale Integration zwischen E-ID Consent Framework und Open API Consent Tokens mit Service Permissions. Dies gewährleistet konsistente Einwilligungsverwaltung über beide Paradigmen hinweg.
 
 ### Abgrenzung und Scope Definition
 
