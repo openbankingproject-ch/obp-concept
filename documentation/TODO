@@ -9,15 +9,13 @@ Complete the TODOs defined here and also the ones added directly within the file
 I will tell you which file to work on next, so please do not start working on the conclusions until I tell you to do so. This serves as a complete overview for everything that needs to be done and to give you context about the entire project.
 
 **TODO for each conclusion:** keep structure as is,  complete the TODOs defined here and in the files, if needed: find additional information about each topic in the files in the folder: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original resources" 
-[] 01 Marktanalyse:
+[x] 01 Marktanalyse:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/01 Marktanalyse.md"
     - change last part according to the TODOs in the file
 [x] 02 Anforderungen: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md"
     - complete the TODOs in the file
-    - MVP-Datenmodell should be described in 03 Referenzprozess, here only conceptual description "MVP Definition"
-    - Use Case 1 "Bankwechsel/Kontoeröffnung" wurde in Use Case "Kundenbeziehungseröffnung" umbenannt
-[] 03 Referenzprozess: 
+[x] 03 Referenzprozess: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/03 Referenzprozess.md"
     - complete the TODOs in the file
     - make sure to use the exact definition of the 10 steps of the Referenzprozess as defined in the resources!
@@ -27,7 +25,7 @@ I will tell you which file to work on next, so please do not start working on th
     - complete the TODOs in the file
     - make sure to use the exact data fields defined in the resources where applicable (1:1 mapping) and add any missing fields that are necessary for the API Endpoint Design
     - needs to be coherent with the Referenzprozess and the data fields defined there, make sure structure matches and that everything described conceptually in the Referenzprozess is then described in detail in the API Endpoint Design conclusion
-[] 05 Vertrauensnetzwerk:
+[x] 05 Vertrauensnetzwerk:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
     - complete the TODOs in the file
 [] 06 Consent und Security Flow:
@@ -38,10 +36,9 @@ I will tell you which file to work on next, so please do not start working on th
     - fix broken mermaid diagrams
     - fix grammar and typos (especially where ä/ö/ü have been switched up)
     - fix wordings like "Finanzmenschen" - replace with things like "Konzeptionelle Beschreibung" oder "Economic Perspective" (shouldn't be derogatory)
-[] 07 Rechtliche Rahmenbedingungen:
+[x] 07 Rechtliche Rahmenbedingungen:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md"
     - complete the TODOs in the file
-    - fix grammar and typos (especially where ä/ö/ü have been switched up)
 [] 08 Testing und Verifikation:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
     - complete the TODOs in the file
