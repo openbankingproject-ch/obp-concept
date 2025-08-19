@@ -57,7 +57,7 @@ Das Vertrauensnetzwerk für die Open API Kundenbeziehung definiert eine föderie
 
 ## Architektur-Modelle Übersicht
 
-*TODO: Bilder einfügen*
+**Grafische Darstellung:** Die vollständigen Architektur-Diagramme für alle drei Modelle sind verfügbar in der Dokumentation "Grafische Darstellung Open API Prozess" → [Siehe Resources/original sources/grafische_darstellung_open_api_prozess.md]
 
 ### Modell 1: Dezentrale Architektur (Peer-to-Peer)
 
@@ -101,12 +101,10 @@ Die gleichen Akteure wie im P2P-Modell (Banken, FinTech, InsurTech, Mobility, Re
 
 **Charakteristika:**
 
-*TODO: als Tabelle darstellen*
-
-- **Vorteil:** Zentrale Standards mit dezentraler Ausführung
-- **Vorteil:** Multi-Stakeholder Governance  
-- **Vorteil:** Skalierbare Koordination
-- **Vorteil:** Balance zwischen Autonomie und Standards
+| **Vorteile** | **Herausforderungen** |
+|---------------|----------------------|
+| **Standards-Koordination**: Zentrale Standards mit dezentraler Ausführung | **Governance-Komplexität**: Multi-Stakeholder Entscheidungsfindung erfordert Koordination |
+| **Skalierbare Architektur**: Effiziente Koordination bei wachsender Teilnehmerzahl | **Implementierungs-Vielfalt**: Balance zwischen Standards und individueller Umsetzung |
 
 ### Modell 3: Zentrale Hub-Architektur
 
@@ -132,12 +130,10 @@ Alle Akteure (Banken A-B, FinTech C, InsurTech D, Mobility E, Retail F) sind aus
 
 **Charakteristika:**
 
-*TODO: als Tabelle darstellen*
-
-- **Vorteil:** Maximale Standardisierung und Kontrolle
-- **Vorteil:** Zentrale Compliance und Audit
-- **Nachteil:** Single Point of Failure Risiko
-- **Nachteil:** Abhängigkeit von zentraler Organisation
+| **Vorteile** | **Nachteile** |
+|---------------|----------------|
+| **Umfassende Kontrolle**: Maximale Standardisierung und zentrale Steuerung | **Systemrisiko**: Single Point of Failure gefährdet gesamtes Netzwerk |
+| **Einheitliche Compliance**: Zentrale Überwachung und Audit-Funktionen | **Abhängigkeitsrisiko**: Hohe Dependenz von zentraler Organisation |
 
 ---
 
