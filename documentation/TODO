@@ -16,6 +16,7 @@ I will tell you which file to work on next, so please do not start working on th
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md"
     - complete the TODOs in the file
     - MVP-Datenmodell should be described in 03 Referenzprozess, here only conceptual description "MVP Definition"
+    - Use Case 1 "Bankwechsel/Kontoeröffnung" wurde in Use Case "Kundenbeziehungseröffnung" umbenannt
 [] 03 Referenzprozess: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/03 Referenzprozess.md"
     - complete the TODOs in the file
@@ -56,6 +57,7 @@ for each conclusion:
 - verify added content with the original sources and the resources in the folder "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original resources" and make sure to keep the content consistent with the resources
 - if some information is not available in the resources, please use professional and reliable sources to fill the gaps, and make sure to document the sources properly
 - if necessary update the file "Konklusion Open API Kundenbeziehung Overview.md" where all the final conclusions are linked and each files structure and content is outlined briefly
+- no ß, use ss instead (we are swiss not german!!)
 
 also for everything use the following sources as inspiration for best practice implementations and for the structure of the documentation:
 - https://spec.openapis.org/oas/v3.0.3.html
