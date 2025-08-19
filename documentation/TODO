@@ -6,6 +6,8 @@ The conclusions should be kept on a conceptual level (except 04 API Endpoint Des
 
 Complete the TODOs defined here and also the ones added directly within the files. Do not change the structure (chapters, subchapters,...) of the documents without asking me first - if you think the structure needs to be changed, please discuss it with me first. (I am grateful for any criticism and suggestions for improvement, but I want to be involved in the decision making process.) Do not remove the TODOs in cursive (*TODO: ...*), they are for future verification with experts.
 
+I will tell you which file to work on next, so please do not start working on the conclusions until I tell you to do so. This serves as a complete overview for everything that needs to be done and to give you context about the entire project.
+
 **TODO for each conclusion:** keep structure as is,  complete the TODOs defined here and in the files, if needed: find additional information about each topic in the files in the folder: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original resources" 
 [] 01 Marktanalyse:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/01 Marktanalyse.md"
