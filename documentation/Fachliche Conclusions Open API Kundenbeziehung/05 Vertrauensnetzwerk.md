@@ -486,6 +486,7 @@ Die Architektur-Evolution folgt einem systematischen Pfad mit definierten Entsch
 - **Quality Brand:** "Swiss Standards" für Financial Data Exchange
 - **Innovation Hub:** Attraktion internationaler FinTech Investment
 
+TODO: speziell bei dem nachfolgenden Stichpunkt versuchen die Mischung aus deutschen und englischen Begriffen zu reduzieren: wie in stichpunkt drei statt shared, geteilt nutzen und statt overall network security eher die gesamte Netzwerksicherheit" - gilt für das gesamte dokument
 #### Operational Benefits
 - **Reduced Integration Costs:** Standardisierte APIs eliminieren custom Integrations
 - **Faster Time-to-Market:** Neue Services können rapid auf established Network aufbauen
