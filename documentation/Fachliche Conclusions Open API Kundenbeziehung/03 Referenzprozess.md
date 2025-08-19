@@ -129,7 +129,7 @@ sequenceDiagram
 
 Der Prozess ist so konzipiert, dass jeder Akteur seine spezialisierten Kompetenzen optimal einbringen kann.
 
-### Modulare "Bläckli"-Architektur
+### Modulare "Blöckli"-Architektur
 
 **Konzeptionelle Baustein-Organisation:**
 
@@ -185,18 +185,9 @@ Alle Branchen nutzen dieselbe 10-Stufen-Grundstruktur (Initialisierung bis Metad
 - Leasing Contract: Vollständiger Prozess mit Mobility-spezifischen erweiterten Daten
 - Insurance Package: Cross-Sector Integration mit Insurance-Modulen
 
-
-
----
-
-## Branchenübergreifender 10-Stufen Referenzprozess: Design und Ziel
-TODO: concatenate redundant content with the previous section!
-
-### Konzeptionelles Design
+### Konzeptionelles Design und Kernprinzipien
 
 Der Referenzprozess wurde als **universeller Standard** für die digitale Kundenbeziehung entwickelt, der über verschiedene Branchen hinweg angewendet werden kann. Die Architektur folgt dem Prinzip der modularen Datenbausteine, die je nach Anwendungsfall kombiniert werden können.
-
-#### Kernprinzipien
 
 **1. Branchenübergreifende Anwendbarkeit**
 - Einsetzbar in Finance, Insurance, Mobility, Retail, Education, Health
@@ -208,7 +199,7 @@ Der Referenzprozess wurde als **universeller Standard** für die digitale Kunden
 - Granulare Consent-Mechanismen
 - Transparente Datenverwendung
 
-**3. Modulare "Bläckli"-Architektur**
+**3. Modulare "Blöckli"-Architektur**
 - **Basisdaten:** Branchenübergreifend verwendbar
 - **Erweiterte Daten:** Ecosystem-spezifische Erweiterungen
 - **Metadaten:** Prozess- und Compliance-Informationen
@@ -759,7 +750,32 @@ flowchart TD
 - **Insurance Integration:** Coverage, Risk Assessment
 
 ### Metadaten-Framework
-TODO: conceptual definition of metadata framework here, details in 04 API Endpoint Design
+
+**Konzeptionelles Metadaten-Management:**
+
+Das Metadaten-Framework bildet das Rückgrat für Governance, Qualitätssicherung und Compliance-Management im Referenzprozess. Es organisiert sich in drei zentrale Komponenten:
+
+**1. Process Metadata**
+- Prozess-Timestamps für lückenlose Nachverfolgung
+- System-Informationen über verwendete APIs und Service-Provider
+- Qualitäts-Metriken zur Performance-Überwachung
+- Error Handling und Exception Tracking
+
+**2. Data Quality Metadata**
+- Source Classification zur Bewertung der Datenherkunft
+- Verification Level mit QEAA/EAA-Klassifizierung
+- Confidence Scoring für algorithmic quality assessment
+- Temporal Validity mit Zeitstempeln und Ablauffristen
+
+**3. Compliance Metadata**
+- Consent Management mit granularen Einwilligungsdaten
+- Regulatory Check Results für Audit-Compliance
+- Data Retention Policies mit Lebenszyklus-Management
+- Legal Basis Documentation für regulatorische Anforderungen
+
+Das Framework ermöglicht eine vollständige Datenlineage vom Erfassungspunkt bis zur finalen Verwendung und unterstützt sowohl automatisierte als auch manuelle Compliance-Prozesse.
+
+Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endpoint Design](/documentation/Umsetzung%20und%20Implementierung/04%20API%20Endpoint%20Design.md) spezifiziert.
 
 #### Consent Management
 **Konzeptionelle Einwilligungsverwaltung:**
