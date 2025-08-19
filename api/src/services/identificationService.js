@@ -13,9 +13,9 @@ class IdentificationService {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Identification Service...');
+    console.log(' Initializing Identification Service...');
     this.initialized = true;
-    console.log('✅ Identification Service initialized');
+    console.log(' Identification Service initialized');
   }
 
   /**
@@ -619,9 +619,9 @@ class IdentificationService {
    * Shutdown
    */
   async shutdown() {
-    console.log('🔄 Shutting down Identification Service...');
+    console.log(' Shutting down Identification Service...');
     this.initialized = false;
-    console.log('✅ Identification Service shutdown complete');
+    console.log(' Identification Service shutdown complete');
   }
 }
 

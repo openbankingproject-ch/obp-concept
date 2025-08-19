@@ -28,7 +28,7 @@ class ConsentEngine {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Universal Consent Engine...');
+    console.log(' Initializing Universal Consent Engine...');
     
     // Initialize storage backend
     await this.initializeStorage();
@@ -36,7 +36,7 @@ class ConsentEngine {
     // Start cleanup task
     this.startCleanupTask();
     
-    console.log('✅ Universal Consent Engine initialized');
+    console.log(' Universal Consent Engine initialized');
   }
 
   /**
@@ -63,7 +63,7 @@ class ConsentEngine {
    */
   registerExtensionHandler(extensionName, handler) {
     this.extensionHandlers.set(extensionName, handler);
-    console.log(`✅ Registered consent handler for extension: ${extensionName}`);
+    console.log(` Registered consent handler for extension: ${extensionName}`);
   }
 
   /**
@@ -169,7 +169,7 @@ class ConsentEngine {
         }
       }
 
-      console.log(`✅ Consent created: ${consentId} for customer: ${consent.customerId}`);
+      console.log(` Consent created: ${consentId} for customer: ${consent.customerId}`);
 
       return {
         consentId,
@@ -280,7 +280,7 @@ class ConsentEngine {
     // Notify requesting participant
     await this.notifyConsentDecision(consent);
 
-    console.log(`✅ Consent ${consent.status}: ${consentId} by customer`);
+    console.log(` Consent ${consent.status}: ${consentId} by customer`);
 
     return {
       consentId,
@@ -315,7 +315,7 @@ class ConsentEngine {
     // Notify relevant parties
     await this.notifyConsentRevocation(consent, reason);
 
-    console.log(`✅ Consent revoked: ${consentId} by ${revokedBy}, reason: ${reason}`);
+    console.log(` Consent revoked: ${consentId} by ${revokedBy}, reason: ${reason}`);
 
     return {
       consentId,
@@ -547,10 +547,10 @@ class ConsentEngine {
   }
 
   async shutdown() {
-    console.log('🔄 Shutting down Consent Engine...');
+    console.log(' Shutting down Consent Engine...');
     // Clear any timers
     // Close storage connections
-    console.log('✅ Consent Engine shutdown complete');
+    console.log(' Consent Engine shutdown complete');
   }
 }
 

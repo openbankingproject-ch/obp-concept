@@ -13,9 +13,9 @@ class ChecksService {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Checks Service...');
+    console.log(' Initializing Checks Service...');
     this.initialized = true;
-    console.log('✅ Checks Service initialized');
+    console.log(' Checks Service initialized');
   }
 
   /**
@@ -645,9 +645,9 @@ class ChecksService {
    * Shutdown
    */
   async shutdown() {
-    console.log('🔄 Shutting down Checks Service...');
+    console.log(' Shutting down Checks Service...');
     this.initialized = false;
-    console.log('✅ Checks Service shutdown complete');
+    console.log(' Checks Service shutdown complete');
   }
 }
 

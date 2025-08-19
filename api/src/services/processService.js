@@ -12,9 +12,9 @@ class ProcessService {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Process Service...');
+    console.log(' Initializing Process Service...');
     this.initialized = true;
-    console.log('✅ Process Service initialized');
+    console.log(' Process Service initialized');
   }
 
   /**
@@ -435,9 +435,9 @@ class ProcessService {
    * Shutdown
    */
   async shutdown() {
-    console.log('🔄 Shutting down Process Service...');
+    console.log(' Shutting down Process Service...');
     this.initialized = false;
-    console.log('✅ Process Service shutdown complete');
+    console.log(' Process Service shutdown complete');
   }
 }
 

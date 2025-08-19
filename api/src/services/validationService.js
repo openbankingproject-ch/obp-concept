@@ -12,9 +12,9 @@ class ValidationService {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Validation Service...');
+    console.log(' Initializing Validation Service...');
     this.initialized = true;
-    console.log('✅ Validation Service initialized');
+    console.log(' Validation Service initialized');
   }
 
   /**
@@ -404,9 +404,9 @@ class ValidationService {
    * Shutdown
    */
   async shutdown() {
-    console.log('🔄 Shutting down Validation Service...');
+    console.log(' Shutting down Validation Service...');
     this.initialized = false;
-    console.log('✅ Validation Service shutdown complete');
+    console.log(' Validation Service shutdown complete');
   }
 }
 

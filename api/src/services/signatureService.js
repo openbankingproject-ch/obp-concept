@@ -13,9 +13,9 @@ class SignatureService {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Signature Service...');
+    console.log(' Initializing Signature Service...');
     this.initialized = true;
-    console.log('✅ Signature Service initialized');
+    console.log(' Signature Service initialized');
   }
 
   /**
@@ -472,9 +472,9 @@ class SignatureService {
   async sendSignatureNotification(session) {
     try {
       // Mock notification sending
-      console.log(`📧 Would send ${session.notificationMethod} notification to customer ${session.customerId}`);
-      console.log(`📄 Documents to sign: ${session.documents.map(d => d.documentName).join(', ')}`);
-      console.log(`🔗 Signature URL: ${session.signatureUrl}`);
+      console.log(`Would send ${session.notificationMethod} notification to customer ${session.customerId}`);
+      console.log(`Documents to sign: ${session.documents.map(d => d.documentName).join(', ')}`);
+      console.log(`Signature URL: ${session.signatureUrl}`);
 
       // Add notification step
       session.steps.push({
@@ -502,8 +502,8 @@ class SignatureService {
   async sendCompletionNotification(session) {
     try {
       // Mock completion notification
-      console.log(`✅ Signature completed notification for customer ${session.customerId}`);
-      console.log(`📄 Documents signed: ${session.documents.length}`);
+      console.log(` Signature completed notification for customer ${session.customerId}`);
+      console.log(`Documents signed: ${session.documents.length}`);
 
     } catch (error) {
       console.warn('Failed to send completion notification:', error);
@@ -768,9 +768,9 @@ class SignatureService {
    * Shutdown
    */
   async shutdown() {
-    console.log('🔄 Shutting down Signature Service...');
+    console.log(' Shutting down Signature Service...');
     this.initialized = false;
-    console.log('✅ Signature Service shutdown complete');
+    console.log(' Signature Service shutdown complete');
   }
 }
 

@@ -21,9 +21,9 @@ class DataModels {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Universal Data Models...');
+    console.log(' Initializing Universal Data Models...');
     // Additional async initialization if needed
-    console.log('✅ Universal Data Models initialized');
+    console.log(' Universal Data Models initialized');
   }
 
   /**
@@ -243,7 +243,7 @@ class DataModels {
       validator: joi.string()
     }));
 
-    console.log(`✅ Initialized ${this.schemas.size} universal schemas`);
+    console.log(` Initialized ${this.schemas.size} universal schemas`);
   }
 
   /**
@@ -259,7 +259,7 @@ class DataModels {
   registerExtensionSchema(extensionName, schemaName, schema) {
     const extensionKey = `${extensionName}:${schemaName}`;
     this.extensions.set(extensionKey, schema);
-    console.log(`✅ Registered extension schema: ${extensionKey}`);
+    console.log(` Registered extension schema: ${extensionKey}`);
   }
 
   /**

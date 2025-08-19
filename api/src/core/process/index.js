@@ -31,12 +31,12 @@ class ProcessOrchestrator {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Process Orchestration Engine...');
+    console.log(' Initializing Process Orchestration Engine...');
     
     // Register universal step handlers
     this.registerUniversalStepHandlers();
     
-    console.log('✅ Process Orchestration Engine initialized');
+    console.log(' Process Orchestration Engine initialized');
   }
 
   /**
@@ -268,7 +268,7 @@ class ProcessOrchestrator {
       ]
     });
 
-    console.log(`✅ Initialized ${this.processDefinitions.size} universal process definitions`);
+    console.log(` Initialized ${this.processDefinitions.size} universal process definitions`);
   }
 
   /**
@@ -376,7 +376,7 @@ class ProcessOrchestrator {
         currentStep: null
       });
 
-      console.log(`🔄 Starting process: ${processId} [${processInstance}]`);
+      console.log(` Starting process: ${processId} [${processInstance}]`);
 
       // Execute steps
       const result = await this.executeSteps(processDefinition.steps, context);
@@ -389,7 +389,7 @@ class ProcessOrchestrator {
         activeProcess.duration = activeProcess.endTime - startTime;
       }
 
-      console.log(`✅ Process completed: ${processId} [${processInstance}] in ${Date.now() - startTime}ms`);
+      console.log(` Process completed: ${processId} [${processInstance}] in ${Date.now() - startTime}ms`);
 
       return {
         success: true,
@@ -408,7 +408,7 @@ class ProcessOrchestrator {
         activeProcess.endTime = new Date();
       }
 
-      console.error(`❌ Process failed: ${processId} [${processInstance}]:`, error);
+      console.error(` Process failed: ${processId} [${processInstance}]:`, error);
 
       return {
         success: false,
@@ -482,7 +482,7 @@ class ProcessOrchestrator {
     }
 
     try {
-      console.log(`🔄 Executing step: ${stepConfig.stepId}`);
+      console.log(` Executing step: ${stepConfig.stepId}`);
 
       // Prepare step inputs
       const stepInputs = this.prepareStepInputs(stepConfig, context);
@@ -513,7 +513,7 @@ class ProcessOrchestrator {
         });
       }
 
-      console.log(`✅ Step completed: ${stepConfig.stepId} in ${Date.now() - stepStart}ms`);
+      console.log(` Step completed: ${stepConfig.stepId} in ${Date.now() - stepStart}ms`);
 
       return {
         success: true,
@@ -538,7 +538,7 @@ class ProcessOrchestrator {
         throw error;
       }
 
-      console.warn(`⚠️ Optional step failed: ${stepConfig.stepId}: ${error.message}`);
+      console.warn(` Optional step failed: ${stepConfig.stepId}: ${error.message}`);
       return {
         success: false,
         error: error.message,
@@ -681,7 +681,7 @@ class ProcessOrchestrator {
    */
   registerExtensionHandler(extensionName, handler) {
     this.extensionHandlers.set(extensionName, handler);
-    console.log(`✅ Registered process handler for extension: ${extensionName}`);
+    console.log(` Registered process handler for extension: ${extensionName}`);
   }
 
   /**
@@ -710,9 +710,9 @@ class ProcessOrchestrator {
   }
 
   async shutdown() {
-    console.log('🔄 Shutting down Process Orchestrator...');
+    console.log(' Shutting down Process Orchestrator...');
     // Wait for active processes to complete or timeout
-    console.log('✅ Process Orchestrator shutdown complete');
+    console.log(' Process Orchestrator shutdown complete');
   }
 }
 

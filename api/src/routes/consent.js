@@ -7,11 +7,29 @@ const { requireScope } = require('../middleware/auth');
 
 const router = express.Router();
 
+// Service layer references (injected by app.js)
+let serviceManager = null;
+let coreFramework = null;
+
+/**
+ * Set service manager reference
+ */
+function setServiceManager(manager) {
+  serviceManager = manager;
+}
+
+/**
+ * Set core framework reference
+ */
+function setCoreFramework(framework) {
+  coreFramework = framework;
+}
+
 // In-memory storage for demo (use database in production)
 const consents = new Map();
 
 /**
- * Create consent request
+ * Create consent request (Enhanced with Banking MVP)
  * POST /consent
  */
 router.post('/', validateRequest('createConsent'), async (req, res) => {
@@ -26,6 +44,66 @@ router.post('/', validateRequest('createConsent'), async (req, res) => {
       customerContactMethod
     } = req.body;
 
+    logger.info('Banking MVP - Consent request', {
+      customerId,
+      requestingInstitution,
+      purpose,
+      institutionId: req.user?.institutionId
+    });
+
+    // Use service layer if available, fallback to legacy implementation
+    if (serviceManager) {
+      const consentService = serviceManager.getService('consent');
+      
+      const consentResult = await consentService.createConsent(
+        {
+          customerId,
+          requestingInstitution,
+          providingInstitution,
+          dataCategories,
+          purpose,
+          expiryDate,
+          customerContactMethod
+        },
+        {
+          institutionId: req.user?.institutionId || 'anonymous',
+          userId: req.user?.id,
+          ipAddress: req.ip,
+          userAgent: req.get('User-Agent')
+        }
+      );
+
+      if (consentResult.success) {
+        logger.info('Banking MVP - Consent created successfully (service layer)', {
+          consentId: consentResult.consentId,
+          customerId,
+          purpose
+        });
+
+        return res.status(201).json({
+          consentId: consentResult.consentId,
+          status: consentResult.status,
+          consentUrl: consentResult.consentUrl,
+          qrCode: consentResult.qrCode,
+          expiryDate: consentResult.expiryDate,
+          dataCategories: consentResult.dataCategories,
+          purpose: consentResult.purpose,
+          processedBy: 'banking_mvp_service_layer',
+          framework: 'core_framework_v1'
+        });
+      } else {
+        logger.error('Banking MVP - Consent creation failed (service layer)', consentResult);
+        return res.status(400).json({
+          error: consentResult.error,
+          message: consentResult.message || 'Consent creation failed',
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+
+    // Legacy fallback implementation
+    logger.warn('Using legacy consent creation - service layer not available');
+    
     const consentId = uuidv4();
     const consentUrl = `${process.env.CONSENT_BASE_URL || 'https://consent.openbanking.ch'}/consent/${consentId}`;
     
@@ -58,7 +136,7 @@ router.post('/', validateRequest('createConsent'), async (req, res) => {
 
     consents.set(consentId, consent);
 
-    logger.info('Consent request created', {
+    logger.info('Consent request created (legacy)', {
       consentId,
       customerId,
       requestingInstitution,
@@ -328,3 +406,5 @@ router.get('/', requireScope('consent:read'), (req, res) => {
 });
 
 module.exports = router;
+module.exports.setServiceManager = setServiceManager;
+module.exports.setCoreFramework = setCoreFramework;

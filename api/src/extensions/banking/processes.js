@@ -11,11 +11,11 @@ class BankingProcesses {
   }
 
   async initialize(coreFramework) {
-    console.log('⚙️ Initializing Banking Processes...');
+    console.log(' Initializing Banking Processes...');
     this.coreFramework = coreFramework;
     this.setupBankingProcesses();
     this.initialized = true;
-    console.log('✅ Banking Processes initialized');
+    console.log(' Banking Processes initialized');
   }
 
   /**
@@ -686,7 +686,7 @@ class BankingProcesses {
   async shutdown() {
     this.processDefinitions.clear();
     this.initialized = false;
-    console.log('⚙️ Banking Processes shut down');
+    console.log(' Banking Processes shut down');
   }
 }
 

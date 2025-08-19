@@ -29,7 +29,7 @@ class TrustNetwork {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Trust Network...');
+    console.log(' Initializing Trust Network...');
     
     // Initialize network topology
     this.initializeNetworkTopology();
@@ -37,7 +37,7 @@ class TrustNetwork {
     // Start trust maintenance
     this.startTrustMaintenance();
     
-    console.log('✅ Trust Network initialized');
+    console.log(' Trust Network initialized');
   }
 
   initializeNetworkTopology() {
@@ -93,7 +93,7 @@ class TrustNetwork {
       mutual: trustRelationship.metadata.mutualTrust
     });
     
-    console.log(`✅ Trust established: ${fromParticipant} -> ${toParticipant} (${trustLevel})`);
+    console.log(` Trust established: ${fromParticipant} -> ${toParticipant} (${trustLevel})`);
     
     return { success: true, trustKey, trustLevel: trustRelationship.trustLevel };
   }
@@ -283,7 +283,7 @@ class TrustNetwork {
     }
     
     if (decayedCount > 0) {
-      console.log(`🕰️ Applied trust decay to ${decayedCount} relationships`);
+      console.log(`🕰 Applied trust decay to ${decayedCount} relationships`);
     }
   }
 
@@ -301,8 +301,8 @@ class TrustNetwork {
   }
 
   async shutdown() {
-    console.log('🔄 Shutting down Trust Network...');
-    console.log('✅ Trust Network shutdown complete');
+    console.log(' Shutting down Trust Network...');
+    console.log(' Trust Network shutdown complete');
   }
 }
 

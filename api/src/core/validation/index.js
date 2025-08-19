@@ -30,12 +30,12 @@ class ValidationEngine {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Validation Engine...');
+    console.log(' Initializing Validation Engine...');
     
     // Register built-in validators
     this.registerBuiltinValidators();
     
-    console.log('✅ Validation Engine initialized');
+    console.log(' Validation Engine initialized');
   }
 
   /**
@@ -158,7 +158,7 @@ class ValidationEngine {
       return { score: Math.max(0, score), issues };
     });
 
-    console.log(`✅ Initialized ${this.customValidators.size} universal validation rules`);
+    console.log(` Initialized ${this.customValidators.size} universal validation rules`);
   }
 
   /**
@@ -278,9 +278,9 @@ class ValidationEngine {
 
       // Log validation
       if (result.valid) {
-        console.log(`✅ Validation successful: ${schemaName} in ${result.duration}ms`);
+        console.log(` Validation successful: ${schemaName} in ${result.duration}ms`);
       } else {
-        console.log(`❌ Validation failed: ${schemaName} with ${result.errors.length} errors`);
+        console.log(` Validation failed: ${schemaName} with ${result.errors.length} errors`);
       }
 
       return result;
@@ -413,7 +413,7 @@ class ValidationEngine {
   registerExtensionSchema(extensionName, schemaName, schema) {
     const key = `${extensionName}:${schemaName}`;
     this.customValidators.set(key, schema);
-    console.log(`✅ Registered extension validation schema: ${key}`);
+    console.log(` Registered extension validation schema: ${key}`);
   }
 
   /**
@@ -425,7 +425,7 @@ class ValidationEngine {
     }
     
     this.extensionRules.get(extensionName).set(ruleName, ruleFunction);
-    console.log(`✅ Registered extension quality rule: ${extensionName}:${ruleName}`);
+    console.log(` Registered extension quality rule: ${extensionName}:${ruleName}`);
   }
 
   /**
@@ -508,7 +508,7 @@ class ValidationEngine {
    */
   clearCache() {
     this.validationCache.clear();
-    console.log('✅ Validation cache cleared');
+    console.log(' Validation cache cleared');
   }
 
   /**
@@ -542,9 +542,9 @@ class ValidationEngine {
   }
 
   async shutdown() {
-    console.log('🔄 Shutting down Validation Engine...');
+    console.log(' Shutting down Validation Engine...');
     this.clearCache();
-    console.log('✅ Validation Engine shutdown complete');
+    console.log(' Validation Engine shutdown complete');
   }
 }
 

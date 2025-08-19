@@ -12,10 +12,10 @@ class BankingDataModels {
   }
 
   async initialize(coreFramework) {
-    console.log('📊 Initializing Banking Data Models...');
+    console.log(' Initializing Banking Data Models...');
     this.coreFramework = coreFramework;
     this.initialized = true;
-    console.log('✅ Banking Data Models initialized');
+    console.log(' Banking Data Models initialized');
   }
 
   /**
@@ -433,7 +433,7 @@ class BankingDataModels {
    */
   async shutdown() {
     this.initialized = false;
-    console.log('📊 Banking Data Models shut down');
+    console.log(' Banking Data Models shut down');
   }
 }
 

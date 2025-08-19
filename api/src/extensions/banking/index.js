@@ -30,7 +30,7 @@ class BankingExtension {
    */
   async initialize(coreFramework) {
     try {
-      console.log('🏦 Initializing Banking Extension...');
+      console.log(' Initializing Banking Extension...');
 
       this.coreFramework = coreFramework;
 
@@ -50,7 +50,7 @@ class BankingExtension {
       await this.registerComplianceRules(coreFramework);
 
       this.initialized = true;
-      console.log('✅ Banking Extension initialized successfully');
+      console.log(' Banking Extension initialized successfully');
 
       return {
         success: true,
@@ -60,7 +60,7 @@ class BankingExtension {
       };
 
     } catch (error) {
-      console.error('❌ Banking Extension initialization failed:', error);
+      console.error(' Banking Extension initialization failed:', error);
       throw error;
     }
   }
@@ -92,7 +92,7 @@ class BankingExtension {
       this.dataModels.getAccountDataSchema()
     );
 
-    console.log('📋 Banking schemas registered');
+    console.log(' Banking schemas registered');
   }
 
   /**
@@ -122,7 +122,7 @@ class BankingExtension {
       this.processes.getAccountOpeningProcess()
     );
 
-    console.log('⚙️ Banking processes registered');
+    console.log(' Banking processes registered');
   }
 
   /**
@@ -138,7 +138,7 @@ class BankingExtension {
     // Register anti-money laundering rules
     this.compliance.registerAmlRules(coreFramework);
 
-    console.log('📜 Banking compliance rules registered');
+    console.log(' Banking compliance rules registered');
   }
 
   /**
@@ -251,7 +251,7 @@ class BankingExtension {
    * Shutdown extension
    */
   async shutdown() {
-    console.log('🔄 Shutting down Banking Extension...');
+    console.log(' Shutting down Banking Extension...');
     
     try {
       await this.compliance.shutdown();
@@ -260,9 +260,9 @@ class BankingExtension {
       await this.dataModels.shutdown();
       
       this.initialized = false;
-      console.log('✅ Banking Extension shutdown complete');
+      console.log(' Banking Extension shutdown complete');
     } catch (error) {
-      console.error('❌ Error shutting down Banking Extension:', error);
+      console.error(' Error shutting down Banking Extension:', error);
       throw error;
     }
   }

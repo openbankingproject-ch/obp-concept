@@ -15,6 +15,11 @@ const authMiddleware = require('./middleware/auth');
 const mtlsMiddleware = require('./middleware/mtls');
 const validationMiddleware = require('./middleware/validation');
 
+// Core Framework and Service Layer
+const CoreFramework = require('./core');
+const { createServiceManager } = require('./services');
+const BankingExtension = require('./extensions/banking');
+
 // Import routes
 const consentRoutes = require('./routes/consent');
 const customerRoutes = require('./routes/customer');
@@ -27,6 +32,11 @@ const parRoutes = require('./routes/par');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Global variables for framework and services
+let coreFramework = null;
+let serviceManager = null;
+let bankingExtension = null;
 
 // Security middleware
 app.use(helmet({
@@ -93,6 +103,112 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
   customSiteTitle: 'Open API Kundenbeziehung - Documentation'
 }));
 
+// Initialize Core Framework and Services
+async function initializeFramework() {
+  try {
+    logger.info('Initializing Open API Kundenbeziehung Framework...');
+    
+    // Initialize core framework
+    coreFramework = new CoreFramework({
+      enableExtensions: true,
+      enableTrustNetwork: true,
+      enableAuditLogging: true,
+      environment: process.env.NODE_ENV || 'development'
+    });
+    await coreFramework.initialize();
+    
+    // Initialize banking extension
+    bankingExtension = new BankingExtension();
+    await bankingExtension.initialize(coreFramework);
+    
+    // Register banking extension with core framework
+    await coreFramework.registerExtension('banking', bankingExtension);
+    
+    // Initialize service layer
+    serviceManager = createServiceManager(coreFramework);
+    await serviceManager.initialize();
+    
+    // Inject dependencies into routes
+    injectDependenciesIntoRoutes();
+    
+    logger.info('Framework initialization complete');
+    logger.info(`Banking extension loaded (version: ${bankingExtension.version})`);
+    logger.info(`Core components: ${Object.keys(coreFramework.components).length}`);
+    logger.info(`Services initialized: ${Object.keys(serviceManager.services).length}`);
+    
+  } catch (error) {
+    logger.error('Framework initialization failed:', error);
+    throw error;
+  }
+}
+
+// Inject dependencies into route modules
+function injectDependenciesIntoRoutes() {
+  // Set core framework reference in routes that support it
+  if (typeof healthRoutes.setCoreFramework === 'function') {
+    healthRoutes.setCoreFramework(coreFramework);
+  }
+  if (typeof registryRoutes.setCoreFramework === 'function') {
+    registryRoutes.setCoreFramework(coreFramework);
+  }
+  if (typeof identificationRoutes.setCoreFramework === 'function') {
+    identificationRoutes.setCoreFramework(coreFramework);
+  }
+  if (typeof checksRoutes.setCoreFramework === 'function') {
+    checksRoutes.setCoreFramework(coreFramework);
+  }
+  if (typeof signatureRoutes.setCoreFramework === 'function') {
+    signatureRoutes.setCoreFramework(coreFramework);
+  }
+  if (typeof consentRoutes.setCoreFramework === 'function') {
+    consentRoutes.setCoreFramework(coreFramework);
+  }
+  if (typeof customerRoutes.setCoreFramework === 'function') {
+    customerRoutes.setCoreFramework(coreFramework);
+  }
+  
+  // Set service manager reference in routes that support it
+  if (typeof healthRoutes.setServiceManager === 'function') {
+    healthRoutes.setServiceManager(serviceManager);
+  }
+  if (typeof registryRoutes.setServiceManager === 'function') {
+    registryRoutes.setServiceManager(serviceManager);
+  }
+  if (typeof identificationRoutes.setServiceManager === 'function') {
+    identificationRoutes.setServiceManager(serviceManager);
+  }
+  if (typeof checksRoutes.setServiceManager === 'function') {
+    checksRoutes.setServiceManager(serviceManager);
+  }
+  if (typeof signatureRoutes.setServiceManager === 'function') {
+    signatureRoutes.setServiceManager(serviceManager);
+  }
+  if (typeof consentRoutes.setServiceManager === 'function') {
+    consentRoutes.setServiceManager(serviceManager);
+  }
+  if (typeof customerRoutes.setServiceManager === 'function') {
+    customerRoutes.setServiceManager(serviceManager);
+  }
+}
+
+// Middleware to ensure framework is initialized
+app.use((req, res, next) => {
+  if (!coreFramework || !serviceManager) {
+    return res.status(503).json({
+      error: 'SERVICE_UNAVAILABLE',
+      message: 'Framework is initializing, please try again',
+      timestamp: new Date().toISOString()
+    });
+  }
+  
+  // Attach framework and services to request object for easy access
+  req.coreFramework = coreFramework;
+  req.services = serviceManager;
+  req.bankingExtension = bankingExtension;
+  
+  next();
+});
+
 // Health check (no authentication required)
 app.use('/health', healthRoutes);
 
@@ -107,12 +223,54 @@ app.use('/v1/checks', authMiddleware.required, checksRoutes);
 app.use('/v1/signature', authMiddleware.required, signatureRoutes);
 app.use('/v1/registry', authMiddleware.optional, registryRoutes);
 
+// Banking MVP endpoints
+app.get('/v1/banking/info', authMiddleware.optional, (req, res) => {
+  if (!bankingExtension) {
+    return res.status(503).json({
+      error: 'SERVICE_UNAVAILABLE',
+      message: 'Banking extension not available'
+    });
+  }
+  
+  const capabilities = bankingExtension.getCapabilities();
+  
+  res.json({
+    message: 'Swiss Banking MVP - Customer Data Exchange API',
+    extension: capabilities,
+    framework: {
+      version: '1.0.0',
+      environment: process.env.NODE_ENV || 'development',
+      features: [
+        'Universal customer data exchange',
+        'Swiss banking compliance',
+        'FAPI 2.0 security',
+        'Multi-industry extensibility'
+      ]
+    },
+    endpoints: {
+      customerCheck: '/v1/customer/check',
+      customerData: '/v1/customer/data',
+      consent: '/v1/consent',
+      identification: '/v1/identification',
+      checks: '/v1/checks',
+      signature: '/v1/signature',
+      registry: '/v1/registry'
+    },
+    documentation: '/docs',
+    health: '/health',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
     message: 'Open API Kundenbeziehung - Swiss National Standard',
     version: '1.0.0',
+    mvp: 'Banking Customer Data Exchange',
+    framework: 'Generic multi-industry API with banking extension',
     documentation: '/docs',
+    banking_info: '/v1/banking/info',
     health: '/health',
     timestamp: new Date().toISOString()
   });
@@ -131,24 +289,68 @@ app.use('*', (req, res) => {
 app.use(errorHandler);
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
-  logger.info('SIGTERM received, shutting down gracefully');
-  process.exit(0);
-});
+async function gracefulShutdown() {
+  logger.info('Shutting down gracefully...');
+  
+  try {
+    // Shutdown service layer
+    if (serviceManager) {
+      await serviceManager.shutdown();
+    }
+    
+    // Shutdown banking extension
+    if (bankingExtension) {
+      await bankingExtension.shutdown();
+    }
+    
+    // Shutdown core framework
+    if (coreFramework) {
+      await coreFramework.shutdown();
+    }
+    
+    logger.info('Graceful shutdown complete');
+    process.exit(0);
+  } catch (error) {
+    logger.error('Error during shutdown:', error);
+    process.exit(1);
+  }
+}
 
-process.on('SIGINT', () => {
-  logger.info('SIGINT received, shutting down gracefully');
-  process.exit(0);
-});
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', gracefulShutdown);
 
 // Start server
+async function startServer() {
+  try {
+    // Initialize framework first
+    await initializeFramework();
+    
+    // Start HTTP server
+    const server = app.listen(PORT, () => {
+      logger.info('Open API Kundenbeziehung server started successfully');
+      logger.info(`Server running on port ${PORT}`);
+      logger.info(`API Documentation: http://localhost:${PORT}/docs`);
+      logger.info(`Health check: http://localhost:${PORT}/health`);
+      logger.info(`Banking info: http://localhost:${PORT}/v1/banking/info`);
+      logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
+      logger.info('Banking MVP is ready for customer data exchange!');
+    });
+    
+    // Handle server errors
+    server.on('error', (error) => {
+      logger.error('Server error:', error);
+      process.exit(1);
+    });
+    
+    return server;
+  } catch (error) {
+    logger.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
 if (require.main === module) {
-  app.listen(PORT, () => {
-    logger.info(`🚀 Open API Kundenbeziehung server running on port ${PORT}`);
-    logger.info(`📚 API Documentation available at http://localhost:${PORT}/docs`);
-    logger.info(`💚 Health check available at http://localhost:${PORT}/health`);
-    logger.info(`🏛️ Environment: ${process.env.NODE_ENV || 'development'}`);
-  });
+  startServer();
 }
 
 module.exports = app;

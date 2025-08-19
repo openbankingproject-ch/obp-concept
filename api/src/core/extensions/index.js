@@ -28,7 +28,7 @@ class ExtensionLoader {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Extension System...');
+    console.log(' Initializing Extension System...');
     
     // Ensure extensions directory exists
     await this.ensureExtensionsDirectory();
@@ -36,7 +36,7 @@ class ExtensionLoader {
     // Register core hooks
     this.registerCoreHooks();
     
-    console.log('✅ Extension System initialized');
+    console.log(' Extension System initialized');
   }
 
   /**
@@ -99,7 +99,7 @@ class ExtensionLoader {
         }
       }
       
-      console.log(`🔍 Discovered ${extensions.length} extensions`);
+      console.log(` Discovered ${extensions.length} extensions`);
       return extensions;
       
     } catch (error) {
@@ -238,12 +238,12 @@ class ExtensionLoader {
         await this.setupHotReload(name, extensionPath);
       }
       
-      console.log(`✅ Extension loaded: ${name} v${extensionMetadata.version}`);
+      console.log(` Extension loaded: ${name} v${extensionMetadata.version}`);
       
       return extension;
       
     } catch (error) {
-      console.error(`❌ Failed to load extension ${extensionMetadata.name}:`, error);
+      console.error(` Failed to load extension ${extensionMetadata.name}:`, error);
       throw error;
     }
   }
@@ -417,10 +417,10 @@ class ExtensionLoader {
         this.watchers.delete(name);
       }
       
-      console.log(`✅ Extension unloaded: ${name}`);
+      console.log(` Extension unloaded: ${name}`);
       
     } catch (error) {
-      console.error(`❌ Error unloading extension ${name}:`, error);
+      console.error(` Error unloading extension ${name}:`, error);
       throw error;
     }
   }
@@ -433,7 +433,7 @@ class ExtensionLoader {
       const fs = require('fs');
       const watcher = fs.watch(extensionPath, { recursive: true }, async (eventType, filename) => {
         if (filename && (filename.endsWith('.js') || filename.endsWith('.json'))) {
-          console.log(`🔄 Hot reloading extension: ${extensionName} (${filename} changed)`);
+          console.log(` Hot reloading extension: ${extensionName} (${filename} changed)`);
           
           try {
             // Unload current extension
@@ -566,7 +566,7 @@ class ExtensionLoader {
   }
 
   async shutdown() {
-    console.log('🔄 Shutting down Extension System...');
+    console.log(' Shutting down Extension System...');
     
     // Shutdown all extensions
     for (const [name, extension] of this.extensions) {
@@ -588,7 +588,7 @@ class ExtensionLoader {
     this.extensionMetadata.clear();
     this.watchers.clear();
     
-    console.log('✅ Extension System shutdown complete');
+    console.log(' Extension System shutdown complete');
   }
 }
 

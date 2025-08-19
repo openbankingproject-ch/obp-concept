@@ -12,9 +12,9 @@ class RegistryService {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Registry Service...');
+    console.log(' Initializing Registry Service...');
     this.initialized = true;
-    console.log('✅ Registry Service initialized');
+    console.log(' Registry Service initialized');
   }
 
   /**
@@ -540,9 +540,9 @@ class RegistryService {
    * Shutdown
    */
   async shutdown() {
-    console.log('🔄 Shutting down Registry Service...');
+    console.log(' Shutting down Registry Service...');
     this.initialized = false;
-    console.log('✅ Registry Service shutdown complete');
+    console.log(' Registry Service shutdown complete');
   }
 }
 

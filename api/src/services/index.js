@@ -34,7 +34,7 @@ class ServiceManager {
     }
 
     try {
-      console.log('🔄 Initializing Service Layer...');
+      console.log(' Initializing Service Layer...');
 
       // Initialize services with core framework dependencies
       this.services.consent = new ConsentService(this.coreFramework);
@@ -50,15 +50,15 @@ class ServiceManager {
       for (const [name, service] of Object.entries(this.services)) {
         if (typeof service.initialize === 'function') {
           await service.initialize();
-          console.log(`✅ Service initialized: ${name}`);
+          console.log(` Service initialized: ${name}`);
         }
       }
 
       this.initialized = true;
-      console.log('✅ Service Layer initialized successfully');
+      console.log(' Service Layer initialized successfully');
 
     } catch (error) {
-      console.error('❌ Service Layer initialization failed:', error);
+      console.error(' Service Layer initialization failed:', error);
       throw error;
     }
   }
@@ -133,21 +133,21 @@ class ServiceManager {
    * Shutdown all services
    */
   async shutdown() {
-    console.log('🔄 Shutting down Service Layer...');
+    console.log(' Shutting down Service Layer...');
 
     for (const [name, service] of Object.entries(this.services)) {
       try {
         if (typeof service.shutdown === 'function') {
           await service.shutdown();
-          console.log(`✅ Service shut down: ${name}`);
+          console.log(` Service shut down: ${name}`);
         }
       } catch (error) {
-        console.error(`❌ Error shutting down service ${name}:`, error);
+        console.error(` Error shutting down service ${name}:`, error);
       }
     }
 
     this.initialized = false;
-    console.log('✅ Service Layer shutdown complete');
+    console.log(' Service Layer shutdown complete');
   }
 }
 

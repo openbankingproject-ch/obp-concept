@@ -75,9 +75,9 @@ class CoreFramework {
       }
 
       this.initialized = true;
-      console.log('✅ Core Framework initialized successfully');
+      console.log(' Core Framework initialized successfully');
     } catch (error) {
-      console.error('❌ Core Framework initialization failed:', error);
+      console.error(' Core Framework initialization failed:', error);
       throw error;
     }
   }
@@ -93,9 +93,9 @@ class CoreFramework {
         const loaded = await this.components.extensionLoader.loadExtension(extension);
         await loaded.initialize(this);
         this.extensions.set(extension.name, loaded);
-        console.log(`✅ Extension loaded: ${extension.name}`);
+        console.log(` Extension loaded: ${extension.name}`);
       } catch (error) {
-        console.error(`❌ Failed to load extension ${extension.name}:`, error);
+        console.error(` Failed to load extension ${extension.name}:`, error);
       }
     }
   }
@@ -259,7 +259,7 @@ class CoreFramework {
    * Shutdown framework gracefully
    */
   async shutdown() {
-    console.log('🔄 Shutting down Core Framework...');
+    console.log(' Shutting down Core Framework...');
 
     // Shutdown extensions first
     for (const [name, extension] of this.extensions) {
@@ -284,7 +284,7 @@ class CoreFramework {
     }
 
     this.initialized = false;
-    console.log('✅ Core Framework shutdown complete');
+    console.log(' Core Framework shutdown complete');
   }
 }
 

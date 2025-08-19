@@ -11,11 +11,11 @@ class BankingValidation {
   }
 
   async initialize(coreFramework) {
-    console.log('✅ Initializing Banking Validation...');
+    console.log(' Initializing Banking Validation...');
     this.coreFramework = coreFramework;
     this.setupBankingValidators();
     this.initialized = true;
-    console.log('✅ Banking Validation initialized');
+    console.log(' Banking Validation initialized');
   }
 
   /**
@@ -496,7 +496,7 @@ class BankingValidation {
   async shutdown() {
     this.validators.clear();
     this.initialized = false;
-    console.log('✅ Banking Validation shut down');
+    console.log(' Banking Validation shut down');
   }
 }
 

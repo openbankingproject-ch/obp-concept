@@ -29,7 +29,7 @@ class ParticipantRegistry {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Participant Registry...');
+    console.log(' Initializing Participant Registry...');
     
     // Load participants from persistent storage
     await this.loadParticipants();
@@ -37,7 +37,7 @@ class ParticipantRegistry {
     // Start health monitoring
     this.startHealthMonitoring();
     
-    console.log(`✅ Participant Registry initialized with ${this.participants.size} participants`);
+    console.log(` Participant Registry initialized with ${this.participants.size} participants`);
   }
 
   /**
@@ -144,7 +144,7 @@ class ParticipantRegistry {
       // Add to industry registry
       this.addToIndustryRegistry(participant);
 
-      console.log(`✅ Participant registered: ${participant.participantId} (${participant.name})`);
+      console.log(` Participant registered: ${participant.participantId} (${participant.name})`);
 
       return {
         participantId: participant.participantId,
@@ -154,7 +154,7 @@ class ParticipantRegistry {
       };
 
     } catch (error) {
-      console.error(`❌ Participant registration failed:`, error);
+      console.error(` Participant registration failed:`, error);
       throw error;
     }
   }
@@ -238,7 +238,7 @@ class ParticipantRegistry {
 
     this.participants.set(participantId, updatedParticipant);
     
-    console.log(`✅ Participant updated: ${participantId}`);
+    console.log(` Participant updated: ${participantId}`);
     
     return updatedParticipant;
   }
@@ -545,7 +545,7 @@ class ParticipantRegistry {
     
     const degradedCount = activeParticipants.filter(p => p.stats.uptime < 80).length;
     if (degradedCount > 0) {
-      console.log(`⚠️ ${degradedCount} participants have degraded health`);
+      console.log(` ${degradedCount} participants have degraded health`);
     }
   }
 
@@ -584,9 +584,9 @@ class ParticipantRegistry {
   }
 
   async shutdown() {
-    console.log('🔄 Shutting down Participant Registry...');
+    console.log(' Shutting down Participant Registry...');
     await this.saveParticipants();
-    console.log('✅ Participant Registry shutdown complete');
+    console.log(' Participant Registry shutdown complete');
   }
 }
 

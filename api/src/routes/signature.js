@@ -485,9 +485,9 @@ async function sendSignatureNotification(signatureProcess) {
     const { customerId, signatureUrl, notificationMethod, documents } = signatureProcess;
 
     // Mock notification sending
-    console.log(`📧 Would send ${notificationMethod} notification to customer ${customerId}`);
-    console.log(`📄 Documents to sign: ${documents.map(d => d.documentName).join(', ')}`);
-    console.log(`🔗 Signature URL: ${signatureUrl}`);
+    console.log(`Would send ${notificationMethod} notification to customer ${customerId}`);
+    console.log(`Documents to sign: ${documents.map(d => d.documentName).join(', ')}`);
+    console.log(`Signature URL: ${signatureUrl}`);
 
     // Add notification step
     signatureProcess.steps.push({

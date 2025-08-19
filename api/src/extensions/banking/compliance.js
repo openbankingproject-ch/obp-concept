@@ -12,12 +12,12 @@ class BankingCompliance {
   }
 
   async initialize(coreFramework) {
-    console.log('📜 Initializing Banking Compliance...');
+    console.log(' Initializing Banking Compliance...');
     this.coreFramework = coreFramework;
     this.setupComplianceRules();
     this.setupRegulatoryRequirements();
     this.initialized = true;
-    console.log('✅ Banking Compliance initialized');
+    console.log(' Banking Compliance initialized');
   }
 
   /**
@@ -250,7 +250,7 @@ class BankingCompliance {
       );
     }
 
-    console.log('🏦 Swiss banking compliance rules registered');
+    console.log(' Swiss banking compliance rules registered');
   }
 
   /**
@@ -258,7 +258,7 @@ class BankingCompliance {
    */
   registerFinmaCompliance(coreFramework) {
     // Register FINMA-specific processes and validations
-    console.log('🏛️ FINMA compliance requirements registered');
+    console.log(' FINMA compliance requirements registered');
   }
 
   /**
@@ -266,7 +266,7 @@ class BankingCompliance {
    */
   registerAmlRules(coreFramework) {
     // Register AML-specific processes and validations
-    console.log('🛡️ AML compliance rules registered');
+    console.log(' AML compliance rules registered');
   }
 
   // Compliance Check Implementations
@@ -654,7 +654,7 @@ class BankingCompliance {
     this.complianceRules.clear();
     this.regulatoryRequirements.clear();
     this.initialized = false;
-    console.log('📜 Banking Compliance shut down');
+    console.log(' Banking Compliance shut down');
   }
 }
 

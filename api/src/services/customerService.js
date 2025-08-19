@@ -15,13 +15,13 @@ class CustomerService {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Customer Service...');
+    console.log(' Initializing Customer Service...');
     
     // Import existing customer data (from existing customer.js route)
     await this.migrateExistingCustomerData();
     
     this.initialized = true;
-    console.log('✅ Customer Service initialized');
+    console.log(' Customer Service initialized');
   }
 
   /**
@@ -106,7 +106,7 @@ class CustomerService {
     };
     
     this.customers.set(sampleCustomer.sharedCustomerHash, sampleCustomer);
-    console.log('✅ Sample customer data migrated to Customer Service');
+    console.log(' Sample customer data migrated to Customer Service');
   }
 
   /**
@@ -458,10 +458,10 @@ class CustomerService {
    * Shutdown
    */
   async shutdown() {
-    console.log('🔄 Shutting down Customer Service...');
+    console.log(' Shutting down Customer Service...');
     // Could save customer data to persistent storage here
     this.initialized = false;
-    console.log('✅ Customer Service shutdown complete');
+    console.log(' Customer Service shutdown complete');
   }
 }
 

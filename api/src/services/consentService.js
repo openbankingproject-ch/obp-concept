@@ -12,9 +12,9 @@ class ConsentService {
   }
 
   async initialize() {
-    console.log('🔄 Initializing Consent Service...');
+    console.log(' Initializing Consent Service...');
     this.initialized = true;
-    console.log('✅ Consent Service initialized');
+    console.log(' Consent Service initialized');
   }
 
   /**
@@ -428,9 +428,9 @@ class ConsentService {
    * Shutdown
    */
   async shutdown() {
-    console.log('🔄 Shutting down Consent Service...');
+    console.log(' Shutting down Consent Service...');
     this.initialized = false;
-    console.log('✅ Consent Service shutdown complete');
+    console.log(' Consent Service shutdown complete');
   }
 }
 
