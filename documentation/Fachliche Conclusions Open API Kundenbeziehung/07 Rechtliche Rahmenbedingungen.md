@@ -22,7 +22,7 @@ Die rechtlichen Rahmenbedingungen für die Open API Kundenbeziehung sind durch e
 - GwG-Compliance und Outsourcing-Behandlung sind komplexe, fallspezifische Themen
 - Bankkundengeheimnis und Datenschutz erfordern robuste Consent-Mechanismen
 
-**Wichtiger Disclaimer:** *Die in diesem Dokument enthaltenen Informationen und Empfehlungen stellen keine Rechtsberatung dar. Wir sind keine Fachpersonen im rechtlichen Bereich. Fär konkrete rechtliche Fragestellungen ist zwingend qualifizierte juristische Beratung einzuholen.*
+**Wichtiger Disclaimer:** *Die in diesem Dokument enthaltenen Informationen und Empfehlungen stellen keine Rechtsberatung dar. Wir sind keine Fachpersonen im rechtlichen Bereich. Für konkrete rechtliche Fragestellungen ist zwingend qualifizierte juristische Beratung einzuholen.*
 
 ---
 
@@ -66,22 +66,22 @@ Die Open API Kundenbeziehung bewegt sich im Spannungsfeld verschiedener Rechtsge
 
 #### Expertenstellungnahmen
 
-**HBL Position:**
+**Bank A Position:**
 - Keine Haftung vom Produzenten für Aktualität/Richtigkeit der Daten
 - Integrator B bleibt verantwortlich für GwG-/DSG-Konformität
 
-**PostFinance Position:**
-- Haftung für die Daten bis zum Consent des Kunden  sobald die Daten beim Empfänger sind, liegt die Verantwortung bei ihm
+**Bank B Position:**
+- Haftung für die Daten bis zum Consent des Kunden → sobald die Daten beim Empfänger sind, liegt die Verantwortung bei ihm
 
-**Intrum Position:**
-- **Ausservertragliche Haftung (Art. 41 OR):** Jede Partei kann haften  abhängig von Verschulden und Kausalität
+**Third-Party Service Provider F Position:**
+- **Ausservertragliche Haftung (Art. 41 OR):** Jede Partei kann haften → abhängig von Verschulden und Kausalität
 - **Empfehlung:** Zivilrechtliche Haftung besser vertraglich regeln (z.B. über Teilnahmevereinbarung, SLA)
 
 #### Zusätzliche Haftungsaspekte
 
-Das bestehende Vertragswerk zwischen YUH, Swissquote und PostFinance ist als Basis für die Klärung der Haftungsfrage zu eruieren.
+Das bestehende Vertragswerk zwischen Digital Platform G, FinTech Provider C und Bank B ist als Basis für die Klärung der Haftungsfrage zu eruieren.
 
-Parallel dazu sind ergänzende Sicherheitsmaänahmen zu prüfen  beispielsweise Mechanismen zur Identifikation und Verhinderung von Fake-Accounts.
+Parallel dazu sind ergänzende Sicherheitsmaßnahmen zu prüfen → beispielsweise Mechanismen zur Identifikation und Verhinderung von Fake-Accounts.
 
 ### Outsourcing und Delegation
 
@@ -92,22 +92,22 @@ Parallel dazu sind ergänzende Sicherheitsmaänahmen zu prüfen  beispielsweise
 #### Experteneinschätzung
 
 **BEI Position:**
-Mit Bankidentitätscase von PostFinance zu Kunden im Namen und auf Rechnung klären.
+Mit Bankidentitätscase von Bank B zu Kunden im Namen und auf Rechnung klären.
 
-**HBL Position:**
-- **Fall 1:** Bank B verlässt sich auf die von Bank A durchgeführte Identifikation. Bank B nutzt die Daten, übernimmt aber selbst die Verantwortung. ä **Kein Outsourcing** (sondern reiner Datenempfang).
-  - Bank B nutzt die Daten im Reliance-Modell". Bank A wird nicht im Auftrag von Bank B tätig. Vertraglich zwischen den beiden Banken regeln, aber ohne Delegation der Funktion.
+**Bank A Position:**
+- **Fall 1:** Bank B verlässt sich auf die von Bank A durchgeführte Identifikation. Bank B nutzt die Daten, übernimmt aber selbst die Verantwortung. → **Kein Outsourcing** (sondern reiner Datenempfang).
+  - Bank B nutzt die Daten im "Reliance-Modell". Bank A wird nicht im Auftrag von Bank B tätig. Vertraglich zwischen den beiden Banken regeln, aber ohne Delegation der Funktion.
 
-- **Fall 2:** Bank B beauftragt Bank A explizit mit der Identifikation von Kunden im Namen der Bank B. ä **Outsourcing.** Bank A wird als Dienstleister tätig. Bank B delegiert eine bankrechtlich wesentliche Funktion.
+- **Fall 2:** Bank B beauftragt Bank A explizit mit der Identifikation von Kunden im Namen der Bank B. → **Outsourcing.** Bank A wird als Dienstleister tätig. Bank B delegiert eine bankrechtlich wesentliche Funktion.
 
-- **Fall 3:** Bank B nutzt einen KYC-Dienstleister (z.B. IDnow, Intrum, Swisscom), der Kunden im Namen der Bank identifiziert. ä **Outsourcing** (gilt auch bei Drittanbietern).
+- **Fall 3:** Bank B nutzt einen KYC-Dienstleister (z.B. Identity Service Provider E, Third-Party Service Provider F, Telecommunications Provider D), der Kunden im Namen der Bank identifiziert. → **Outsourcing** (gilt auch bei Drittanbietern).
   
   Wenn sich die Bank für ein Outsourcing entscheidet:
   - Vertrag über die Auslagerung abschließen (inkl. Weisungsrecht, Kontrollrechte etc.)
   - Risikobeurteilung und Outsourcing-Governance etablieren
   - Meldung an die FINMA (wenn die Funktion wesentlich ist)
 
-**Intrum Position:**
+**Third-Party Service Provider F Position:**
 Falls Outsourcing relevant, kann dies generisch umgesetzt werden? Oder ist kein Outsourcing möglich? Somit nur Fall 1 möglich.
 
 #### Lösungsansatz
@@ -125,22 +125,22 @@ Heikel ist hier das in Art. 28 GwV-FINMA angelegte Verbot einer Weiterdelegation
 
 #### Experteneinschätzung
 
-**HBL Position:**
-Annahme: Die herausgegebenen Datensätze werden „as is" übergeben. Allfällige weitere Prüfungen erfolgen durch den Integrator.
+**Bank A Position:**
+Annahme: Die herausgegebenen Datensätze werden "as is" übergeben. Allfällige weitere Prüfungen erfolgen durch den Integrator.
 
 Warum werden keine Effizienzgewinne erzielt? Die Identifikation wurde ja durchgeführt. Ergänzungen auf Grund Risikoapproach sind Zusatzaufwände des Integrators. Prüfen mit Yuh Case.
 
-**PostFinance Position:**
+**Bank B Position:**
 Herausgabe: Einverständnis des Kunden bezäglich Datenschutz und Bankkundengeheimnis nötig.
 
 Datenprüfung: Aktuell rechtlich wohl nicht konkret definiert. Eine Stellungnahme seitens FINMA würde wünschenswert, da der Integrator ansonsten das Risiko trägt oder bei nötiger Prüfung der Datensätze keine Effizienzgewinne mehr erzielt.
 
-**Intrum Position:**
+**Third-Party Service Provider F Position:**
 Zur Beantwortung dieser Frage benötigt es mehr Angaben zu den Datensätzen und ihrer Anwendung. Sicher sind Themen wie Datenschutz und Berufsgeheimnisse, allenfalls auch Geschäftsgeheimnisse zu beachten und gebührend zu berücksichtigen.
 
-Fär die Struktur der Datensätze könnten die folgenden allgemeinen Grundsätze definiert werden:
+Für die Struktur der Datensätze könnten die folgenden allgemeinen Grundsätze definiert werden:
 
-"Datenprodukte bündeln Ressourcen (z.B. Datensätze, Datensammlungen oder Datendienste) und bringen diese in eine nutzbare Form. Sie beinhalten neben der Datenressource selbst weitere relevante Informationen wie Nutzungsrichtlinien, Vertragsbedingungen, Preise, etc. Sie sind einfach zu nutzende Einheiten, die einzeln oder mit anderen Datenprodukten verwendet und kombiniert werden, um Anwendungsfälle zu realisieren. Datenprodukte werden von Datenanbietenden oder Datenvermittelnden bereitgestellt. Ein gutes Datenproduktmanagement ermöglicht die Wiederverwendung von einzelnen Datenprodukten und kreiert Netzwerkeffekte" (Bundeskanzlei, Bausteine von Datenräumen  Datenäkosystem Schweiz, Ziffer 3.2.3)
+"Datenprodukte bündeln Ressourcen (z.B. Datensätze, Datensammlungen oder Datendienste) und bringen diese in eine nutzbare Form. Sie beinhalten neben der Datenressource selbst weitere relevante Informationen wie Nutzungsrichtlinien, Vertragsbedingungen, Preise, etc. Sie sind einfach zu nutzende Einheiten, die einzeln oder mit anderen Datenprodukten verwendet und kombiniert werden, um Anwendungsfälle zu realisieren. Datenprodukte werden von Datenanbietenden oder Datenvermittelnden bereitgestellt. Ein gutes Datenproduktmanagement ermöglicht die Wiederverwendung von einzelnen Datenprodukten und kreiert Netzwerkeffekte" (Bundeskanzlei, Bausteine von Datenräumen Datenäkosystem Schweiz, Ziffer 3.2.3)
 
 Sie stellen sicher, dass die mehrfache Datennutzung vertrauenswärdig und sicher ist, und verhindern den Missbrauch von Daten. Vertragliche Vereinbarungen können auf verschiedenen Ebenen getroffen werden und unterscheiden sich darin, welche Akteure sie betreffen. Vereinbarungen auf Ebene Datenraum sind für alle Datenraumteilnehmenden gleichermassen durch ihre Teilnahme verbindlich.
 
@@ -157,7 +157,7 @@ Sobald manuelle Prüfschritte notwendig werden, verliert das gesamte API-Vorhabe
 
 Dabei geht es nicht nur um die reine Identifikation, sondern auch um die Gesamtdatenlage.
 
-Das Beispiel YUH zeigt jedoch, dass die Identifikation ohne weitere Prüfung übernommen wird. Risikobasiert wird bei YUH allenfalls zusätzlich eine überprüfung vorgenommen, ist jedoch selten der Fall.
+Das Beispiel Digital Platform G zeigt jedoch, dass die Identifikation ohne weitere Prüfung übernommen wird. Risikobasiert wird bei Digital Platform G allenfalls zusätzlich eine überprüfung vorgenommen, ist jedoch selten der Fall.
 
 #### Lösungsansatz
 
@@ -178,14 +178,52 @@ Eine unabhängige rechtliche Einschätzung würde daher hilfreich, um diese Frag
 
 **Zweigleisiger Lösungsansatz:**
 Es wurde eine zweigleisige Vorgehensweise diskutiert:
-1. **Orientierung an YUH:** Deren Lösungsansatz im Umgang mit der FINMA als Referenz
+1. **Orientierung an Digital Platform G:** Deren Lösungsansatz im Umgang mit der FINMA als Referenz
 2. **Direkter FINMA-Austausch:** Prüfung, ob ein direkter Austausch mit der FINMA sinnvoll und möglich ist
 
 ---
 
 ## Offene Fragestellungen
 
-Die folgenden rechtlichen Fragestellungen bedürfen weiterer Klärung durch qualifizierte Rechtsexperten und möglicherweise FINMA-Guidance:
+**Basierend auf der umfassenden Workshop-Analyse und Expertenstellungnahme wurden folgende 20+ kritische rechtliche Fragestellungen identifiziert, die qualifizierte juristische Klärung erfordern:**
+
+### Grundsätzliche Regulatorische Fragen
+
+**1. Prinzipielle Regelungen:**
+- Wird das Prinzip einer "Identifikation auf Vorrat" grundsätzlich erlaubt? (Das bedeutet: ein neues Onboarding mit allenfalls nicht mehr gültigen Dokumenten wäre erlaubt - z.B. bei Ausweis gestohlen, Namensänderung bei Heirat etc.)
+
+**2. Arten der Identifikation:**
+- Welche Arten der Identifikation sollen weitergegeben werden können (z.B. nur Online/Video Ident?)
+- Sind physische Identifikationsverfahren übertragbar oder nur digitale?
+
+**3. Zeitliche Beschränkungen:**
+- Definition der Dauer: Wie lange kann eine Identifikation wiederverwendet werden?
+- Gibt es Verjährungsfristen für übertragene KYC-Daten?
+
+**4. Ausweisdokumentation:**
+- Details zu Ausweisen: Ist Gültigkeit für Wiederverwendung relevant?
+- Zugelassene Ausweisarten: Welche Dokumente sind akzeptabel?
+- Umgang mit Ausländern: Ist Ausländerausweis nötig?
+
+**5. Scope-Definitionen:**
+- Festlegung von "out of Scope" Kundengruppen (z.B. Workout/Recovery Positionen, Kunden mit MROS Meldungen, etc.)
+- Soll Ausschluss vor Datenweitergabe erfolgen oder danach durch neue Bank?
+
+### Delegation und Haftungsfragen
+
+**6. Regelung der Delegation:**
+- Beispiel: Bank A gibt ein Onboarding der Third-Party Service Provider F an eine Bank B weiter
+- Wem kommt welche Rolle und Haftbarkeit zu in dieser Dreieckskonstellation?
+
+**7. Haftung bei Online Ident:**
+- Besonders im Zusammenhang mit Ersteinzahlungen: Wer haftet wofür?
+- Da Identifikation aus Bestandteilen von Drittanbieter und Bank besteht
+
+**8. Compliance und Aufsichtsfragen:**
+- FINMA-Engagement Timeline: Zu welchem Zeitpunkt sollte FINMA über Open API Kundenbeziehung informiert werden?
+- Meldepflichten: Bestehen Meldepflichten gegenüber FINMA bei Einführung von API-Services?
+
+Die ursprünglich identifizierten Fragestellungen bleiben ebenfalls relevant:
 
 ### Outsourcing und Delegation
 
@@ -241,7 +279,7 @@ Die folgenden rechtlichen Fragestellungen bedürfen weiterer Klärung durch qual
 - API-Responses enthalten nur für den Zweck erforderliche Daten
 - Purpose-based Access Control auf API-Ebene
 - Automatische Datenanonymisierung wo möglich
-- Regelmääige Datenbereinigung nach Zweckwegfall
+- Regelmäßige Datenbereinigung nach Zweckwegfall
 
 **Rechtliche Grundlage:** DSG Art. 4 (Datenbearbeitungsgrundsätze)
 
@@ -322,7 +360,7 @@ Die folgenden rechtlichen Fragestellungen bedürfen weiterer Klärung durch qual
 #### Empfohlene Vertragsstrukturen
 
 **1. API Provider (Data Producer) Responsibilities:**
-- Datenqualität zum Zeitpunkt der übertragung
+- Datenqualität zum Zeitpunkt der Übertragung
 - Consent-Validierung vor Datenpreisgabe  
 - Security Standards Compliance
 - Timely Notification bei Data Breaches
@@ -361,7 +399,7 @@ Die folgenden rechtlichen Fragestellungen bedürfen weiterer Klärung durch qual
 
 1. **Qualifizierte Rechtsberatung engagieren:** Spezialisierte Anwaltskanzlei mit FinTech/Banking-Expertise für detaillierte rechtliche Analyse
 
-2. **FINMA-Strategie entwickeln:** Entscheidung über Timing und Approach für FINMA-Engagement basierend auf YUH-Präzedenzfall
+2. **FINMA-Strategie entwickeln:** Entscheidung über Timing und Approach für FINMA-Engagement basierend auf Digital Platform G-Präzedenzfall
 
 3. **Legal Framework Design:** Entwicklung von Standardverträgen für API-Participants mit klarer Haftungsverteilung
 
