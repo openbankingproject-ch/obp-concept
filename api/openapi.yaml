@@ -56,6 +56,481 @@ security:
   - mTLS: []
 
 paths:
+  # OAUTH 2.1 / OIDC ENDPOINTS (FAPI 2.0 Compliant)
+  /authorize:
+    get:
+      summary: OAuth 2.1 Authorization Endpoint
+      description: |
+        FAPI 2.0 compliant OAuth 2.1 authorization endpoint. Supports PAR (Pushed Authorization Requests)
+        and requires PKCE for all authorization flows.
+      operationId: authorize
+      tags:
+        - OAuth 2.1 / OIDC
+      parameters:
+        - name: response_type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [code]
+          description: Must be 'code' for authorization code flow
+        - name: client_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: OAuth client identifier
+        - name: redirect_uri
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uri
+          description: Client redirect URI
+        - name: scope
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Requested OAuth scopes
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Client state parameter for CSRF protection
+        - name: code_challenge
+          in: query
+          required: true
+          schema:
+            type: string
+          description: PKCE code challenge (S256)
+        - name: code_challenge_method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [S256]
+          description: PKCE code challenge method
+        - name: nonce
+          in: query
+          schema:
+            type: string
+          description: OpenID Connect nonce
+        - name: request_uri
+          in: query
+          schema:
+            type: string
+          description: PAR request URI (urn:ietf:params:oauth:request_uri:*)
+      responses:
+        '302':
+          description: Redirect to redirect_uri with authorization code
+        '400':
+          description: Invalid authorization request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security: []
+  
+  /token:
+    post:
+      summary: OAuth 2.1 Token Endpoint
+      description: |
+        FAPI 2.0 compliant token endpoint supporting authorization_code and refresh_token grants.
+        Requires mTLS or private_key_jwt client authentication.
+      operationId: token
+      tags:
+        - OAuth 2.1 / OIDC
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - grant_type
+                - client_id
+              properties:
+                grant_type:
+                  type: string
+                  enum: [authorization_code, refresh_token]
+                client_id:
+                  type: string
+                code:
+                  type: string
+                  description: Required for authorization_code grant
+                redirect_uri:
+                  type: string
+                  format: uri
+                  description: Required for authorization_code grant
+                code_verifier:
+                  type: string
+                  description: PKCE code verifier
+                refresh_token:
+                  type: string
+                  description: Required for refresh_token grant
+                client_assertion_type:
+                  type: string
+                  enum: [urn:ietf:params:oauth:client-assertion-type:jwt-bearer]
+                  description: For private_key_jwt authentication
+                client_assertion:
+                  type: string
+                  description: JWT assertion for private_key_jwt authentication
+            examples:
+              authorization_code:
+                summary: Authorization Code Grant
+                value:
+                  grant_type: authorization_code
+                  client_id: bank-client-001
+                  code: auth_code_123
+                  redirect_uri: https://client.example.com/callback
+                  code_verifier: pkce_verifier_123
+      responses:
+        '200':
+          description: Access token response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Invalid token request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - mTLS: []
+        - private_key_jwt: []
+
+  /userinfo:
+    get:
+      summary: OpenID Connect UserInfo Endpoint
+      description: |
+        Returns user information for the authenticated user. Supports DPoP token binding.
+      operationId: userinfo
+      tags:
+        - OAuth 2.1 / OIDC
+      responses:
+        '200':
+          description: User information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - BearerAuth: [openid, profile]
+        - DPoP: [openid, profile]
+
+  /introspect:
+    post:
+      summary: OAuth 2.1 Token Introspection
+      description: |
+        RFC 7662 compliant token introspection endpoint for resource servers.
+      operationId: introspect
+      tags:
+        - OAuth 2.1 / OIDC
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
+                  description: Token to introspect
+                token_type_hint:
+                  type: string
+                  enum: [access_token, refresh_token]
+                  description: Hint about token type
+      responses:
+        '200':
+          description: Token introspection response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntrospectionResponse'
+        '400':
+          description: Invalid introspection request
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - mTLS: []
+
+  # PUSHED AUTHORIZATION REQUESTS (PAR)
+  /par:
+    post:
+      summary: Pushed Authorization Request
+      description: |
+        FAPI 2.0 compliant PAR endpoint for securely submitting authorization request parameters.
+      operationId: pushedAuthorizationRequest
+      tags:
+        - OAuth 2.1 / OIDC
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - client_id
+                - response_type
+                - scope
+                - redirect_uri
+                - code_challenge
+                - code_challenge_method
+              properties:
+                client_id:
+                  type: string
+                response_type:
+                  type: string
+                  enum: [code]
+                scope:
+                  type: string
+                redirect_uri:
+                  type: string
+                  format: uri
+                state:
+                  type: string
+                code_challenge:
+                  type: string
+                code_challenge_method:
+                  type: string
+                  enum: [S256]
+                nonce:
+                  type: string
+                purpose:
+                  type: string
+                  enum: [accountOpening, creditAssessment, compliance, customerUpdate]
+      responses:
+        '201':
+          description: PAR response with request_uri
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - request_uri
+                  - expires_in
+                properties:
+                  request_uri:
+                    type: string
+                    pattern: '^urn:ietf:params:oauth:request_uri:'
+                  expires_in:
+                    type: integer
+                    maximum: 60
+                    description: Request URI lifetime in seconds (max 60)
+        '400':
+          description: Invalid PAR request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - mTLS: []
+        - private_key_jwt: []
+
+  # DYNAMIC CLIENT REGISTRATION
+  /register:
+    post:
+      summary: Dynamic Client Registration
+      description: |
+        RFC 7591 compliant dynamic client registration with FAPI 2.0 enhancements.
+      operationId: registerClient
+      tags:
+        - Client Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientRegistrationRequest'
+      responses:
+        '201':
+          description: Client registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientRegistrationResponse'
+        '400':
+          description: Invalid client metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - mTLS: []
+
+  /register/{client_id}:
+    get:
+      summary: Get Client Configuration
+      description: Retrieve client configuration using registration access token
+      operationId: getClientConfiguration
+      tags:
+        - Client Management
+      parameters:
+        - name: client_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: OAuth client identifier
+      responses:
+        '200':
+          description: Client configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientConfiguration'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Client not found
+      security:
+        - RegistrationToken: []
+    
+    put:
+      summary: Update Client Configuration
+      description: Update client configuration using registration access token
+      operationId: updateClientConfiguration
+      tags:
+        - Client Management
+      parameters:
+        - name: client_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: OAuth client identifier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientUpdateRequest'
+      responses:
+        '200':
+          description: Client updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientConfiguration'
+        '400':
+          description: Invalid client metadata
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Client not found
+      security:
+        - RegistrationToken: []
+    
+    delete:
+      summary: Delete Client
+      description: Delete client registration using registration access token
+      operationId: deleteClient
+      tags:
+        - Client Management
+      parameters:
+        - name: client_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: OAuth client identifier
+      responses:
+        '204':
+          description: Client deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Client not found
+      security:
+        - RegistrationToken: []
+
+  # OIDC/FAPI DISCOVERY
+  /.well-known/openid-configuration:
+    get:
+      summary: OpenID Connect Discovery
+      description: |
+        OpenID Connect Discovery 1.0 compliant discovery document with FAPI 2.0 metadata.
+      operationId: openidConfiguration
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: OpenID Connect configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OIDCDiscovery'
+      security: []
+
+  /.well-known/fapi-configuration:
+    get:
+      summary: FAPI Configuration
+      description: |
+        FAPI 2.0 specific configuration metadata for Swiss financial services.
+      operationId: fapiConfiguration
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: FAPI configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FAPIConfiguration'
+      security: []
+
+  /.well-known/jwks.json:
+    get:
+      summary: JSON Web Key Set
+      description: |
+        Public keys for JWT signature verification (RFC 7517).
+      operationId: jwks
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: JSON Web Key Set
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWKSet'
+      security: []
+
+  /.well-known/swiss-banking-metadata:
+    get:
+      summary: Swiss Banking Metadata
+      description: |
+        Swiss Open Banking specific metadata including supported use cases and standards.
+      operationId: swissBankingMetadata
+      tags:
+        - Discovery
+      responses:
+        '200':
+          description: Swiss banking metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwissBankingMetadata'
+      security: []
+
   # CONSENT MANAGEMENT
   /consent:
     post:
@@ -611,9 +1086,15 @@ components:
     mTLS:
       type: mutualTLS
       description: Mutual TLS für höchste Sicherheitsanforderungen (FAPI 2.0 compliant)
-    PrivateKeyJWT:
-      type: oauth2
-      description: Private Key JWT client authentication (alternative zu mTLS)
+    private_key_jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Private Key JWT client authentication (RFC 7523) - alternative zu mTLS
+    RegistrationToken:
+      type: http
+      scheme: bearer
+      description: Registration access token für dynamic client registration
 
   responses:
     BadRequest:
@@ -2042,3 +2523,591 @@ components:
         lastSeen:
           type: string
           format: date-time
+
+    # OAuth 2.1 / OIDC Schemas
+    OAuthError:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          enum:
+            - invalid_request
+            - invalid_client
+            - invalid_grant
+            - unauthorized_client
+            - unsupported_grant_type
+            - invalid_scope
+            - server_error
+            - temporarily_unavailable
+        error_description:
+          type: string
+          description: Human-readable error description
+        error_uri:
+          type: string
+          format: uri
+          description: URI to error documentation
+        timestamp:
+          type: string
+          format: date-time
+
+    TokenResponse:
+      type: object
+      required:
+        - access_token
+        - token_type
+        - expires_in
+      properties:
+        access_token:
+          type: string
+          description: JWT access token
+        refresh_token:
+          type: string
+          description: Refresh token for getting new access tokens
+        token_type:
+          type: string
+          enum: [Bearer, DPoP]
+          description: Token type (Bearer or DPoP)
+        expires_in:
+          type: integer
+          description: Token lifetime in seconds
+        scope:
+          type: string
+          description: Granted OAuth scopes
+        id_token:
+          type: string
+          description: OpenID Connect ID token (JWT)
+
+    UserInfo:
+      type: object
+      required:
+        - sub
+      properties:
+        sub:
+          type: string
+          description: Subject identifier
+        preferred_username:
+          type: string
+          description: Preferred username
+        name:
+          type: string
+          description: Full name
+        given_name:
+          type: string
+          description: Given name
+        family_name:
+          type: string
+          description: Family name
+        email:
+          type: string
+          format: email
+          description: Email address
+        email_verified:
+          type: boolean
+          description: Whether email is verified
+        institution_id:
+          type: string
+          description: Associated institution identifier
+        updated_at:
+          type: integer
+          description: Time of last update (Unix timestamp)
+
+    IntrospectionResponse:
+      type: object
+      required:
+        - active
+      properties:
+        active:
+          type: boolean
+          description: Whether the token is active
+        client_id:
+          type: string
+          description: Client identifier
+        scope:
+          type: string
+          description: Authorized scopes
+        sub:
+          type: string
+          description: Subject of the token
+        aud:
+          type: string
+          description: Intended audience
+        iss:
+          type: string
+          description: Token issuer
+        exp:
+          type: integer
+          description: Expiration time (Unix timestamp)
+        iat:
+          type: integer
+          description: Issued at time (Unix timestamp)
+        token_type:
+          type: string
+          enum: [Bearer, DPoP]
+          description: Token type
+
+    # Client Management Schemas
+    ClientRegistrationRequest:
+      type: object
+      required:
+        - redirect_uris
+      properties:
+        client_name:
+          type: string
+          maxLength: 255
+          description: Human-readable client name
+        client_uri:
+          type: string
+          format: uri
+          description: Client website URL
+        redirect_uris:
+          type: array
+          items:
+            type: string
+            format: uri
+          minItems: 1
+          description: Authorized redirect URIs
+        grant_types:
+          type: array
+          items:
+            type: string
+            enum: [authorization_code, refresh_token]
+          default: [authorization_code]
+        response_types:
+          type: array
+          items:
+            type: string
+            enum: [code]
+          default: [code]
+        scope:
+          type: string
+          default: "openid profile customer:read"
+        token_endpoint_auth_method:
+          type: string
+          enum: [private_key_jwt, tls_client_auth]
+          default: private_key_jwt
+        token_endpoint_auth_signing_alg:
+          type: string
+          enum: [PS256, ES256, EdDSA]
+          default: PS256
+        require_pushed_authorization_requests:
+          type: boolean
+          default: true
+        require_signed_request_object:
+          type: boolean
+          default: false
+        id_token_signed_response_alg:
+          type: string
+          enum: [PS256, ES256, EdDSA]
+          default: PS256
+        jwks_uri:
+          type: string
+          format: uri
+          description: URL for client's JWK Set
+        industry_type:
+          type: string
+          enum: [banking, insurance, fintech, other]
+          default: banking
+        finma_license:
+          type: string
+          description: FINMA license number if applicable
+        swiss_qr_support:
+          type: boolean
+          default: false
+
+    ClientRegistrationResponse:
+      type: object
+      required:
+        - client_id
+        - client_id_issued_at
+        - registration_access_token
+        - registration_client_uri
+      properties:
+        client_id:
+          type: string
+          description: Unique client identifier
+        client_secret:
+          type: string
+          description: Client secret (if applicable)
+        client_secret_expires_at:
+          type: integer
+          description: Client secret expiration time (0 means no expiration)
+        client_id_issued_at:
+          type: integer
+          description: Client ID issued time (Unix timestamp)
+        registration_access_token:
+          type: string
+          description: Token for accessing registration endpoint
+        registration_client_uri:
+          type: string
+          format: uri
+          description: URI for client configuration management
+        client_name:
+          type: string
+          description: Client name
+        redirect_uris:
+          type: array
+          items:
+            type: string
+            format: uri
+        grant_types:
+          type: array
+          items:
+            type: string
+        response_types:
+          type: array
+          items:
+            type: string
+        scope:
+          type: string
+        token_endpoint_auth_method:
+          type: string
+        require_pushed_authorization_requests:
+          type: boolean
+        require_signed_request_object:
+          type: boolean
+        fapi_compliance_level:
+          type: string
+          enum: [baseline, advanced]
+        industry_type:
+          type: string
+        swiss_standards_support:
+          type: object
+          properties:
+            qr_code:
+              type: boolean
+            iso_20022:
+              type: boolean
+            finma_compliant:
+              type: boolean
+
+    ClientConfiguration:
+      type: object
+      required:
+        - client_id
+      properties:
+        client_id:
+          type: string
+        client_secret_expires_at:
+          type: integer
+        client_id_issued_at:
+          type: integer
+        client_name:
+          type: string
+        client_uri:
+          type: string
+          format: uri
+        redirect_uris:
+          type: array
+          items:
+            type: string
+            format: uri
+        grant_types:
+          type: array
+          items:
+            type: string
+        response_types:
+          type: array
+          items:
+            type: string
+        scope:
+          type: string
+        industry_type:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive]
+        fapi_compliance_level:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ClientUpdateRequest:
+      type: object
+      properties:
+        client_name:
+          type: string
+          maxLength: 255
+        client_uri:
+          type: string
+          format: uri
+        redirect_uris:
+          type: array
+          items:
+            type: string
+            format: uri
+          minItems: 1
+        scope:
+          type: string
+        jwks_uri:
+          type: string
+          format: uri
+        industry_type:
+          type: string
+          enum: [banking, insurance, fintech, other]
+        finma_license:
+          type: string
+        swiss_qr_support:
+          type: boolean
+
+    # Discovery Schemas
+    OIDCDiscovery:
+      type: object
+      required:
+        - issuer
+        - authorization_endpoint
+        - token_endpoint
+        - jwks_uri
+        - response_types_supported
+        - subject_types_supported
+        - id_token_signing_alg_values_supported
+      properties:
+        issuer:
+          type: string
+          format: uri
+        authorization_endpoint:
+          type: string
+          format: uri
+        token_endpoint:
+          type: string
+          format: uri
+        userinfo_endpoint:
+          type: string
+          format: uri
+        introspection_endpoint:
+          type: string
+          format: uri
+        jwks_uri:
+          type: string
+          format: uri
+        pushed_authorization_request_endpoint:
+          type: string
+          format: uri
+        response_types_supported:
+          type: array
+          items:
+            type: string
+        response_modes_supported:
+          type: array
+          items:
+            type: string
+        grant_types_supported:
+          type: array
+          items:
+            type: string
+        subject_types_supported:
+          type: array
+          items:
+            type: string
+        scopes_supported:
+          type: array
+          items:
+            type: string
+        token_endpoint_auth_methods_supported:
+          type: array
+          items:
+            type: string
+        token_endpoint_auth_signing_alg_values_supported:
+          type: array
+          items:
+            type: string
+        id_token_signing_alg_values_supported:
+          type: array
+          items:
+            type: string
+        request_object_signing_alg_values_supported:
+          type: array
+          items:
+            type: string
+        claims_supported:
+          type: array
+          items:
+            type: string
+        code_challenge_methods_supported:
+          type: array
+          items:
+            type: string
+        dpop_signing_alg_values_supported:
+          type: array
+          items:
+            type: string
+        require_pushed_authorization_requests:
+          type: boolean
+        require_signed_request_object:
+          type: boolean
+
+    FAPIConfiguration:
+      type: object
+      required:
+        - issuer
+        - fapi_profile
+      properties:
+        issuer:
+          type: string
+          format: uri
+        fapi_profile:
+          type: string
+          enum: ["2.0"]
+        fapi_security_profile:
+          type: string
+          enum: [baseline, advanced]
+        fapi_compliance_level:
+          type: string
+          enum: [full, partial]
+        require_pushed_authorization_requests:
+          type: boolean
+        require_signed_request_object:
+          type: boolean
+        token_endpoint_auth_methods_supported:
+          type: array
+          items:
+            type: string
+        tls_client_certificate_bound_access_tokens:
+          type: boolean
+        dpop_signing_alg_values_supported:
+          type: array
+          items:
+            type: string
+        token_binding_methods_supported:
+          type: array
+          items:
+            type: string
+        max_authorization_code_lifetime:
+          type: integer
+        max_access_token_lifetime:
+          type: integer
+        max_refresh_token_lifetime:
+          type: integer
+        regulatory_compliance:
+          type: array
+          items:
+            type: string
+        supported_use_cases:
+          type: array
+          items:
+            type: string
+        swiss_standards_compliance:
+          type: array
+          items:
+            type: string
+
+    JWKSet:
+      type: object
+      required:
+        - keys
+      properties:
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/JWK'
+
+    JWK:
+      type: object
+      required:
+        - kty
+        - use
+        - alg
+        - kid
+      properties:
+        kty:
+          type: string
+          enum: [RSA, EC, OKP]
+          description: Key type
+        use:
+          type: string
+          enum: [sig, enc]
+          description: Key use
+        alg:
+          type: string
+          enum: [PS256, ES256, EdDSA]
+          description: Algorithm
+        kid:
+          type: string
+          description: Key identifier
+        n:
+          type: string
+          description: RSA modulus
+        e:
+          type: string
+          description: RSA public exponent
+        crv:
+          type: string
+          enum: [P-256, Ed25519]
+          description: Elliptic curve
+        x:
+          type: string
+          description: EC/OKP x coordinate
+        y:
+          type: string
+          description: EC y coordinate
+
+    SwissBankingMetadata:
+      type: object
+      required:
+        - issuer
+        - swiss_open_banking_version
+      properties:
+        issuer:
+          type: string
+          format: uri
+        swiss_open_banking_version:
+          type: string
+        kundenbeziehung_api_version:
+          type: string
+        supported_standards:
+          type: array
+          items:
+            type: string
+        finma_compliance:
+          type: boolean
+        dsg_compliance:
+          type: boolean
+        gdpr_compliance:
+          type: boolean
+        supported_banking_use_cases:
+          type: array
+          items:
+            type: object
+            properties:
+              use_case:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              endpoints:
+                type: array
+                items:
+                  type: string
+        supported_data_categories:
+          type: array
+          items:
+            type: string
+        referenzprozess_steps:
+          type: array
+          items:
+            type: string
+        technical_features:
+          type: array
+          items:
+            type: string
+        support:
+          type: object
+          properties:
+            technical_contact:
+              type: string
+              format: email
+            business_contact:
+              type: string
+              format: email
+            documentation:
+              type: string
+              format: uri
+            github:
+              type: string
+              format: uri

@@ -14,6 +14,7 @@ const errorHandler = require('./middleware/errorHandler');
 const authMiddleware = require('./middleware/auth');
 const mtlsMiddleware = require('./middleware/mtls');
 const validationMiddleware = require('./middleware/validation');
+const securityMiddleware = require('./middleware/security');
 
 // Core Framework and Service Layer
 const CoreFramework = require('./core');
@@ -29,6 +30,11 @@ const signatureRoutes = require('./routes/signature');
 const registryRoutes = require('./routes/registry');
 const healthRoutes = require('./routes/health');
 const parRoutes = require('./routes/par');
+const oauthRoutes = require('./routes/oauth');
+const discoveryRoutes = require('./routes/discovery');
+const jwksRoutes = require('./routes/jwks');
+const clientsRoutes = require('./routes/clients');
+const securityDashboardRoutes = require('./routes/security-dashboard');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -82,19 +88,17 @@ app.use(morgan('combined', {
   }
 }));
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'production' ? 100 : 1000, // requests per window
-  message: {
-    error: 'RATE_LIMIT_EXCEEDED',
-    message: 'Too many requests from this IP, please try again later.',
-    timestamp: new Date().toISOString()
-  },
-  standardHeaders: true,
-  legacyHeaders: false
-});
-app.use('/v1', limiter);
+// Enhanced security middleware (FAPI 2.0 compliant)
+app.use(securityMiddleware.securityHeaders);
+app.use(securityMiddleware.fapiComplianceValidation);
+app.use(securityMiddleware.inputValidation);
+app.use(securityMiddleware.securityAccessLog);
+
+// Rate limiting (enhanced with security audit)
+app.use('/authorize', securityMiddleware.authRateLimit);
+app.use('/token', securityMiddleware.tokenRateLimit);
+app.use('/par', securityMiddleware.authRateLimit);
+app.use('/v1', securityMiddleware.generalRateLimit);
 
 // API Documentation
 const swaggerDocument = YAML.load(path.join(__dirname, '../openapi.yaml'));
@@ -107,6 +111,10 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
 async function initializeFramework() {
   try {
     logger.info('Initializing Open API Kundenbeziehung Framework...');
+    
+    // Initialize security audit service first
+    await securityMiddleware.initializeSecurityAudit();
+    logger.info('Security audit service initialized');
     
     // Initialize core framework
     coreFramework = new CoreFramework({
@@ -166,6 +174,12 @@ function injectDependenciesIntoRoutes() {
   if (typeof customerRoutes.setCoreFramework === 'function') {
     customerRoutes.setCoreFramework(coreFramework);
   }
+  if (typeof oauthRoutes.setCoreFramework === 'function') {
+    oauthRoutes.setCoreFramework(coreFramework);
+  }
+  if (typeof clientsRoutes.setCoreFramework === 'function') {
+    clientsRoutes.setCoreFramework(coreFramework);
+  }
   
   // Set service manager reference in routes that support it
   if (typeof healthRoutes.setServiceManager === 'function') {
@@ -189,6 +203,12 @@ function injectDependenciesIntoRoutes() {
   if (typeof customerRoutes.setServiceManager === 'function') {
     customerRoutes.setServiceManager(serviceManager);
   }
+  if (typeof oauthRoutes.setServiceManager === 'function') {
+    oauthRoutes.setServiceManager(serviceManager);
+  }
+  if (typeof clientsRoutes.setServiceManager === 'function') {
+    clientsRoutes.setServiceManager(serviceManager);
+  }
 }
 
 // Middleware to ensure framework is initialized
@@ -211,6 +231,19 @@ app.use((req, res, next) => {
 
 // Health check (no authentication required)
 app.use('/health', healthRoutes);
+
+// Security dashboard (internal use with token authentication)
+app.use('/security', securityDashboardRoutes);
+
+// OIDC/FAPI 2.0 Discovery endpoints (no authentication required)
+app.use('/.well-known', discoveryRoutes);
+app.use('/.well-known', jwksRoutes);
+
+// OAuth 2.1/OIDC endpoints
+app.use('/', oauthRoutes);
+
+// Dynamic Client Registration (DCR) endpoints (require mTLS)
+app.use('/', clientsRoutes);
 
 // FAPI 2.0 OAuth endpoints (require client authentication)
 app.use('/par', mtlsMiddleware, parRoutes);
@@ -284,6 +317,9 @@ app.use('*', (req, res) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// Security incident response middleware
+app.use(securityMiddleware.securityIncidentResponse);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);
