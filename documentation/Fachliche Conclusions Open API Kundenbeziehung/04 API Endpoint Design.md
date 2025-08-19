@@ -57,97 +57,73 @@ Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 
 
 ## Hauptendpunkte
 
+Basierend auf der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase bietet die Open API Kundenbeziehung folgende Kernendpunkte:
+
 ### Customer Check API
 
-#### `GET /customer/check`
-**Purpose:** Schnelle Existenz- und Gültigkeitsprüfung von Kundendaten
+#### `POST /customer/check`
+**Zweck:** Existenz- und Identifikationsgültigkeitsprüfung
+**HTTP Method:** POST
+**Authentication:** JWT Header with Consent Claims
+
+**Request (Hin):**
 ```json
 {
-  "endpoint": "/v1/customer/check",
-  "method": "GET",
-  "description": "Verifies customer existence and identity validity",
-  "authentication": "FAPI 2.0 Bearer Token"
+  "sharedCustomerHash": "sha256_hash_value",
+  "name": "Mustermann",
+  "vorname": "Max", 
+  "geburtsdatum": "1990-01-01"
 }
 ```
 
-**Request Parameters:**
-- `sharedCustomerHash` (required): Eindeutige anonyme Kundenidentifikation
-- `purpose` (required): Intended use case für Data Processing
-- `requestingInstitution` (required): Institution Identifier für Audit
-
-**Response Structure:**
+**Response (Her):**
 ```json
 {
-  "customerExists": true,
-  "identityValid": true,
-  "lastVerified": "2025-08-18T10:00:00Z",
-  "verificationLevel": "QEAA",
-  "dataAvailable": ["identity", "contact", "kyc_basic"]
+  "match": true,
+  "idDate": "2025-01-15"
 }
 ```
 
-### Customer Data Request API
+### Full Customer Dataset API
 
-#### `POST /customer/data-request`
-**Purpose:** Granulare Anfrage spezifischer Kundendaten-Kategorien
+#### `POST /customer/fullRequest`
+**Zweck:** Vollständiger Kundendatensatz (≈ 65 Felder inkl. PDF-Dokumente)
+**HTTP Method:** POST
+**Authentication:** Header JWT (Consent-Claim)
+
+**Request (Hin):**
 ```json
 {
-  "endpoint": "/v1/customer/data-request",
-  "method": "POST",
-  "description": "Request specific customer data categories with consent",
-  "authentication": "FAPI 2.0 Bearer Token with appropriate scope"
+  "sharedCustomerHash": "sha256_hash_value",
+  "purpose": "accountOpening"
 }
 ```
 
-**Request Body:**
+**Response (Her):** Vollständiges Kundendatenset inkl. `pdfUrlPassportScan` und sämtliche KYC-Attribute
+
+### Customer Identification API
+
+#### `POST /customer/identification`
+**Zweck:** Nur Identifikationsdaten abrufen
+**HTTP Method:** POST
+**Authentication:** JWT Header
+
+**Request (Hin):**
 ```json
 {
-  "customerHash": "sha256_hash_value",
-  "requestedFields": ["identity.name", "contact.email", "kyc.income"],
-  "purpose": "account_opening",
-  "consentToken": "consent_jwt_token",
-  "requesterInfo": {
-    "institutionId": "bank_123",
-    "useCase": "onboarding",
-    "dataRetention": "customer_lifetime"
-  }
+  "sharedCustomerHash": "sha256_hash_value"
 }
 ```
 
-### Customer Profile API
-
-#### `GET /customer/{customerId}/profile`
-**Purpose:** Vollständiges Kundenprofil für authentifizierte Requests
+**Response (Her):**
 ```json
 {
-  "endpoint": "/v1/customer/{customerId}/profile",
-  "method": "GET",
-  "description": "Retrieve complete customer profile data",
-  "authentication": "Customer-authorized Bearer Token"
-}
-```
-
-**Response Structure:**
-```json
-{
-  "customerId": "customer_123",
-  "profile": {
-    "identity": {
-      "firstName": "Max",
-      "lastName": "Mustermann",
-      "dateOfBirth": "1990-01-01",
-      "nationality": ["CH"]
-    },
-    "contact": {
-      "email": "max@example.ch",
-      "phone": "+41791234567"
-    },
-    "verification": {
-      "level": "QEAA",
-      "verifiedAt": "2025-08-18T10:00:00Z",
-      "method": "video_ident"
-    }
-  }
+  "identArt": "VideoIdent",
+  "referenznummer": "VI_2025_001234",
+  "ausstellungsdatum": "2025-01-15",
+  "gueltigBis": "2035-01-15",
+  "ausgestelltIn": "Schweiz",
+  "pdfUrlPassportScan": "https://secure-storage.example.ch/docs/passport_scan_123.pdf"
 }
 ```
 
@@ -155,68 +131,382 @@ Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 
 
 ## Granulare Daten-Endpunkte
 
-### Modulare Datenbausteine
+Die API bietet granulare Endpunkte für spezifische Datensubsets, um minimale Datenübertragung und präzise Consent-Kontrolle zu ermöglichen:
 
-#### Identity Module
-```
-GET /v1/customer/{customerId}/identity
-PUT /v1/customer/{customerId}/identity
-```
-**Data Scope:** Name, Geburtsdatum, Nationalität, Government IDs
+### Basic Customer Data API
 
-#### Contact Module  
-```
-GET /v1/customer/{customerId}/contact
-PUT /v1/customer/{customerId}/contact
-```
-**Data Scope:** E-Mail, Telefon, Adresse, Kommunikationsprüferenzen
+#### `POST /customer/basic`
+**Zweck:** Nur Stammdaten (Name, Vorname, Geburtsdatum, Nationalität)
+**HTTP Method:** POST
 
-#### KYC Module
-```
-GET /v1/customer/{customerId}/kyc
-PUT /v1/customer/{customerId}/kyc  
-```
-**Data Scope:** Beruf, Einkommen, PEP-Status, Source of Wealth
-
-#### Financial Module
-```
-GET /v1/customer/{customerId}/financial
-PUT /v1/customer/{customerId}/financial
-```
-**Data Scope:** Investment Experience, Risk Profile, Banking History
-
-#### Compliance Module
-```
-GET /v1/customer/{customerId}/compliance
-PUT /v1/customer/{customerId}/compliance
-```
-**Data Scope:** FATCA Status, Tax Residency, Regulatory Classifications
-
-### Consent Management Endpoints
-
-#### `POST /consent/request`
-**Purpose:** Initiierung granularer Consent-Requests
+**Request (Hin):**
 ```json
 {
-  "endpoint": "/v1/consent/request",
-  "method": "POST",
-  "description": "Request specific data access consent from customer"
+  "sharedCustomerHash": "sha256_hash_value"
 }
 ```
 
-#### `GET /consent/{consentId}/status`
-**Purpose:** Consent Status und Gültigkeitsprüfung
+**Response (Her):**
 ```json
 {
-  "endpoint": "/v1/consent/{consentId}/status",
-  "method": "GET",
-  "description": "Check current consent status and validity"
+  "name": "Mustermann",
+  "vorname": "Max",
+  "geburtsdatum": "1990-01-01",
+  "nationalitaet": "CH"
 }
+```
+
+### Address Data API
+
+#### `POST /customer/address`
+**Zweck:** Nur Adressdaten (Haupt- & Korrespondenzadresse)
+**HTTP Method:** POST
+
+**Request (Hin):**
+```json
+{
+  "sharedCustomerHash": "sha256_hash_value"
+}
+```
+
+**Response (Her):**
+```json
+{
+  "adresse": {
+    "strasse": "Musterstrasse",
+    "hausnummer": "123",
+    "plz": "8001",
+    "ort": "Zürich",
+    "landcode": "CH"
+  },
+  "korrespondenz": {
+    "strasse": "Postfach",
+    "hausnummer": "456", 
+    "plz": "8002",
+    "ort": "Zürich",
+    "landcode": "CH"
+  }
+}
+```
+
+### Contact Data API
+
+#### `POST /customer/contact`
+**Zweck:** Nur Kontaktdaten (Telefon, E-Mail)
+**HTTP Method:** POST
+
+**Request (Hin):**
+```json
+{
+  "sharedCustomerHash": "sha256_hash_value"
+}
+```
+
+**Response (Her):**
+```json
+{
+  "telefonNum": "+41791234567",
+  "email": "max.mustermann@example.ch"
+}
+```
+
+### KYC Attributes API
+
+#### `POST /customer/kyc`
+**Zweck:** Nur KYC-Attribute ohne Ausweisdokumente
+**HTTP Method:** POST
+
+**Request (Hin):**
+```json
+{
+  "sharedCustomerHash": "sha256_hash_value"
+}
+```
+
+**Response (Her):**
+```json
+{
+  "amlRisikoklasse": "niedrig",
+  "pepTyp": "nein",
+  "wirtschaftlich_berechtigt": "ja",
+  "fatcaStatus": "nicht_us_person",
+  "tin": "756.1234.5678.97"
+}  
 ```
 
 ---
 
 ## Request/Response Strukturen
+
+### Technische Spezifikationen
+
+**API Version:** 2.0
+**Standard:** OpenAPI 3.0 konforme Spezifikation
+**Architektur:** RESTful API
+**Datenformat:** JSON
+**Sicherheit:** JWT-Token mit Consent-Claims
+**Authentifizierung:** Header-basierte JWT-Übertragung
+
+### Datenpunkte – Basic Dataset (Version 2.0)
+
+Die Open API Kundenbeziehung Version 2.0 definiert folgende Kernstrukturen:
+
+```json
+{
+  "customerId": "string - Interne Referenznummer der Bank",
+  "sharedCustomerHash": "string - Anonymer Kundenidentifikator",
+  "firstName": "string - Vorname des Kunden",
+  "lastName": "string - Nachname des Kunden", 
+  "dateOfBirth": "date - Geburtsdatum (YYYY-MM-DD)",
+  "identificationDate": "date - Datum der Identifikation",
+  "identificationMethod": "string - Methode (VideoIdent, E-ID, etc.)",
+  "vsbStatus": "object - VSB-Status (Version, erfüllt/ausstehend)",
+  "customerConsent": "boolean - Zustimmung zur Weitergabe",
+  "consentValidUntil": "date - Gültigkeit der Zustimmung"
+}
+```
+
+### sharedCustomerHash-Konzept
+
+**Zweck:** Eindeutige, aber anonyme Identifikation von Kunden über Provider hinweg
+**Implementation:** SHA-256 Hash von standardisierten Identitätsdaten
+**Sicherheit:** Salt-based Hashing für zusätzliche Sicherheit
+**Privacy:** GDPR-konform durch Pseudonymisierung
+
+**Hash-Eingabedaten:**
+```
+hash_input = normalize(
+  firstName + lastName + dateOfBirth + 
+  placeOfBirth + nationality + salt
+)
+sharedCustomerHash = SHA256(hash_input)
+```
+
+---
+
+## API Flow Diagramme
+
+### Customer Onboarding Flow
+
+```mermaid
+sequenceDiagram
+    participant C as Customer
+    participant I as Integrator (Bank B)
+    participant P as Producer (Bank A)
+    participant API as Open API
+
+    Note over C,API: Phase 1: Customer Check
+    C->>I: Initiiert Kontoeröffnung
+    I->>API: POST /customer/check {sharedCustomerHash, name, vorname, geburtsdatum}
+    API->>P: Validate & Check
+    P->>API: {match: true, idDate: "2025-01-15"}
+    API->>I: Customer exists & valid
+    
+    Note over C,API: Phase 2: Consent Management  
+    I->>C: Request consent for data sharing
+    C->>I: Grant consent
+    
+    Note over C,API: Phase 3: Data Retrieval
+    I->>API: POST /customer/fullRequest {sharedCustomerHash, purpose: "accountOpening"}
+    API->>P: Request full dataset
+    P->>API: Complete customer profile (65 fields)
+    API->>I: Full customer data
+    
+    Note over C,API: Phase 4: Account Creation
+    I->>I: Create account with existing data
+    I->>C: Account ready for use
+```
+
+### Granular Data Access Flow
+
+```mermaid
+sequenceDiagram
+    participant Client as Client Application
+    participant Gateway as API Gateway  
+    participant Auth as JWT Auth Service
+    participant Data as Customer Data Service
+
+    Client->>Gateway: POST /customer/basic
+    Note over Client,Data: Authentication & Authorization
+    Gateway->>Auth: Validate JWT Token
+    Auth->>Gateway: Token valid + scopes
+    
+    Note over Client,Data: Data Access Control
+    Gateway->>Data: Request basic customer data
+    Data->>Data: Apply data minimization
+    Data->>Gateway: {name, vorname, geburtsdatum, nationalitaet}
+    Gateway->>Client: Response with minimal data
+    
+    Note over Client,Data: Audit & Logging
+    Gateway->>Gateway: Log API access
+```
+
+### Trust Network Integration Flow
+
+```mermaid
+graph TB
+    subgraph "Integrator Institution (Bank B)"
+        B_UI[Customer UI]
+        B_API[API Client]
+        B_Core[Core Banking]
+    end
+    
+    subgraph "Open API Kundenbeziehung"
+        API_GW[API Gateway]
+        API_Auth[Authentication]
+        API_Consent[Consent Management]
+        API_Data[Data Router]
+    end
+    
+    subgraph "Producer Institution (Bank A)"
+        A_Core[Core Banking]
+        A_Data[Customer Data]
+        A_KYC[KYC System]
+    end
+    
+    B_UI --> B_API
+    B_API --> API_GW
+    API_GW --> API_Auth
+    API_Auth --> API_Consent  
+    API_Consent --> API_Data
+    API_Data --> A_Core
+    A_Core --> A_Data
+    A_Core --> A_KYC
+    
+    classDef integrator fill:#e1f5fe
+    classDef api fill:#f3e5f5  
+    classDef producer fill:#e8f5e8
+    
+    class B_UI,B_API,B_Core integrator
+    class API_GW,API_Auth,API_Consent,API_Data api
+    class A_Core,A_Data,A_KYC producer
+```
+
+---
+
+## Use Case: Onboarding Bank Implementation
+
+### Szenario: Bankwechsel mit Open API Integration
+
+**Ausgangslage:** Ein Kunde möchte von Bank A (Producer) zu Bank B (Integrator) wechseln und seine bestehenden, bereits verifizierten Kundendaten wiederverwenden.
+
+**Akteure:**
+- **Kunde:** Bankkunde mit bestehender Beziehung zu Bank A
+- **Bank A (Producer):** Datenbereitstellende Bank mit vollständigem KYC
+- **Bank B (Integrator):** Neue Bank, die Onboarding vereinfachen möchte
+- **Open API:** Vermittlungssystem für sicheren Datenaustausch
+
+### Detaillierte Implementierung
+
+#### Phase 1: Customer Discovery & Verification
+
+```mermaid
+sequenceDiagram
+    participant K as Kunde
+    participant BA as Bank A (Producer)
+    participant BB as Bank B (Integrator) 
+    participant API as Open API Platform
+
+    K->>BB: Initiiert Kontoeröffnung Online
+    BB->>K: Fragt nach vorhandenen Bankverbindungen
+    K->>BB: Nennt Bank A als bestehende Beziehung
+    
+    BB->>API: POST /customer/check
+    Note over BB,API: Request: {sharedCustomerHash, name, vorname, geburtsdatum}
+    
+    API->>BA: Validate customer existence  
+    BA->>BA: Check customer records & consent status
+    BA->>API: Customer found & valid
+    Note over API,BB: Response: {match: true, idDate: "2025-01-15"}
+    
+    API->>BB: Customer verification successful
+    BB->>K: Bestehende Daten gefunden - Fortfahren?
+```
+
+#### Phase 2: Consent Management & Data Request
+
+```mermaid
+sequenceDiagram
+    participant K as Kunde
+    participant BA as Bank A (Producer)
+    participant BB as Bank B (Integrator)
+    participant API as Open API Platform
+
+    K->>BB: Stimmt Datenverwendung zu
+    BB->>API: POST /customer/fullRequest
+    Note over BB,API: Request mit JWT Consent Claims
+    
+    API->>BA: Request complete dataset
+    BA->>BA: Validate consent & prepare data
+    
+    BA->>API: Complete customer profile
+    Note over BA,API: 65 Datenfelder + pdfUrlPassportScan
+    
+    API->>BB: Full customer data received
+    BB->>BB: Map data to internal systems
+    BB->>BB: Create customer account
+    
+    BB->>K: Konto erfolgreich eröffnet
+    Note over K,BB: Onboarding in Minuten statt Tagen
+```
+
+### Technische Implementation Details
+
+#### API Call Sequence für Bank Onboarding
+
+**1. Customer Check:**
+```json
+POST /customer/check
+{
+  "sharedCustomerHash": "a1b2c3d4e5f6...",
+  "name": "Müller", 
+  "vorname": "Anna",
+  "geburtsdatum": "1985-03-15"
+}
+
+Response:
+{
+  "match": true,
+  "idDate": "2025-02-01"
+}
+```
+
+**2. Full Data Request:**
+```json
+POST /customer/fullRequest
+Header: JWT with consent claims
+{
+  "sharedCustomerHash": "a1b2c3d4e5f6...",
+  "purpose": "accountOpening"
+}
+
+Response: 
+{
+  // 65+ Datenfelder aus gesamtunterlage Workshop-Spezifikation
+  "personalData": {...},
+  "addressData": {...},
+  "identificationData": {...},
+  "kycData": {...},
+  "complianceData": {...}
+}
+```
+
+### Business Impact Metriken
+
+**Effizienzgewinn für Integrator Bank:**
+- **Onboarding-Zeit:** Reduktion von 5-10 Tagen auf wenige Minuten
+- **Dokumentensammlung:** 90% Reduktion des manuellen Aufwands
+- **Compliance-Prüfungen:** Wiederverwendung bestehender KYC-Verfahren
+- **Conversion Rate:** Erwartete Steigerung um 40-60%
+
+**Kundenvorteile:**
+- **Nahtloser Bankwechsel:** Keine erneute Dokumentenvorlage
+- **Sofortige Kontoaktivierung:** Online-Abschluss möglich
+- **Datenschutzkonforme Wiederverwendung:** Granulare Consent-Kontrolle
+
+---
+
+## Implementierungsrichtlinien
 
 ### Standard Request Headers
 ```http
