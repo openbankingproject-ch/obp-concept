@@ -1,12 +1,11 @@
 # Themenbereich 2: Anforderungen
-**Fertigstellung bis 18.07.**
 
 ## Inhalt
 
 1. [Executive Summary](#executive-summary)
 2. [Zielbild-Framework](#zielbild-framework)
 3. [Use Case Analyse und Priorisierung](#use-case-analyse-und-priorisierung)
-4. [Anforderungsanalyse je Teilschritt](#anforderungsanalyse-je-teilschritt)
+4. [Anforderungen im Kontext des Referenzprozesses](#anforderungen-im-kontext-des-referenzprozesses)
 5. [Technische Anforderungen](#technische-anforderungen)
 6. [Business Case und Monetarisierung](#business-case-und-monetarisierung)
 7. [E-ID Integration und Abgrenzung](#e-id-integration-und-abgrenzung)
@@ -15,7 +14,7 @@
 
 ## Executive Summary
 
-Die Anforderungsanalyse definiert ein strukturiertes Framework für die Umsetzung der Open API Kundenbeziehung basierend auf fünf Zielbildern der digitalen Kundennähe. Der Fokus liegt auf kurzfristig umsetzbaren Lösungen (Zielbilder 1 & 2) mit strategischer Perspektive für erweiterte Szenarien. Use Case 1 "Bankwechsel/Kontoeröffnung" wurde als prioritärer Implementierungskandidat identifiziert, wobei der Baustein "Identifikation" als MVP-Einstieg definiert wird.
+Die Anforderungsanalyse definiert ein strukturiertes Framework für die Umsetzung der Open API Kundenbeziehung basierend auf fünf Zielbildern der digitalen Kundennähe. Der Fokus liegt auf kurzfristig umsetzbaren Lösungen (Zielbilder 1 & 2) mit strategischer Perspektive für erweiterte Szenarien. Use Case 1 "Kundenbeziehungseröffnung" wurde als prioritärer Implementierungskandidat identifiziert, wobei der Baustein "Identifikation" als MVP-Einstieg definiert wird.
 
 **Zentrale Erkenntnisse:**
 - Klare Priorisierung auf Zielbilder 1 & 2 für MVP-Phase
@@ -248,9 +247,19 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 | **Regulatorische Konformität** | 25% | Compliance-Anforderungen, Governance-Komplexität, Reputationsrisiken |
 
 ### Top 4 priorisierte Use Cases
-TODO: analog zu content in 01 marktanalyse anpassen (Bewertungen, Punkte, etc.)
 
-#### **UC1: Bankwechsel/Kontoeröffnung (13 Punkte)**
+**Quantitative Bewertungsmatrix:**
+
+Die Use Cases wurden durch einen strukturierten Workshop-Prozess mit Multi-Stakeholder-Bewertung (Bank, FinTech, Regulator, Consumer) bewertet. Jeder Use Case erhielt Punkte basierend auf den definierten Bewertungskriterien.
+
+| Use Case | Machbarkeit | Umsetzbarkeit | Strategische Relevanz | Regulatorische Konformität | **Gesamt** |
+|----------|-------------|---------------|----------------------|----------------------------|------------|
+| **UC1: Kundenbeziehungseröffnung** | 4/4 | 3/4 | 3/4 | 3/4 | **13 Punkte** |
+| **UC2: Re-Identifikation** | 3/4 | 2/4 | 1/4 | 1/4 | **7 Punkte** |
+| **UC3: Altersverifikation** | 2/4 | 1/4 | 1/4 | 0/4 | **4 Punkte** |
+| **UC4: CLM von EVV-Endkunden** | 2/4 | 1/4 | 1/4 | 0/4 | **4 Punkte** |
+
+#### **UC1: Kundenbeziehungseröffnung**
 
 **Ausgangslage:**
 - Eröffnung einer Bankbeziehung eines Kunden direkt bei einer Bank
@@ -274,8 +283,8 @@ TODO: analog zu content in 01 marktanalyse anpassen (Bewertungen, Punkte, etc.)
 **Mehrwerte:**
 - Reduktion redundanter Dateneingaben durch automatisierte Wiederverwendung
 - Nahtlose Integration, hohe Sicherheitsstandards und Usability
-- Schnellere und einfachere Kontoeröffnung und Bankwechselprozesse
-- Hebung von Effizienzen im Kontoeröffnungsprozess für Banken
+- Schnellere und einfachere Kundenbeziehungseröffnung und Bankwechselprozesse
+- Hebung von Effizienzen im Kundenbeziehungseröffnungsprozess für Banken
 - Kosteneinsparungspotenzial durch schlankere Prozesse
 
 **Rollen im Netzwerk:**
@@ -283,7 +292,7 @@ TODO: analog zu content in 01 marktanalyse anpassen (Bewertungen, Punkte, etc.)
 - Bank (Service Provider)
 - Optionale Provider (Verifikationsservices)
 
-#### **UC2: Re-Identifikation (7 Punkte)**
+#### **UC2: Re-Identifikation**
 
 **Ausgangslage:**
 - Kunden müssen sich bei verschiedenen Finanzdienstleistern wiederholt identifizieren
@@ -300,7 +309,7 @@ TODO: analog zu content in 01 marktanalyse anpassen (Bewertungen, Punkte, etc.)
 - Verbesserte Customer Experience durch verkürzte Onboarding-Zeiten
 - Erhöhte Sicherheit durch standardisierte Verifikationsprozesse
 
-#### **UC3: Altersverifikation (4 Punkte)**
+#### **UC3: Altersverifikation**
 
 **Ausgangslage:**
 - Rechtliche Anforderungen für Altersverifikation in verschiedenen Branchen
@@ -317,7 +326,7 @@ TODO: analog zu content in 01 marktanalyse anpassen (Bewertungen, Punkte, etc.)
 - Kostenreduktion durch Wiederverwendbarkeit
 - Compliance-Sicherheit für verschiedene Branchen
 
-#### **UC4: CLM von EVV-Endkunden (4 Punkte)**
+#### **UC4: CLM von EVV-Endkunden**
 
 **Ausgangslage:**
 - Customer Lifecycle Management über verschiedene Touchpoints
@@ -592,15 +601,12 @@ TODO: analog zu content in 01 marktanalyse anpassen (Bewertungen, Punkte, etc.)
 - Metrics Collection und Alerting
 - Performance Analytics
 
-### MVP-Datenmodell
-TODO: MVP-Datenmodell sollte in 03 Referenzprozess beschrieben werden, hier nur konzeptionelle Beschreibung "MVP Definition" 
+### MVP Open API Kundenbeziehung
 
-Das MVP-Datenmodell konzentriert sich auf die wesentlichen Datenstrukturen für die Implementierung des Bausteins "Identifikation". Die Strukturen sind vollständig kompatibel mit der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase und definieren die Kernkomponenten für die Open API Kundenbeziehung.
-
-Die konzeptionelle Beschreibung in diesem Kapitel definiert die Kernkomponenten, während detaillierte Implementierungsdetails in den technischen Dokumenten [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) ausgearbeitet werden.
+Das Minimum Viable Product der Open API Kundenbeziehung konzentriert sich auf die wesentlichen Funktionalitäten für die erfolgreiche Markteinführung. Die MVP-Definition erfolgt auf konzeptioneller Ebene, während detaillierte Datenstrukturen und technische Implementierungsaspekte in der [Referenzprozess-Conclusion](./03%20Referenzprozess.md) und den technischen Dokumenten [Implementation Alpha Version 1.0](../Umsetzung%20und%20Implementierung%20/Implementation%20Alpha%20Version%201.0.md) ausgearbeitet werden.
 
 #### **MVP Scope Definition**
-Das Minimum Viable Product der Open API Kundenbeziehung fokussiert auf die grundlegenden Funktionalitäten für den **Use Case 1: Kontoeröffnung resp. Bankwechsel**.
+Das Minimum Viable Product der Open API Kundenbeziehung fokussiert auf die grundlegenden Funktionalitäten für den **Use Case 1: Kundenbeziehungseröffnung**.
 
 **MVP Kernfunktionalitäten:**
 1. Basisdaten-Transfer: Name, Adresse, Kontaktdaten
@@ -614,8 +620,15 @@ Das Minimum Viable Product der Open API Kundenbeziehung fokussiert auf die grund
 - Cross-Industry: Andere Ecosystems außer Finance
 - Advanced Analytics: KI-basierte Datenanalyse
 
-#### **Core Data Structures**
+#### **MVP-Datenmodell**
+Das MVP-Datenmodell konzentriert sich auf die wesentlichen Datenstrukturen für die Implementierung des Bausteins "Identifikation". Die Strukturen sind vollständig kompatibel mit der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase und definieren die Kernkomponenten für die Open API Kundenbeziehung.
 
+**Konzeptionelle Datenstruktur**
+
+Das MVP basiert auf drei Kernkomponenten für die Open API Kundenbeziehung:
+
+**1. Identitätsdaten-Framework:**
+Standardisierte Strukturen für Personendaten, Kontaktinformationen und Adressdaten mit integriertem Verifikationsstatus. Die Datenstrukturen ermöglichen providerübergreifende Wiederverwendung bei gleichzeitiger Wahrung von Datenschutz und Sicherheit.
 **Customer Identity Structure:**
 Konzeptionelle Datenstruktur umfasst customerId als interne Referenz, sharedCustomerHash für anonyme providerübergreifende Identifikation sowie drei Hauptkategorien:
 
@@ -625,8 +638,8 @@ Konzeptionelle Datenstruktur umfasst customerId als interne Referenz, sharedCust
 
 Detaillierte Datenstrukturen sind in [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) spezifiziert.
 
-**Consent Management Structure:**
-Konzeptionelles Framework für granulare Einwilligungsverwaltung umfasst:
+**2. Consent Management System:**
+Granulare Einwilligungsverwaltung mit zweckgebundener Datenverwendung, zeitlicher Begrenzung und vollständiger Nachverfolgbarkeit. Das System unterstützt feldspezifische Berechtigungen und unterschiedliche rechtliche Grundlagen für die Datenverarbeitung.
 
 - **Consent Identification:** Eindeutige ConsentId und Kunden-Zuordnung
 - **Purpose Definition:** Explizite Zweckangabe für Datenverwendung (z.B. Kontoeröffnung, KYC-Prüfung)
@@ -636,10 +649,8 @@ Konzeptionelles Framework für granulare Einwilligungsverwaltung umfasst:
 - **Legal Framework:** Rechtsgrundlage für Datenverarbeitung (Einwilligung, Vertrag, rechtliche Verpflichtung)
 - **Audit Trail:** Vollständige Nachverfolgbarkeit aller Consent-Änderungen
 
-Detaillierte Implementierungsrichtlinien sind in [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) dokumentiert.
-
-**Verification Status Structure:**
-Konzeptionelles System zur Dokumentation von Verifikationsstatus umfasst:
+**3. Verifikations- und Assurance-Level:**
+Strukturierte Dokumentation von Verifikationsmethoden und -zeitpunkten mit entsprechenden Assurance-Leveln gemäß regulatorischen Standards. Dies ermöglicht vertrauensvolle Datenübertragung zwischen verschiedenen Providern.
 
 - **Verification Identity:** Eindeutige VerificationId mit Kunden-Zuordnung
 - **Data Field Specification:** Spezifikation des verifizierten Datenfeldes (z.B. Identität, Adresse)
@@ -648,7 +659,8 @@ Konzeptionelles System zur Dokumentation von Verifikationsstatus umfasst:
 - **Temporal Tracking:** Verifikationszeitpunkt, durchführende Instanz, Gültigkeitsdauer
 - **Document References:** Sichere Referenzen zu Verifikationsdokumenten ohne direkte Speicherung
 
-Detaillierte Verifikationsrichtlinien sind in [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) spezifiziert.
+**Privacy-preserving Identifikation:**
+Implementation eines anonymen Customer-Hash-Systems zur providerübergreifenden Identifikation ohne Preisgabe persönlicher Daten, basierend auf standardisierten kryptographischen Verfahren.
 
 #### **sharedCustomerHash-Konzept**
 
@@ -664,7 +676,7 @@ Detaillierte Verifikationsrichtlinien sind in [Implementation Alpha Version 1.0]
 - GDPR-konform durch Pseudonymisierung
 
 **Hash-Generierung:**
-Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung standardisierter Identitätsdaten (Vorname, Nachname, Geburtsdatum, Geburtsort, Nationalität) mit einem Sicherheits-Salt generiert und über SHA-256 gehasht. Die Implementierungsdetails sind in [Implementation Alpha Version 1.0](/documentation/Umsetzung%20und%20Implementierung/Implementation%20Alpha%20Version%201.0.md) dokumentiert.
+Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung standardisierter Identitätsdaten (Vorname, Nachname, Geburtsdatum, Geburtsort, Nationalität) mit einem Sicherheits-Salt generiert und über SHA-256 gehasht.
 
 #### **Granularitäts-Level Definition**
 
@@ -727,18 +739,6 @@ Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung 
 - Reduzierte Customer Acquisition Costs
 - Improved Customer Lifetime Value
 - Cross-selling Opportunities
-
-#### **Quantitativer Business Case**
-**Conversion Rate Improvements:**
-- Videoidentifikation Success Rate: 80%
-- MVP Identifikation Success Rate: 90%
-- Gewinnsteigerung durch Open API: 10-15%
-
-**Financial Impact (pro Bank/Jahr):**
-- Beispiel HBL: CHF 891,000 zusätzlicher Gewinn
-- Beispiel PostFinance: CHF 1,094,500 zusätzlicher Gewinn
-- 20 größte Banken: CHF 9,900,000 Gesamtpotenzial
-
 ## E-ID Integration und Abgrenzung
 *TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
@@ -765,15 +765,70 @@ Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung 
 - Unified User Experience über beide Paradigmen
 
 #### **Technische Integration Points**
-TODO: mermaid diagramme
 
 **Integration-Architektur:**
+
+```mermaid
+flowchart TD
+    A[Customer] --> B[E-ID Authentication]
+    B --> C[Open API Authorization]
+    C --> D[Service Access]
+    
+    E[E-ID Identity Claims] --> F[Customer Data Mapping]
+    F --> G[Service-specific Processing]
+    
+    H[E-ID Consent Framework] <--> I[Open API Consent Tokens]
+    I --> J[Service Permissions]
+    
+    subgraph "Authentication Layer"
+        B
+        C
+        D
+    end
+    
+    subgraph "Data Flow Layer"
+        E
+        F
+        G
+    end
+    
+    subgraph "Consent Management Layer"
+        H
+        I
+        J
+    end
+```
 
 **Authentication Layer:** E-ID Authentication führt zu Open API Authorization und ermöglicht anschließend Service Access. Dies schafft eine durchgängige Authentifizierungskette mit höchsten Sicherheitsstandards.
 
 **Data Flow:** E-ID Identity Claims werden auf Customer Data Mapping abgebildet und in Service-specific Processing überführt. Dies ermöglicht nahtlose Integration staatlicher Identitätsnachweise in kommerzielle Services.
 
 **Consent Management:** Bidirektionale Integration zwischen E-ID Consent Framework und Open API Consent Tokens mit Service Permissions. Dies gewährleistet konsistente Einwilligungsverwaltung über beide Paradigmen hinweg.
+
+**Detaillierter Integration Flow:**
+
+```mermaid
+sequenceDiagram
+    participant Customer
+    participant E-ID Provider
+    participant Open API Gateway
+    participant Service Provider
+    participant Consent Manager
+    
+    Customer->>E-ID Provider: E-ID Authentication Request
+    E-ID Provider->>E-ID Provider: Validate Digital Identity
+    E-ID Provider->>Open API Gateway: Identity Claims + Attestation
+    
+    Open API Gateway->>Consent Manager: Check Service Permissions
+    Consent Manager->>Customer: Request Service-specific Consent
+    Customer->>Consent Manager: Grant/Deny Consent
+    
+    Consent Manager->>Open API Gateway: Consent Token
+    Open API Gateway->>Service Provider: Authorized API Call + Context
+    Service Provider->>Customer: Provide Requested Service
+    
+    Note over Customer,Service Provider: Unified Identity & Consent Experience
+```
 
 ### Abgrenzung und Scope Definition
 
@@ -863,7 +918,7 @@ Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen
 
 **Business Deliverables:**
 - 3-5 Pilot Partners (Banks + Fintechs)
-- Use Case 1 (Kontoeröffnung) - Limited Scope
+- Use Case 1 (Kundenbeziehungseröffnung) - Limited Scope
 - Basic Business Model Validation
 - Governance Framework Establishment
 
@@ -994,7 +1049,7 @@ Die umfassende Anforderungsanalyse zeigt eine klare Strategie für die erfolgrei
 ### Strategische Empfehlungen
 
 #### **Kurzfristige Prioritäten (6-12 Monate)**
-1. **MVP Development:** Focus auf Use Case 1 mit Baustein "Identifikation"
+1. **MVP Development:** Focus auf Use Case 1 "Kundenbeziehungseröffnung" mit Baustein "Identifikation"
 2. **Partnership Building:** Onboarding von 3-5 Pilot Partners
 3. **Regulatory Alignment:** Compliance Framework etablieren
 4. **Technology Foundation:** Secure, scalable API Platform entwickeln
@@ -1041,8 +1096,8 @@ Die umfassende Anforderungsanalyse zeigt eine klare Strategie für die erfolgrei
 3. **Regulatory Compliance:** Proactive Regulatory Engagement
 4. **Customer Value:** Clear, demonstrable Customer Benefits
 5. **Financial Sustainability:** Viable Business Model from Day 1
-6. **Market Timing:** Launch vor competitive Threats
-7. **Team Expertise:** Experienced Team mit Domain Knowledge
+6. **Market Timing:** Launch vor Competitive Threats
+7. **Team Expertise:** Experienced Team mit Domain-Expertise
 8. **Stakeholder Alignment:** Unified Vision across all Stakeholders
 
 Die Anforderungsanalyse zeigt einen klaren Weg für die erfolgreiche Implementierung der Open API Kundenbeziehung mit fokussiertem Approach auf kurzfristig umsetzbare Lösungen und strategischer Perspektive für langfristige Marktführerschaft.
