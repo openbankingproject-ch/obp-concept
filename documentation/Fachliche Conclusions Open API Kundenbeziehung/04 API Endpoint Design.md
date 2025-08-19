@@ -70,9 +70,9 @@ Basierend auf der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase b
 ```json
 {
   "sharedCustomerHash": "sha256_hash_value",
-  "name": "Mustermann",
-  "vorname": "Max", 
-  "geburtsdatum": "1990-01-01"
+  "lastName": "Mustermann",
+  "firstName": "Max", 
+  "dateOfBirth": "1990-01-01"
 }
 ```
 
@@ -80,7 +80,9 @@ Basierend auf der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase b
 ```json
 {
   "match": true,
-  "idDate": "2025-01-15"
+  "identificationDate": "2025-01-15",
+  "verificationLevel": "QEAA",
+  "lastUpdate": "2025-01-15T10:00:00Z"
 }
 ```
 
@@ -95,11 +97,57 @@ Basierend auf der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase b
 ```json
 {
   "sharedCustomerHash": "sha256_hash_value",
-  "purpose": "accountOpening"
+  "purpose": "accountOpening",
+  "requestedDataCategories": ["identity", "address", "contact", "identification", "kyc"]
 }
 ```
 
-**Response (Her):** Vollständiges Kundendatenset inkl. `pdfUrlPassportScan` und sämtliche KYC-Attribute
+**Response (Her):** Vollständiges Kundendatenset basierend auf den definierten Datenbausteinen des Referenzprozesses:
+```json
+{
+  "personalData": {
+    "title": "Herr",
+    "firstName": "Max",
+    "lastName": "Mustermann",
+    "gender": "male",
+    "dateOfBirth": "1990-01-01",
+    "placeOfBirth": "Zürich",
+    "nationality": ["CH"],
+    "maritalStatus": "single"
+  },
+  "addressData": {
+    "street": "Musterstrasse",
+    "houseNumber": "123",
+    "postalCode": "8001",
+    "city": "Zürich",
+    "country": "CH",
+    "canton": "ZH"
+  },
+  "contactData": {
+    "phoneNumber": "+41791234567",
+    "emailAddress": "max.mustermann@example.ch",
+    "preferredCommunication": "email"
+  },
+  "identificationData": {
+    "identificationMethod": "VideoIdent",
+    "documentType": "passport",
+    "documentNumber": "123456789",
+    "issuingAuthority": "Schweiz",
+    "expiryDate": "2035-01-15",
+    "verificationLevel": "QEAA",
+    "verificationDate": "2025-01-15T10:00:00Z"
+  },
+  "kycData": {
+    "economicBeneficiary": true,
+    "taxDomicile": "CH",
+    "usTaxLiability": false,
+    "fatcaStatus": "non_us_person",
+    "tin": "756.1234.5678.97",
+    "amlRiskClass": "low",
+    "pepStatus": "no"
+  }
+}
+```
 
 ### Customer Identification API
 
@@ -118,12 +166,120 @@ Basierend auf der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase b
 **Response (Her):**
 ```json
 {
-  "identArt": "VideoIdent",
-  "referenznummer": "VI_2025_001234",
-  "ausstellungsdatum": "2025-01-15",
-  "gueltigBis": "2035-01-15",
-  "ausgestelltIn": "Schweiz",
-  "pdfUrlPassportScan": "https://secure-storage.example.ch/docs/passport_scan_123.pdf"
+  "identificationMethod": "VideoIdent",
+  "referenceNumber": "VI_2025_001234",
+  "verificationDate": "2025-01-15T10:00:00Z",
+  "documentType": "passport",
+  "documentNumber": "123456789",
+  "issuingAuthority": "Schweiz",
+  "expiryDate": "2035-01-15",
+  "verificationLevel": "QEAA",
+  "biometricVerification": {
+    "livenessScore": 0.98,
+    "faceMatchScore": 0.95,
+    "documentAuthenticityScore": 0.97
+  },
+  "auditTrail": {
+    "videoReference": "secure-storage.example.ch/audit/video_123.mp4",
+    "documentScanReference": "secure-storage.example.ch/docs/passport_scan_123.pdf"
+  }
+}
+```
+
+### Process Flow APIs
+
+Entsprechend dem 10-stufigen Referenzprozess → [Siehe Conclusion Referenzprozess](./03%20Referenzprozess.md) werden zusätzliche API-Endpunkte für den vollständigen Onboarding-Flow bereitgestellt:
+
+#### `POST /process/initialize`
+**Zweck:** Schritt 1 - Initialisierung des Onboarding-Prozesses
+**HTTP Method:** POST
+
+**Request (Hin):**
+```json
+{
+  "cookieConsent": true,
+  "dataProcessingConsent": true,
+  "selectedCountry": "CH",
+  "serviceType": "bankAccount"
+}
+```
+
+**Response (Her):**
+```json
+{
+  "processId": "proc_12345",
+  "status": "initialized",
+  "nextStep": "selfDeclaration"
+}
+```
+
+#### `POST /process/self-declaration`
+**Zweck:** Schritt 3 - Selbstdeklaration für Compliance
+**HTTP Method:** POST
+
+**Request (Hin):**
+```json
+{
+  "processId": "proc_12345",
+  "economicBeneficiary": true,
+  "taxDomicile": "CH",
+  "usTaxLiability": false,
+  "fatcaDeclaration": {
+    "status": "non_us_person",
+    "confirmed": true
+  },
+  "tin": "756.1234.5678.97",
+  "sourceOfFunds": "employment",
+  "nationalities": ["CH"]
+}
+```
+
+#### `POST /process/background-checks`
+**Zweck:** Schritt 7 - Background Checks und KYC-Prüfungen
+**HTTP Method:** POST
+
+**Request (Hin):**
+```json
+{
+  "processId": "proc_12345",
+  "checksRequested": ["sanction", "pep", "crime", "credit"],
+  "riskLevel": "standard"
+}
+```
+
+**Response (Her):**
+```json
+{
+  "checksCompleted": {
+    "sanctionCheck": "passed",
+    "pepCheck": "passed",
+    "crimeCheck": "passed",
+    "creditCheck": "passed"
+  },
+  "riskAssessment": {
+    "overallRisk": "low",
+    "riskScore": 2,
+    "factors": []
+  },
+  "complianceStatus": "approved"
+}
+```
+
+#### `POST /process/contract-signature`
+**Zweck:** Schritt 9 - Digitale Vertragsunterzeichnung
+**HTTP Method:** POST
+
+**Request (Hin):**
+```json
+{
+  "processId": "proc_12345",
+  "signatureType": "QES",
+  "documentsToSign": ["terms_conditions", "privacy_policy", "product_agreement"],
+  "signatureData": {
+    "certificate": "-----BEGIN CERTIFICATE-----...",
+    "timestamp": "2025-01-15T10:00:00Z",
+    "deviceInfo": "browser_info"
+  }
 }
 ```
 
@@ -149,10 +305,12 @@ Die API bietet granulare Endpunkte für spezifische Datensubsets, um minimale Da
 **Response (Her):**
 ```json
 {
-  "name": "Mustermann",
-  "vorname": "Max",
-  "geburtsdatum": "1990-01-01",
-  "nationalitaet": "CH"
+  "lastName": "Mustermann",
+  "firstName": "Max",
+  "dateOfBirth": "1990-01-01",
+  "nationality": ["CH"],
+  "gender": "male",
+  "title": "Herr"
 }
 ```
 
@@ -172,19 +330,25 @@ Die API bietet granulare Endpunkte für spezifische Datensubsets, um minimale Da
 **Response (Her):**
 ```json
 {
-  "adresse": {
-    "strasse": "Musterstrasse",
-    "hausnummer": "123",
-    "plz": "8001",
-    "ort": "Zürich",
-    "landcode": "CH"
+  "residentialAddress": {
+    "addressType": "residential",
+    "street": "Musterstrasse",
+    "houseNumber": "123",
+    "postalCode": "8001",
+    "city": "Zürich",
+    "country": "CH",
+    "canton": "ZH",
+    "validFrom": "2020-01-01"
   },
-  "korrespondenz": {
-    "strasse": "Postfach",
-    "hausnummer": "456", 
-    "plz": "8002",
-    "ort": "Zürich",
-    "landcode": "CH"
+  "correspondenceAddress": {
+    "addressType": "correspondence",
+    "street": "Postfach",
+    "houseNumber": "456", 
+    "postalCode": "8002",
+    "city": "Zürich",
+    "country": "CH",
+    "canton": "ZH",
+    "validFrom": "2024-01-01"
   }
 }
 ```
@@ -205,8 +369,15 @@ Die API bietet granulare Endpunkte für spezifische Datensubsets, um minimale Da
 **Response (Her):**
 ```json
 {
-  "telefonNum": "+41791234567",
-  "email": "max.mustermann@example.ch"
+  "phoneNumber": "+41791234567",
+  "mobileNumber": "+41791234567",
+  "emailAddress": "max.mustermann@example.ch",
+  "preferredChannel": "email",
+  "verificationStatus": {
+    "phoneVerified": true,
+    "emailVerified": true,
+    "lastVerification": "2025-01-15T10:00:00Z"
+  }
 }
 ```
 
@@ -226,12 +397,21 @@ Die API bietet granulare Endpunkte für spezifische Datensubsets, um minimale Da
 **Response (Her):**
 ```json
 {
-  "amlRisikoklasse": "niedrig",
-  "pepTyp": "nein",
-  "wirtschaftlich_berechtigt": "ja",
-  "fatcaStatus": "nicht_us_person",
-  "tin": "756.1234.5678.97"
-}  
+  "amlRiskClass": "low",
+  "pepStatus": "no",
+  "pepCategory": null,
+  "economicBeneficiary": true,
+  "fatcaStatus": "non_us_person",
+  "tin": "756.1234.5678.97",
+  "taxDomicile": "CH",
+  "usTaxLiability": false,
+  "sourceOfFunds": "employment",
+  "riskAssessment": {
+    "riskScore": 2,
+    "riskFactors": [],
+    "lastAssessment": "2025-01-15T10:00:00Z"
+  }
+}
 ```
 
 ---
@@ -247,24 +427,98 @@ Die API bietet granulare Endpunkte für spezifische Datensubsets, um minimale Da
 **Sicherheit:** JWT-Token mit Consent-Claims
 **Authentifizierung:** Header-basierte JWT-Übertragung
 
-### Datenpunkte – Basic Dataset (Version 2.0)
+### Datenpunkte – Modulare Datenbausteine (Version 2.0)
 
-Die Open API Kundenbeziehung Version 2.0 definiert folgende Kernstrukturen:
+Die Open API Kundenbeziehung Version 2.0 definiert modulare Datenbausteine entsprechend dem Referenzprozess → [Siehe Conclusion Referenzprozess](./03%20Referenzprozess.md):
 
+#### Baustein: Identität
 ```json
 {
-  "customerId": "string - Interne Referenznummer der Bank",
-  "sharedCustomerHash": "string - Anonymer Kundenidentifikator",
-  "firstName": "string - Vorname des Kunden",
-  "lastName": "string - Nachname des Kunden", 
-  "dateOfBirth": "date - Geburtsdatum (YYYY-MM-DD)",
-  "identificationDate": "date - Datum der Identifikation",
-  "identificationMethod": "string - Methode (VideoIdent, E-ID, etc.)",
-  "vsbStatus": "object - VSB-Status (Version, erfüllt/ausstehend)",
-  "customerConsent": "boolean - Zustimmung zur Weitergabe",
-  "consentValidUntil": "date - Gültigkeit der Zustimmung"
+  "identity": {
+    "personalData": {
+      "title": "string - Anrede (Herr, Frau, etc.)",
+      "firstName": "string - Vorname",
+      "lastName": "string - Nachname",
+      "gender": "string - Geschlecht",
+      "dateOfBirth": "date - Geburtsdatum (YYYY-MM-DD)",
+      "placeOfBirth": "string - Geburtsort",
+      "nationality": "array - Staatsangehörigkeit(en)",
+      "maritalStatus": "string - Zivilstand"
+    },
+    "verificationLevel": "string - QEAA|EAA|self-declared",
+    "verificationDate": "datetime - Verifikationszeitpunkt",
+    "verificationProvider": "string - Identity Service Provider"
+  }
 }
 ```
+
+#### Baustein: Adresse
+```json
+{
+  "address": {
+    "addressType": "string - residential|correspondence|business",
+    "street": "string - Strasse",
+    "houseNumber": "string - Hausnummer",
+    "postalCode": "string - Postleitzahl",
+    "city": "string - Ort",
+    "country": "string - Land (ISO Code)",
+    "canton": "string - Kanton/Region",
+    "validFrom": "date - Gültig ab",
+    "validTo": "date - Gültig bis"
+  }
+}
+```
+
+#### Baustein: Kontakt
+```json
+{
+  "contact": {
+    "phoneNumber": "string - Telefonnummer",
+    "mobileNumber": "string - Mobilnummer",
+    "emailAddress": "string - E-Mail-Adresse",
+    "preferredChannel": "string - email|sms|phone|app",
+    "verificationStatus": "string - verified|pending|unverified"
+  }
+}
+```
+
+#### Baustein: Consent
+```json
+{
+  "consent": {
+    "consentId": "uuid - Eindeutige Consent-ID",
+    "dataCategories": "array - [identity, address, contact, financial]",
+    "purposes": "array - [onboarding, kyc, marketing, analytics]",
+    "grantedAt": "datetime - Erteilungszeitpunkt",
+    "expiresAt": "datetime - Ablaufzeitpunkt",
+    "withdrawnAt": "datetime - Widerrufszeitpunkt",
+    "legalBasis": "string - consent|contract|legal_obligation"
+  }
+}
+```
+
+#### Baustein: KYC/Compliance
+```json
+{
+  "kycData": {
+    "economicBeneficiary": "boolean - Wirtschaftliche Berechtigung",
+    "taxDomicile": "string - Steuerdomizil",
+    "usTaxLiability": "boolean - US-Steuerpflicht",
+    "fatcaStatus": "string - FATCA-Status",
+    "tin": "string - Steuernummer (AHV-Nummer)",
+    "amlRiskClass": "string - AML-Risikoklasse",
+    "pepStatus": "string - PEP-Status",
+    "sourceOfFunds": "string - Herkunft der Gelder",
+    "riskAssessment": {
+      "riskScore": "number - Risikoscore",
+      "riskFactors": "array - Risikofaktoren",
+      "lastAssessment": "datetime - Letzte Bewertung"
+    }
+  }
+}
+```
+
+**Integration:** Diese Datenbausteine können einzeln oder kombiniert über die entsprechenden API-Endpunkte abgerufen werden, wodurch eine granulare und datenschutzkonforme Datenübertragung gewährleistet wird.
 
 ### sharedCustomerHash-Konzept
 
@@ -297,9 +551,9 @@ sequenceDiagram
 
     Note over C,API: Phase 1: Customer Check
     C->>I: Initiiert Kontoeröffnung
-    I->>API: POST /customer/check {sharedCustomerHash, name, vorname, geburtsdatum}
+    I->>API: POST /customer/check {sharedCustomerHash, firstName, lastName, dateOfBirth}
     API->>P: Validate & Check
-    P->>API: {match: true, idDate: "2025-01-15"}
+    P->>API: {match: true, identificationDate: "2025-01-15", verificationLevel: "QEAA"}
     API->>I: Customer exists & valid
     
     Note over C,API: Phase 2: Consent Management  
@@ -307,10 +561,10 @@ sequenceDiagram
     C->>I: Grant consent
     
     Note over C,API: Phase 3: Data Retrieval
-    I->>API: POST /customer/fullRequest {sharedCustomerHash, purpose: "accountOpening"}
-    API->>P: Request full dataset
-    P->>API: Complete customer profile (65 fields)
-    API->>I: Full customer data
+    I->>API: POST /customer/fullRequest {sharedCustomerHash, purpose: "accountOpening", requestedDataCategories: ["identity", "address", "contact", "identification", "kyc"]}
+    API->>P: Request modular data blocks
+    P->>API: Complete customer profile (modulare Datenbausteine)
+    API->>I: Full customer data with data blocks
     
     Note over C,API: Phase 4: Account Creation
     I->>I: Create account with existing data
@@ -459,15 +713,17 @@ sequenceDiagram
 POST /customer/check
 {
   "sharedCustomerHash": "a1b2c3d4e5f6...",
-  "name": "Müller", 
-  "vorname": "Anna",
-  "geburtsdatum": "1985-03-15"
+  "lastName": "Müller", 
+  "firstName": "Anna",
+  "dateOfBirth": "1985-03-15"
 }
 
 Response:
 {
   "match": true,
-  "idDate": "2025-02-01"
+  "identificationDate": "2025-02-01",
+  "verificationLevel": "QEAA",
+  "lastUpdate": "2025-02-01T10:00:00Z"
 }
 ```
 
@@ -477,17 +733,46 @@ POST /customer/fullRequest
 Header: JWT with consent claims
 {
   "sharedCustomerHash": "a1b2c3d4e5f6...",
-  "purpose": "accountOpening"
+  "purpose": "accountOpening",
+  "requestedDataCategories": ["identity", "address", "contact", "identification", "kyc"]
 }
 
 Response: 
 {
-  // 65+ Datenfelder aus gesamtunterlage Workshop-Spezifikation
-  "personalData": {...},
-  "addressData": {...},
-  "identificationData": {...},
-  "kycData": {...},
-  "complianceData": {...}
+  // Modulare Datenbausteine entsprechend Referenzprozess
+  "identity": {
+    "personalData": {
+      "firstName": "Anna",
+      "lastName": "Müller",
+      "dateOfBirth": "1985-03-15",
+      "nationality": ["CH"],
+      "gender": "female",
+      "maritalStatus": "single"
+    },
+    "verificationLevel": "QEAA",
+    "verificationDate": "2025-02-01T10:00:00Z"
+  },
+  "address": {
+    "addressType": "residential",
+    "street": "Bahnhofstrasse",
+    "houseNumber": "42",
+    "postalCode": "8001",
+    "city": "Zürich",
+    "country": "CH",
+    "canton": "ZH"
+  },
+  "contact": {
+    "emailAddress": "anna.mueller@example.ch",
+    "mobileNumber": "+41791234567",
+    "preferredChannel": "email"
+  },
+  "kycData": {
+    "economicBeneficiary": true,
+    "taxDomicile": "CH",
+    "amlRiskClass": "low",
+    "pepStatus": "no",
+    "fatcaStatus": "non_us_person"
+  }
 }
 ```
 
@@ -663,7 +948,6 @@ paths:
 
 Diese konzeptionelle API-Spezifikation bietet die Grundlage für die technische Implementation und wird kontinuierlich mit der separaten technischen Dokumentation synchronisiert, um eine konsistente und wartbare API-Architektur zu gewährleisten.
 
-TODO: TZE bitte verifizieren!!
 
 ---
 
