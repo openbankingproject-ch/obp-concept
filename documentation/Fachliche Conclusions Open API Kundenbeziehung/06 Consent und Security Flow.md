@@ -260,19 +260,22 @@ graph TB
 - **Compliance Monitoring:** Security Audit und Incident Response
 
 ### Security Component Architecture
-TODO: fix mermaid diagram
 
-```
-Customer Authentication Layer
-         ä
-Authorization Server (FAPI 2.0)
-         ä
-Consent Management Engine
-         ä  
-API Gateway & Security Enforcement
-         ä
-Data Producer APIs
-```
+**Konzeptionelle Sicherheitsarchitektur:**
+
+Die Security-Komponenten sind in einer hierarchischen Schicht-Architektur organisiert:
+
+**Customer Authentication Layer**
+↓
+**Authorization Server (FAPI 2.0)**
+↓
+**Consent Management Engine**
+↓
+**API Gateway & Security Enforcement**
+↓
+**Data Producer APIs**
+
+**Architektur-Fluss:** Jede Schicht baut auf der vorhergehenden auf und bietet spezialisierte Sicherheitsfunktionalitäten. Der Datenfluss erfolgt top-down von der Kundenauthentifizierung bis zu den produktiven APIs, wobei jede Ebene zusätzliche Sicherheits- und Compliance-Kontrollen implementiert.
 
 **Component Responsibilities:**
 - **Customer Authentication:** Multi-Factor Authentication mit Swiss E-ID Integration
@@ -578,7 +581,6 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 ### Authentication/Authorization Sequence
 
 **Complete Authentication Flow für Business Stakeholders:**
-TODO: fix broken diagrams
 
 #### Phase 1: Customer Initiation
 ```
@@ -635,27 +637,27 @@ TODO: fix broken diagrams
 20. Audit event logged at all systems
 ```
 
-### Sequence Diagram aus der Perspektive der Finanzindustrie
+TODO: add mermaid diagram (sequence diagram of complete authentication/authorization sequence)
 
-TODO: fix broken diagrams
+### Security Flow aus der Perspektive der Finanzindustrie
 
-**Konzeptionelle Darstellung:**
+**Konzeptionelle Customer Journey:**
 
-```
-Customer Journey Perspective:
+Der Sicherheits- und Consent-Flow folgt einer strukturierten Customer-Journey-Perspektive:
 
-[Customer] starts onboarding process
-    ä
-[Customer] clearly informed about data sharing
-    ä 
-[Customer] authenticates with strong security
-    ä
-[Customer] grants granular consent for data access
-    ä
-[Customer] receives immediate service benefit
-    ä
-[Customer] retains full control over data sharing
-```
+**[Customer] starts onboarding process**
+↓
+**[Customer] clearly informed about data sharing**
+↓
+**[Customer] authenticates with strong security**
+↓
+**[Customer] grants granular consent for data access**
+↓
+**[Customer] receives immediate service benefit**
+↓
+**[Customer] retains full control over data sharing**
+
+**Journey-Charakteristika:** Der Flow ist so konzipiert, dass der Kunde in jeder Phase vollständige Transparenz und Kontrolle behält, während gleichzeitig die höchsten Sicherheitsstandards (FAPI 2.0) eingehalten werden.
 
 **Technical Implementation Perspective:**
 - Detaillierte Sequence Diagrams für Implementation sind in [Technische Implementierung](/documentation/Umsetzung%20und%20Implementierung/) dokumentiert
@@ -845,9 +847,10 @@ sequenceDiagram
 ```
 
 ### Multi-Provider Integration Pattern
-TODO: fix broken diagrams
 
 **Hub-and-Spoke Integration:**
+TODO: fix broken diagram!
+
 ```
 Integrator System
        Producer A (Bank 1) via FAPI 2.0
@@ -863,9 +866,10 @@ Integrator System
 ### Federation Integration Pattern
 
 **Cross-Domain Authentication:**
-```
-Customer ä Home Domain Auth ä Cross-Domain Token ä Resource Access
-```
+**Konzeptioneller Authentifizierungs-Flow:**
+**Customer** → **Home Domain Auth** → **Cross-Domain Token** → **Resource Access**
+
+**Federation-Mechanismus:** Der Kunde authentifiziert sich einmal in seiner Heimat-Domäne und erhält einen Cross-Domain-Token, der grenzüberschreitenden Zugriff auf Ressourcen ermöglicht.
 
 **Use Cases:**
 - Swiss Customer accessing EU Services
@@ -875,9 +879,10 @@ Customer ä Home Domain Auth ä Cross-Domain Token ä Resource Access
 ### Legacy System Integration Pattern
 
 **API Gateway Bridge:**
-```
-Modern FAPI 2.0 Client ä API Gateway ä Legacy System Adapter ä Core Banking
-```
+**Konzeptionelle Legacy-Integration:**
+**Modern FAPI 2.0 Client** → **API Gateway** → **Legacy System Adapter** → **Core Banking**
+
+**Transformation-Pattern:** Das API Gateway fungiert als Protokoll-Übersetzer zwischen modernen FAPI 2.0-Standards und proprietären Legacy-Systemen.
 
 **Implementation Strategy:**
 - Legacy Systems bleiben unverändert
@@ -887,9 +892,10 @@ Modern FAPI 2.0 Client ä API Gateway ä Legacy System Adapter ä Core Banking
 ### Mobile App Integration Pattern
 
 **Native Mobile Integration:**
-```
-Mobile App ä System Browser (ASWebAuthenticationSession) ä Auth Server ä Mobile App
-```
+**Konzeptionelle Mobile Integration:**
+**Mobile App** → **System Browser (ASWebAuthenticationSession)** → **Auth Server** → **Mobile App**
+
+**Native Integration:** Die App nutzt das System-Browser-Framework für sichere Authentifizierung ohne Verlassen der App-Umgebung.
 
 **Security Features:**
 - App-to-App Redirect wo verfügbar
@@ -1039,8 +1045,7 @@ TODO: TZE bitte verifizieren!!
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Final Draft für Stakeholder Review  
-**Referenz:** [Airlock IAM FAPI 2.0 Implementation](https://docs.airlock.com/iam/latest/index/1639690251538.html)
+**Status:** Final Draft für Review  
 
 ---
 
