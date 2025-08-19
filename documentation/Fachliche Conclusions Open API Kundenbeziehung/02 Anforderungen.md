@@ -7,9 +7,10 @@
 3. [Use Case Analyse und Priorisierung](#use-case-analyse-und-priorisierung)
 4. [Anforderungen im Kontext des Referenzprozesses](#anforderungen-im-kontext-des-referenzprozesses)
 5. [Technische Anforderungen](#technische-anforderungen)
-6. [E-ID Integration und Abgrenzung](#e-id-integration-und-abgrenzung)
-7. [Strategische Herangehensweise: "Vom Kleinen ins Grosse"](#strategische-herangehensweise-vom-kleinen-ins-grosse)
-8. [Fazit und Roadmap](#fazit-und-roadmap)
+6. [Business Case und Monetarisierung](#business-case-und-monetarisierung)
+7. [E-ID Integration und Abgrenzung](#e-id-integration-und-abgrenzung)
+8. [Strategische Herangehensweise: "Vom Kleinen ins Grosse"](#strategische-herangehensweise-vom-kleinen-ins-grosse)
+9. [Fazit und Roadmap](#fazit-und-roadmap)
 
 ## Executive Summary
 
@@ -169,10 +170,10 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 **Zielbilder Evolution und Bewertung:**
 
 **Machbarkeits- und Innovationsbewertung:**
-- **Zielbild 1 (Direkt):** Höchste Machbarkeit (95%), moderate Innovation (60%), minimale Komplexität
-- **Zielbild 2 (Indirekt):** Hohe Machbarkeit (85%), hohe Innovation (80%), moderate Komplexität
-- **Zielbild 3 (Intermediär):** Mittlere Machbarkeit (65%), höchste Innovation (95%), mittlere Komplexität
-- **Zielbild 4 (Plattform):** Niedrige Machbarkeit (35%), höchste Innovation (95%), höchste Komplexität
+- **Zielbild 1 (Direkt):** Höchste Machbarkeit, moderate Innovation, minimale Komplexität
+- **Zielbild 2 (Indirekt):** Hohe Machbarkeit, hohe Innovation, moderate Komplexität
+- **Zielbild 3 (Intermediär):** Mittlere Machbarkeit, höchste Innovation, mittlere Komplexität
+- **Zielbild 4 (Plattform):** Niedrige Machbarkeit, höchste Innovation, höchste Komplexität
 - **Zielbild 5 (Dezentral):** Außer Scope - Blockchain-basierte Lösungen sind für den Schweizer Finanzmarkt nicht relevant
 
 **Implementation Timeline:**
@@ -189,22 +190,22 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 **Quantitative Bewertungsmatrix:**
 
 **Machbarkeit (Kurzfristige Umsetzbarkeit):**
-- Zielbild 1: 95% - Sofort umsetzbar mit bestehender Infrastruktur
-- Zielbild 2: 85% - Hohe Machbarkeit mit moderatem API-Entwicklungsaufwand
-- Zielbild 3: 65% - Mittlere Machbarkeit, erfordert erweiterte Koordination
-- Zielbild 4: 35% - Niedrige kurzfristige Machbarkeit aufgrund hoher Komplexität
+- Zielbild 1: Höchste Machbarkeit - Sofort umsetzbar mit bestehender Infrastruktur
+- Zielbild 2: Hohe Machbarkeit mit moderatem API-Entwicklungsaufwand
+- Zielbild 3: Mittlere Machbarkeit, erfordert erweiterte Koordination
+- Zielbild 4: Niedrige kurzfristige Machbarkeit aufgrund hoher Komplexität
 
 **Innovationspotenzial (Strategischer Mehrwert):**
-- Zielbild 1: 60% - Moderate Innovation durch Prozessoptimierung
-- Zielbild 2: 80% - Hohe Innovation durch Service-Integration
-- Zielbild 3: 95% - Höchste Innovation durch Multi-Player-Konstellationen
-- Zielbild 4: 95% - Höchste Innovation durch Plattform-Ökonomie
+- Zielbild 1: Moderate Innovation durch Prozessoptimierung
+- Zielbild 2: Hohe Innovation durch Service-Integration
+- Zielbild 3: Höchste Innovation durch Multi-Player-Konstellationen
+- Zielbild 4: Höchste Innovation durch Plattform-Ökonomie
 
 **Marktrelevanz (Gegenwärtige Nachfrage):**
-- Zielbild 1: 80% - Hohe Relevanz für bestehende Geschäftsmodelle
-- Zielbild 2: 90% - Höchste Marktrelevanz durch PSD2-Compliance
-- Zielbild 3: 85% - Hohe Zukunftsrelevanz für Marktentwicklung
-- Zielbild 4: 70% - Mittlere aktuelle Relevanz, hohe strategische Bedeutung
+- Zielbild 1: Hohe Relevanz für bestehende Geschäftsmodelle
+- Zielbild 2: Höchste Marktrelevanz durch PSD2-Compliance
+- Zielbild 3: Hohe Zukunftsrelevanz für Marktentwicklung
+- Zielbild 4: Mittlere aktuelle Relevanz, hohe strategische Bedeutung
 
 **Implementierungs-Zeitrahmen:**
 - Zielbild 1: 0-3 Monate - Sofortige Umsetzung möglich
@@ -240,10 +241,10 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 
 | Kategorie | Gewichtung | Beschreibung |
 |-----------|------------|--------------|
-| **Machbarkeit** | 25% | Kundennutzen, Mehrwert Bank, Mehrwert Kontributor, Mehrwert Provider, Marktvolumen |
-| **Umsetzbarkeit** | 25% | Level of Assurance, API Abdeckungsgrad, Komplexität & Risiken, Integrationsaufwand, Finanzielle Tragbarkeit |
-| **Strategische Relevanz** | 25% | Differenzierungspotenzial, Ecosystem-Impact, Skalierbarkeit |
-| **Regulatorische Konformität** | 25% | Compliance-Anforderungen, Governance-Komplexität, Reputationsrisiken |
+| **Machbarkeit** | Gleichwertig | Kundennutzen, Mehrwert Bank, Mehrwert Kontributor, Mehrwert Provider, Marktvolumen |
+| **Umsetzbarkeit** | Gleichwertig | Level of Assurance, API Abdeckungsgrad, Komplexität & Risiken, Integrationsaufwand, Finanzielle Tragbarkeit |
+| **Strategische Relevanz** | Gleichwertig | Differenzierungspotenzial, Ecosystem-Impact, Skalierbarkeit |
+| **Regulatorische Konformität** | Gleichwertig | Compliance-Anforderungen, Governance-Komplexität, Reputationsrisiken |
 
 ### Top 4 priorisierte Use Cases
 
@@ -362,7 +363,7 @@ Die Use Cases wurden durch einen strukturierten Workshop-Prozess mit Multi-Stake
 - Cross-platform Loyalty Programs
 
 **Real Estate:**
-- Mietprozess/Mietkautionskonto (700.000 Umzüge/Jahr CH)
+- Mietprozess/Mietkautionskonto (hohe Anzahl Umzüge jährlich in der Schweiz)
   * Besonderheit: Für ein reines Mietkautionskonto ist keine vollständige Identifikation notwendig
   * Reduzierte regulatorische Hürden und technische Komplexität
   * Langfristiges Optimierungspotenzial für Mietprozesse
@@ -552,7 +553,7 @@ Die Use Cases wurden durch einen strukturierten Workshop-Prozess mit Multi-Stake
 - Circuit Breaker Pattern Implementation
 
 **Availability Requirements:**
-- 99.9% Uptime SLA (8.76 Stunden Downtime/Jahr)
+- Sehr hohe Uptime SLA mit minimaler jährlicher Downtime
 - Maximum 5 Minuten ungeplante Ausfälle
 - Planned Maintenance Windows ausserhalb Geschäftszeiten
 - Multi-Region Deployment für Disaster Recovery
@@ -699,6 +700,45 @@ Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung 
 - Investment Experience
 - Compliance Status (PEP, Sanctions)
 
+## Business Case und Monetarisierung
+
+### Herausforderungen bei Open Finance Initiativen
+
+**Typische Probleme:**
+- Schwierige Formulierung tragfähiger Business Cases
+- Motivation kommt primär aus regulatorischem Druck
+- Kundenwünschbarkeit vs. wirtschaftliche Tragfähigkeit
+- Network Effects erst bei kritischer Masse erreicht
+
+### Monetarisierungsmodelle
+
+#### **Direkte Monetarisierung**
+
+**Transaction-based Fees:**
+- Per-API-Call Pricing (Tiered Structure)
+- Success-based Fees für completed Customer Onboardings
+- Premium Features für erweiterte Datensets
+- SLA-based Pricing für guaranteed Performance
+
+**Subscription Models:**
+- Basic/Premium/Enterprise Tiers
+- Volume-based Pricing Tiers
+- White-label Solutions für kleinere Provider
+- Platform-as-a-Service Offerings
+
+#### **Indirekte Monetarisierung**
+
+**Datenmonetarisierung:**
+- Anonymisierte Market Insights
+- Benchmarking Services für Industry
+- Aggregated Analytics Products
+- Compliance Reporting Services
+
+**Ecosystem-Vorteile:**
+- Erhöhte Customer Acquisition durch bessere UX
+- Reduzierte Customer Acquisition Costs
+- Improved Customer Lifetime Value
+- Cross-selling Opportunities
 ## E-ID Integration und Abgrenzung
 *TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
@@ -818,6 +858,26 @@ sequenceDiagram
 - Pilot Programs mit ausgewählten Partners
 - Public Acceptance Building Phase
 
+#### **Strategische Überlegungen zur E-ID Integration**
+
+**Zusammenspiel zwischen E-ID und Open API**
+Die Integration der Schweizer E-ID mit der Open API Kundenbeziehung stellt einen strategischen Vorteil dar. Während die Daten bei den Banken liegen, liegt die Datenhoheit beim Kunden, insbesondere beim Consent-Prozess.
+
+**Hybrid-Lösung Ansatz:** 
+- E-ID-Kompatibilität von Beginn an sicherstellen
+- Parallele Lösung während E-ID-Einführungsphase
+- Vermeidung "unnötiger Verifizierungen" durch modulare Identifikationsdaten-Wiederverwendung
+
+#### **Herausforderungen und Lösungsansätze**
+**Einführungshürden der E-ID:**
+- Biometrische Ausweis-Voraussetzung könnte Adoption erschweren
+- Bedarf an "Killer Use Cases" (z.B. digitales Wahlrecht)
+- Regulatorische Unklarheiten bezüglich FINMA-Anforderungen
+- Haftungs- und Sicherheitsfaktoren noch nicht definiert
+
+**Strategische Antwort:** 
+Eine Open API Kundenbeziehung als wirtschaftlich sinnvolle Zwischenlösung, die später nahtlos in die E-ID-Infrastruktur integriert werden kann.
+
 #### **Mögliche Integration Timeline**
 - **2025:** Open API Standard Development (unabhängig von E-ID)
 - **2026:** E-ID Launch → Integration Planning
@@ -852,10 +912,10 @@ Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen
 - Developer Documentation und SDKs
 
 **Success Metrics:**
-- 50% Reduktion in Verification Time
-- 3+ Partner Banks onboarded
-- 1000+ successful API Calls/Month
-- 90%+ Customer Satisfaction Score
+- Reduktion der Verification Time
+- Anzahl Partner Banks onboarded
+- Anzahl erfolgreicher API Calls/Month
+- Customer Satisfaction Score
 
 #### **Ausgeschlossene Komplexe Bausteine**
 
@@ -898,7 +958,7 @@ Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen
 - Multi-provider Federation Support
 
 **Business Deliverables:**
-- 10-15 Production Partners
+- Production Partners
 - All 4 prioritized Use Cases implemented
 - Revenue Generation (Break-even approach)
 - Cross-border Pilots (EU Integration)
@@ -919,14 +979,14 @@ Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen
 - Advanced Analytics und Machine Learning
 
 **Business Deliverables:**
-- 50+ Ecosystem Partners
+- Akquirierung weiterer Ecosystem Partner 
 - Cross-industry Expansion (Insurance, Mobility, Government)
 - Platform-as-a-Service Offerings
 - International Market Entry
 
 **Success Criteria:**
 - Market Leadership Position etabliert
-- CHF 20+ Million Annual Revenue
+- Jährliche Umsatzsteigerung 
 - Network Effects durch Ecosystem
 - International Recognition und Adoption
 
@@ -973,32 +1033,33 @@ Ein umfassendes Messystem für den Erfolg der Open API Kundenbeziehung umfasst s
 
 
 #### **Technical KPIs**
+Genaue Ziele und Metriken zur Überwachung der technischen Performance und Systemstabilität werden zu Beginn der Implementierung festgelegt und kontinuierlich angepasst.
 
 **Performance Metrics:**
-- API Response Time (Target: < 2000ms)
-- System Uptime (Target: 99.9%)
-- Error Rate (Target: < 0.1%)
-- Security Incidents (Target: 0 critical)
+- API Response Time 
+- System Uptime 
+- Error Rate 
+- Security Incidents 
 
 **Adoption Metrics:**
-- API Calls per Month (Target: 50,000+ by Month 12)
-- Active Partners (Target: 15+ by Month 18)
-- Customer Transactions (Target: 100,000+ by Month 24)
-- Developer Satisfaction (Target: 4.5/5.0)
+- API Calls per Month 
+- Active Partners 
+- Customer Transactions 
+- Developer Satisfaction 
 
 #### **Business KPIs**
 
 **Financial Metrics:**
-- Revenue per Transaction (Target: CHF 3-5)
-- Customer Acquisition Cost (Target: < CHF 100)
-- Partner Lifetime Value (Target: > CHF 50,000)
-- Monthly Recurring Revenue (Target: CHF 500,000+ by Month 24)
+- Revenue per Transaction 
+- Customer Acquisition Cost 
+- Partner Lifetime Value 
+- Monthly Recurring Revenue 
 
 **Market Metrics:**
-- Market Share in Swiss Market (Target: 30%+ by Month 36)
-- Customer Net Promoter Score (Target: > 50)
-- Partner Retention Rate (Target: > 90%)
-- International Inquiries (Target: 100+ by Month 18)
+- Market Share im Schweizer Markt 
+- Customer Net Promoter Score 
+- Partner Retention Rate 
+- International Inquiries
 
 ## Fazit und Roadmap
 *TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
@@ -1028,26 +1089,14 @@ Die umfassende Anforderungsanalyse zeigt eine klare Strategie für die erfolgrei
 
 ### Implementation Roadmap
 
-#### **Immediate Next Steps (Month 1-3)**
-- [ ] Technical Architecture Finalization
-- [ ] Partner Agreement Templates entwickeln
-- [ ] Regulatory Consultation initiation
-- [ ] Development Team Aufbau
-- [ ] Initial Funding secured
+Die detaillierte Implementierung folgt der konsolidierten Master-Timeline mit speziellem Fokus auf Business Requirements und Partner-Onboarding.
 
-#### **Development Phase (Month 3-6)**
-- [ ] MVP API Development
-- [ ] Security Framework Implementation
-- [ ] Sandbox Environment Setup
-- [ ] Partner Pilot Program Launch
-- [ ] Legal Framework etablieren
+**Vollständige Implementierungs-Details:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
 
-#### **Launch Phase (Month 6-9)**
-- [ ] Production Environment Deployment
-- [ ] Partner Onboarding at Scale
-- [ ] Customer-facing Services Launch
-- [ ] Marketing und Communication Strategy
-- [ ] Continuous Monitoring und Optimization
+#### **Business-spezifische Meilensteine:**
+- **Immediate Phase (Monate 1-3):** Business Requirements Finalisierung, Partner Agreement Templates
+- **Foundation Phase (Monate 1-6):** MVP für priorisierten Use Case 1 (Bankwechsel), initiales Partner-Onboarding
+- **Scaling Phase (Monate 6-18):** Vollständige Use Case Implementation, Business Model Validation
 
 ### Critical Success Factors
 
