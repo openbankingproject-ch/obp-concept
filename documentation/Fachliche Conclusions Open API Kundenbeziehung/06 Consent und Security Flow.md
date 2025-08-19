@@ -25,7 +25,203 @@ Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Securit
 - Granulare Consent-Management mit Customer Control
 - Sequence Diagram-basierte Implementation für Business Stakeholder Verständnis
 
-**Referenz-Implementation:** Orientierung an [Airlock IAM FAPI Implementation](https://docs.airlock.com/iam/latest/index/1639690251538.html) für bewährte Patterns
+**Referenz-Implementation:** Orientierung an bewährten FAPI 2.0 Implementation Patterns für robuste Security-Architektur
+
+---
+
+## Consent und Security Flow Diagramme
+
+### Überblick: Complete IAM Flow
+
+```mermaid
+sequenceDiagram
+    participant Client as Client Application
+    participant Browser as System Browser (User-Agent)
+    participant Gateway as Gateway/Microgateway  
+    participant AuthServer as Authorization Server (AS)
+    participant FlowEngine as Flow Engine/Processor
+    participant LoginUI as Loginapp UI
+    participant TokenEndpoint as Token Endpoint
+    participant Resource as Protected Resource
+
+    Note over Client,Resource: Phase 1: Initial Request & Authorization Start
+    Client->>Gateway: Request to protected resource
+    Gateway->>Client: 401 Unauthorized (insufficient credentials)
+    
+    Client->>Browser: Create authorization request
+    Browser->>AuthServer: Authorization request
+    
+    Note over Client,Resource: Phase 2: Flow Determination & Authentication
+    AuthServer->>AuthServer: Determine target app & flow
+    AuthServer->>Browser: 302 Redirect to authentication flow
+    Browser->>FlowEngine: Start authentication flow
+    
+    FlowEngine->>LoginUI: User credentials required
+    LoginUI->>LoginUI: Present login screen
+    LoginUI->>FlowEngine: Submit user credentials
+    
+    Note over Client,Resource: Phase 3: Consent Management
+    FlowEngine->>LoginUI: Consent required
+    LoginUI->>LoginUI: Present consent screen
+    LoginUI->>FlowEngine: Submit user consent
+    
+    Note over Client,Resource: Phase 4: Authorization Response & Token Exchange
+    FlowEngine->>AuthServer: Request authorization response
+    AuthServer->>FlowEngine: Authorization response
+    FlowEngine->>Browser: Authorization response
+    Browser->>Client: Forward authorization response
+    
+    Client->>TokenEndpoint: Token exchange (authorization code)
+    TokenEndpoint->>Client: Access tokens (based on identity propagation config)
+    
+    Note over Client,Resource: Phase 5: Resource Access
+    Client->>Resource: Request with access token
+    Resource->>Client: Protected resource data
+```
+
+### Generic Consent Management Flow
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant Bank as Bank/Service Provider
+    participant ConsentMgmt as Consent Management
+    participant DataProvider as Data Provider
+    participant AuditLog as Audit & Compliance
+
+    Note over Customer,AuditLog: Phase 1: Consent Request Initiation
+    Customer->>Bank: Initiate service request
+    Bank->>ConsentMgmt: Check existing consents
+    ConsentMgmt->>Bank: No valid consent found
+    
+    Bank->>ConsentMgmt: Create consent request
+    ConsentMgmt->>Customer: Present consent form
+    Note over Customer: Granular consent options:<br/>- Basic data access<br/>- Extended KYC data<br/>- Purpose limitation<br/>- Time restrictions
+    
+    Note over Customer,AuditLog: Phase 2: Consent Granting & Validation
+    Customer->>ConsentMgmt: Grant specific consents
+    ConsentMgmt->>ConsentMgmt: Validate consent completeness
+    ConsentMgmt->>AuditLog: Log consent decision
+    
+    ConsentMgmt->>Bank: Consent granted with scope
+    Bank->>DataProvider: Request data with consent token
+    
+    Note over Customer,AuditLog: Phase 3: Data Access & Usage
+    DataProvider->>ConsentMgmt: Verify consent validity
+    ConsentMgmt->>DataProvider: Consent valid for scope
+    DataProvider->>Bank: Provide requested data
+    DataProvider->>AuditLog: Log data access
+    
+    Bank->>Customer: Service delivered
+    
+    Note over Customer,AuditLog: Phase 4: Ongoing Consent Management
+    ConsentMgmt->>Customer: Consent expiry notification (if applicable)
+    Customer->>ConsentMgmt: Renew/modify/revoke consent
+    ConsentMgmt->>AuditLog: Log consent updates
+```
+
+### FAPI 2.0 Security Implementation
+
+```mermaid
+sequenceDiagram
+    participant Client as Client App
+    participant AuthServer as Authorization Server
+    participant ResourceServer as Resource Server
+    participant Customer as Customer
+
+    Note over Client,Customer: FAPI 2.0 Security Flow with PKCE + mTLS
+    
+    Client->>Client: Generate PKCE code_verifier & code_challenge
+    Client->>Client: Create authorization request with security parameters
+    
+    Client->>AuthServer: Authorization request<br/>(client_id, scope, code_challenge, state, nonce)
+    AuthServer->>Customer: Authenticate customer
+    Customer->>AuthServer: Authentication successful
+    
+    AuthServer->>Customer: Present consent screen<br/>(granular data permissions)
+    Customer->>AuthServer: Grant consent
+    
+    AuthServer->>Client: Authorization code + state
+    
+    Note over Client,Customer: Token Exchange with Enhanced Security
+    Client->>AuthServer: Token request via mTLS<br/>(code, code_verifier, client_cert)
+    AuthServer->>AuthServer: Verify mTLS certificate
+    AuthServer->>AuthServer: Validate PKCE code_verifier
+    AuthServer->>Client: Access token + ID token (JWT)
+    
+    Note over Client,Customer: Resource Access with Financial-Grade Security
+    Client->>ResourceServer: API request + access token via mTLS
+    ResourceServer->>ResourceServer: Validate mTLS client certificate
+    ResourceServer->>AuthServer: Introspect access token
+    AuthServer->>ResourceServer: Token valid + scope information
+    ResourceServer->>Client: Protected resource data
+```
+
+### JWT Token Architecture & Claims
+
+```mermaid
+graph TB
+    subgraph "JWT Token Structure"
+        Header[Header<br/>alg: RS256<br/>typ: JWT<br/>kid: key-id]
+        Payload[Payload<br/>Standard Claims<br/>Custom Claims<br/>Consent Claims]
+        Signature[Signature<br/>RSA256<br/>Private Key Signed]
+    end
+    
+    subgraph "Standard Claims"
+        ISS[iss: issuer]
+        SUB[sub: subject]  
+        AUD[aud: audience]
+        EXP[exp: expiration]
+        IAT[iat: issued at]
+        JTI[jti: JWT ID]
+    end
+    
+    subgraph "Consent Claims"
+        PURPOSE[purpose: account_opening]
+        SCOPE[scope: basic_data kyc_data]
+        CUSTOMER[customer_hash: sha256_hash]
+        CONSENT_ID[consent_id: unique_id]
+        CONSENT_EXP[consent_expires: timestamp]
+    end
+    
+    subgraph "Custom Claims"
+        INSTITUTION[requesting_institution: bank_id]
+        USE_CASE[use_case: customer_onboarding]
+        DATA_RETENTION[data_retention_period: duration]
+        PROCESSING_PURPOSE[processing_purpose: specific_purpose]
+    end
+    
+    Header --> Payload
+    Payload --> Signature
+    
+    Payload --> ISS
+    Payload --> SUB
+    Payload --> AUD
+    Payload --> EXP
+    Payload --> IAT
+    Payload --> JTI
+    
+    Payload --> PURPOSE
+    Payload --> SCOPE
+    Payload --> CUSTOMER
+    Payload --> CONSENT_ID
+    Payload --> CONSENT_EXP
+    
+    Payload --> INSTITUTION
+    Payload --> USE_CASE
+    Payload --> DATA_RETENTION
+    Payload --> PROCESSING_PURPOSE
+    
+    classDef header fill:#e3f2fd
+    classDef standard fill:#f3e5f5
+    classDef consent fill:#e8f5e8  
+    classDef custom fill:#fff3e0
+    
+    class Header,Signature header
+    class ISS,SUB,AUD,EXP,IAT,JTI standard
+    class PURPOSE,SCOPE,CUSTOMER,CONSENT_ID,CONSENT_EXP consent
+    class INSTITUTION,USE_CASE,DATA_RETENTION,PROCESSING_PURPOSE custom
+```
 
 ---
 
@@ -64,6 +260,7 @@ Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Securit
 - **Compliance Monitoring:** Security Audit und Incident Response
 
 ### Security Component Architecture
+TODO: fix mermaid diagram
 
 ```
 Customer Authentication Layer
@@ -143,6 +340,8 @@ Data Producer APIs
 
 #### App-to-App Redirect Flow (UK Standard)
 **Architektur:**
+TODO: fix mermaid diagram
+
 ```
 Customer App ä Bank App ä Customer App (with consent)
 ```
@@ -161,6 +360,8 @@ Customer App ä Bank App ä Customer App (with consent)
 
 #### Browser Redirect Flow (PSD2 Standard)
 **Architektur:**
+TODO: fix mermaid diagram
+
 ```
 Customer Browser ä Authorization Server ä Customer Browser (with code)
 ```
@@ -179,6 +380,8 @@ Customer Browser ä Authorization Server ä Customer Browser (with code)
 
 #### Decoupled Flow (Brasil Model)
 **Architektur:**
+TODO: fix mermaid diagram
+
 ```
 Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 ```
@@ -375,6 +578,7 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 ### Authentication/Authorization Sequence
 
 **Complete Authentication Flow für Business Stakeholders:**
+TODO: fix broken diagrams
 
 #### Phase 1: Customer Initiation
 ```
@@ -431,9 +635,11 @@ Customer Device 1 ä Authorization + Customer Device 2 ä Consent Completion
 20. Audit event logged at all systems
 ```
 
-### Sequence Diagram für Finanzmenschen
+### Sequence Diagram aus der Perspektive der Finanzindustrie
 
-**Vereinfachte Darstellung für Business Stakeholders:**
+TODO: fix broken diagrams
+
+**Konzeptionelle Darstellung:**
 
 ```
 Customer Journey Perspective:
@@ -477,7 +683,169 @@ Customer Journey Perspective:
 
 ## Integration Patterns
 
+### Trust Network Architecture Flows
+
+#### Dezentrales (P2P) Security Model
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant BankA as Bank A (Producer)
+    participant BankB as Bank B (Integrator)
+    participant Consent as Consent Layer
+
+    Note over Customer,Consent: Direct P2P Security Flow
+    Customer->>BankB: Request account opening
+    BankB->>Customer: Request consent for data from Bank A
+    Customer->>Consent: Grant consent with specific permissions
+    
+    BankB->>BankA: Direct API call with customer consent
+    BankA->>Consent: Verify consent validity
+    Consent->>BankA: Consent valid for requested scope
+    BankA->>BankA: Apply data minimization based on consent
+    BankA->>BankB: Provide requested customer data
+    
+    BankB->>Customer: Account opened with imported data
+    
+    Note over Customer,Consent: Ongoing Consent Management
+    Consent->>Customer: Consent status notifications
+    Customer->>Consent: Modify/revoke consent as needed
+```
+
+#### Hybrid Security Model
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant BankB as Bank B (Integrator)
+    participant CentralAuth as Central Auth Hub
+    participant BankA as Bank A (Producer)
+    participant PolicyEngine as Policy Engine
+
+    Note over Customer,PolicyEngine: Hybrid: Central Auth + Distributed Data
+    Customer->>BankB: Initiate service request
+    BankB->>CentralAuth: Request authorization
+    CentralAuth->>Customer: Authenticate & consent request
+    Customer->>CentralAuth: Grant consent
+    
+    CentralAuth->>PolicyEngine: Apply governance policies
+    PolicyEngine->>CentralAuth: Validate compliance & scope
+    CentralAuth->>BankB: Issue access token with consent scope
+    
+    BankB->>BankA: Direct data request with central token
+    BankA->>CentralAuth: Validate token & consent
+    CentralAuth->>BankA: Token valid, scope approved
+    BankA->>BankB: Provide data within approved scope
+    
+    BankB->>Customer: Service delivered
+    CentralAuth->>CentralAuth: Log all transactions for audit
+```
+
+#### Zentrales Hub Security Model
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant BankB as Bank B (Integrator)
+    participant CentralHub as Central Security Hub
+    participant BankA as Bank A (Producer)
+    participant Audit as Audit & Compliance
+
+    Note over Customer,Audit: Centralized Hub with Full Control
+    Customer->>BankB: Request service
+    BankB->>CentralHub: Submit data request
+    CentralHub->>Customer: Present unified consent interface
+    Customer->>CentralHub: Provide consent with granular permissions
+    
+    CentralHub->>BankA: Authenticated data request
+    BankA->>CentralHub: Provide data to hub
+    CentralHub->>CentralHub: Apply policy & compliance checks
+    CentralHub->>Audit: Log data processing activity
+    
+    CentralHub->>BankB: Deliver processed data
+    BankB->>Customer: Service completed
+    
+    Note over Customer,Audit: Centralized Oversight
+    CentralHub->>Customer: Consent management dashboard
+    CentralHub->>Audit: Comprehensive audit trail
+```
+
+### Consent Lifecycle Management
+
+```mermaid
+stateDiagram-v2
+    [*] --> ConsentRequested: Customer service request
+    
+    ConsentRequested --> ConsentPresented: Show consent form
+    ConsentPresented --> ConsentGranted: Customer accepts
+    ConsentPresented --> ConsentRejected: Customer rejects
+    
+    ConsentGranted --> ConsentActive: Consent validated & active
+    ConsentRejected --> [*]: Process terminated
+    
+    ConsentActive --> DataAccess: Provider uses consent
+    DataAccess --> ConsentActive: Ongoing data access
+    
+    ConsentActive --> ConsentModified: Customer modifies scope
+    ConsentModified --> ConsentActive: Updated consent active
+    
+    ConsentActive --> ConsentExpiring: Approaching expiry
+    ConsentExpiring --> ConsentRenewed: Customer renews
+    ConsentExpiring --> ConsentExpired: Automatic expiry
+    ConsentRenewed --> ConsentActive: Renewed consent active
+    
+    ConsentActive --> ConsentRevoked: Customer revokes
+    ConsentExpired --> ConsentArchived: Archive expired consent
+    ConsentRevoked --> ConsentArchived: Archive revoked consent
+    
+    ConsentArchived --> [*]: End of lifecycle
+    
+    DataAccess --> AuditLog: Log every access
+    ConsentModified --> AuditLog: Log modifications
+    ConsentRevoked --> AuditLog: Log revocation
+    ConsentExpired --> AuditLog: Log expiry
+    
+    AuditLog --> ComplianceReport: Generate reports
+```
+
+### Cross-Industry Consent Flow
+
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant MobilityApp as Mobility Service
+    participant InsuranceCo as Insurance Provider
+    participant Bank as Bank
+    participant ConsentHub as Consent Management Hub
+    
+    Note over Customer,ConsentHub: Cross-Industry Data Sharing
+    Customer->>MobilityApp: Request car lease + insurance package
+    MobilityApp->>ConsentHub: Request multi-provider consent
+    
+    ConsentHub->>Customer: Present unified consent form
+    Note over Customer: Granular permissions:<br/>- Bank: Income verification<br/>- Insurance: Risk assessment<br/>- Mobility: Credit check
+    
+    Customer->>ConsentHub: Grant specific permissions
+    ConsentHub->>ConsentHub: Distribute consent tokens
+    
+    par Bank Data Access
+        ConsentHub->>Bank: Request income data with token
+        Bank->>ConsentHub: Provide verified income data
+    and Insurance Data Access  
+        ConsentHub->>InsuranceCo: Request risk profile with token
+        InsuranceCo->>ConsentHub: Provide risk assessment
+    end
+    
+    ConsentHub->>MobilityApp: Deliver aggregated data
+    MobilityApp->>Customer: Personalized lease + insurance offer
+    
+    Note over Customer,ConsentHub: Ongoing Management
+    ConsentHub->>Customer: Monthly consent status report
+    Customer->>ConsentHub: Modify/revoke specific permissions
+```
+
 ### Multi-Provider Integration Pattern
+TODO: fix broken diagrams
 
 **Hub-and-Spoke Integration:**
 ```
@@ -589,6 +957,7 @@ Mobile App ä System Browser (ASWebAuthenticationSession) ä Auth Server ä Mobi
 ---
 
 ## Fazit und Roadmap
+*TODO: verifizieren!*
 
 ### Strategic Security Architecture Benefits
 
