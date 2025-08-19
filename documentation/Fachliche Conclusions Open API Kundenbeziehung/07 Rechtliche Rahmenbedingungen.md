@@ -67,7 +67,7 @@ Stichpunkt 1 löschen
 ---
 
 ## Identifizierte rechtliche Kernfragestellungen 
-**Basierend auf den durchgeführten Workshops und dem Austausch mit Fachexperten wurden über 15 kritische rechtliche Fragestellungen identifiziert, die eine qualifizierte juristische Klärung erfordern. Die Abklärung dieser Fragen erfolgte im Rahmen des Workshop-Formates gemeinsam mit internen Legal-Experten der Projektteilnehmenden und wurde in Phase 1 initial beantwortet. Nachfolgend findet sich ein Auszug der diskutierten Fragestellungen sowie die Antworten auf vier konkrete Schlüsselfragen.**
+Basierend auf den durchgeführten Workshops und dem Austausch mit Fachexperten wurden über 15 kritische rechtliche Fragestellungen identifiziert, die eine qualifizierte juristische Klärung erfordern. Die Abklärung dieser Fragen erfolgte im Rahmen des Workshop-Formates gemeinsam mit internen Legal-Experten der Projektteilnehmenden und wurde in Phase 1 initial beantwortet. Nachfolgend findet sich ein Auszug der diskutierten Fragestellungen sowie die Antworten auf vier konkrete Schlüsselfragen.
 
 | Kategorie         | Thema                            | Fragestellung                                                                                                                                                                                                           |
 | ----------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
