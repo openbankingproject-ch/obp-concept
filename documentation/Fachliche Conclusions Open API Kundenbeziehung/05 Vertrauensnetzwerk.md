@@ -4,7 +4,7 @@
 
 1. [Executive Summary](#executive-summary)
 2. [Konzeptionelle Ausarbeitung - Definition und Scope](#konzeptionelle-ausarbeitung---definition-und-scope)
-3. [Detaillierte übersicht der 3 Architektur-Modelle](#detaillierte-übersicht-der-3-architektur-modelle)
+3. [Detaillierte Übersicht der 3 Architektur-Modelle](#detaillierte-übersicht-der-3-architektur-modelle)
 4. [Technische Rollen Definition und Matrix](#technische-rollen-definition-und-matrix)
 5. [Governance-Infrastruktur](#governance-infrastruktur)
 6. [Existierende Beispiele und Best Practices](#existierende-beispiele-und-best-practices)
@@ -18,172 +18,120 @@ Das Vertrauensnetzwerk für die Open API Kundenbeziehung definiert eine föderie
 
 **Zentrale Erkenntnisse:**
 - Hybrid-Architektur kombiniert Vorteile von dezentraler und zentraler Organisation
-- Skalierbare Evolution: Start dezentral ä Entwicklung zu hybrid ä optional zentral
+- Skalierbare Evolution: Start dezentral → Entwicklung zu hybrid → optional zentral
 - Multi-Stakeholder Governance-Framework ermöglicht koordinierte Marktentwicklung
 - Technische Rollen-Matrix unterstützt flexible Teilnehmer-Integration
 
 ---
 
 ## Architektur-Modelle Übersicht
+*TODO: Bilder einfügen*
 
 ### Modell 1: Dezentrale Architektur (Peer-to-Peer)
 
-```mermaid
-graph TB
-    subgraph "Dezentrale P2P Architektur"
-        A[Bank A<br/>Producer]
-        B[Bank B<br/>Integrator] 
-        C[FinTech C<br/>Producer/Integrator]
-        D[InsurTech D<br/>Integrator]
-        E[Mobility E<br/>Producer]
-        F[Retail F<br/>Integrator]
-    end
-    
-    A <==> B
-    A <==> C
-    A <==> D
-    A <==> E
-    B <==> C
-    B <==> D
-    B <==> F
-    C <==> D
-    C <==> E
-    C <==> F
-    D <==> E
-    D <==> F
-    E <==> F
-    
-    classDef bank fill:#e3f2fd
-    classDef fintech fill:#f3e5f5
-    classDef insurance fill:#e8f5e8
-    classDef mobility fill:#fff3e0
-    classDef retail fill:#fce4ec
-    
-    class A,B bank
-    class C fintech
-    class D insurance  
-    class E mobility
-    class F retail
-```
+**Konzeptionelle Architektur-Darstellung:**
+
+Die dezentrale P2P-Architektur organisiert sich als vollständig vernetztes System ohne zentrale Koordinationsinstanz. Alle Teilnehmer sind gleichberechtigt und kommunizieren direkt miteinander:
+
+- **Banken** (A, B): Agieren sowohl als Datenproducer als auch Integrator
+- **FinTech** (C): Hybride Rolle als Producer und Integrator  
+- **InsurTech** (D): Primär Integrator-Funktion
+- **Mobility Provider** (E): Fokus auf Datenproduction
+- **Retail Provider** (F): Primär Integrator-Funktion
+
+**Verbindungsstruktur:** Jeder Teilnehmer unterhält direkte bilaterale Verbindungen zu allen anderen Teilnehmern, was zu einem vollständig vermaschten Netzwerk mit n*(n-1)/2 Verbindungen führt.
 
 **Charakteristika:**
-- ✅ Maximale Autonomie für jeden Teilnehmer
-- ✅ Keine Single Points of Failure
-- ❌ Exponentiell steigende Integrationskosten (n²)
-- ❌ Fragmentierte Standards ohne Koordination
+*TODO: als Tabelle darstellen*
+
+- **Vorteil:** Maximale Autonomie für jeden Teilnehmer
+- **Vorteil:** Keine Single Points of Failure
+- **Nachteil:** Exponentiell steigende Integrationskosten (n²)
+- **Nachteil:** Fragmentierte Standards ohne Koordination
 
 ### Modell 2: Hybrid-Architektur (Präferierte Lösung)
 
-```mermaid
-graph TB
-    subgraph "Zentrale Koordination"
-        Standards[Standards Body<br/>& Registry]
-        Gov[Multi-Stakeholder<br/>Governance]
-        Cert[Certification<br/>Authority]
-    end
-    
-    subgraph "Dezentrale Teilnehmer"
-        A[Bank A<br/>Producer]
-        B[Bank B<br/>Integrator]
-        C[FinTech C<br/>Producer/Integrator] 
-        D[InsurTech D<br/>Integrator]
-        E[Mobility E<br/>Producer]
-        F[Retail F<br/>Integrator]
-    end
-    
-    Standards -.-> A
-    Standards -.-> B
-    Standards -.-> C
-    Standards -.-> D
-    Standards -.-> E
-    Standards -.-> F
-    
-    Gov -.-> Standards
-    Cert -.-> Standards
-    
-    A <==> B
-    A <==> C
-    B <==> D
-    C <==> E
-    D <==> F
-    E <==> A
-    F <==> B
-    
-    classDef central fill:#ffeb3b,stroke:#f57f17,stroke-width:3px
-    classDef bank fill:#e3f2fd
-    classDef fintech fill:#f3e5f5
-    classDef insurance fill:#e8f5e8
-    classDef mobility fill:#fff3e0
-    classDef retail fill:#fce4ec
-    
-    class Standards,Gov,Cert central
-    class A,B bank
-    class C fintech
-    class D insurance
-    class E mobility
-    class F retail
-```
+**Konzeptionelle Architektur-Darstellung:**
+
+Die Hybrid-Architektur kombiniert zentrale Koordination mit dezentraler Ausführung in einem zweischichtigen Modell:
+
+**Zentrale Koordinationsebene:**
+- **Standards Body & Registry**: Entwickelt und verwaltet API-Standards sowie Teilnehmer-Registry
+- **Multi-Stakeholder Governance**: Koordiniert Entscheidungsfindung zwischen verschiedenen Interessensgruppen
+- **Certification Authority**: Stellt Zertifizierungsservices und Compliance-Überwachung bereit
+
+**Dezentrale Teilnehmerebene:**
+Die gleichen Akteure wie im P2P-Modell (Banken, FinTech, InsurTech, Mobility, Retail) operieren autonom, jedoch nach einheitlichen Standards.
+
+**Interaktionsmodell:**
+- Zentrale Instanzen liefern Standards und Richtlinien an alle Teilnehmer
+- Teilnehmer kommunizieren direkt miteinander, aber nach standardisierten Protokollen
+- Weniger Verbindungen als P2P erforderlich, da Standards die Integration vereinfachen
 
 **Charakteristika:**
-- ✅ Zentrale Standards mit dezentraler Ausführung
-- ✅ Multi-Stakeholder Governance  
-- ✅ Skalierbare Koordination
-- ✅ Balance zwischen Autonomie und Standards
+*TODO: als Tabelle darstellen*
+
+- **Vorteil:** Zentrale Standards mit dezentraler Ausführung
+- **Vorteil:** Multi-Stakeholder Governance  
+- **Vorteil:** Skalierbare Koordination
+- **Vorteil:** Balance zwischen Autonomie und Standards
 
 ### Modell 3: Zentrale Hub-Architektur
 
-```mermaid
-graph TB
-    subgraph "Zentraler Hub"
-        Hub[Central Trust Hub]
-        Data[Centralized<br/>Data Store]
-        Policy[Policy<br/>Engine]
-        Audit[Audit &<br/>Compliance]
-        Gateway[API Gateway]
-    end
-    
-    subgraph "Angeschlossene Teilnehmer" 
-        A[Bank A]
-        B[Bank B]
-        C[FinTech C]
-        D[InsurTech D]
-        E[Mobility E]
-        F[Retail F]
-    end
-    
-    Hub --> Data
-    Hub --> Policy
-    Hub --> Audit
-    Hub --> Gateway
-    
-    A --> Gateway
-    B --> Gateway
-    C --> Gateway
-    D --> Gateway
-    E --> Gateway
-    F --> Gateway
-    
-    Gateway -.-> A
-    Gateway -.-> B
-    Gateway -.-> C
-    Gateway -.-> D
-    Gateway -.-> E
-    Gateway -.-> F
-    
-    classDef hub fill:#ff5722,stroke:#bf360c,stroke-width:3px
-    classDef participants fill:#e0e0e0
-    
-    class Hub,Data,Policy,Audit,Gateway hub
-    class A,B,C,D,E,F participants
-```
+**Konzeptionelle Architektur-Darstellung:**
+
+Die zentrale Hub-Architektur organisiert sich als Stern-Topologie mit einem zentralen Knotenpunkt, der alle Funktionalitäten und Datenflüsse koordiniert:
+
+**Zentraler Hub-Komplex:**
+- **Central Trust Hub**: Kernsystem für alle Netzwerkoperationen
+- **Centralized Data Store**: Zentrale Datenhaltung aller Teilnehmerinformationen
+- **Policy Engine**: Regelwerk-Management und Compliance-Enforcement
+- **Audit & Compliance**: Zentrale Überwachung und Berichterstattung
+- **API Gateway**: Einheitlicher Zugangspoint für alle externen Verbindungen
+
+**Angeschlossene Teilnehmer:**
+Alle Akteure (Banken A-B, FinTech C, InsurTech D, Mobility E, Retail F) sind ausschliesslich über den zentralen Hub verbunden.
+
+**Kommunikationsmodell:**
+- Alle Teilnehmer kommunizieren ausschliesslich über das API Gateway
+- Keine direkten Peer-to-Peer-Verbindungen zwischen Teilnehmern
+- Hub verarbeitet, validiert und leitet alle Datenanfragen weiter
+- Zentrale Kontrolle und Überwachung aller Transaktionen
 
 **Charakteristika:**
-- ✅ Maximale Standardisierung und Kontrolle
-- ✅ Zentrale Compliance und Audit
-- ❌ Single Point of Failure Risiko
-- ❌ Abhängigkeit von zentraler Organisation
+*TODO: als Tabelle darstellen*
+
+- **Vorteil:** Maximale Standardisierung und Kontrolle
+- **Vorteil:** Zentrale Compliance und Audit
+- **Nachteil:** Single Point of Failure Risiko
+- **Nachteil:** Abhängigkeit von zentraler Organisation
 
 ### Evolution Path: Skalierbare Architektur-Entwicklung
+
+**Konzeptionelle Entwicklungspfade:**
+
+Die Architektur-Evolution folgt einem systematischen Pfad mit definierten Entscheidungspunkten:
+
+**Phase 1: Dezentrale P2P-Pilotprojekte**
+- Ausgangspunkt für schnellen Go-Live
+- Bilaterale Vereinbarungen zwischen wenigen Teilnehmern
+- Minimale Koordinationsanforderungen
+
+**Entscheidungspunkt 1: Standards harmonisieren?**
+- **Option A (Ja)**: Evolution zur Hybrid-Architektur mit zentralen Standards aber dezentraler Datenhoheit
+- **Option B (Nein)**: Verbleib im P2P-Modell mit individuellen Lösungen
+
+**Phase 2: Hybrid-Architektur (bei Standards-Harmonisierung)**
+- Zentrale Standards-Entwicklung bei dezentraler Ausführung
+- Multi-Stakeholder-Governance etablieren
+- Skalierbare Teilnehmer-Integration
+
+**Entscheidungspunkt 2: Vollständige Zentralisierung?**
+- **Option A (Ja)**: Evolution zum zentralen Hub mit maximaler Kontrolle und Single Authority
+- **Option B (Nein)**: Verbleib in der bewährten Hybrid-Struktur
+
+**Zielzustand: Mature Ecosystem**
+Sowohl Hybrid- als auch zentrale Modelle können zu einem ausgereiften Ecosystem führen, je nach Marktanforderungen und Stakeholder-Präferenzen.
 
 ```mermaid
 flowchart LR
@@ -264,17 +212,19 @@ flowchart LR
 
 ---
 
-## Detaillierte übersicht der 3 Architektur-Modelle
+## Detaillierte Übersicht der 3 Architektur-Modelle
 
 ### Modell 1: Dezentrale Architektur (Peer-to-Peer)
 
 #### Architektur-Charakteristika
 **Struktur:** Direkte bilaterale Verbindungen zwischen allen Teilnehmern
+TODO: fix mermaid diagram!
+
 ```
-Bank A ää Bank B
-Bank A ää FinTech C
-Bank B ää FinTech C
-FinTech C ää InsurTech D
+Bank A ↔ Bank B
+Bank A ↔ FinTech C
+Bank B ↔ FinTech C
+FinTech C ↔ InsurTech D
 ```
 
 **Governance:** Keine zentrale Koordinationsinstanz, vollständig autonome Entscheidungen
@@ -297,10 +247,11 @@ FinTech C ää InsurTech D
 
 #### Architektur-Charakteristika
 **Struktur:** Zentrale Standards-Organisation mit dezentraler Datenhoheit
+TODO: fix mermaid diagram!
 ```
 Standards-Body & Registry
-        ä (Standards)
-Bank A ää Bank B ää FinTech C ää InsurTech D
+        ↓ (Standards)
+Bank A ↔ Bank B ↔ FinTech C ↔ InsurTech D
 ```
 
 **Governance:** Multi-Stakeholder Governance mit zentraler Koordination für Standards
@@ -330,6 +281,7 @@ Bank A ää Bank B ää FinTech C ää InsurTech D
 ### Modell 3: Zentrale Architektur (Hub & Spoke)
 
 #### Architektur-Charakteristika
+TODO: fix mermaid diagram!
 **Struktur:** Alle Datenflässe über zentrale Plattform
 ```
      Central Hub Platform
@@ -359,7 +311,7 @@ Bank A Bank B FinTech C InsurTech D
 **Strategische Vorteile für Schweizer Kontext:**
 1. **Kompatibilität mit Schweizer Bankentradition:** Dezentrale Datenhoheit respektiert etablierte Geschäftsmodelle
 2. **Skalierbarkeit:** Standards ermöglichen efficient onboarding neuer Teilnehmer
-3. **Innovation-Färderung:** Offene Standards schaffen level playing field für FinTechs
+3. **Innovation-Förderung:** Offene Standards schaffen level playing field für FinTechs
 4. **Regulatory Alignment:** Multi-Stakeholder Governance entspricht FINMA-Präferenzen
 5. **International Compatibility:** Hybrid-Modelle sind international bewährt (siehe UK, EU)
 
@@ -444,6 +396,22 @@ Bank A Bank B FinTech C InsurTech D
 
 #### Dezentrale P2P Datenflüsse
 
+**Konzeptioneller Datenfluss:**
+
+**Phase 1: Kundenanfrage**
+Der Kunde stellt bei Bank B eine Kontoeröffnungsanfrage. Bank B benötigt zusätzliche Daten von Bank A und fordert entsprechende Kundeneinwilligung an.
+
+**Phase 2: Direkte API-Kommunikation**
+Bank B kommuniziert direkt mit Bank A über bilaterale Sicherheitsvereinbarungen und custom API-Implementierungen. Keine zentrale Überwachung oder standardisierte Protokolle.
+
+**Phase 3: Datenverarbeitung**
+Bank A validiert die Kundeneinwilligung eigenständig, bereitet die Daten auf und übermittelt sie direkt an Bank B.
+
+**Phase 4: Serviceerbringung**
+Bank B vervollständigt die Kontoeröffnung mit den erhaltenen Daten.
+
+**Charakteristikum:** Vollständig bilaterale Compliance ohne zentrale Oversight-Instanz.
+
 ```mermaid
 sequenceDiagram
     participant Customer as Customer
@@ -465,6 +433,28 @@ sequenceDiagram
 ```
 
 #### Hybrid-Architektur Datenflüsse
+
+**Konzeptioneller Datenfluss:**
+
+**Phase 1: Service Discovery**
+Der Kunde stellt eine Serviceanfrage bei Bank B. Bank B nutzt die zentrale Participant Registry zur Ermittlung der standardisierten API-Endpoints von Bank A.
+
+**Phase 2: Standardisierte Einwilligungsverfahren**
+Bank B präsentiert dem Kunden standardisierte Einwilligungsformulare gemäss zentralen Vorgaben des Standards Body.
+
+**Phase 3: Zertifizierte API-Kommunikation**
+Bank B kommuniziert mit Bank A über standardisierte FAPI 2.0-Protokolle. Beide Implementierungen sind zertifiziert und folgen einheitlichen API-Verträgen.
+
+**Phase 4: Zentrale Validierung**
+Bank A validiert die Einwilligungsformate über das zentrale Standards Body und erhält Bestätigung der Gültigkeit.
+
+**Phase 5: Koordinierte Datenübertragung**
+Datenübertragung in standardisierten Formaten mit automatischem Logging in zentrale Audit-Systeme durch beide Parteien.
+
+**Phase 6: Serviceerbringung**
+Bank B erbringt den Service unter Verwendung der standardisiert übertragenen Daten.
+
+**Charakteristikum:** Zentrale Standards mit dezentraler Datenhoheit und koordinierter Compliance-Überwachung.
 
 ```mermaid
 sequenceDiagram
@@ -497,6 +487,31 @@ sequenceDiagram
 ```
 
 #### Zentrale Hub Datenflüsse
+
+**Konzeptioneller Datenfluss:**
+
+**Phase 1: Serviceinitiierung**
+Der Kunde stellt eine Serviceanfrage bei Bank B. Bank B leitet alle Datenanfragen an den Central Trust Hub weiter.
+
+**Phase 2: Zentrale Einwilligungsverwaltung**
+Der Hub präsentiert dem Kunden ein einheitliches Consent-Interface für alle beteiligten Parteien und verwaltet die Einwilligung zentral.
+
+**Phase 3: Policy-basierte Validierung**
+Der Hub validiert alle Anfragen gegen die zentrale Policy Engine und erhält Genehmigung für weitere Verarbeitung.
+
+**Phase 4: Koordinierte Datensammlung**
+Der Hub fordert Kundendaten von Bank A an. Bank A speichert die Daten im zentralen Data Store, von wo sie dem Hub zur Verfügung gestellt werden.
+
+**Phase 5: Zentrale Datenverarbeitung**
+Die Policy Engine wendet Datenverarbeitungsregeln an und bereitet die Daten gemäss zentralen Vorgaben auf.
+
+**Phase 6: Koordinierte Serviceerbringung**
+Der Hub liefert die verarbeiteten Daten an Bank B, die den Service für den Kunden vervollständigt.
+
+**Phase 7: Comprehensive Audit**
+Der Hub führt umfassende Audit-Protokollierung aller Transaktionen und Datenflüsse durch.
+
+**Charakteristikum:** Vollständige zentrale Kontrolle aller Datenflüsse und Entscheidungsprozesse.
 
 ```mermaid
 sequenceDiagram
@@ -531,6 +546,29 @@ sequenceDiagram
 ### Governance-Flow Diagramme
 
 #### Multi-Stakeholder Governance (Hybrid Model)
+
+**Konzeptionelle Governance-Struktur:**
+
+**Governance-Hierarchie:**
+- **Governance Board**: Zentrale Multi-Stakeholder-Instanz für strategische Entscheidungen
+- **Standards Committee**: Technische Standardentwicklung und -wartung
+- **Compliance Committee**: Regulatorische Konformität und Risikomanagement  
+- **Technical Committee**: Implementierungsrichtlinien und Best Practices
+
+**Stakeholder-Gewichtung:**
+- **Large Banks**: 30% Stimmgewicht (Systemrelevanz und Marktanteil)
+- **FinTech Companies**: 25% Stimmgewicht (Innovation und Agilität)
+- **Insurance Companies**: 20% Stimmgewicht (Branchendiversität)
+- **Other Financial Services**: 15% Stimmgewicht (Ecosystem-Vollständigkeit)
+- **Technology Providers**: 10% Stimmgewicht (Technische Expertise)
+
+**Entscheidungsfluss:**
+1. **Standards Proposal**: Einreichung neuer Standards-Vorschläge durch Committees
+2. **Committee Review**: Fachliche Prüfung durch relevante Committee-Strukturen
+3. **Weighted Voting**: Gewichtete Abstimmung im Governance Board
+4. **Implementation**: Koordinierte Umsetzung über alle Stakeholder-Gruppen
+
+**Partizipationsmodell:** Alle Stakeholder-Gruppen entsenden Vertreter in das Governance Board, das wiederum die fachspezifischen Committees koordiniert.
 
 ```mermaid
 graph TB
@@ -645,13 +683,13 @@ graph TB
 - Risk Assessment und Mitigation
 - Regulatory Liaison und Reporting
 
-### Fäderative Anforderungen
+### Föderative Anforderungen
 
 #### Multi-Stakeholder Decision Making
 **Voting Structure:** Weighted Voting basierend auf:
-- Market Share (30%): Beräcksichtigung der Systemrelevanz
+- Market Share (30%): Berücksichtigung der Systemrelevanz
 - Stakeholder Category (40%): Equal representation verschiedener Kategorien
-- Technical Contribution (30%): Beräcksichtigung der technischen Beiträge
+- Technical Contribution (30%): Berücksichtigung der technischen Beiträge
 
 **Consensus Building:**
 - 2/3 Majority für Standards Changes
@@ -687,99 +725,8 @@ graph TB
 ---
 
 ## Existierende Beispiele und Best Practices
+*TODO: War ursprünglich angedacht, zusätzlich zur Marktanalyse hier spezifisch auf bestehende Vertrauensnetzwerke einzugehen, kann ich noch machen aber ist eine Frage der Priorität.*
 
-### Internationale Referenz-Implementationen
-
-#### UK Open Banking Implementation Entity (OBIE)
-**Architektur-Modell:** Hybrid (Standards + Dezentrale Implementation)
-
-**Governance Structure:**
-- Implementation Entity als Standards-Organisation
-- Industry Stakeholder Groups für verschiedene Kategorien
-- Regulatory Oversight durch Competition and Markets Authority (CMA)
-
-**Lessons Learned:**
-- Starke regulatorische Unterstätzung essential für Adoption
-- Comprehensive Testing und Sandbox kritisch für Success
-- Industry Engagement benötigt kontinuierliche Facilitation
-
-**übertragbarkeit auf Schweiz:**
-- Multi-Stakeholder Governance-Modell adaptierbar
-- Standards-first Approach bewährt
-- Regulatory Support durch FINMA erforderlich
-
-#### Berlin Group NextGenPSD2
-**Architektur-Modell:** Dezentral mit Industry Coordination
-
-**Governance Structure:**
-- Industry-led Working Groups
-- Consensus-based Standards Development
-- Voluntary Adoption mit Market-driven Implementation
-
-**Lessons Learned:**
-- Industry-led Standards können hohe Quality erreichen
-- Voluntary Adoption führt zu fragmentierter Implementation
-- Clear Governance Rules essential für productive Collaboration
-
-**übertragbarkeit auf Schweiz:**
-- Technical Standards-Entwicklung adaptierbar
-- Governance-Mechanismen für Consensus Building relevant
-- Hybrid-Approach mit mehr Coordination würde Fragmentation reduzieren
-
-#### Australia Consumer Data Right (CDR)
-**Architektur-Modell:** Zentral mit Regulatory Enforcement
-
-**Governance Structure:**
-- Australian Competition and Consumer Commission (ACCC) als Central Authority
-- Data Standards Body für Technical Specifications
-- Mandatory Participation für Major Players
-
-**Lessons Learned:**
-- Zentrale Coordination ermöglicht rapid Rollout
-- Mandatory Approach sichert comprehensive Coverage
-- High Compliance Costs für Participants
-- Limited Innovation aufgrund rigid Standards
-
-**übertragbarkeit auf Schweiz:**
-- Zentrale Technical Standards-Entwicklung adaptierbar
-- Mandatory Approach weniger suitable für Schweizer Kontext
-- Regulatory Clarity von ACCC als Vorbild für FINMA
-
-### Schweizer Vorreiter-Initiativen
-
-#### bLink (SIX)
-**Current State:** Multi-Banking Platform mit API-Integration
-
-**Governance:** Zentrale Plattform unter SIX Betrieb
-
-**Lessons Learned:**
-- Etablierte Infrastruktur schafft Vertrauen
-- Zentrale Plattform ermöglicht schnelle Integration
-- Vendor Lock-in limitiert Flexibilität
-- Innovation Cycle abhängig von Platform Roadmap
-
-**Synergien mit OBP:**
-- Complementary Services rather than Competitive
-- bLink für Transaction Processing, OBP für Customer Data
-- Potential Integration über standardisierte APIs
-
-#### Swiss Fintech Innovation (SFTI) Initiativen
-**Current State:** Verschiedene API Standards für spezifische Use Cases
-
-**Governance:** Industry-led Working Groups
-
-**Lessons Learned:**
-- Domain-specific Standards können high Value schaffen
-- Industry Coordination essentiell für Adoption
-- Limited Scope begrenzt Network Effects
-- Integration verschiedener Standards challenging
-
-**Synergien mit OBP:**
-- SFTI Standards als Input für OBP API Design
-- Cross-referencing zwischen verschiedenen Standards
-- Joint Governance-Strukturen zur Koordination
-
----
 
 ## Fazit und Implikationen für die Schweiz
 
@@ -823,7 +770,7 @@ graph TB
 #### Operational Benefits
 - **Reduced Integration Costs:** Standardisierte APIs eliminieren custom Integrations
 - **Faster Time-to-Market:** Neue Services können rapid auf established Network aufbauen
-- **Enhanced Security:** Shared Security Standards erhähen overall Network Security
+- **Enhanced Security:** Shared Security Standards erhöhen overall Network Security
 
 ### Risiko-Mitigation Strategien
 
@@ -859,15 +806,13 @@ graph TB
 
 Das Hybrid-Vertrauensnetzwerk positioniert die Schweiz optimal für die digitale Transformation des Finanzsektors bei gleichzeitiger Wahrung der etablierten Werte von Sicherheit, Qualität und Kundenorientierung.
 
-TODO: TZE bitte verifizieren!!
-
 ---
 
 ---
 
 **Version:** 1.0  
 **Datum:** August 2025  
-**Status:** Final Draft für Stakeholder Review
+**Status:** Final Draft für Review
 
 ---
 
