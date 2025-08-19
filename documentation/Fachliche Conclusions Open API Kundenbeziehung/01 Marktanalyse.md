@@ -526,14 +526,14 @@ Eine Open API Kundenbeziehung als wirtschaftlich sinnvolle Zwischenlösung, die 
 - FINMA-Engagement für regulatorische Klarstellung
 
 #### Phase 2: Expansion (12-24 Monate)
-- Erweiterte Use Cases (Re-Identifikation, Altersverifikation)
+- Erweiterte Use Cases
 - Integration mit E-ID-Infrastruktur als Competitive Advantage
 - Community-Expansion zu Fintech-Ecosystem
 
 #### Phase 3: Scale-up (24-36 Monate)
 - Full Open Finance-Funktionalität mit Insurance und Investment
 - Payment Initiation als separate Ausbaustufe
-- Internationale Interoperabilität (EU, UK Kompatibilität)
+- Internationale Interoperabilität
 
 
 ---

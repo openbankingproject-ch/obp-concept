@@ -1,17 +1,34 @@
-DOCUMENTATION:
-careful: differentiate between technical code documentation and the professional documentation (conclusions) written from the perspective of an economics institute. Thus: professional language, no emojis or slang, no code snippets in the conclusions, everything anonymized, no exact numbers about use cases (those are classified and should not be disclosed) keep roadmaps and timelines generic.
-
 **complete professional documentation: conclusions in 8 topics**
-The conclusions should be kept on a conceptual level (except 04 API Endpoint Design) and NOT contain any code snippets. Any Implementation specifics need to be outlined conceptually in the conclusion and for each detailed/technical explanation create a new file in the folder: "documentation/Umsetzung und Implementierung" and linked in the conclusion. Also link references to other conclusions to avoid too much redundancy. 
+professional documentation (conclusions) written from the perspective of an economics institute
 
-Complete the TODOs defined here and also the ones added directly within the files. Do not change the structure (chapters, subchapters,...) of the documents without asking me first - if you think the structure needs to be changed, please discuss it with me first. (I am grateful for any criticism and suggestions for improvement, but I want to be involved in the decision making process.) Do not remove the TODOs in cursive (*TODO: ...*), they are for future verification with experts.
+**General guidelines for the conclusions:**
+- keep the structure as is, do not change the chapters and subchapters without asking me
+- complete TODOs in the files and take the section **context for each conclusion** into account
+- do not remove the TODOs in cursive (*TODO: ...*), they are for future verification with experts
+- make sure to add all sources and references to the file "Quellen und Referenzen"
 
-I will tell you which file to work on next, so please do not start working on the conclusions until I tell you to do so. This serves as a complete overview for everything that needs to be done and to give you context about the entire project.
+**General guidelines for the content:**
+- link references to other conclusions to avoid too much redundancy
+- everything should be anonymized, so that it is not possible to identify the author or the company. replace names with generic terms like "Bank X","Financial Institution Y", etc. (it should still be clear where the perspective comes from so make sure to choose the terms wisely)
+- no exact numbers about use cases, those are classified and should not be disclosed
+- keep roadmaps and timelines generic, not too many details 
+- verify added content with the original sources and the resources in the folder "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original resources" and make sure to keep the content consistent with the resources
+- if some information is not available in the resources, please use professional and reliable sources to fill the gaps, and make sure to document the sources properly
 
-**TODO for each conclusion:** keep structure as is,  complete the TODOs defined here and in the files, if needed: find additional information about each topic in the files in the folder: "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original resources" 
-[x] 01 Marktanalyse:
+**General guidelines for the language:**
+- even though the conclusions are written in german, please use "Ecosystem" instead of "Ökosystem" and "API" instead of "Schnittstelle" (this is a common term in the industry and should be used consistently)
+- no ß, use ss instead (we are swiss not german!!)
+- no emojis or slang, use professional language
+
+**Additional sources as inspiration for best practice implementations and for the structure of the documentation:**
+- https://spec.openapis.org/oas/v3.0.3.html
+- https://docs.airlock.com/iam/latest/index/1639690251538.html
+
+
+**context and TODO for each conclusion:**
+[] 01 Marktanalyse:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/01 Marktanalyse.md"
-    - change last part according to the TODOs in the file
+    - complete the TODOs in the file
 [x] 02 Anforderungen: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md"
     - complete the TODOs in the file
@@ -19,44 +36,34 @@ I will tell you which file to work on next, so please do not start working on th
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/03 Referenzprozess.md"
     - complete the TODOs in the file
     - make sure to use the exact definition of the 10 steps of the Referenzprozess as defined in the resources!
-    - no code snippets to describe data fields, only conceptual description of the data fields and their purpose (details will be in the API Endpoint Design: wherever code snippets are removed add a link to the file "documentation/Umsetzung und Implementierung/04 API Endpoint Design.md" )
 [x] 04 API-Endpoint Design:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
     - complete the TODOs in the file
     - make sure to use the exact data fields defined in the resources where applicable (1:1 mapping) and add any missing fields that are necessary for the API Endpoint Design
     - needs to be coherent with the Referenzprozess and the data fields defined there, make sure structure matches and that everything described conceptually in the Referenzprozess is then described in detail in the API Endpoint Design conclusion
-[x] 05 Vertrauensnetzwerk:
+[] 05 Vertrauensnetzwerk:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
     - complete the TODOs in the file
-[] 06 Consent und Security Flow:
+[x] 06 Consent und Security Flow:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/06 Consent und Security Flow.md"
     - complete the TODOs in the file
-    - additional resource that shows a great example of how this topic can be explained and documented: https://docs.airlock.com/iam/latest/index/1639690251538.html
     - define generic flows for our API that are applicable to any of the trust network architectures and the corresponding trust network flows
-    - fix broken mermaid diagrams
-    - fix grammar and typos (especially where ä/ö/ü have been switched up)
-    - fix wordings like "Finanzmenschen" - replace with things like "Konzeptionelle Beschreibung" oder "Economic Perspective" (shouldn't be derogatory)
-[x] 07 Rechtliche Rahmenbedingungen:
+[] 07 Rechtliche Rahmenbedingungen:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md"
     - complete the TODOs in the file
 [x] 08 Testing und Verifikation:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
     - complete the TODOs in the file
-    - no code snippets, just conceptual description of the testing and verification process
 
-for each conclusion:
-- make sure to add all sources and references to the file "Quellen und Referenzen"
-- no emojis or slang - this is a professional documentation
-- even though the conclusions are written in german, please use "Ecosystem" instead of "Ökosystem" and "API" instead of "Schnittstelle" (this is a common term in the industry and should be used consistently)
-- everything should be anonymized, so that it is not possible to identify the author or the company. replace names with generic terms like "Bank X","Financial Institution Y", etc. (it should still be clear where the perspective comes from so make sure to choose the terms wisely)
-- no exact numbers about use cases, those are classified and should not be disclosed
-- keep roadmaps and timelines generic, not too many details 
-- verify added content with the original sources and the resources in the folder "documentation/Fachliche Conclusions Open API Kundenbeziehung/Resources/original resources" and make sure to keep the content consistent with the resources
-- if some information is not available in the resources, please use professional and reliable sources to fill the gaps, and make sure to document the sources properly
-- if necessary update the file "Konklusion Open API Kundenbeziehung Overview.md" where all the final conclusions are linked and each files structure and content is outlined briefly
-- no ß, use ss instead (we are swiss not german!!)
+**TODOs concerning all conclusions:**
+[] for each conclusion seperately: evaluate structure and content, focus on coherency and no redundancy and check grammar and general language, make sure it is professional and coherent
+[] check for redundancies and coherency across all conclusions: instead of duplicate content link to relevant sections in other conclusions
+[] make sure to add all sources and references to the file "Quellen und Referenzen"
+[] update the file "Konklusion Open API Kundenbeziehung.md" that it matches the conclusions and the structure of the documentation
+[] complete the file "Navigation Documentation"
 
-also for everything use the following sources as inspiration for best practice implementations and for the structure of the documentation:
-- https://spec.openapis.org/oas/v3.0.3.html
-- https://docs.airlock.com/iam/latest/index/1639690251538.html
+**Priority list and order of task completion:**
+1. Specific changes in conclusions 01, 05 and 07
+2. first TODO concerning all conclusions: evaluate structure and content, focus on coherency and no redundancy and check grammar and general language, make sure it is professional and coherent
+3. remaining TODOs concerning all conclusions
 
