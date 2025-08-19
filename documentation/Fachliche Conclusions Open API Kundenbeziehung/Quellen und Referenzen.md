@@ -77,13 +77,6 @@
 - Swiss Fintech Innovations (SFTI) - Mortgage API Standards
 - Bundeskanzlei - "Bausteine von Datenräumen – Datenökosystem Schweiz"
 
-**Projektpartner-Stellungnahmen und Experteninterviews:**
-- Bank A - Position zu Haftung und Outsourcing
-- Bank B - Stellungnahme zu Datenschutz und Kundeneinwilligung  
-- Third-Party Service Provider F - Rechtliche Einschätzung zu Compliance-Anforderungen
-- Bank für Internationalen Zahlungsausgleich (BIZ) - Beratung zu Standards
-- Digital Platform G - Praxiserfahrungen mit FINMA-konformer API-Implementation
-
 ## Technische Referenzen und Implementation-Guides
 
 **Security und Compliance Standards:**
