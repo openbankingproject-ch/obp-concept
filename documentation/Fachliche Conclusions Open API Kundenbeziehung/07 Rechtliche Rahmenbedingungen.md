@@ -22,7 +22,7 @@ Die rechtlichen Rahmenbedingungen für die Open API Kundenbeziehung sind durch e
 - GwG-Compliance und Outsourcing-Behandlung sind komplexe, fallspezifische Themen
 - Bankkundengeheimnis und Datenschutz erfordern robuste Consent-Mechanismen
 
-**Wichtiger Disclaimer:** *Die in diesem Dokument enthaltenen Informationen und Empfehlungen stellen keine Rechtsberatung dar. Wir sind keine Fachpersonen im rechtlichen Bereich. Fär konkrete rechtliche Fragestellungen ist zwingend qualifizierte juristische Beratung einzuholen.*
+**Wichtiger Disclaimer:** *Die in diesem Dokument enthaltenen Informationen und Empfehlungen stellen keine Rechtsberatung dar. Wir sind keine Fachpersonen im rechtlichen Bereich. Für konkrete rechtliche Fragestellungen ist zwingend qualifizierte juristische Beratung einzuholen.*
 
 ---
 
@@ -71,17 +71,17 @@ Die Open API Kundenbeziehung bewegt sich im Spannungsfeld verschiedener Rechtsge
 - Integrator B bleibt verantwortlich für GwG-/DSG-Konformität
 
 **Bank B Position:**
-- Haftung für die Daten bis zum Consent des Kunden  sobald die Daten beim Empfänger sind, liegt die Verantwortung bei ihm
+- Haftung für die Daten bis zum Consent des Kunden → sobald die Daten beim Empfänger sind, liegt die Verantwortung bei ihm
 
 **Third-Party Service Provider F Position:**
-- **Ausservertragliche Haftung (Art. 41 OR):** Jede Partei kann haften  abhängig von Verschulden und Kausalität
+- **Ausservertragliche Haftung (Art. 41 OR):** Jede Partei kann haften → abhängig von Verschulden und Kausalität
 - **Empfehlung:** Zivilrechtliche Haftung besser vertraglich regeln (z.B. über Teilnahmevereinbarung, SLA)
 
 #### Zusätzliche Haftungsaspekte
 
 Das bestehende Vertragswerk zwischen Digital Platform G, FinTech Provider C und Bank B ist als Basis für die Klärung der Haftungsfrage zu eruieren.
 
-Parallel dazu sind ergänzende Sicherheitsmaänahmen zu prüfen  beispielsweise Mechanismen zur Identifikation und Verhinderung von Fake-Accounts.
+Parallel dazu sind ergänzende Sicherheitsmaßnahmen zu prüfen → beispielsweise Mechanismen zur Identifikation und Verhinderung von Fake-Accounts.
 
 ### Outsourcing und Delegation
 
@@ -95,12 +95,12 @@ Parallel dazu sind ergänzende Sicherheitsmaänahmen zu prüfen  beispielsweise
 Mit Bankidentitätscase von Bank B zu Kunden im Namen und auf Rechnung klären.
 
 **Bank A Position:**
-- **Fall 1:** Bank B verlässt sich auf die von Bank A durchgeführte Identifikation. Bank B nutzt die Daten, übernimmt aber selbst die Verantwortung. ä **Kein Outsourcing** (sondern reiner Datenempfang).
-  - Bank B nutzt die Daten im Reliance-Modell". Bank A wird nicht im Auftrag von Bank B tätig. Vertraglich zwischen den beiden Banken regeln, aber ohne Delegation der Funktion.
+- **Fall 1:** Bank B verlässt sich auf die von Bank A durchgeführte Identifikation. Bank B nutzt die Daten, übernimmt aber selbst die Verantwortung. → **Kein Outsourcing** (sondern reiner Datenempfang).
+  - Bank B nutzt die Daten im "Reliance-Modell". Bank A wird nicht im Auftrag von Bank B tätig. Vertraglich zwischen den beiden Banken regeln, aber ohne Delegation der Funktion.
 
-- **Fall 2:** Bank B beauftragt Bank A explizit mit der Identifikation von Kunden im Namen der Bank B. ä **Outsourcing.** Bank A wird als Dienstleister tätig. Bank B delegiert eine bankrechtlich wesentliche Funktion.
+- **Fall 2:** Bank B beauftragt Bank A explizit mit der Identifikation von Kunden im Namen der Bank B. → **Outsourcing.** Bank A wird als Dienstleister tätig. Bank B delegiert eine bankrechtlich wesentliche Funktion.
 
-- **Fall 3:** Bank B nutzt einen KYC-Dienstleister (z.B. Identity Service Provider E, Third-Party Service Provider F, Telecommunications Provider D), der Kunden im Namen der Bank identifiziert. ä **Outsourcing** (gilt auch bei Drittanbietern).
+- **Fall 3:** Bank B nutzt einen KYC-Dienstleister (z.B. Identity Service Provider E, Third-Party Service Provider F, Telecommunications Provider D), der Kunden im Namen der Bank identifiziert. → **Outsourcing** (gilt auch bei Drittanbietern).
   
   Wenn sich die Bank für ein Outsourcing entscheidet:
   - Vertrag über die Auslagerung abschließen (inkl. Weisungsrecht, Kontrollrechte etc.)
@@ -126,7 +126,7 @@ Heikel ist hier das in Art. 28 GwV-FINMA angelegte Verbot einer Weiterdelegation
 #### Experteneinschätzung
 
 **Bank A Position:**
-Annahme: Die herausgegebenen Datensätze werden „as is" übergeben. Allfällige weitere Prüfungen erfolgen durch den Integrator.
+Annahme: Die herausgegebenen Datensätze werden "as is" übergeben. Allfällige weitere Prüfungen erfolgen durch den Integrator.
 
 Warum werden keine Effizienzgewinne erzielt? Die Identifikation wurde ja durchgeführt. Ergänzungen auf Grund Risikoapproach sind Zusatzaufwände des Integrators. Prüfen mit Yuh Case.
 
@@ -138,7 +138,7 @@ Datenprüfung: Aktuell rechtlich wohl nicht konkret definiert. Eine Stellungnahm
 **Third-Party Service Provider F Position:**
 Zur Beantwortung dieser Frage benötigt es mehr Angaben zu den Datensätzen und ihrer Anwendung. Sicher sind Themen wie Datenschutz und Berufsgeheimnisse, allenfalls auch Geschäftsgeheimnisse zu beachten und gebührend zu berücksichtigen.
 
-Fär die Struktur der Datensätze könnten die folgenden allgemeinen Grundsätze definiert werden:
+Für die Struktur der Datensätze könnten die folgenden allgemeinen Grundsätze definiert werden:
 
 "Datenprodukte bündeln Ressourcen (z.B. Datensätze, Datensammlungen oder Datendienste) und bringen diese in eine nutzbare Form. Sie beinhalten neben der Datenressource selbst weitere relevante Informationen wie Nutzungsrichtlinien, Vertragsbedingungen, Preise, etc. Sie sind einfach zu nutzende Einheiten, die einzeln oder mit anderen Datenprodukten verwendet und kombiniert werden, um Anwendungsfälle zu realisieren. Datenprodukte werden von Datenanbietenden oder Datenvermittelnden bereitgestellt. Ein gutes Datenproduktmanagement ermöglicht die Wiederverwendung von einzelnen Datenprodukten und kreiert Netzwerkeffekte" (Bundeskanzlei, Bausteine von Datenräumen Datenäkosystem Schweiz, Ziffer 3.2.3)
 
@@ -279,7 +279,7 @@ Die ursprünglich identifizierten Fragestellungen bleiben ebenfalls relevant:
 - API-Responses enthalten nur für den Zweck erforderliche Daten
 - Purpose-based Access Control auf API-Ebene
 - Automatische Datenanonymisierung wo möglich
-- Regelmääige Datenbereinigung nach Zweckwegfall
+- Regelmäßige Datenbereinigung nach Zweckwegfall
 
 **Rechtliche Grundlage:** DSG Art. 4 (Datenbearbeitungsgrundsätze)
 
@@ -360,7 +360,7 @@ Die ursprünglich identifizierten Fragestellungen bleiben ebenfalls relevant:
 #### Empfohlene Vertragsstrukturen
 
 **1. API Provider (Data Producer) Responsibilities:**
-- Datenqualität zum Zeitpunkt der übertragung
+- Datenqualität zum Zeitpunkt der Übertragung
 - Consent-Validierung vor Datenpreisgabe  
 - Security Standards Compliance
 - Timely Notification bei Data Breaches
