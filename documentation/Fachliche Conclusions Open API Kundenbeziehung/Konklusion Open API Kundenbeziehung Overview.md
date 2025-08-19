@@ -166,8 +166,8 @@ Diese Übersicht bietet eine strukturierte Navigation durch alle Fachlichen Conc
 
 **Struktur-Brief:**
 - Schweizer Finanzmarkt-Kontext und regulatorische Ausgangslage
-- Identifizierte Kernfragestellungen mit Expertenstellungnahmen (HBL, PostFinance, Intrum)
-- Offene Fragestellungen für weitere rechtliche Klärung
+- Identifizierte Kernfragestellungen mit Expertenstellungnahmen (anonymisiert)
+- 20+ offene Fragestellungen für weitere rechtliche Klärung
 - Compliance-Framework Vorschlag für API-Design
 - Risikomanagement und Haftungsverteilungs-Framework
 
@@ -309,6 +309,19 @@ graph TD
 - Market Response und Competitive Developments
 
 Diese Overview bietet eine zentrale Navigation durch die gesamte Conclusion-Sammlung und unterstützt verschiedene Stakeholder-Gruppen bei der effizienten Nutzung der dokumentierten Erkenntnisse und Empfehlungen.
+
+---
+
+## Quellen und Referenzen
+
+Umfassende Quellensammlung für alle Conclusions verfügbar in: **[Quellen und Referenzen](./Quellen%20und%20Referenzen.md)**
+
+**Zentrale Quellen:**
+- Open Banking Project Gesamtunterlage (Workshop-basierte Projektdokumentation)
+- FAPI 2.0 Security Profile und OpenID Connect Standards
+- FINMA-Rundschreiben und Schweizer Regulatorische Frameworks
+- Internationale Open Banking Standards (UK OBIE, Berlin Group, Australia CDR)
+- Industry Best Practices und Academic Research
 
 ---
 
