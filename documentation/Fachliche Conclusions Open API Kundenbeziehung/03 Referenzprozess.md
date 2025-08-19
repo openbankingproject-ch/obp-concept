@@ -68,67 +68,6 @@ Der Referenzprozess gliedert sich in vier thematische Phasen mit je 2-3 Einzelst
 
 Der lineare Ablauf ermöglicht eine systematische Datenerfassung mit integrierten Qualitäts- und Compliance-Checkpoints.
 
-### Detaillierter Prozessflow mit Akteuren
-
-**Konzeptionelle Akteur-Interaktionen:**
-
-**Beteiligte Akteure:**
-- **Kunde:** Initiiert Prozess und stellt Daten bereit
-- **Bank/Anbieter:** Koordiniert Onboarding und sammelt Daten
-- **Open API System:** Vermittelt Datenabfragen zwischen Anbietern
-- **KYC Services:** Führt regulatorische Compliance-Checks durch
-- **Identity Provider:** Verifiziert Kundenidentität professionell
-
-
-```mermaid
-sequenceDiagram
-    participant K as Kunde
-    participant B as Bank/Anbieter
-    participant API as Open API System
-    participant KYC as KYC Services
-    participant ID as Identity Provider
-
-    Note over K,ID: Phase 1: Initialisierung & Produktauswahl
-    K->>B: 1. Initialisierung - Service Discovery
-    B->>K: Verfügbare Services anzeigen
-    K->>B: 2. Produktauswahl - Gewünschte Services
-    B->>K: Produktkonfiguration bestätigt
-    
-    Note over K,ID: Phase 2: Datenerfassung
-    K->>B: 3. Selbstdeklaration - FATCA/MIFID
-    K->>B: 4. Basisdaten - Kontaktinformationen
-    K->>B: 5. Erweiterte Daten - Risikoprofil
-    
-    Note over K,ID: Phase 3: Verifikation & Compliance
-    B->>API: 6. Identifikation über Open API
-    API->>ID: Identity Verification Request
-    ID->>API: Identity Verified
-    API->>B: Verified Identity Data
-    
-    B->>KYC: 7. Background Checks - KYC Prozess
-    KYC->>B: KYC Assessment Complete
-    
-    Note over K,ID: Phase 4: Vertragsabschluss
-    B->>K: 8. Vertragsabschluss - AGB präsentieren  
-    K->>B: AGB akzeptiert
-    B->>K: 9. Signatur - Vertrag signieren
-    K->>B: Digitale Signatur erteilt
-    B->>B: 10. Metadaten/Verteilung - Verarbeitung
-    B->>K: ✅ Onboarding abgeschlossen
-```
-
-**Interaktionsablauf:**
-
-**Phase 1:** Kunde entdeckt Services beim Anbieter, wählt gewünschte Produkte und erhält Produktkonfiguration
-
-**Phase 2:** Kunde übermittelt schrittweise seine Daten - von regulatorischen Selbstdeklarationen über Basisdaten bis zu erweiterten Risikoinformationen
-
-**Phase 3:** Bank/Anbieter leitet Identitätsverifikation über spezialisierte Provider ein und führt umfassende KYC-Background-Checks durch
-
-**Phase 4:** Kunde akzeptiert finale Geschäftsbedingungen, signiert den Vertrag digital und das System verarbeitet alle Metadaten für die Kontoeröffnung
-
-Der Prozess ist so konzipiert, dass jeder Akteur seine spezialisierten Kompetenzen optimal einbringen kann.
-
 ### Modulare "Blöckli"-Architektur
 
 **Konzeptionelle Baustein-Organisation:**
@@ -478,78 +417,158 @@ Automatische Erfassung von Prozess-Metadaten für Audit, Compliance und Qualitä
 
 ---
 
-## Regulatorische und rechtliche Fragestellungen
-*TODO: Verifizieren, ob dieser Teil relevant ist!*
-
-Spezifisch im Kontext zum Referenzprozess, detaillierte Betrachtung der regulatorischen und rechtlichen Herausforderungen sind hier beschrieben: [Konklusion Rechtliche Rahmenbedingungen](documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md)
-
-### Identifikation offener Herausforderungen
-
-Die Implementation des Referenzprozesses wirft verschiedene regulatorische und rechtliche Fragen auf, die für eine erfolgreiche Umsetzung geklärt werden müssen.
-
-#### Regulatorische Fragestellungen
-
-**Prinzipielle Regelungen:**
-- Wird das Prinzip einer "Identifikation auf Vorrat" grundsätzlich erlaubt? (das bedeutet, ein neues Onboarding mit allenfalls nicht mehr gültigen Dokumenten wäre erlaubt - z.B. bei Ausweis gestohlen, Namensänderung bei Heirat etc.)
-
-**Arten der Identifikation:**
-- Welche Arten der Identifikation sollen weitergegeben werden können (z.B. nur Online / Video Ident?)
-
-**Zeitliche Beschränkungen:**
-- Definition Dauer, wie lange eine Identifikation wiederverwendet werden kann
-
-**Ausweisdokumentation:**
-- Details zu Ausweisen:
-  - Gültigkeit für Wiederverwendung relevant?
-  - Zugelassene Ausweisarten
-  - Umgang mit Ausländern / Ausländerausweis nötig?
-
-**Scope-Definitionen:**
-- Festlegung von "out of Scope" Kundengruppen (z.B. Workout/Recovery Positionen, Kunden mit MROS Meldungen, etc.) vor Datenweitergabe, oder danach durch neue Bank?
-
-#### Rechtliche Fragestellungen
-
-**Delegation und Haftung:**
-- Regelung der Delegation (Beispiel: HBL gibt ein Onboarding der Intrum an eine Drittbank weiter. Wem kommt welche Rolle und Haftbarkeit zu?)
-- Haftung bei Online Ident. im Zusammenhang mit Ersteinzahlungen: Wer haftet wofür (da Identifikation aus Bestandteilen von Drittanbieter und Bank besteht)
-
-**Wiederverwendung und Outsourcing:**
-- Wie müssen wiederverwendete Identifikationen im Zusammenhang mit der Beurteilung von Outsourcing behandelt werden?
-
-**Legal Einschätzung:**
-- Ersteinschätzung Legal: Weitergabe nur mit Disclaimer/ohne Haftbarkeit
-
-#### Zentrale Herausforderungen
-
-**Datenaktualität und Haftung:**
-- Aktualität der Daten kann nicht garantiert werden:
-  1. Darf man diese dann verwenden, oder nur mit Bestätigung Korrektheit durch Kunde?
-  2. Möchte man diese als neue Bank überhaupt für ein neues Onboarding verwenden? (insbesondere Use Case Bank zu Bank)
-- Haftung, wenn nicht durch den Kunden direkt bestätigt? (für Korrektheit, Aktualität, Falscherfassungen, etc.)
-
-**Praktische Überlegung:** Automatisches Ausfüllen aber Daten müssen vom Kunden noch bestätigt werden
-
-### KYC-Standardisierung als zentrale Fragestellung
-
-Eine zentrale Fragestellung am Bankenplatz betrifft die mögliche Vereinheitlichung von KYC-Prozessen. Angesichts der bestehenden Vielfalt an bankindividuellen Standards und regulatorischen Auslegungen stellt sich die Frage, wie sich dies auf die Konzeption der Open API Kundenbeziehung auswirkt.
-
-**Empfehlung:** Sinnvollerweise sollte ein Minimalstandard definiert werden, welcher individuell erweitert werden kann.
-
-**Historische Herausforderungen:**
-- Im Bankenmarkt bestehen historisch gewachsene Unterschiede in den Onboarding-Standards, insbesondere hinsichtlich der erhobenen Datenpunkte und Prozessausgestaltung
-- Diese Heterogenität ist auch auf sich wandelnde regulatorische Anforderungen zurückzuführen – so galten beispielsweise im Jahr 2015 andere KYC-Vorgaben als heute im Jahr 2024
-
----
-
 ## Modulare Datenbausteine-Architektur
 
 ### Konzeptionelles Framework
 
 Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexibel kombiniert und wiederverwendet werden können. Jeder Baustein enthält:
 
-- **Core Data:** Minimale erforderliche Informationen
-- **Extended Data:** Zusätzliche ecosystem-spezifische Daten
+- **Basisdaten:** Minimale erforderliche Informationen
+- **Erweiterte Daten:** Zusätzliche ecosystem-spezifische Daten
 - **Metadata:** Governance, Consent und Quality Informationen
+
+### Basisdaten-Bausteine
+
+#### Baustein "Identität"
+- **Core:** Name, Geburtsdatum, Nationalität
+- **Extended:** Titel, Aliases, Historische Namen
+- **Metadata:** Verification Level, Source, Last Update
+
+#### Baustein "Kontakt"
+- **Core:** E-Mail, Telefon, Adresse
+- **Extended:** Social Media, Präferenzen, Zeitfenster
+- **Metadata:** Verification Status, Communication Consent
+
+#### Baustein "KYC-Basis"
+- **Core:** Beruf, Arbeitgeber, Grundeinkommen
+- **Extended:** Detaillierte Einkommensnachweise, Vermägen
+- **Metadata:** Verification Method, Document References
+
+### Erweiterte Daten-Bausteine (Ecosystem-spezifisch)
+
+#### Financial Services
+- **Investment Experience:** Portfolio, Trading History, Risk Appetite
+- **Credit Information:** Credit Score, Existing Obligations, Collateral
+- **Tax Information:** Residency, FATCA Status, Reporting Requirements
+
+#### Insurance Services
+- **Risk Assessment:** Health, Lifestyle, Previous Claims
+- **Coverage History:** Existing Policies, Claims Experience
+- **Beneficiary Information:** Dependents, Estate Planning
+
+#### Mobility Services
+- **Driving Information:** License, History, Violations
+- **Vehicle Data:** Ownership, Usage Patterns, Preferences
+- **Insurance Integration:** Coverage, Risk Assessment
+
+### Metadaten-Framework
+
+**Konzeptionelles Metadaten-Management:**
+
+Das Metadaten-Framework bildet das Rückgrat für Governance, Qualitätssicherung und Compliance-Management im Referenzprozess. Es organisiert sich in drei zentrale Komponenten:
+
+**1. Process Metadata**
+- Prozess-Timestamps für lückenlose Nachverfolgung
+- System-Informationen über verwendete APIs und Service-Provider
+- Qualitäts-Metriken zur Performance-Überwachung
+- Error Handling und Exception Tracking
+
+**2. Data Quality Metadata**
+- Source Classification zur Bewertung der Datenherkunft
+- Verification Level mit QEAA/EAA-Klassifizierung
+- Confidence Scoring für algorithmic quality assessment
+- Temporal Validity mit Zeitstempeln und Ablauffristen
+
+**3. Compliance Metadata**
+- Consent Management mit granularen Einwilligungsdaten
+- Regulatory Check Results für Audit-Compliance
+- Data Retention Policies mit Lebenszyklus-Management
+- Legal Basis Documentation für regulatorische Anforderungen
+
+Das Framework ermöglicht eine vollständige Datenlineage vom Erfassungspunkt bis zur finalen Verwendung und unterstützt sowohl automatisierte als auch manuelle Compliance-Prozesse.
+
+Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endpoint Design](/documentation/Umsetzung%20und%20Implementierung/04%20API%20Endpoint%20Design.md) spezifiziert.
+
+#### Consent Management
+**Konzeptionelle Einwilligungsverwaltung:**
+- **Purpose Definition:** Klare Zweckbindung (z.B. Kontoeröffnung, Kreditprüfung)
+- **Data Categories:** Granulare Kategorisierung (Identität, Kontakt, KYC-Basisdaten)
+- **Granularity Control:** Field-Level Kontrolle für maximale Kundensouveränität
+- **Retention Policy:** Lebenszyklus-gebundene Datenaufbewahrung
+- **Withdrawal Options:** Self-Service-Widerrufsmöglichkeiten für Kunden
+
+#### Data Quality
+**Konzeptionelle Datenqualitäts-Bewertung:**
+- **Source Classification:** Bewertung der Datenherkunft (Behördenregister, Self-Declaration, Third-Party)
+- **Verification Level:** QEAA/EAA-Level-Klassifizierung für verschiedene Assurance-Stufen
+- **Confidence Scoring:** Algorithmic scoring der Datenqualität und -zuverlässigkeit
+- **Temporal Validity:** Zeitstempel für letzte Verifikation und Ablauffristen
+- **Expiry Management:** Automatische Benachrichtigung bei ablaufender Datenvalidität
+
+---
+
+## Implementationskonzept Referenzprozess
+
+### Detaillierter Prozessflow mit Akteuren
+
+**Konzeptionelle Akteur-Interaktionen:**
+
+**Beteiligte Akteure:**
+- **Kunde:** Initiiert Prozess und stellt Daten bereit
+- **Bank/Anbieter:** Koordiniert Onboarding und sammelt Daten
+- **Open API System:** Vermittelt Datenabfragen zwischen Anbietern
+- **KYC Services:** Führt regulatorische Compliance-Checks durch
+- **Identity Provider:** Verifiziert Kundenidentität professionell
+
+
+```mermaid
+sequenceDiagram
+    participant K as Kunde
+    participant B as Bank/Anbieter
+    participant API as Open API System
+    participant KYC as KYC Services
+    participant ID as Identity Provider
+
+    Note over K,ID: Phase 1: Initialisierung & Produktauswahl
+    K->>B: 1. Initialisierung - Service Discovery
+    B->>K: Verfügbare Services anzeigen
+    K->>B: 2. Produktauswahl - Gewünschte Services
+    B->>K: Produktkonfiguration bestätigt
+    
+    Note over K,ID: Phase 2: Datenerfassung
+    K->>B: 3. Selbstdeklaration - FATCA/MIFID
+    K->>B: 4. Basisdaten - Kontaktinformationen
+    K->>B: 5. Erweiterte Daten - Risikoprofil
+    
+    Note over K,ID: Phase 3: Verifikation & Compliance
+    B->>API: 6. Identifikation über Open API
+    API->>ID: Identity Verification Request
+    ID->>API: Identity Verified
+    API->>B: Verified Identity Data
+    
+    B->>KYC: 7. Background Checks - KYC Prozess
+    KYC->>B: KYC Assessment Complete
+    
+    Note over K,ID: Phase 4: Vertragsabschluss
+    B->>K: 8. Vertragsabschluss - AGB präsentieren  
+    K->>B: AGB akzeptiert
+    B->>K: 9. Signatur - Vertrag signieren
+    K->>B: Digitale Signatur erteilt
+    B->>B: 10. Metadaten/Verteilung - Verarbeitung
+    B->>K: ✅ Onboarding abgeschlossen
+```
+
+**Interaktionsablauf:**
+
+**Phase 1:** Kunde entdeckt Services beim Anbieter, wählt gewünschte Produkte und erhält Produktkonfiguration
+
+**Phase 2:** Kunde übermittelt schrittweise seine Daten - von regulatorischen Selbstdeklarationen über Basisdaten bis zu erweiterten Risikoinformationen
+
+**Phase 3:** Bank/Anbieter leitet Identitätsverifikation über spezialisierte Provider ein und führt umfassende KYC-Background-Checks durch
+
+**Phase 4:** Kunde akzeptiert finale Geschäftsbedingungen, signiert den Vertrag digital und das System verarbeitet alle Metadaten für die Kontoeröffnung
+
+Der Prozess ist so konzipiert, dass jeder Akteur seine spezialisierten Kompetenzen optimal einbringen kann.
 
 ### Prozess-State-Machine
 
@@ -715,93 +734,12 @@ flowchart TD
     class End1,End2,End3,Success endpoint
 ```
 
-### Basisdaten-Bausteine
-
-#### Baustein "Identität"
-- **Core:** Name, Geburtsdatum, Nationalität
-- **Extended:** Titel, Aliases, Historische Namen
-- **Metadata:** Verification Level, Source, Last Update
-
-#### Baustein "Kontakt"
-- **Core:** E-Mail, Telefon, Adresse
-- **Extended:** Social Media, Präferenzen, Zeitfenster
-- **Metadata:** Verification Status, Communication Consent
-
-#### Baustein "KYC-Basis"
-- **Core:** Beruf, Arbeitgeber, Grundeinkommen
-- **Extended:** Detaillierte Einkommensnachweise, Vermägen
-- **Metadata:** Verification Method, Document References
-
-### Erweiterte Daten-Bausteine (Ecosystem-spezifisch)
-
-#### Financial Services
-- **Investment Experience:** Portfolio, Trading History, Risk Appetite
-- **Credit Information:** Credit Score, Existing Obligations, Collateral
-- **Tax Information:** Residency, FATCA Status, Reporting Requirements
-
-#### Insurance Services
-- **Risk Assessment:** Health, Lifestyle, Previous Claims
-- **Coverage History:** Existing Policies, Claims Experience
-- **Beneficiary Information:** Dependents, Estate Planning
-
-#### Mobility Services
-- **Driving Information:** License, History, Violations
-- **Vehicle Data:** Ownership, Usage Patterns, Preferences
-- **Insurance Integration:** Coverage, Risk Assessment
-
-### Metadaten-Framework
-
-**Konzeptionelles Metadaten-Management:**
-
-Das Metadaten-Framework bildet das Rückgrat für Governance, Qualitätssicherung und Compliance-Management im Referenzprozess. Es organisiert sich in drei zentrale Komponenten:
-
-**1. Process Metadata**
-- Prozess-Timestamps für lückenlose Nachverfolgung
-- System-Informationen über verwendete APIs und Service-Provider
-- Qualitäts-Metriken zur Performance-Überwachung
-- Error Handling und Exception Tracking
-
-**2. Data Quality Metadata**
-- Source Classification zur Bewertung der Datenherkunft
-- Verification Level mit QEAA/EAA-Klassifizierung
-- Confidence Scoring für algorithmic quality assessment
-- Temporal Validity mit Zeitstempeln und Ablauffristen
-
-**3. Compliance Metadata**
-- Consent Management mit granularen Einwilligungsdaten
-- Regulatory Check Results für Audit-Compliance
-- Data Retention Policies mit Lebenszyklus-Management
-- Legal Basis Documentation für regulatorische Anforderungen
-
-Das Framework ermöglicht eine vollständige Datenlineage vom Erfassungspunkt bis zur finalen Verwendung und unterstützt sowohl automatisierte als auch manuelle Compliance-Prozesse.
-
-Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endpoint Design](/documentation/Umsetzung%20und%20Implementierung/04%20API%20Endpoint%20Design.md) spezifiziert.
-
-#### Consent Management
-**Konzeptionelle Einwilligungsverwaltung:**
-- **Purpose Definition:** Klare Zweckbindung (z.B. Kontoeröffnung, Kreditprüfung)
-- **Data Categories:** Granulare Kategorisierung (Identität, Kontakt, KYC-Basisdaten)
-- **Granularity Control:** Field-Level Kontrolle für maximale Kundensouveränität
-- **Retention Policy:** Lebenszyklus-gebundene Datenaufbewahrung
-- **Withdrawal Options:** Self-Service-Widerrufsmöglichkeiten für Kunden
-
-#### Data Quality
-**Konzeptionelle Datenqualitäts-Bewertung:**
-- **Source Classification:** Bewertung der Datenherkunft (Behördenregister, Self-Declaration, Third-Party)
-- **Verification Level:** QEAA/EAA-Level-Klassifizierung für verschiedene Assurance-Stufen
-- **Confidence Scoring:** Algorithmic scoring der Datenqualität und -zuverlässigkeit
-- **Temporal Validity:** Zeitstempel für letzte Verifikation und Ablauffristen
-- **Expiry Management:** Automatische Benachrichtigung bei ablaufender Datenvalidität
-
----
 
 ## Use Case Implementierung: Bankkonten-Onboarding
 
-### Referenz-Implementation Konzept
-
 Die Bankkonten-Eröffnung dient als Referenz-Use Case für die praktische Anwendung des 10-Stufen Prozesses. Die konzeptionelle Implementation zeigt, wie die modularen Bausteine in der Praxis kombiniert werden.
 
-### Prozess-Mapping für Bankkonten-Onboarding
+#### **Prozess-Mapping für Bankkonten-Onboarding**
 
 #### Phase 1: Customer Intent (Stufen 1-2)
 **Stufe 1:** Kunde besucht Bank-Website oder App, zeigt Interesse an Kontoeräffnung
