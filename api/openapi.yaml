@@ -1,30 +1,41 @@
-openapi: Alpha 1.0
+openapi: 3.0.3
 info:
   title: Open API Kundenbeziehung - Swiss National Standard
   description: |
     Schweizer Standard für den branchenübergreifenden Austausch von Kundendaten zur Etablierung einer selbstbestimmten digitalen Kundenbeziehung.
     
-    Diese API implementiert das Basiskit der Open API Kundenbeziehung und ermöglicht standardisierten Datenaustausch zwischen Finanzdienstleistern und anderen Ecosystemen.
+    Diese API implementiert das vollständige Framework der Open API Kundenbeziehung mit dem universellen 10-Stufen-Referenzprozess und ermöglicht standardisierten Datenaustausch zwischen Finanzdienstleistern und anderen Ecosystemen.
     
-    **Implementierte Module:**
-    - Basisdaten (Identität, Kontakt, Adresse)
-    - Identifikation (E-ID kompatibel)
-    - Consent Management
-    - Background Checks
-    - Signatur-Services
-    - Metadaten-Management
+    **Implementierte Module (Datenbausteine):**
+    - Initialisierung (Step 1) - Service Discovery & Cookie Consent
+    - Produktauswahl (Step 2) - Bedürfnisbefriedigung & Konfiguration  
+    - Selbstdeklaration (Step 3) - FATCA/MIFID II Information
+    - Basisdaten (Step 4) - Identität, Kontakt, Adresse
+    - Erweiterte Daten (Step 5) - Risiko-/Potenzialermittlung
+    - Identifikation (Step 6) - E-ID kompatibel, VideoIdent
+    - Background Checks (Step 7) - KYC, AML, PEP, Sanctions
+    - Vertragsabschluss (Step 8) - AGB-Akzeptanz
+    - Signatur-Services (Step 9) - QES/AES/eSignatur
+    - Metadaten-Management (Step 10) - Verarbeitung & Integration
+    
+    **Use Cases Implementiert:**
+    - UC1: Kundenbeziehungseröffnung (Banking Account Opening)
+    - UC2: Re-Identifikation (Cross-Provider Identity Reuse)
+    - UC3: Altersverifikation (Privacy-preserving Age Verification)
+    - UC4: CLM von EVV-Endkunden (External Wealth Management Lifecycle)
     
     **Sicherheitsstandards:**
     - FAPI 2.0 Security Profile Compliance
-    - OAuth 2.1 / OpenID Connect
+    - OAuth 2.1 / OpenID Connect with PKCE
     - mTLS und DPoP für kritische Services
     - JWT-basierte Autorisierung (PS256, ES256, EdDSA)
     - PAR (Pushed Authorization Requests)
     
     **Regulatorische Compliance:**
-    - DSGVO/nDSG konform
-    - Banking Regulations (FINMA)
-    - E-ID Framework Integration
+    - DSGVO/nDSG konform mit Privacy-by-Design
+    - Banking Regulations (FINMA, GwG)
+    - MiFID II Suitability Assessment Integration
+    - E-ID Framework Integration (ready)
   version: "1.0.0"
   contact:
     name: Open Banking Project
@@ -128,6 +139,87 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  # REFERENZPROZESS ENDPOINTS
+  /process/initialize:
+    post:
+      summary: Referenzprozess initialisieren (Step 1)
+      description: Initiiert den universellen 10-Stufen-Referenzprozess für Customer Onboarding
+      operationId: initializeProcess
+      tags:
+        - Referenzprozess
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessInitializationRequest'
+      responses:
+        '201':
+          description: Referenzprozess erfolgreich initialisiert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessInitializationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /process/{processId}/step/{stepNumber}:
+    post:
+      summary: Referenzprozess-Schritt ausführen
+      description: Führt einen spezifischen Schritt (1-10) des Referenzprozesses aus
+      operationId: executeProcessStep
+      tags:
+        - Referenzprozess
+      parameters:
+        - name: processId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: stepNumber
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessStepRequest'
+      responses:
+        '200':
+          description: Prozessschritt erfolgreich ausgeführt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessStepResponse'
+
+  /process/{processId}/status:
+    get:
+      summary: Referenzprozess-Status abrufen
+      description: Ruft den aktuellen Status und Fortschritt des Referenzprozesses ab
+      operationId: getProcessStatus
+      tags:
+        - Referenzprozess
+      parameters:
+        - name: processId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Prozess-Status erfolgreich abgerufen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessStatus'
+
   # CUSTOMER DATA EXCHANGE
   /customer/check:
     post:
@@ -197,7 +289,127 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 
+  /customer/data:
+    post:
+      summary: Kundendaten mit Consent abrufen
+      description: Ruft spezifische Kundendatenmodule basierend auf gewährtem Consent ab
+      operationId: getCustomerData
+      tags:
+        - Customer Data
+      security:
+        - mTLS: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDataRequest'
+      responses:
+        '200':
+          description: Kundendaten erfolgreich abgerufen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDataResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  # PORTFOLIO & EVV SERVICES
+  /portfolio/sync:
+    post:
+      summary: Portfolio-Daten synchronisieren (UC4 EVV)
+      description: Synchronisiert Portfolio-Daten zwischen verschiedenen Wealth Management Providern
+      operationId: syncPortfolioData
+      tags:
+        - Portfolio Services
+      security:
+        - mTLS: []
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioSyncRequest'
+      responses:
+        '200':
+          description: Portfolio-Synchronisation erfolgreich
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioSyncResponse'
+
+  /mifid/assessment:
+    post:
+      summary: MiFID II Suitability Assessment
+      description: Führt MiFID II konforme Anlageeignungsprüfung durch
+      operationId: performMiFIDAssessment
+      tags:
+        - Compliance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MiFIDAssessmentRequest'
+      responses:
+        '200':
+          description: MiFID II Assessment erfolgreich
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MiFIDAssessmentResponse'
+
+  # AGE VERIFICATION (UC3)
+  /verification/age:
+    post:
+      summary: Datenschutzkonforme Altersverifikation (UC3)
+      description: Privacy-preserving Altersverifikation ohne vollständige Identitätspreisgabe
+      operationId: verifyAge
+      tags:
+        - Age Verification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgeVerificationRequest'
+      responses:
+        '200':
+          description: Altersverifikation erfolgreich
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgeVerificationResponse'
+
   # IDENTIFICATION SERVICES
+  /identification/{verificationId}/status:
+    get:
+      summary: Identifikations-Status abrufen
+      description: Ruft den Status einer bestehenden Identifikation ab (für UC2 Re-identification)
+      operationId: getIdentificationStatus
+      tags:
+        - Identification
+      parameters:
+        - name: verificationId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "VER-20240115-001"
+      responses:
+        '200':
+          description: Identifikations-Status erfolgreich abgerufen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentificationStatusResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
   /identification/verify:
     post:
       summary: Identifikation verifizieren
@@ -222,6 +434,29 @@ paths:
           $ref: '#/components/responses/BadRequest'
 
   # BACKGROUND CHECKS
+  /checks/perform:
+    post:
+      summary: Gezielte Background Checks ausführen
+      description: Führt spezifische Background Checks (Sanctions, PEP, etc.) durch
+      operationId: performBackgroundChecks
+      tags:
+        - Background Checks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackgroundChecksRequest'
+      responses:
+        '200':
+          description: Background Checks erfolgreich durchgeführt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackgroundChecksResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
   /checks/comprehensive:
     post:
       summary: Umfassende Background Checks
@@ -1360,6 +1595,408 @@ components:
           description: Request URI lifetime in seconds (max 60 for FAPI 2.0)
           maximum: 60
           example: 60
+
+    # REFERENZPROZESS SCHEMAS
+    ProcessInitializationRequest:
+      type: object
+      required:
+        - industry
+        - useCase
+        - customerContext
+      properties:
+        industry:
+          type: string
+          enum: [banking, insurance, mobility, retail, government, healthcare]
+          description: Ziel-Ecosystem für den Prozess
+        useCase:
+          type: string
+          enum: [kundenbeziehungseroffnung, re_identification, age_verification, evv_lifecycle]
+          description: Spezifischer Use Case
+        customerContext:
+          type: object
+          properties:
+            existingCustomer:
+              type: boolean
+            customerHint:
+              type: string
+              maxLength: 255
+        processConfiguration:
+          type: object
+          properties:
+            skipSteps:
+              type: array
+              items:
+                type: integer
+                minimum: 1
+                maximum: 10
+            customData:
+              type: object
+
+    ProcessInitializationResponse:
+      type: object
+      properties:
+        processId:
+          type: string
+          format: uuid
+        processType:
+          type: string
+        estimatedSteps:
+          type: integer
+          minimum: 1
+          maximum: 10
+        currentStep:
+          type: integer
+          default: 1
+        nextStepUrl:
+          type: string
+          format: uri
+
+    ProcessStepRequest:
+      type: object
+      required:
+        - stepData
+      properties:
+        stepData:
+          type: object
+          description: Step-spezifische Daten
+        skipToStep:
+          type: integer
+          minimum: 1
+          maximum: 10
+        customerConsent:
+          type: boolean
+
+    ProcessStepResponse:
+      type: object
+      properties:
+        stepNumber:
+          type: integer
+        stepName:
+          type: string
+        status:
+          type: string
+          enum: [completed, pending, failed, skipped]
+        nextStep:
+          type: integer
+        processComplete:
+          type: boolean
+        result:
+          type: object
+        errors:
+          type: array
+          items:
+            type: string
+
+    ProcessStatus:
+      type: object
+      properties:
+        processId:
+          type: string
+          format: uuid
+        currentStep:
+          type: integer
+        completedSteps:
+          type: array
+          items:
+            type: integer
+        overallProgress:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Fortschritt in Prozent
+        status:
+          type: string
+          enum: [active, completed, failed, cancelled]
+        estimatedCompletion:
+          type: string
+          format: date-time
+
+    # USE CASE SPECIFIC SCHEMAS
+    CustomerDataRequest:
+      type: object
+      required:
+        - sharedCustomerHash
+        - requestedModules
+        - consentToken
+      properties:
+        sharedCustomerHash:
+          type: string
+          description: SHA-256 Hash des Kunden
+        requestedModules:
+          type: array
+          items:
+            type: string
+            enum: [basisdaten_module, erweiterte_daten_module, identifikation_module, background_checks_module]
+          description: Angeforderte Datenbausteine
+        consentToken:
+          type: string
+          description: JWT-Token mit Consent-Nachweis
+        purpose:
+          type: string
+          enum: [kundenbeziehungseroffnung, re_identification, compliance_update]
+
+    CustomerDataResponse:
+      type: object
+      properties:
+        availableModules:
+          type: array
+          items:
+            type: string
+        moduleData:
+          type: object
+          description: Bereitgestellte Datenbausteine
+        verificationStatus:
+          type: object
+        lastUpdated:
+          type: string
+          format: date-time
+
+    PortfolioSyncRequest:
+      type: object
+      required:
+        - customerId
+        - sourceProviders
+        - targetProvider
+      properties:
+        customerId:
+          type: string
+        sourceProviders:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderRelationship'
+        targetProvider:
+          type: string
+        transferType:
+          type: string
+          enum: [full_portfolio_migration, partial_portfolio_migration, data_sync_only]
+        assetCategories:
+          type: array
+          items:
+            type: string
+            enum: [equities, bonds, funds, alternatives, derivatives, cash]
+
+    ProviderRelationship:
+      type: object
+      properties:
+        providerId:
+          type: string
+        relationshipType:
+          type: string
+          enum: [primary_wealth_manager, custody_services, advisory_only]
+        since:
+          type: string
+          format: date
+        portfolioValue:
+          $ref: '#/components/schemas/MonetaryAmount'
+        custodyBank:
+          type: string
+
+    PortfolioSyncResponse:
+      type: object
+      properties:
+        syncId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [initiated, in_progress, completed, failed]
+        syncedAssets:
+          type: object
+        dataQuality:
+          type: number
+          minimum: 0
+          maximum: 1
+        estimatedCompletion:
+          type: string
+          format: date-time
+
+    MiFIDAssessmentRequest:
+      type: object
+      required:
+        - customerId
+        - investmentObjectives
+      properties:
+        customerId:
+          type: string
+        existingAssessments:
+          type: array
+          items:
+            type: object
+        investmentObjectives:
+          type: array
+          items:
+            type: string
+        investmentExperience:
+          type: string
+          enum: [none, limited, good, extensive]
+        financialSituation:
+          type: object
+          properties:
+            netWealth:
+              $ref: '#/components/schemas/MonetaryAmount'
+            liquidityNeeds:
+              type: string
+              enum: [low, medium, high]
+
+    MiFIDAssessmentResponse:
+      type: object
+      properties:
+        assessmentId:
+          type: string
+          format: uuid
+        suitabilityRating:
+          type: string
+          enum: [suitable, suitable_with_restrictions, not_suitable]
+        riskProfile:
+          type: string
+          enum: [conservative, moderate, aggressive]
+        approvedInstruments:
+          type: array
+          items:
+            type: string
+        restrictions:
+          type: array
+          items:
+            type: string
+        validUntil:
+          type: string
+          format: date
+
+    AgeVerificationRequest:
+      type: object
+      required:
+        - customerId
+        - requiredAttribute
+        - minimumAge
+      properties:
+        customerId:
+          type: string
+        requiredAttribute:
+          type: string
+          example: "age_minimum_18"
+        purpose:
+          type: string
+          enum: [cross_industry_age_gate, regulatory_compliance]
+        requestingService:
+          type: string
+        minimumAge:
+          type: integer
+          minimum: 16
+          maximum: 25
+        attributeOnly:
+          type: boolean
+          default: true
+          description: Nur Attribut (ja/nein) zurückgeben
+        dataMinimization:
+          type: boolean
+          default: true
+        existingVerificationId:
+          type: string
+
+    AgeVerificationResponse:
+      type: object
+      properties:
+        verificationId:
+          type: string
+          format: uuid
+        meetsRequirement:
+          type: boolean
+          description: Erfüllt das Mindestalter (ja/nein)
+        attributeValue:
+          type: string
+          enum: ["YES", "NO"]
+          description: Attribut-only Antwort
+        verificationMethod:
+          type: string
+        assuranceLevel:
+          type: string
+          enum: [low, substantial, high]
+        timestamp:
+          type: string
+          format: date-time
+        privacyCompliance:
+          type: object
+          properties:
+            gdprCompliant:
+              type: boolean
+            dataMinimizationApplied:
+              type: boolean
+            actualAgeDisclosed:
+              type: boolean
+              default: false
+
+    IdentificationStatusResponse:
+      type: object
+      properties:
+        verificationId:
+          type: string
+        status:
+          type: string
+          enum: [valid, expired, revoked, pending]
+        verificationMethod:
+          type: string
+        documentType:
+          type: string
+        assuranceLevel:
+          type: string
+          enum: [low, substantial, high]
+        issuedAt:
+          type: string
+          format: date-time
+        validUntil:
+          type: string
+          format: date-time
+        canBeReused:
+          type: boolean
+
+    BackgroundChecksRequest:
+      type: object
+      required:
+        - customerId
+        - checkTypes
+      properties:
+        customerId:
+          type: string
+        customerData:
+          type: object
+        checkTypes:
+          type: array
+          items:
+            type: string
+            enum: [sanctions, pep, adverse_media, identity_verification, sanctions_update, pep_update]
+        baselineDate:
+          type: string
+          format: date-time
+          description: Datum für inkrementelle Updates
+        riskProfile:
+          type: string
+          enum: [standard, enhanced, high_risk]
+
+    BackgroundChecksResponse:
+      type: object
+      properties:
+        checkId:
+          type: string
+          format: uuid
+        results:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CheckResult'
+        overallRisk:
+          type: string
+          enum: [low, medium, high]
+        newFindings:
+          type: boolean
+        recommendedActions:
+          type: array
+          items:
+            type: string
+        nextReviewDate:
+          type: string
+          format: date
+        timestamp:
+          type: string
+          format: date-time
 
     # REGISTRY SCHEMAS
     ParticipantList:
