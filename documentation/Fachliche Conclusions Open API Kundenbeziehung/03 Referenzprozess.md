@@ -57,10 +57,10 @@ Der Referenzprozess gliedert sich in vier thematische Phasen mit je 2-3 Einzelst
 
 **Phase 3: Verifikation und Compliance (Stufen 6-7)**
 - Stufe 6: Identifikation der Vertragspartei
-- Stufe 7: Know-Your-Customer Background Checks
+- Stufe 7: Know-Your-Customer Checks
 
 **Phase 4: Vertragsabschluss (Stufen 8-10)**
-- Stufe 8: AGB-Akzeptanz und Geschäftsbedingungen
+- Stufe 8: Abschluss (AGB-Akzeptanz) und Geschäftsbedingungen
 - Stufe 9: Vertragsunterzeichnung
 - Stufe 10: Metadatenerfassung, Systemverarbeitung und finale Verteilung
 
@@ -146,10 +146,10 @@ Der Referenzprozess wurde als **universeller Standard** für die digitale Kunden
 ### Zielsetzung des Referenzprozesses
 
 **Primärziele:**
-- **Effizienzsteigerung:** Reduktion redundanter Datenerfassung um 70%
-- **Customer Experience:** Verbesserung der Onboarding-Zeit um 60%
+- **Effizienzsteigerung:** Reduktion redundanter Datenerfassung
+- **Customer Experience:** Verbesserung der Onboarding-Zeit
 - **Compliance-Sicherheit:** Automatisierte regulatorische Konformität
-- **Kostenoptimierung:** Senkung der Customer Acquisition Costs um 40%
+- **Kostenoptimierung:** Senkung der Customer Acquisition Costs
 
 **Sekundärziele:**
 - Standardisierung der Schweizer Finanzbranche

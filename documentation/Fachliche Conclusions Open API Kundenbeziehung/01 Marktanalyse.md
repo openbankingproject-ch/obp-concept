@@ -459,26 +459,6 @@ Transport- und Protokoll-Standards
 - **Proportionalität:** Risk-based Approach für verschiedene Use Case Kategorien.
 - **Innovation-Förderung:** Sandbox-Umgebungen für experimentelle Implementierungen.
 
-### E-ID Integration und strategische Überlegungen
-
-#### Zusammenspiel zwischen E-ID und Open API
-Die Integration der Schweizer E-ID mit der Open API Kundenbeziehung stellt einen strategischen Vorteil dar. Während die Daten bei den Banken liegen, liegt die Datenhoheit beim Kunden, insbesondere beim Consent-Prozess.
-
-**Hybrid-Lösung Ansatz:** 
-- E-ID-Kompatibilität von Beginn an sicherstellen
-- Parallele Lösung während E-ID-Einführungsphase
-- Vermeidung "unnötiger Verifizierungen" durch modulare Identifikationsdaten-Wiederverwendung
-
-#### Herausforderungen und Lösungsansätze
-**Einführungshürden der E-ID:**
-- Biometrische Ausweis-Voraussetzung könnte Adoption erschweren
-- Bedarf an "Killer Use Cases" (z.B. digitales Wahlrecht)
-- Regulatorische Unklarheiten bezüglich FINMA-Anforderungen
-- Haftungs- und Sicherheitsfaktoren noch nicht definiert
-
-**Strategische Antwort:** 
-Eine Open API Kundenbeziehung als wirtschaftlich sinnvolle Zwischenlösung, die später nahtlos in die E-ID-Infrastruktur integriert werden kann.
-
 ---
 
 ## Fazit und Handlungsempfehlungen

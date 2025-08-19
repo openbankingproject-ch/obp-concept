@@ -346,9 +346,9 @@ sequenceDiagram
 
 #### Multi-Stakeholder Decision Making
 **Voting Structure:** Weighted Voting basierend auf:
-- Market Share (30%): Berücksichtigung der Systemrelevanz
-- Stakeholder Category (40%): Equal representation verschiedener Kategorien
-- Technical Contribution (30%): Berücksichtigung der technischen Beiträge
+- Market Share: Berücksichtigung der Systemrelevanz
+- Stakeholder Category: Equal representation verschiedener Kategorien
+- Technical Contribution: Berücksichtigung der technischen Beiträge
 
 **Consensus Building:**
 - 2/3 Majority für Standards Changes
@@ -444,10 +444,10 @@ Die Architektur-Evolution folgt einem systematischen Pfad mit definierten Entsch
 - Skalierbar für verschiedene Branchen-Segmente
 
 **Implementation Roadmap:**
-1. **Phase 1 (6 Monate):** Standards Development Organisation etablieren
-2. **Phase 2 (12 Monate):** Core Standards finalisieren und Testing beginnen
-3. **Phase 3 (18 Monate):** Pilot Implementation mit 5-8 Participants
-4. **Phase 4 (24+ Monate):** Market Rollout und kontinuierliche Evolution
+1. **Phase 1 (kurzfristig):** Standards Development Organisation etablieren
+2. **Phase 2 (mittelfristig):** Core Standards finalisieren und Testing beginnen
+3. **Phase 3 (mittelfristig):** Pilot Implementation mit mehreren Participants
+4. **Phase 4 (längerfristig):** Market Rollout und kontinuierliche Evolution
 
 #### Governance-Struktur für Schweizer Kontext
 

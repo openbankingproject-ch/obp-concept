@@ -779,10 +779,10 @@ Response:
 ### Business Impact Metriken
 
 **Effizienzgewinn für Integrator Bank:**
-- **Onboarding-Zeit:** Reduktion von 5-10 Tagen auf wenige Minuten
-- **Dokumentensammlung:** 90% Reduktion des manuellen Aufwands
+- **Onboarding-Zeit:** Reduktion der Bearbeitungszeit
+- **Dokumentensammlung:** Reduktion des manuellen Aufwands
 - **Compliance-Prüfungen:** Wiederverwendung bestehender KYC-Verfahren
-- **Conversion Rate:** Erwartete Steigerung um 40-60%
+- **Conversion Rate:** Erwartete Steigerung
 
 **Kundenvorteile:**
 - **Nahtloser Bankwechsel:** Keine erneute Dokumentenvorlage
@@ -813,7 +813,7 @@ Accept: application/json
   },
   "metadata": {
     "version": "1.0",
-    "processingTime": "150ms",
+    "processingTime": "sehr kurz",
     "dataSource": "primary_db"
   }
 }
@@ -920,15 +920,15 @@ paths:
 ### Performance Guidelines
 
 **Response Time Targets:**
-- Authentication Endpoints: < 500ms
-- Data Retrieval Endpoints: < 2000ms
-- Data Modification Endpoints: < 3000ms
-- Bulk Operations: < 10000ms
+- Authentication Endpoints: Sehr schnelle Antwortzeit
+- Data Retrieval Endpoints: Schnelle Antwortzeit
+- Data Modification Endpoints: Mittlere Antwortzeit
+- Bulk Operations: Längere Antwortzeit für komplexe Operationen
 
 **Caching Strategy:**
-- Static Data: 24 hours TTL
-- Customer Profile Data: 1 hour TTL  
-- Verification Status: 15 minutes TTL
+- Static Data: Lange Cache-Dauer
+- Customer Profile Data: Mittlere Cache-Dauer  
+- Verification Status: Kurze Cache-Dauer
 - Real-time Data: No caching
 
 ### Development Best Practices
@@ -940,7 +940,7 @@ paths:
 - Feature Flags für schrittweise Rollouts
 
 **Testing Requirements:**
-- Unit Tests für alle API Endpoints (>90% Coverage)
+- Unit Tests für alle API Endpoints mit hoher Testabdeckung
 - Integration Tests mit Mock External Systems
 - Contract Testing zwischen Producer/Consumer
 - Load Testing für Performance Validation

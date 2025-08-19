@@ -585,11 +585,11 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 
 #### Phase 5: Token Exchange
 ```
-14. Authorization code issued (10 min expiry)
+14. Authorization code issued (sehr kurze Gültigkeitsdauer)
 15. Customer redirected back to Integrator
 16. Integrator exchanges code for tokens:
-    - Access Token (1 hour expiry)
-    - Refresh Token (1 year expiry) 
+    - Access Token (kurze Gültigkeitsdauer)
+    - Refresh Token (lange Gültigkeitsdauer) 
     - ID Token with customer claims
 ```
 
@@ -1081,7 +1081,7 @@ graph TB
 
 #### Phase 3: Production Rollout (Monate 12-18)
 **Market Launch:**
-- [ ] Production Environment mit 99.9% SLA
+- [ ] Production Environment mit sehr hoher Verfügbarkeit
 - [ ] 24/7 Security Monitoring und Incident Response
 - [ ] Customer Self-Service Consent Management
 - [ ] Comprehensive Analytics und Reporting
