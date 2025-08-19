@@ -26,7 +26,7 @@ Der Open API Kundenbeziehung Referenzprozess definiert einen standardisierten, b
 7. **Background Checks** - Know-Your-Customer (KYC)
 8. **Vertragsabschluss** - Akzeptanz Geschäftsbedingungen
 9. **Signatur** - Vertragsunterzeichnung
-10. **Metadaten/Verteilung** - Erfassung und Verarbeitung
+10. **Metadaten und Verteilung** - Erfassung, Verarbeitung und Systemintegration
 
 Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compliance-by-Design Prinzipien. Der Fokus liegt auf einer selbstbestimmten digitalen Kundenbeziehung mit messbaren Effizienzsteigerungen.
 
@@ -38,35 +38,47 @@ Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compl
 
 ---
 
-## Referenzprozess Flow-Diagramme
+## Referenzprozess Definition
 
 ### Überblick: 10-Stufen-Referenzprozess
 
-```mermaid
-flowchart TD
-    A[1. Initialisierung<br/>Information des Kunden] --> B[2. Produktauswahl<br/>Bedürfnisbefriedigung]
-    B --> C[3. Selbstdeklaration<br/>FATCA, MIFID Abfragen]
-    C --> D[4. Basisdaten<br/>Kontaktangaben erfassen]
-    D --> E[5. Erweiterte Daten<br/>Risiko-/Potenzialermittlung]
-    E --> F[6. Identifikation<br/>Vertragspartei identifizieren]
-    F --> G[7. Background Checks<br/>Know-Your-Customer KYC]
-    G --> H[8. Vertragsabschluss<br/>AGB akzeptieren]
-    H --> I[9. Signatur<br/>Vertragsunterzeichnung]
-    I --> J[10. Metadaten/Verteilung<br/>Erfassung und Verarbeitung]
-    J --> K[✅ Kunde onboarded]
-    
-    classDef phase1 fill:#e3f2fd
-    classDef phase2 fill:#f3e5f5  
-    classDef phase3 fill:#e8f5e8
-    classDef phase4 fill:#fff3e0
-    
-    class A,B,C phase1
-    class D,E,F phase2
-    class G,H phase3
-    class I,J,K phase4
-```
+**Konzeptioneller Prozessablauf:**
+
+Der Referenzprozess gliedert sich in vier thematische Phasen mit je 2-3 Einzelstufen:
+
+**Phase 1: Setup und Produktauswahl (Stufen 1-2)**
+- Stufe 1: Information des Kunden und Service Discovery
+- Stufe 2: Bedürfnisbefriedigung und Produktkonfiguration
+
+**Phase 2: Datenerfassung (Stufen 3-5)**  
+- Stufe 3: FATCA/MIFID Selbstdeklaration
+- Stufe 4: Kontaktangaben und Personalien
+- Stufe 5: Risiko-/Potenzialermittlung
+
+**Phase 3: Verifikation und Compliance (Stufen 6-7)**
+- Stufe 6: Identifikation der Vertragspartei
+- Stufe 7: Know-Your-Customer Background Checks
+
+**Phase 4: Vertragsabschluss (Stufen 8-10)**
+- Stufe 8: AGB-Akzeptanz und Geschäftsbedingungen
+- Stufe 9: Vertragsunterzeichnung
+- Stufe 10: Metadatenerfassung, Systemverarbeitung und finale Verteilung
+
+
+
+Der lineare Ablauf ermöglicht eine systematische Datenerfassung mit integrierten Qualitäts- und Compliance-Checkpoints.
 
 ### Detaillierter Prozessflow mit Akteuren
+
+**Konzeptionelle Akteur-Interaktionen:**
+
+**Beteiligte Akteure:**
+- **Kunde:** Initiiert Prozess und stellt Daten bereit
+- **Bank/Anbieter:** Koordiniert Onboarding und sammelt Daten
+- **Open API System:** Vermittelt Datenabfragen zwischen Anbietern
+- **KYC Services:** Führt regulatorische Compliance-Checks durch
+- **Identity Provider:** Verifiziert Kundenidentität professionell
+
 
 ```mermaid
 sequenceDiagram
@@ -105,103 +117,80 @@ sequenceDiagram
     B->>K: ✅ Onboarding abgeschlossen
 ```
 
-### Modulare "Blöckli"-Architektur
+**Interaktionsablauf:**
 
-```mermaid
-graph TB
-    subgraph "Phase 1: Setup"
-        Init[Initialisierung<br/>Cookie Consent<br/>Service Discovery]
-        Product[Produktauswahl<br/>Konfiguration<br/>Eligibility Check]
-    end
-    
-    subgraph "Phase 2: Datensammlung"
-        SelfDecl[Selbstdeklaration<br/>FATCA Status<br/>MIFID II Kategorisierung]
-        Basic[Basisdaten<br/>Name, Adresse<br/>Kontaktdaten]
-        Extended[Erweiterte Daten<br/>Einkommen<br/>Investmenterfahrung]
-    end
-    
-    subgraph "Phase 3: Verifikation"
-        Identity[Identifikation<br/>VideoIdent<br/>E-ID Integration]
-        KYC[Background Checks<br/>PEP Screening<br/>Sanktionslisten]
-    end
-    
-    subgraph "Phase 4: Abschluss"
-        Contract[Vertragsabschluss<br/>AGB Zustimmung<br/>Risiko-Disclaimer]
-        Signature[Signatur<br/>Digitale Signatur<br/>Qualified Signature]
-        Meta[Metadaten<br/>Dokumentenarchivierung<br/>Prozessabschluss]
-    end
-    
-    Init --> Product
-    Product --> SelfDecl
-    SelfDecl --> Basic
-    Basic --> Extended
-    Extended --> Identity
-    Identity --> KYC
-    KYC --> Contract
-    Contract --> Signature
-    Signature --> Meta
-    
-    classDef setup fill:#e3f2fd
-    classDef data fill:#f3e5f5
-    classDef verify fill:#e8f5e8
-    classDef complete fill:#fff3e0
-    
-    class Init,Product setup
-    class SelfDecl,Basic,Extended data
-    class Identity,KYC verify
-    class Contract,Signature,Meta complete
-```
+**Phase 1:** Kunde entdeckt Services beim Anbieter, wählt gewünschte Produkte und erhält Produktkonfiguration
+
+**Phase 2:** Kunde übermittelt schrittweise seine Daten - von regulatorischen Selbstdeklarationen über Basisdaten bis zu erweiterten Risikoinformationen
+
+**Phase 3:** Bank/Anbieter leitet Identitätsverifikation über spezialisierte Provider ein und führt umfassende KYC-Background-Checks durch
+
+**Phase 4:** Kunde akzeptiert finale Geschäftsbedingungen, signiert den Vertrag digital und das System verarbeitet alle Metadaten für die Kontoeröffnung
+
+Der Prozess ist so konzipiert, dass jeder Akteur seine spezialisierten Kompetenzen optimal einbringen kann.
+
+### Modulare "Bläckli"-Architektur
+
+**Konzeptionelle Baustein-Organisation:**
+
+Die modulare Architektur organisiert den Referenzprozess in vier thematische Blöcke mit flexibel kombinierbaren Bausteinen:
+
+**Block 1: Setup und Initialisierung**
+- Initialisierungs-Baustein: Cookie Consent, Service Discovery
+- Produktauswahl-Baustein: Konfiguration, Eligibility Check
+
+**Block 2: Datensammlung**
+- Selbstdeklarations-Baustein: FATCA Status, MIFID II Kategorisierung
+- Basisdaten-Baustein: Name, Adresse, Kontaktdaten
+- Erweiterte-Daten-Baustein: Einkommen, Investmenterfahrung
+
+**Block 3: Verifikation und Compliance**
+- Identifikations-Baustein: VideoIdent, E-ID Integration
+- Background-Check-Baustein: PEP Screening, Sanktionslisten
+
+**Block 4: Finalisierung**
+- Vertragsabschluss-Baustein: AGB Zustimmung, Risiko-Disclaimer
+- Signatur-Baustein: Digitale Signatur, Qualified Signature
+- Metadaten-und-Verteilungs-Baustein: Dokumentenarchivierung, Prozessabschluss, Systemintegration
+
+**Sequenzielle Verkettung:** Jeder Baustein baut auf den Ergebnissen des vorhergehenden auf, wodurch eine logische Progression von der Initialisierung bis zur finalen Kontoeröffnung gewährleistet wird.
+
+**Modulare Flexibilität:** Einzelne Bausteine können je nach Use Case angepasst oder erweitert werden, ohne die Gesamtarchitektur zu beeinträchtigen.
 
 ### Branchenübergreifende Anwendung
 
-```mermaid
-graph LR
-    subgraph "Banking"
-        B1[Kontoeröffnung]
-        B2[Kreditantrag]
-        B3[Investment Services]
-    end
-    
-    subgraph "Insurance"
-        I1[Versicherungsabschluss]
-        I2[Schadensmeldung]
-        I3[Portfolio Review]
-    end
-    
-    subgraph "Mobility"
-        M1[Car Sharing]
-        M2[Leasing Contract]
-        M3[Insurance Package]
-    end
-    
-    subgraph "10-Step Reference Process"
-        REF[1. Initialisierung<br/>2. Produktauswahl<br/>3. Selbstdeklaration<br/>4. Basisdaten<br/>5. Erweiterte Daten<br/>6. Identifikation<br/>7. Background Checks<br/>8. Vertragsabschluss<br/>9. Signatur<br/>10. Metadaten/Verteilung]
-    end
-    
-    B1 --> REF
-    B2 --> REF  
-    B3 --> REF
-    I1 --> REF
-    I2 --> REF
-    I3 --> REF
-    M1 --> REF
-    M2 --> REF
-    M3 --> REF
-    
-    classDef banking fill:#e3f2fd
-    classDef insurance fill:#f3e5f5
-    classDef mobility fill:#e8f5e8
-    classDef reference fill:#fff3e0
-    
-    class B1,B2,B3 banking
-    class I1,I2,I3 insurance
-    class M1,M2,M3 mobility
-    class REF reference
-```
+**Konzeptionelle Cross-Industry Anwendbarkeit:**
+
+Der 10-Stufen-Referenzprozess wurde als universeller Standard entwickelt, der sich flexibel auf verschiedene Branchen und Use Cases anwenden lässt.
+
+**Zentrale Referenzprozess-Anwendung:**
+Alle Branchen nutzen dieselbe 10-Stufen-Grundstruktur (Initialisierung bis Metadaten/Verteilung), passen jedoch die spezifischen Dateninhalte und Compliance-Anforderungen innerhalb jeder Stufe an ihre jeweiligen regulatorischen und geschäftlichen Anforderungen an.
+
+**Skalierbarkeits-Vorteil:** Ein einmal implementierter Prozess kann durch Konfiguration der Datenbausteine für verschiedene Branchen wiederverwendet werden.
+
+### Branchenübergreifende Use Cases:
+
+**Banking Sector Anwendungen:**
+- Kontoeröffnung: Vollständiger 10-Stufen-Prozess mit Banking-spezifischen Daten
+- Kreditantrag: Erweiterte Fokussierung auf Stufen 5 und 7 (Risikobewertung und Background Checks)
+- Investment Services: Spezialisierung auf MIFID II-Compliance in Stufe 3
+
+**Insurance Sector Anwendungen:**
+- Versicherungsabschluss: Anpassung der erweiterten Daten (Stufe 5) auf Risikofaktoren
+- Schadensmeldung: Verkürzte Prozess-Variante mit Fokus auf Identifikation (Stufe 6)
+- Portfolio Review: Schwerpunkt auf Stufen 3-5 für Updated Risk Assessment
+
+**Mobility Sector Anwendungen:**
+- Car Sharing: Leichtgewichtige Prozess-Variante mit Fokus auf Identität und Basic KYC
+- Leasing Contract: Vollständiger Prozess mit Mobility-spezifischen erweiterten Daten
+- Insurance Package: Cross-Sector Integration mit Insurance-Modulen
+
+
 
 ---
 
 ## Branchenübergreifender 10-Stufen Referenzprozess: Design und Ziel
+TODO: concatenate redundant content with the previous section!
 
 ### Konzeptionelles Design
 
@@ -235,7 +224,7 @@ Der Referenzprozess wurde als **universeller Standard** für die digitale Kunden
 **Sekundärziele:**
 - Standardisierung der Schweizer Finanzbranche
 - Internationale Interoperabilität
-- Innovation-Färderung durch offene Standards
+- Innovation-Förderung durch offene Standards
 - Datenschutz-by-Design Implementation
 
 ---
@@ -416,7 +405,7 @@ Umfassende Hintergrundprüfungen zur Risikobewertung und Compliance-Sicherstellu
 
 **Fakultative/Produktspezifische Checks:**
 - **Kreditwürdigkeit:** Bonität, ZEK/IKO-Abfrage, Betreibungsauskunft
-- **Adressverifikation:** Wohnsitzbetätigung, Melderegisterabgleich
+- **Adressverifikation:** Wohnsitzbestätigung, Melderegisterabgleich
 - **Kontaktverifikation:** Mobilnummercheck, E-Mail-Verifikation
 - **Device Intelligence:** Wallet Check, Geräte-ID, Fraud Detection
 
@@ -471,31 +460,36 @@ Rechtsgültige Unterzeichnung des Vertrags mittels verschiedener Signaturverfahr
 **Anmerkungen:** Abhängig von Produktauswahl (z.B. Kreditkarte, Hypothek erfordern QES)  
 **Rechtliche Anforderungen:** ZertES (Zertifikate-Services-Gesetz), eIDAS-Kompatibilität
 
-#### Stufe 10: Metadaten/Verteilung
+#### Stufe 10: Metadaten und Verteilung
 **Beschreibung:** Service-Activation und Welcome Process
 - Account Provisioning
-- Initial Service Configuration
+- Initial Service Configuration  
 - Welcome Package und Onboarding Support
 
 **Owner:** System  
-**Zweck:** Erfassung von Metadaten und Verarbeitung  
-**Level of Assurance:** Self-declared  
+**Zweck:** Erfassung von Metadaten und finale Systemverteilung  
+**Level of Assurance:** System-validated  
 
 **Event:**
-Automatische Erfassung von Prozess-Metadaten für Audit, Compliance und Qualitätssicherung, gefolgt von finaler Systemintegration.
+Automatische Erfassung von Prozess-Metadaten für Audit, Compliance und Qualitätssicherung, gefolgt von finaler Datenvalidierung, Systemintegration und Verteilung an relevante Backend-Systeme.
 
 **Relevante Datenpunkte:**
-- **Prozess-Timestamps:** Start-/Endzeiten jedes Schritts, Zeitstempel, Originator
+- **Prozess-Timestamps:** Start-/Endzeiten jedes Schritts
 - **System-Informationen:** API-Versionen, Service-Provider
 - **Qualitäts-Metriken:** Completion Rate, Error Rate, Processing Time
 - **Compliance-Daten:** Regulatory Check Results, Audit Trail
-- **Verteilung:** Verarbeitung der Eröffnung durch die Bank
+- **Performance-Metriken:** Response Times, Throughput
+- **Validation Results:** Data Quality Checks
 - **Integration Status:** Core Banking System Integration
+- **Distribution Log:** Target Systems und Status
+- **Error Handling:** Failed Operations und Retry Logic
 - **Notification Status:** Customer und Internal Notifications
 
 ---
 
 ## Regulatorische und rechtliche Fragestellungen
+*TODO: Verifizieren, ob dieser Teil relevant ist!*
+
 Spezifisch im Kontext zum Referenzprozess, detaillierte Betrachtung der regulatorischen und rechtlichen Herausforderungen sind hier beschrieben: [Konklusion Rechtliche Rahmenbedingungen](documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md)
 
 ### Identifikation offener Herausforderungen
@@ -568,6 +562,34 @@ Die modulare Architektur basiert auf standardisierten Datenbausteinen, die flexi
 
 ### Prozess-State-Machine
 
+**Konzeptionelle Zustandsübergänge:**
+
+Der Referenzprozess implementiert ein state-basiertes System mit definierten Übergangsbedingungen zwischen den einzelnen Stufen:
+
+**Lineare Progression:**
+- Jede Stufe wird erst nach erfolgreicher Vollendung der vorhergehenden freigeschaltet
+- Automatische Validierung vor Übergang zur nächsten Stufe
+- Persistierung des aktuellen Status für Unterbrechung und Wiederaufnahme
+
+**Parallele Verarbeitungszustände:**
+Bei komplexen Stufen (z.B. Identifikation, Background Checks) können mehrere Verfahren parallel ablaufen:
+- **Identifikation:** VideoIdent, E-ID Integration oder biometrische Verifikation alternativ
+- **Background Checks:** PEP-Screening, Sanktionslisten-Check und AML-Assessment parallel
+- **Signatur:** Verschiedene Signaturverfahren (QES, 2FA, biometrisch) je nach Produktanforderung
+
+**Fehlerbehandlung und Rollback:**
+- Definierte Fehlerzustände für jede Stufe mit spezifischen Recovery-Optionen
+- Möglichkeit zur Korrektur und Wiederholung bei Validierungsfehlern
+- Eskalationspfade für manuelle Intervention bei komplexen Fällen
+
+**Finale Zustandsübergänge:**
+- Erfolgreicher Abschluss führt zum "AccountActivated"-Status
+- Metadatenerfassung und Systemverteilung als finale automatisierte Schritte
+- Audit-Trail für alle Zustandsübergänge und Entscheidungspunkte
+
+Technische Details der State-Machine-Implementation sind in *TODO: create file* dokumentiert.
+
+
 ```mermaid
 stateDiagram-v2
     [*] --> Initialized: Customer starts process
@@ -626,7 +648,38 @@ stateDiagram-v2
     Failed --> [*]: Process terminated
 ```
 
+
 ### Entscheidungspunkte und Rollbacks
+
+**Konzeptionelle Qualitätskontroll-Mechanismen:**
+
+Der Referenzprozess integriert systematische Entscheidungspunkte und Korrekturmöglichkeiten für robuste Prozessführung:
+
+**Automatisierte Qualitätschecks:**
+- **Eligibility Check:** Automatische Prüfung der Grundqualifikation vor Dateneingabe
+- **Data Validation:** Real-time Plausibilitätsprüfung bei Basisdaten-Erfassung
+- **Risk Assessment:** Algorithmic scoring bei erweiterten Daten
+- **Identity Verification:** Technische Validierung der Identifikationsverfahren
+- **KYC Clearance:** Automatisierte Compliance-Checks gegen regulatorische Anforderungen
+
+**Rollback und Korrektur-Mechanismen:**
+- **Data Correction:** Rückkehr zu vorheriger Stufe bei Validierungsfehlern mit Korrekturmöglichkeit
+- **Alternative Methods:** Ausweichverfahren bei technischen Problemen (z.B. alternative Identifikationsmethoden)
+- **Process Pause:** Möglichkeit zur Unterbrechung und späteren Wiederaufnahme bei allen Stufen
+
+**Manuelle Intervention und Eskalation:**
+- **Manual Review:** Human-in-the-Loop für Grenzfälle bei Risk Assessment
+- **Compliance Review:** Spezialisierte Prüfung bei KYC-Auffälligkeiten
+- **Conditional Approval:** Möglichkeit der bedingten Genehmigung mit zusätzlichen Auflagen
+
+**Definierte Ausstiegspunkte:**
+- **Ineligibility:** Frühzeitige Beendigung bei grundsätzlicher Nichteignung
+- **High Risk:** Beendigung bei nicht akzeptablem Risikoprofil
+- **Compliance Issues:** Abbruch bei regulatorischen Hindernissen
+
+**Erfolgreiche Abschluss-Kriterien:**
+Alle automatisierten und manuellen Checks müssen erfolgreich bestanden werden, bevor der finale "Account Activated"-Status erreicht wird.
+
 
 ```mermaid
 flowchart TD
@@ -709,26 +762,20 @@ flowchart TD
 TODO: conceptual definition of metadata framework here, details in 04 API Endpoint Design
 
 #### Consent Management
-```json
-{
-  "purpose": "account_opening",
-  "dataCategories": ["identity", "contact", "kyc_basic"],
-  "granularity": "field_level",
-  "retention": "customer_lifetime",
-  "withdrawal_method": "self_service"
-}
-```
+**Konzeptionelle Einwilligungsverwaltung:**
+- **Purpose Definition:** Klare Zweckbindung (z.B. Kontoeröffnung, Kreditprüfung)
+- **Data Categories:** Granulare Kategorisierung (Identität, Kontakt, KYC-Basisdaten)
+- **Granularity Control:** Field-Level Kontrolle für maximale Kundensouveränität
+- **Retention Policy:** Lebenszyklus-gebundene Datenaufbewahrung
+- **Withdrawal Options:** Self-Service-Widerrufsmöglichkeiten für Kunden
 
 #### Data Quality
-```json
-{
-  "source": "government_registry",
-  "verification_level": "QEAA",
-  "confidence_score": 0.98,
-  "last_verified": "2025-08-18T10:00:00Z",
-  "expiry": "2026-08-18T10:00:00Z"
-}
-```
+**Konzeptionelle Datenqualitäts-Bewertung:**
+- **Source Classification:** Bewertung der Datenherkunft (Behördenregister, Self-Declaration, Third-Party)
+- **Verification Level:** QEAA/EAA-Level-Klassifizierung für verschiedene Assurance-Stufen
+- **Confidence Scoring:** Algorithmic scoring der Datenqualität und -zuverlässigkeit
+- **Temporal Validity:** Zeitstempel für letzte Verifikation und Ablauffristen
+- **Expiry Management:** Automatische Benachrichtigung bei ablaufender Datenvalidität
 
 ---
 
@@ -842,16 +889,26 @@ Die Open API Kundenbeziehung integriert und erweitert bestehende nationale und i
 
 #### Cross-Provider Interoperability
 
-**API-Endpoint-Übersicht (Version 2.0)**
-TODO: detailed API endpoint design in 04 API Endpoint Design coherent with content here!
+**API-Endpoint-Übersicht (Konzeptionell)**
+
+Die API-Architektur unterstützt sowohl vollständige als auch granulare Datenabfragen für flexible Use Case-Abdeckung:
 
 **Vollständige Datenabfrage:**
+- Customer Identification Endpoint für komplette Identitätsverifikation
+- Full Request Endpoint für vollständige Kundendatensätze
+
 ```
 POST /customer/identification
 POST /customer/fullRequest
 ```
 
-**Granulare Daten-Endpunkte (nur Teilmengen):**
+**Granulare Daten-Endpunkte:**
+- Basic Data Endpoint: Stammdaten (Name, Vorname, Geburtsdatum, Nationalität)
+- Address Endpoint: Adressdaten (Haupt- & Korrespondenzadresse)
+- Contact Endpoint: Kontaktdaten (Telefon, E-Mail)
+- KYC Endpoint: KYC-Attribute ohne Ausweisdokumente
+- Check Endpoint: Existenz- und Identifikations-Gültigkeitsprüfung
+
 ```
 POST /customer/basic       # Nur Stammdaten (Name, Vorname, Geburtsdatum, Nationalität)
 POST /customer/address     # Nur Adressdaten (Haupt- & Korrespondenzadresse)
@@ -860,7 +917,14 @@ POST /customer/kyc         # Nur KYC-Attribute ohne Ausweis
 POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
 ```
 
-**Datenpunkte – Basic Dataset (Version 1.0):**
+**Basic Dataset Komponenten:**
+- Customer-ID für eindeutige Referenzierung
+- Personen-Stammdaten (Name, Geburtsdatum)
+- Identifikations-Metadaten (Datum, Methode, Gültigkeit)
+- VSB-Status für regulatorische Compliance
+- Consent-Management für Datenschutz-Compliance
+
+**Datenpunkte für Basic Dataset:**
 - customerId (String): Interne Referenznummer der Bank
 - firstName (String): Vorname des Kunden
 - lastName (String): Nachname des Kunden
@@ -892,24 +956,21 @@ POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
 - Exception Handling und Human Intervention Workflows
 
 **Process State Management:**
-TODO: only conceptual definition of process state management here, details in 04 API Endpoint Design
 
-```json
-{
-  "processId": "onboarding_2025081801",
-  "customerId": "customer_123",
-  "currentStage": "identity_verification",
-  "completedStages": ["service_discovery", "product_selection", "data_collection"],
-  "nextStages": ["background_checks", "contract_signing"],
-  "processData": {...},
-  "auditTrail": [...]
-}
-```
+**Konzeptionelle Prozesszustandsverwaltung:**
+- **Process Identification:** Eindeutige Prozess-IDs für Tracking und Wiederaufnahme
+- **Customer Linkage:** Verknüpfung mit Kunden-Identifikatoren für personalisierte Erfahrung
+- **Stage Tracking:** Kontinuierliche Überwachung des aktuellen Prozessstatus
+- **Progress History:** Vollständige Dokumentation aller abgeschlossenen Stufen
+- **Forward Planning:** Transparente Anzeige der verbleibenden Prozessschritte
+- **Data Persistence:** Sichere Speicherung von Zwischenergebnissen für Session-übergreifende Bearbeitung
+- **Audit Trail:** Lückenlose Nachverfolgung aller Prozessschritte und Entscheidungen
 
 ---
 
 ## Fazit und Best Practices für Referenzprozess-Umsetzung
-*TODO: bitte verifizieren: soll ich diesen Teil (oder zumindest teilweise) zu den Anforderungen packen? passt evtl besser...*
+
+*TODO: verifizieren!*
 
 ### Strategische Erfolgsfaktoren
 
@@ -931,73 +992,7 @@ TODO: only conceptual definition of process state management here, details in 04
 - KYC/AML/CTF Requirements embedded
 - Audit Trails für vollständige Nachverfolgbarkeit
 
-### Implementierungs-Roadmap
 
-#### Sofortige Massnahmen (0-3 Monate)
-- [ ] Stakeholder Alignment über Referenzprozess-Definition
-- [ ] Technical Architecture Review mit bestehenden Core Banking Systems
-- [ ] Pilot Partner Selection für MVP Implementation
-- [ ] Legal Framework Review und Compliance Assessment
-
-#### Kurze Frist (3-9 Monate)
-- [ ] MVP Development: Bankkonten-Onboarding Use Case
-- [ ] API Development und Testing Environment Setup
-- [ ] Integration mit 2-3 Pilot Partners
-- [ ] Security Assessment und Penetration Testing
-
-#### Mittlere Frist (9-18 Monate)
-- [ ] Production Release mit limitiertem Partner-Kreis
-- [ ] Performance Monitoring und Optimization
-- [ ] Expansion zu weiteren Use Cases
-- [ ] Cross-border Integration (EU Markets)
-
-#### Längere Frist (18+ Monate)
-- [ ] Full Market Rollout mit allen relevanten Partnern
-- [ ] Cross-Industry Expansion (Insurance, Mobility)
-- [ ] AI/ML Enhancement für Personalized Experiences
-- [ ] International Standards Contribution und Leadership
-
-### Risiko-Mitigation
-
-#### Technische Risiken
-**Legacy Integration Complexity:**
-- **Mitigation:** Comprehensive API Gateway Architecture
-- **Contingency:** Phased Migration mit Parallel Operation
-
-**Data Quality und Consistency:**
-- **Mitigation:** Automated Validation und Cross-Reference Checks
-- **Contingency:** Human-in-the-Loop Processes für Edge Cases
-
-#### Business Risiken
-**Partner Adoption Resistance:**
-- **Mitigation:** Clear Value Proposition und Incentive Programs
-- **Contingency:** Alternative Partnership Models
-
-**Regulatory Changes:**
-- **Mitigation:** Flexible Architecture mit Configuration-based Compliance
-- **Contingency:** Rapid Response Team für Regulatory Adaptations
-
-### Messbarkeit und KPIs
-
-#### Quantitative Erfolgs-Metriken
-- **Effizienz:** Erhebliche Reduktion redundanter Datenerfassung
-- **Customer Experience:** Signifikante Verbesserung der Onboarding-Zeit
-- **Qualität:** Reduzierte Fehlerrate bei automatisierten Prozessen
-- **Conversion Rate:** Verbesserte Erfolgsraten im Onboarding-Prozess
-
-#### Qualitative Bewertungen
-- Customer Satisfaction Score: Zielwert >4.5/5.0
-- Partner NPS: Zielwert >50
-- Developer Experience Rating: Zielwert >4.0/5.0
-- Compliance Audit Results: 100% Pass Rate
-
-#### Zentrale Vorteile des föderierten Systems
-- **Das Kundenerlebnis** wird einfacher, sicherer und schneller, während die Onboarding-Kosten pro Neukunde sinken
-- **Die regulatorische Konformität** im Kontext des revidierten Datenschutzgesetzes (Datenportabilität) wird hergestellt
-- **Ein nationaler Standard** zur Weitergabe von digitalen Kundendaten kann mitgestaltet werden
-- **Erschließung von neuen Ertragsmöglichkeiten** im Kontext der Datennutzung im Netzwerk
-- **Steigerung der Integrations- und Abwicklungseffizienz** zwischen den involvierten Parteien
-- **Banken können ihre Kompetenzen branchenübergreifend platzieren** und sich als Vertrauensanker gegenüber ihren Kunden positionieren
 
 Der Referenzprozess stellt das Herzstück der Open API Kundenbeziehung dar und bietet ein bewährtes Framework für die Digitalisierung der Kundenbeziehung mit messbaren Effizienzgewinnen und verbesserter Customer Experience.
 
