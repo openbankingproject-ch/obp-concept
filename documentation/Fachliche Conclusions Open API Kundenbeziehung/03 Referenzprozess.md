@@ -930,9 +930,13 @@ POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
 
 #### 1. Modularer Implementierungsansatz
 **Best Practice:** Start mit einem fokussierten Use Case (Bankkonten-Onboarding) und schrittweise Erweiterung
-- **Phase 1:** Kern-Bausteine (Identität, Kontakt, KYC-Basis)
-- **Phase 2:** Ecosystem-spezifische Erweiterungen
-- **Phase 3:** Cross-Industry Integration
+
+**Implementierungs-Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
+
+**Prozess-spezifische Phasen:**
+- **Phase 1:** Kern-Bausteine (Identität, Kontakt, KYC-Basis) - 10-Stufen-Prozess MVP
+- **Phase 2:** Ecosystem-spezifische Erweiterungen - Use Case Expansion  
+- **Phase 3:** Cross-Industry Integration - Referenzprozess für andere Branchen
 
 #### 2. Standards-basierte Architektur
 **Best Practice:** Verwendung etablierter Standards für maximale Interoperabilität

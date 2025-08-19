@@ -443,11 +443,12 @@ Die Architektur-Evolution folgt einem systematischen Pfad mit definierten Entsch
 - Ermöglicht internationale Interoperabilität
 - Skalierbar für verschiedene Branchen-Segmente
 
-**Implementation Roadmap:**
-1. **Phase 1 (kurzfristig):** Standards Development Organisation etablieren
-2. **Phase 2 (mittelfristig):** Core Standards finalisieren und Testing beginnen
-3. **Phase 3 (mittelfristig):** Pilot Implementation mit mehreren Participants
-4. **Phase 4 (längerfristig):** Market Rollout und kontinuierliche Evolution
+**Implementation Roadmap:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
+
+**Governance-spezifische Phasen:**
+- **Phase 1:** Standards Development Organisation etablieren, Governance Framework
+- **Phase 2:** Core Standards finalisieren, Pilot Implementation  
+- **Phase 3:** Market Rollout mit kontinuierlicher Governance Evolution
 
 #### Governance-Struktur für Schweizer Kontext
 

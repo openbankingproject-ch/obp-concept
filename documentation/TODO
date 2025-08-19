@@ -43,7 +43,7 @@ professional documentation (conclusions) written from the perspective of an econ
     - needs to be coherent with the Referenzprozess and the data fields defined there, make sure structure matches and that everything described conceptually in the Referenzprozess is then described in detail in the API Endpoint Design conclusion
 
 05 Vertrauensnetzwerk:
-    - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
+    - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/05 Vertrauensnetzwerk.md"
 
 06 Consent und Security Flow:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/06 Consent und Security Flow.md"

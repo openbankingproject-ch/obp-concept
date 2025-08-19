@@ -1089,26 +1089,14 @@ Die umfassende Anforderungsanalyse zeigt eine klare Strategie für die erfolgrei
 
 ### Implementation Roadmap
 
-#### **Immediate Next Steps (Month 1-3)**
-- [ ] Technical Architecture Finalization
-- [ ] Partner Agreement Templates entwickeln
-- [ ] Regulatory Consultation initiation
-- [ ] Development Team Aufbau
-- [ ] Initial Funding secured
+Die detaillierte Implementierung folgt der konsolidierten Master-Timeline mit speziellem Fokus auf Business Requirements und Partner-Onboarding.
 
-#### **Development Phase (Month 3-6)**
-- [ ] MVP API Development
-- [ ] Security Framework Implementation
-- [ ] Sandbox Environment Setup
-- [ ] Partner Pilot Program Launch
-- [ ] Legal Framework etablieren
+**Vollständige Implementierungs-Details:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
 
-#### **Launch Phase (Month 6-9)**
-- [ ] Production Environment Deployment
-- [ ] Partner Onboarding at Scale
-- [ ] Customer-facing Services Launch
-- [ ] Marketing und Communication Strategy
-- [ ] Continuous Monitoring und Optimization
+#### **Business-spezifische Meilensteine:**
+- **Immediate Phase (Monate 1-3):** Business Requirements Finalisierung, Partner Agreement Templates
+- **Foundation Phase (Monate 1-6):** MVP für priorisierten Use Case 1 (Bankwechsel), initiales Partner-Onboarding
+- **Scaling Phase (Monate 6-18):** Vollständige Use Case Implementation, Business Model Validation
 
 ### Critical Success Factors
 

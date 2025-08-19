@@ -140,6 +140,8 @@ sequenceDiagram
     TestTeam->>Stakeholder: Final validation report
 ```
 
+**Consent Management Testing:** The consent management flow testing includes validation of granular permissions, consent lifecycle management, and GDPR compliance. → [Complete consent flow specifications and testing requirements in Conclusion 06 Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
+
 ### Security Testing Flow
 
 ```mermaid
@@ -413,6 +415,8 @@ Genaue Metriken zur Messung der Code Quality, Performance und Security Complianc
 - **Dynamic Client Registration:** Client Authentication Tests
 - **Request Object Testing:** JAR (JWT Secured Authorization Request) Validation
 
+→ [Complete FAPI 2.0 security requirements and implementation details in Conclusion 06 Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
+
 #### Penetration Testing Programme
 **Quarterly Security Assessments:**
 - **External Penetration Tests:** Third-party Security Audits
@@ -508,6 +512,7 @@ Genaue Metriken zur Messung der Code Quality, Performance und Security Complianc
 **Interactive Consent Management Demonstration:**
 - **Format:** Step-by-step Consent Journey Simulation
 - **Content:** FAPI 2.0-compliant Consent Flow mit granularen Options
+- **Technical Base:** → [Complete consent architecture and flow specifications in Conclusion 06 Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
 - **Features:**
   - Real-time Consent Status Updates
   - Data Category Selection Interface
@@ -660,44 +665,14 @@ Das Testing und Verifikations-Framework positioniert die Open API Kundenbeziehun
 
 ### Roadmap für Testing und Verifikation
 
-#### Phase 1: Foundation Testing (Monate 1-6)
-**Core Testing Infrastructure:**
-- [ ] **Automated Testing Pipeline:** CI/CD pipeline mit full test automation
-- [ ] **Security Testing Framework:** FAPI 2.0 conformance testing
-- [ ] **Performance Benchmarking:** Comprehensive performance baseline
-- [ ] **Initial Use Case Validation:** UC1 (Bankkonten-Onboarding) complete validation
+Testing und Verifikation läuft parallel zu allen Implementierungsphasen mit spezifischem Fokus auf Community-basierte Validation und Multi-Layer Testing Strategy.
 
-**Community Engagement:**
-- [ ] **Partner Testing Program Launch:** First 3-5 partners onboarded
-- [ ] **Expert Advisory Board Establishment:** Technical und business experts
-- [ ] **Public Demo Environment:** Interactive demos available
-- [ ] **Developer Community Setup:** GitHub repository und documentation
+**Vollständige Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
 
-#### Phase 2: Scale-up Testing (Monate 6-12)
-**Extended Testing Coverage:**
-- [ ] **Complete Use Case Testing:** All 4 prioritized use cases validated
-- [ ] **Cross-Browser/Platform Testing:** Comprehensive compatibility testing
-- [ ] **Load Testing:** Production-level performance validation
-- [ ] **Integration Testing:** Multi-partner integration scenarios
-
-**Community Expansion:**
-- [ ] **Extended Partner Program:** 10-15 active partners
-- [ ] **Industry Expert Reviews:** Quarterly expert review cycles
-- [ ] **Academic Collaboration:** Research partnerships established
-- [ ] **Conference Presentations:** Industry validation demonstrations
-
-#### Phase 3: Production Excellence (Monate 12-18)
-**Production-Ready Quality:**
-- [ ] **24/7 Monitoring:** Continuous production quality monitoring
-- [ ] **Automated Incident Response:** Intelligent error detection und response
-- [ ] **Performance Optimization:** Sub-second response time achievement
-- [ ] **Compliance Certification:** Official FAPI 2.0 certification
-
-**Market Validation:**
-- [ ] **Production Partners:** 15+ partners in production
-- [ ] **Community Recognition:** Industry awards und recognition
-- [ ] **International Validation:** Cross-border integration testing
-- [ ] **Standards Contribution:** Contribution to international standards
+#### **Testing-spezifische Meilensteine:**
+**Phase 1 (Monate 1-6):** Automated Testing Pipeline, FAPI 2.0 Conformance, Partner Testing Program Launch
+**Phase 2 (Monate 6-12):** Complete Use Case Testing, Extended Partner Program, Expert Review Cycles
+**Phase 3 (Monate 12-18):** 24/7 Production Monitoring, Community Recognition, International Validation
 
 
 

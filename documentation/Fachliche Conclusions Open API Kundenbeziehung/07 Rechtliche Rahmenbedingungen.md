@@ -126,33 +126,19 @@ Damit erscheint es auch nicht als relevant, ob der bei der Identifikation beim D
 
 ### Rechtliche Handlungsempfehlungen
 
-#### Kurzfristige Massnahmen (0-6 Monate)
+Die rechtliche Umsetzung erfolgt parallel zur technischen Implementation mit spezifischem Fokus auf Compliance-by-Design und proaktives FINMA-Engagement über alle Projektphasen.
 
-1. **Qualifizierte Rechtsberatung engagieren:** Spezialisierte Anwaltskanzlei mit FinTech/Banking-Expertise für detaillierte rechtliche Analyse
+**Vollständige Implementierungs-Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
 
-2. **FINMA-Strategie entwickeln:** Entscheidung über Timing und Approach für FINMA-Engagement
+#### **Rechtsspezifische Phasen-Übersicht:**
+**Phase 1 (Monate 1-6):** Qualifizierte Rechtsberatung, FINMA-Strategie, Legal Framework Design, Compliance-by-Design
+**Phase 2 (Monate 6-18):** Pilot Legal Testing, Regulatory Engagement, Industry Coordination, Legal Precedent Building
+**Phase 3 (Monate 18-36):** Regulatory Advocacy, International Coordination, Legal Innovation
 
-3. **Legal Framework Design:** Entwicklung von Standardverträgen für API-Participants mit einem klar definierten Haftungsreglement
-   
-4. **Compliance-by-Design Implementation:** Integration von rechtlichen Anforderungen in die technische Architektur
-
-#### Mittelfristige Massnahmen (6-18 Monate)
-
-5. **Pilot Legal Testing:** Rechtliche Validierung der API-Implementation mit begrenztem Participant-Set
-
-6. **Regulatory Engagement:** Proaktiver Dialog mit FINMA über Open API Framework
-
-7. **Industry Coordination:** Koordination mit anderen Schweizer Financial Institutions für gemeinsame rechtliche Positionen
-
-8. **Legal Precedent Building:** Dokumentation und Sharing von Legal Learnings für Industry Benefit
-
-#### Langfristige Strategien (18+ Monate)
-
-9. **Regulatory Advocacy:** Engagement in der Entwicklung von Swiss-specific Open API Regulation
-
-10. **International Coordination:** Coordination mit EU/UK Regulatory Developments für Cross-border Compatibility
-
-11. **Legal Innovation:** Entwicklung innovativer rechtlicher Lösungen für emerging API Use Cases
+#### **Detaillierte rechtliche Massnahmen:**
+**Kurzfristige Massnahmen (0-6 Monate):** Rechtliche Foundation und Compliance-Framework
+**Mittelfristige Massnahmen (6-18 Monate):** Pilot-Validierung und Industry-Koordination
+**Langfristige Strategien (18+ Monate):** Regulatorische Innovation und internationale Koordination
 
 ### Kritische Erfolgsfaktoren
 

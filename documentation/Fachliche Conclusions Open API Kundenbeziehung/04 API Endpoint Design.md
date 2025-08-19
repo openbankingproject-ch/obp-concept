@@ -188,7 +188,9 @@ Basierend auf der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase b
 
 ### Process Flow APIs
 
-Entsprechend dem 10-stufigen Referenzprozess → [Siehe Conclusion Referenzprozess](./03%20Referenzprozess.md) werden zusätzliche API-Endpunkte für den vollständigen Onboarding-Flow bereitgestellt:
+**Basierend auf dem 10-stufigen Referenzprozess** → [Vollständige Prozessdetails und Business Logic in Conclusion 03 Referenzprozess](./03%20Referenzprozess.md)
+
+Die folgenden API-Endpunkte implementieren die technischen Schnittstellen für den strukturierten Onboarding-Flow:
 
 #### `POST /process/initialize`
 **Zweck:** Schritt 1 - Initialisierung des Onboarding-Prozesses
@@ -288,6 +290,8 @@ Entsprechend dem 10-stufigen Referenzprozess → [Siehe Conclusion Referenzproze
 ## Granulare Daten-Endpunkte
 
 Die API bietet granulare Endpunkte für spezifische Datensubsets, um minimale Datenübertragung und präzise Consent-Kontrolle zu ermöglichen:
+
+**Consent-basierte Datenzugriffskontrolle:** → [Detailed consent flow architectures and granular permission management in Conclusion 06 Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
 
 ### Basic Customer Data API
 
@@ -424,7 +428,7 @@ Die API bietet granulare Endpunkte für spezifische Datensubsets, um minimale Da
 **Standard:** OpenAPI 3.0 konforme Spezifikation
 **Architektur:** RESTful API
 **Datenformat:** JSON
-**Sicherheit:** JWT-Token mit Consent-Claims
+**Sicherheit:** JWT-Token mit Consent-Claims → [Complete JWT token architecture and consent claims structure in Conclusion 06](./06%20Consent%20und%20Security%20Flow.md#jwt-token-architektur-und-consent-claims)
 **Authentifizierung:** Header-basierte JWT-Übertragung
 
 ### Datenpunkte – Modulare Datenbausteine (Version 2.0)
@@ -483,17 +487,15 @@ Die Open API Kundenbeziehung Version 2.0 definiert modulare Datenbausteine entsp
 ```
 
 #### Baustein: Consent
+**Consent Management Strukturen:** → [Complete consent data structures, JWT claims, and lifecycle management in Conclusion 06 Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
+
+Basic consent reference structure:
 ```json
 {
-  "consent": {
-    "consentId": "uuid - Eindeutige Consent-ID",
-    "dataCategories": "array - [identity, address, contact, financial]",
-    "purposes": "array - [onboarding, kyc, marketing, analytics]",
-    "grantedAt": "datetime - Erteilungszeitpunkt",
-    "expiresAt": "datetime - Ablaufzeitpunkt",
-    "withdrawnAt": "datetime - Widerrufszeitpunkt",
-    "legalBasis": "string - consent|contract|legal_obligation"
-  }
+  "consentId": "uuid - Eindeutige Consent-ID", 
+  "dataCategories": "array - Requested data categories",
+  "purposes": "array - Data usage purposes",
+  "status": "active|revoked|expired"
 }
 ```
 
@@ -638,156 +640,15 @@ graph TB
 
 ---
 
-## Use Case: Onboarding Bank Implementation
+## Use Case Implementation
 
-### Szenario: Bankwechsel mit Open API Integration
+**Detailed implementation examples and technical integration patterns:** → [Complete use case implementations in Umsetzung und Implementierung](../Umsetzung%20und%20Implementierung/Use%20Case%20Implementation%20Examples.md)
 
-**Ausgangslage:** Ein Kunde möchte von Bank A (Producer) zu Bank B (Integrator) wechseln und seine bestehenden, bereits verifizierten Kundendaten wiederverwenden.
-
-**Akteure:**
-- **Kunde:** Bankkunde mit bestehender Beziehung zu Bank A
-- **Bank A (Producer):** Datenbereitstellende Bank mit vollständigem KYC
-- **Bank B (Integrator):** Neue Bank, die Onboarding vereinfachen möchte
-- **Open API:** Vermittlungssystem für sicheren Datenaustausch
-
-### Detaillierte Implementierung
-
-#### Phase 1: Customer Discovery & Verification
-
-```mermaid
-sequenceDiagram
-    participant K as Kunde
-    participant BA as Bank A (Producer)
-    participant BB as Bank B (Integrator) 
-    participant API as Open API Platform
-
-    K->>BB: Initiiert Kontoeröffnung Online
-    BB->>K: Fragt nach vorhandenen Bankverbindungen
-    K->>BB: Nennt Bank A als bestehende Beziehung
-    
-    BB->>API: POST /customer/check
-    Note over BB,API: Request: {sharedCustomerHash, name, vorname, geburtsdatum}
-    
-    API->>BA: Validate customer existence  
-    BA->>BA: Check customer records & consent status
-    BA->>API: Customer found & valid
-    Note over API,BB: Response: {match: true, idDate: "2025-01-15"}
-    
-    API->>BB: Customer verification successful
-    BB->>K: Bestehende Daten gefunden - Fortfahren?
-```
-
-#### Phase 2: Consent Management & Data Request
-
-```mermaid
-sequenceDiagram
-    participant K as Kunde
-    participant BA as Bank A (Producer)
-    participant BB as Bank B (Integrator)
-    participant API as Open API Platform
-
-    K->>BB: Stimmt Datenverwendung zu
-    BB->>API: POST /customer/fullRequest
-    Note over BB,API: Request mit JWT Consent Claims
-    
-    API->>BA: Request complete dataset
-    BA->>BA: Validate consent & prepare data
-    
-    BA->>API: Complete customer profile
-    Note over BA,API: 65 Datenfelder + pdfUrlPassportScan
-    
-    API->>BB: Full customer data received
-    BB->>BB: Map data to internal systems
-    BB->>BB: Create customer account
-    
-    BB->>K: Konto erfolgreich eröffnet
-    Note over K,BB: Onboarding in Minuten statt Tagen
-```
-
-### Technische Implementation Details
-
-#### API Call Sequence für Bank Onboarding
-
-**1. Customer Check:**
-```json
-POST /customer/check
-{
-  "sharedCustomerHash": "a1b2c3d4e5f6...",
-  "lastName": "Müller", 
-  "firstName": "Anna",
-  "dateOfBirth": "1985-03-15"
-}
-
-Response:
-{
-  "match": true,
-  "identificationDate": "2025-02-01",
-  "verificationLevel": "QEAA",
-  "lastUpdate": "2025-02-01T10:00:00Z"
-}
-```
-
-**2. Full Data Request:**
-```json
-POST /customer/fullRequest
-Header: JWT with consent claims
-{
-  "sharedCustomerHash": "a1b2c3d4e5f6...",
-  "purpose": "accountOpening",
-  "requestedDataCategories": ["identity", "address", "contact", "identification", "kyc"]
-}
-
-Response: 
-{
-  // Modulare Datenbausteine entsprechend Referenzprozess
-  "identity": {
-    "personalData": {
-      "firstName": "Anna",
-      "lastName": "Müller",
-      "dateOfBirth": "1985-03-15",
-      "nationality": ["CH"],
-      "gender": "female",
-      "maritalStatus": "single"
-    },
-    "verificationLevel": "QEAA",
-    "verificationDate": "2025-02-01T10:00:00Z"
-  },
-  "address": {
-    "addressType": "residential",
-    "street": "Bahnhofstrasse",
-    "houseNumber": "42",
-    "postalCode": "8001",
-    "city": "Zürich",
-    "country": "CH",
-    "canton": "ZH"
-  },
-  "contact": {
-    "emailAddress": "anna.mueller@example.ch",
-    "mobileNumber": "+41791234567",
-    "preferredChannel": "email"
-  },
-  "kycData": {
-    "economicBeneficiary": true,
-    "taxDomicile": "CH",
-    "amlRiskClass": "low",
-    "pepStatus": "no",
-    "fatcaStatus": "non_us_person"
-  }
-}
-```
-
-### Business Impact Metriken
-
-**Effizienzgewinn für Integrator Bank:**
-- **Onboarding-Zeit:** Reduktion der Bearbeitungszeit
-- **Dokumentensammlung:** Reduktion des manuellen Aufwands
-- **Compliance-Prüfungen:** Wiederverwendung bestehender KYC-Verfahren
-- **Conversion Rate:** Erwartete Steigerung
-
-**Kundenvorteile:**
-- **Nahtloser Bankwechsel:** Keine erneute Dokumentenvorlage
-- **Sofortige Kontoaktivierung:** Online-Abschluss möglich
-- **Datenschutzkonforme Wiederverwendung:** Granulare Consent-Kontrolle
+The implementation guide covers:
+- **Bank Onboarding:** Complete API call sequences and integration patterns
+- **Customer Discovery & Verification:** Step-by-step technical implementation  
+- **Consent Management & Data Request:** JWT-based consent flows
+- **Business Impact Metrics:** Efficiency gains and customer benefits
 
 ---
 
@@ -857,8 +718,6 @@ Accept: application/json
 
 ---
 
-## Implementierungsrichtlinien
-
 ### OpenAPI 3.0 Specification
 
 **Dokumentationsstandards:**
@@ -910,24 +769,19 @@ paths:
 
 ### Sicherheits-Implementation
 
-**FAPI 2.0 Compliance Checklist:**
-- [ ] JWT Access Tokens mit Proof-of-Possession
-- [ ] Certificate-bound Tokens für High-Value Transactions
-- [ ] Request Object Encryption für Sensitive Data
-- [ ] MTLS Authentication für Partner APIs
-- [ ] PKCE für Public Client Applications
+**FAPI 2.0 Implementation:** → [Complete FAPI 2.0 compliance specifications and security requirements in Conclusion 06 Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
 
 ### Performance Guidelines
 
 **Response Time Targets:**
-- Authentication Endpoints: Sehr schnelle Antwortzeit
-- Data Retrieval Endpoints: Schnelle Antwortzeit
-- Data Modification Endpoints: Mittlere Antwortzeit
-- Bulk Operations: Längere Antwortzeit für komplexe Operationen
+- Authentication Endpoints: Optimierte Antwortzeiten für Security Operations
+- Data Retrieval Endpoints: Optimierte Antwortzeiten entsprechend Endpoint-Typ
+- Data Modification Endpoints: Antwortzeiten für Transaktions-Operationen
+- Bulk Operations: Antwortzeiten für komplexe Operationen
 
 **Caching Strategy:**
-- Static Data: Lange Cache-Dauer
-- Customer Profile Data: Mittlere Cache-Dauer  
+- Static Data: Erweiterte Cache-Dauer
+- Customer Profile Data: Moderate Cache-Dauer  
 - Verification Status: Kurze Cache-Dauer
 - Real-time Data: No caching
 

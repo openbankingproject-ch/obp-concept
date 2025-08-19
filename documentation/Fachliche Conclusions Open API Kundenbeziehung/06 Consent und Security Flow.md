@@ -478,6 +478,8 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 }
 ```
 
+**API Data Structures Integration:** These consent claims integrate with the modular data structures → [See complete API data schemas and structures in Conclusion 04 API Endpoint Design](./04%20API%20Endpoint%20Design.md#datenpunkte--modulare-datenbausteine-version-20)
+
 ### Refresh Token und Long-Lived Consent
 
 **Refresh Token Strategy:**
@@ -494,10 +496,10 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 ```
 
 **Long-Lived Consent Management:**
-- **Initial Consent:** 1 Jahr standard validity
+- **Initial Consent:** Definierte Gültigkeitsdauer
 - **Renewal Mechanism:** Automatic mit Customer Notification
 - **Revocation Rights:** 24/7 Customer Self-Service
-- **Activity Monitoring:** Automatic Expiry bei Inactivity >18 Monate
+- **Activity Monitoring:** Automatic Expiry bei längeren Inaktivitätsperioden
 
 ---
 
@@ -585,7 +587,7 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 
 #### Phase 5: Token Exchange
 ```
-14. Authorization code issued (sehr kurze Gültigkeitsdauer)
+14. Authorization code issued (kurze Gültigkeitsdauer)
 15. Customer redirected back to Integrator
 16. Integrator exchanges code for tokens:
     - Access Token (kurze Gültigkeitsdauer)
@@ -1053,44 +1055,14 @@ graph TB
 
 ### Implementation Roadmap
 
-#### Phase 1: Foundation (Monate 1-6)
-**Security Infrastructure Setup:**
-- [ ] Authorization Server Implementation (FAPI 2.0 compliant)
-- [ ] PKI Infrastructure für Mutual TLS
-- [ ] Consent Management Engine Development
-- [ ] API Gateway Security Policy Configuration
+Die Security- und Consent-Implementation ist integraler Bestandteil aller Projektphasen mit spezifischem Fokus auf FAPI 2.0 Compliance und granulares Consent Management.
 
-**Testing und Validation:**
-- [ ] Security Penetration Testing
-- [ ] FAPI 2.0 Conformance Testing
-- [ ] Load Testing für Production Readiness
-- [ ] Regulatory Compliance Validation
+**Vollständige Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
 
-#### Phase 2: Integration (Monate 6-12)  
-**Producer Integration:**
-- [ ] 3-5 Pilot Banks/Producers onboarded
-- [ ] Legacy System Integration Patterns validated
-- [ ] Cross-border Integration Testing
-- [ ] Customer-facing Consent UX optimized
-
-**Consumer Integration:**
-- [ ] 5-8 Consumer Applications integrated
-- [ ] Mobile App Integration Patterns established
-- [ ] Web Application Integration validated
-- [ ] Multi-Provider Scenarios tested
-
-#### Phase 3: Production Rollout (Monate 12-18)
-**Market Launch:**
-- [ ] Production Environment mit sehr hoher Verfügbarkeit
-- [ ] 24/7 Security Monitoring und Incident Response
-- [ ] Customer Self-Service Consent Management
-- [ ] Comprehensive Analytics und Reporting
-
-**Continuous Improvement:**
-- [ ] Security Controls Optimization basierend auf Usage Patterns
-- [ ] Performance Tuning für High-Volume Scenarios
-- [ ] Additional Use Cases Integration
-- [ ] International Market Expansion Preparation
+#### **Security-spezifische Meilensteine:**
+**Phase 1 (Monate 1-6):** FAPI 2.0 Authorization Server, PKI Infrastructure, Consent Management Engine
+**Phase 2 (Monate 6-18):** Producer/Consumer Integration, Consent UX Optimization, Multi-Provider Testing
+**Phase 3 (Monate 18-36):** 24/7 Security Monitoring, Self-Service Consent, International Expansion
 
 ### Risk Mitigation Strategies
 

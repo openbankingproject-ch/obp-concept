@@ -351,6 +351,8 @@ Payment Initiation als separate Ausbaustufe planen.
 - **FAPI 1.0 Advanced:** High Security für Payment Initiation und sensitive Data Access.
 - **FAPI 2.0:** Next Generation Standard in Development, vereinfachte Implementation bei erhöhter Security.
 
+→ [Comprehensive FAPI evaluation and detailed security implementation in Conclusion 06 Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
+
 ### Datenmodelle und Schema-Design
 
 #### Standardisierte Datenstrukturen
@@ -421,16 +423,20 @@ Transport- und Protokoll-Standards
 
 #### Potenzieller Tech-Stack für Schweizer Implementation
 **Core Technologies:**
-- REST/JSON als API-Architektur
-- FAPI 2.0 für Security
+- REST/JSON als API-Architektur  
 - OpenAPI 3.0 für Dokumentation
-- OAuth 2.0 mit PKCE für Authentication
+- FAPI 2.0 als Sicherheitsstandard
+- OAuth 2.0/OIDC mit PCKE für Authentifizierung und Autorisierung
+
+Comprehensive Security Framework → [Detaillierte Security Standards und FAPI 2.0 Evaluation in Conclusion 06 Consent und Security Flow](./06%20Consent%20und%20Security%20Flow.md)
 
 **Supporting Technologies:**
 - JSON Schema für Data Validation
 - JWT für Token Management
 - Webhook für Real-time Notifications
 - API Gateway für Traffic Management
+
+Integration Technologies → [Siehe Conclusion API Endpoint Design](./04%20API%20Endpoint%20Design.md)
 
 #### Data Standards
 **International Standards:**
@@ -497,20 +503,14 @@ Transport- und Protokoll-Standards
 
 ### Strategische Roadmap für Schweizer Implementation
 
-#### Phase 1: Foundation (6-12 Monate)
-- Pilot-Community mit 3-4 führenden Schweizer Banken
-- MVP-Implementation mit Identifikationsdaten (Use Case: Bankverhältnis/Kontoeröffnung)
-- FINMA-Engagement für regulatorische Klarstellung
+Die strategische Markteinführung erfolgt in drei Phasen über 36 Monate, von der Fundament-Phase mit ersten Pilot-Partnern bis hin zur internationalen Skalierung. Die Schweiz soll dabei als führender Markt für Open Banking Customer Management etabliert werden.
 
-#### Phase 2: Expansion (12-24 Monate)
-- Erweiterte Use Cases
-- Integration mit E-ID-Infrastruktur als Competitive Advantage
-- Community-Expansion zu Fintech-Ecosystem
+**Detaillierte Implementierungs-Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
 
-#### Phase 3: Scale-up (24-36 Monate)
-- Full Open Finance-Funktionalität mit Insurance und Investment
-- Payment Initiation als separate Ausbaustufe
-- Internationale Interoperabilität
+#### Strategische Phasen-Übersicht:
+- **Phase 1 (Monate 1-6):** Foundation mit 3-5 Pilot Banks, MVP mit Identifikationsdaten, FINMA-Engagement
+- **Phase 2 (Monate 6-18):** Expansion auf 10-15 Partner, erweiterte Use Cases, E-ID-Integration
+- **Phase 3 (Monate 18-36):** Full Open Finance mit Insurance/Investment, internationale Interoperabilität
 
 
 ---
