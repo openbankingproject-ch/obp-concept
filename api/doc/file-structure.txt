@@ -1,0 +1,241 @@
+Open API Kundenbeziehung - Complete File Structure
+===============================================================
+
+Root Files
+├── openapi.yaml                    # Complete OpenAPI specification
+├── package.json                    # Node.js dependencies and scripts
+├── .env-config.sh                  # Environment configuration template
+├── README.md                       # Complete project documentation
+├── Dockerfile                      # Docker container configuration
+├── docker-compose.yml              # Multi-service Docker setup
+├── .gitignore                      # Git ignore patterns
+└── .eslintrc.js                    # ESLint configuration
+
+📁 src/ - Application Source Code
+├── app.js                          # Main Express application server (FAPI 2.0 compliant)
+├── 📁 core/                        # Universal Core Framework
+│   ├── index.js                    # Core framework main module
+│   ├── 📁 consent/
+│   │   └── index.js                # Universal consent management system
+│   ├── 📁 extensions/
+│   │   └── index.js                # Extension system architecture
+│   ├── 📁 models/
+│   │   └── index.js                # Universal data models and schemas
+│   ├── 📁 process/
+│   │   └── index.js                # 10-step Referenzprozess orchestration
+│   ├── 📁 registry/
+│   │   └── index.js                # Multi-industry participant registry
+│   ├── 📁 trust/
+│   │   └── index.js                # Trust network component
+│   └── 📁 validation/
+│       └── index.js                # Universal validation framework
+├── 📁 extensions/                  # Industry-Specific Extensions
+│   └── 📁 banking/
+│       ├── index.js                # Banking extension main module
+│       ├── compliance.js           # Banking compliance (FINMA, GwG)
+│       ├── models.js               # Banking-specific data models
+│       ├── processes.js            # Banking business processes
+│       └── validation.js           # Banking validation rules
+├── 📁 middleware/
+│   ├── auth.js                     # FAPI 2.0 JWT authentication & DPoP validation
+│   ├── mtls.js                     # Mutual TLS + private_key_jwt authentication
+│   ├── security.js                 # Enhanced security middleware & audit
+│   ├── validation.js               # Request/response validation (Joi)
+│   └── error-handler.js            # Centralized error handling
+├── 📁 routes/
+│   ├── consent.js                  # Consent management endpoints
+│   ├── customer.js                 # Customer data exchange
+│   ├── identification.js           # Identity verification services
+│   ├── checks.js                   # Background checks (KYC/AML/PEP)
+│   ├── signature.js                # Digital signature services
+│   ├── registry.js                 # Participant registry
+│   ├── health.js                   # Health check endpoints
+│   ├── oauth.js                    # OAuth 2.1/OIDC authorization server
+│   ├── clients.js                  # Dynamic client registration (RFC 7591)
+│   ├── discovery.js                # OIDC/FAPI discovery endpoints
+│   ├── jwks.js                     # JWT key management & JWK Set
+│   ├── par.js                      # Pushed Authorization Requests
+│   └── security-dashboard.js       # Security metrics & audit dashboard
+├── 📁 services/                    # Service Layer
+│   ├── index.js                    # Service manager
+│   ├── consentService.js           # Consent business logic
+│   ├── customerService.js          # Customer data management
+│   ├── identificationService.js    # Identity verification logic
+│   ├── checksService.js            # Background check services
+│   ├── signatureService.js         # Digital signature services
+│   ├── registryService.js          # Registry management
+│   ├── processService.js           # Process orchestration
+│   ├── validationService.js        # Validation services
+│   └── securityAuditService.js     # Security audit & monitoring
+├── 📁 utils/
+│   └── logger.js                   # Winston-based logging utility
+└── 📁 models/                      # Data models (legacy - moved to core)
+    ├── Customer.js
+    ├── Consent.js
+    └── Institution.js
+
+📁 config/ - Configuration Files
+├── database.js                     # Database connection config
+├── security.js                     # Security settings
+└── environments/
+    ├── development.js
+    ├── production.js
+    └── test.js
+
+📁 certificates/ - Certificate Management
+├── trusted/                        # Trusted institution certificates
+├── client/                         # Client certificates for mTLS
+└── ca/                             # Certificate Authority files
+
+📁 docs/ - Documentation
+├── api-reference.md                # Detailed API reference
+├── security-guide.md               # Security implementation guide
+├── deployment-guide.md             # Production deployment guide
+├── developer-guide.md              # Developer setup and usage
+├── compliance.md                   # Regulatory compliance guide
+└── 📁 postman/                     # Postman collections
+    ├── Open-API-Kundenbeziehung.postman_collection.json
+    └── environments/
+
+📁 tests/ - Comprehensive Testing Framework (>95% Coverage Target)
+├── jest.config.js                  # Jest configuration with 4-layer testing
+├── 📁 setup/                       # Test environment setup
+│   ├── jest.setup.js               # Global test setup & custom matchers
+│   ├── unit.setup.js               # Unit test configuration & mocks
+│   ├── integration.setup.js        # Integration test utilities
+│   ├── system.setup.js             # System test utilities & performance
+│   └── acceptance.setup.js         # Use case validation utilities
+├── 📁 unit/                        # Layer 1: Unit Testing (Individual Functions)
+│   ├── 📁 routes/                  # Route handler tests
+│   │   ├── oauth.test.js           # OAuth 2.1/OIDC endpoint tests
+│   │   ├── clients.test.js         # Dynamic client registration tests
+│   │   ├── consent.test.js         # Consent management tests
+│   │   └── security.test.js        # Security middleware tests
+│   ├── 📁 services/                # Service layer tests
+│   │   ├── securityAuditService.test.js
+│   │   ├── consentService.test.js
+│   │   └── customerService.test.js
+│   ├── 📁 middleware/              # Middleware tests (100% coverage required)
+│   │   ├── auth.test.js            # FAPI 2.0 authentication tests
+│   │   ├── mtls.test.js            # mTLS & private_key_jwt tests
+│   │   └── security.test.js        # Security audit middleware tests
+│   ├── 📁 core/                    # Core framework tests
+│   │   ├── consent.test.js
+│   │   ├── process.test.js
+│   │   └── registry.test.js
+│   └── 📁 extensions/              # Extension tests
+│       └── banking.test.js
+├── 📁 integration/                 # Layer 2: Integration Testing (API Contracts)
+│   ├── 📁 api/                     # API contract tests
+│   │   ├── oauth-flow.test.js      # Complete OAuth 2.1 flow integration
+│   │   ├── fapi-compliance.test.js # FAPI 2.0 compliance validation
+│   │   └── client-registration.test.js
+│   ├── 📁 database/                # Database integration
+│   ├── 📁 services/                # Service-to-service communication
+│   └── 📁 security/                # Security integration tests
+│       ├── dpop-validation.test.js
+│       └── audit-logging.test.js
+├── 📁 system/                      # Layer 3: System Testing (End-to-End)
+│   ├── 📁 workflows/               # Complete business workflows
+│   │   ├── account-opening.test.js # UC1 system test
+│   │   ├── reidentification.test.js # UC2 system test
+│   │   └── age-verification.test.js # UC3 system test
+│   ├── 📁 performance/             # Performance & load testing
+│   │   ├── load-testing.test.js    # Concurrent user simulation
+│   │   └── response-time.test.js   # Response time validation
+│   └── 📁 security/                # Security testing
+│       ├── penetration.test.js     # Basic security scanning
+│       └── vulnerability.test.js   # Vulnerability assessment
+├── 📁 acceptance/                  # Layer 4: Acceptance Testing (Use Cases)
+│   ├── 📁 use-cases/               # Use case validation
+│   │   ├── uc1-banking.test.js     # UC1: Banking Account Opening
+│   │   ├── uc2-reidentification.test.js # UC2: Re-identification
+│   │   ├── uc3-age-verification.test.js # UC3: Age Verification
+│   │   └── uc4-evv-lifecycle.test.js # UC4: EVV Lifecycle Management
+│   ├── 📁 demos/                   # Demo scenario validation
+│   │   ├── reference-process.test.js
+│   │   └── consent-flow.test.js
+│   └── 📁 compliance/              # Regulatory compliance tests
+│       ├── finma-compliance.test.js
+│       └── gdpr-compliance.test.js
+├── 📁 fixtures/                    # Test data & mocks
+│   ├── sample-customers.json
+│   ├── test-certificates.json
+│   ├── oauth-clients.json
+│   └── test-tokens.json
+├── 📁 utils/                       # Test utilities
+│   ├── oauth-helpers.js            # OAuth flow test helpers
+│   ├── certificate-mocks.js       # mTLS certificate mocks
+│   └── performance-helpers.js     # Performance testing utilities
+└── 📁 mocks/                       # External service mocks
+    ├── external-apis.js
+    └── database-mocks.js
+
+📁 scripts/ - Utility Scripts
+├── setup.sh                       # Initial setup script
+├── generate-certs.sh               # Certificate generation
+├── migrate-db.js                   # Database migrations
+└── seed-data.js                    # Sample data seeding
+
+📁 nginx/ - Reverse Proxy Configuration
+├── nginx.conf                      # Main Nginx configuration
+├── ssl/                            # SSL certificates
+└── sites-available/
+    └── open-api-kundenbeziehung
+
+📁 logs/ - Application Logs (created at runtime)
+├── app.log                         # General application logs
+├── error.log                       # Error logs
+├── security.log                    # Security events
+├── audit.log                       # Audit trail
+└── access.log                      # HTTP access logs
+
+📁 monitoring/ - Monitoring & Observability
+├── prometheus.yml                  # Prometheus configuration
+├── grafana/
+│   └── dashboards/
+│       ├── api-metrics.json
+│       └── security-metrics.json
+└── alerting/
+    └── rules.yml
+
+Additional Configuration Files
+├── .dockerignore                   # Docker ignore patterns
+├── .env.production                 # Production environment
+├── .env.test                       # Test environment
+├── ecosystem.config.js             # PM2 process manager config
+├── jest.config.js                  # Jest testing configuration
+├── healthcheck.js                  # Docker healthcheck script
+└── CHANGELOG.md                    # Version history
+
+Development Files
+├── .vscode/                        # VS Code settings
+│   ├── settings.json
+│   └── launch.json
+├── .github/                        # GitHub workflows
+│   └── workflows/
+│       ├── ci.yml
+│       └── security-scan.yml
+└── LICENSE                         # License
+
+===============================================================
+
+Quick Start Commands:
+- npm install                       # Install dependencies
+- cp .env.example .env              # Setup environment
+- npm run dev                       # Start development server
+- docker-compose up -d              # Run with Docker
+- npm test                          # Run complete test suite (4-layer)
+- npm run test:unit                 # Run unit tests only
+- npm run test:integration          # Run integration tests
+- npm run test:system               # Run system tests (E2E)
+- npm run test:acceptance           # Run acceptance tests (UC1-UC4)
+- npm run test:coverage             # Generate coverage report
+- npm run docs                      # Generate documentation
+
+FAPI 2.0 Specific Commands:
+- node oauth-demo.js                # OAuth 2.1/OIDC flow demonstration
+- node client-registration-demo.js  # Dynamic client registration demo
+- node security-audit-demo.js       # Security audit system demo
+- curl localhost:3000/.well-known/openid-configuration  # OIDC discovery
+- curl localhost:3000/.well-known/fapi-configuration     # FAPI metadata
