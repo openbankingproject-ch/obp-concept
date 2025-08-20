@@ -20,7 +20,7 @@ Die Open API Kundenbeziehung definiert ein Basisset an Kundendaten, welches die 
 Consent und Securityflow:
 - Der Consentflow bildet die Zustimmung des Kunden ab. Der Securityflow ist unabhängig davon formuliert und stellt dadurch auch die Anschlussfähigkeit in jedes andere Ecosystem sicher.
 Zur Sicherstellung der internationalen Kompatibilität werden die gängigsten Standards verwendet. Ebenso wird die Abstimmung mit und Kompatibilität mit anderen Initiativen sichergestellt. Dies sind beispielsweise SFTI (z.B. Kundendatenverwendung in der API des Zahlungsverkehrs), Open Wealth (z.B. Kundendatenverwendung in der API Customer Management für die Anbindung von EVVs), eCH (Verwendung von Kundendaten im behördlichen Kontext.
-Diese offene Schnittstelle steht nach der Fertigstellung Allen offen zur Verfügung und wird z.B. auch auf der I14Y-Plattform vom Bundesamt für Statistik bereit stehen.
+Diese offene Schnittstelle steht nach der Fertigstellung Allen offen zur Verfügung und wird z.B. auch auf der I14Y-Plattform vom Bundesamt für Statistik bereit stehen. Es besteht auch die Idee, diese Open API Kundenbeziehung bei ISO akreditieren zu lassen.
 
 Roadmap:
 Phase 1 (bis 06/26): 
@@ -29,8 +29,10 @@ Phase 1 (bis 06/26):
 - Veröffentlichung dieser Version durch die Community und e.B. eCH getesteten und verifizierten Schnittstelle
 - Konzeptionelle Grundlagen für die Verwendung im Netzwerk: z.B. Governance für föderative Sturkturen, regulatorische Abklärungen
 - Umsetzung eines MVPs mit dem Fokus "Identifikation Privatkunden" und Weitergabe im Netzwerk 
-  Phase 2
-- Konzeption der Weiterentwicklung (strategisch und funktional) 
+  Phase 2 (ab 07/26)
+- Konzeption der Weiterentwicklung (z.B. Governance im föderativen System)
+- Erweiterung des ersten MVPs "Identifikation Privatkunden" und Weitergabe im Netzwerk mit 5-10 zusätzlichen Unternehmen
+- Aufgleisen von weiteren MVPs 
 
 
 
@@ -38,7 +40,7 @@ Phase 1 (bis 06/26):
 
 ## Master Implementierungs-Timeline
 
-### Phase 1: Foundation (Monate 1-6)
+### Phase 1: Foundation (Monate 1-6) --> finde ich gut; wichtig ist die Unabhängigkeit der Bereitstellung der API und des MVPs; die Zeit geht bis 06/26 - also eher 12 Monate
 
 **Ziel:** Kerninfrastruktur, Standards und Pilot-Community etablieren
 
@@ -77,7 +79,8 @@ Phase 1 (bis 06/26):
 
 ---
 
-### Phase 2: Integration & Skalierung (Monate 6-18)
+### Phase 2: Integration & Skalierung (Monate 6-18) --> das hier ist die Sicht des MVPs - es geht um die funktionalte Weiterentwicklung mit drei Aspekten: Funktionale Erweiterung mit der Saldierung, Erweiterung der Anschlussfähigkeiten, Erweiterung für Mitarbeiter in einer Firma, dann für Firmen
+--> die weitere Nutzung obliegt über MVP's dem Neztwerk, wie das föderative System dazu gebaut wird, ist noch offen
 
 **Ziel:** Partner Ecosystem skalieren und Use Case Abdeckung erweitern
 
@@ -117,7 +120,7 @@ Phase 1 (bis 06/26):
 
 ---
 
-### Phase 3: Produktion & Evolution (Monate 18-36)
+### Phase 3: Produktion & Evolution (Monate 18-36) --> das würde ich noch nicht formulieren
 
 **Ziel:** Vollständiger Market Rollout und internationale Expansion
 
@@ -169,13 +172,13 @@ Phase 1 (bis 06/26):
 
 ## Kritische Erfolgsfaktoren
 
-### Technische Exzellenz
+### Technische Exzellenz --> sehr gut
 - **Security-First Ansatz:** FAPI 2.0 Compliance von Tag eins
 - **Performance Standards:** Optimierte Antwortzeiten für alle API Endpoints
 - **Skalierbarkeit:** Architektur unterstützt Wachstum auf 15+ Teilnehmer
 - **Interoperabilität:** Internationale Standards Kompatibilität
 
-### Partnerschaft & Community
+### Partnerschaft & Community --> da gilt es eine Unterscheidung in Open API und MVP zu definieren
 - **Starke Pilot Community:** Committed 3-5 initiale Partner
 - **Progressive Skalierung:** Strukturiertes Wachstum auf 10-15 Partner
 - **Expert Validation:** Industry und Academic Endorsement
@@ -183,15 +186,15 @@ Phase 1 (bis 06/26):
 
 ### Rechtliche Erfolgsfaktoren
 - **Early Legal Engagement:** Rechtsexperten von Projektbeginn an einbinden
-- **FINMA Relationship:** Proaktive und transparente Kommunikation mit der FINMA
+- **BUND Relationship:** Proaktive und transparente Kommunikation mit der Stellen des Bundes (SIF, Bundeskanzlei, BFS, eCH)
 - **Industry Collaboration:** Gemeinsame rechtliche Positions mit anderen Market Participants
 - **Regulatory Monitoring:** Kontinuierliche Überwachung von regulatory Developments
-- **Adaptive Compliance:** Flexible Legal Architecture für schnelle Regulatory Adaptations
+- **Adaptive Compliance:** Flexible Legal Architecture für schnelle Regulatory Adaptations --> was heisst das?
 
 ### Marktbereitschaft
 - **Use Case Validation:** Bewiesener Wert in 4 priorisierten Use Cases
-- **Customer Trust:** Transparentes Consent und Datenschutz
-- **Business Model Nachhaltigkeit:** Klare Value Proposition für alle Teilnehmer
+- **Customer Trust:** Transparenter Consent und Datenschutz
+- **Governance und Busienss Model:** Klare Value Proposition für alle Teilnehmer im föderirten Netzwerk
 - **Competitive Timing:** Market Entry vor competitive Bedrohungen
 
 ---
@@ -199,25 +202,25 @@ Phase 1 (bis 06/26):
 ## Risk Mitigation
 
 ### Technische Risiken
-- **Mitigation:** Comprehensive Testing Strategy mit automated Pipelines
-- **Fallback:** Legacy System Integration Patterns für smooth Migration
-- **Monitoring:** 24/7 Security und Performance Monitoring
+- **Mitigation:** Comprehensive Testing Strategy mit automated Pipelines --> verstehe ich nicht
+- **Fallback:** Legacy System Integration Patterns für smooth Migration --> ist nicht unsere Sache
+- **Monitoring:** 24/7 Security und Performance Monitoring --> ist die Sache vom MVP - nicht unsere
 
-### Regulatory Risks
-- **Mitigation:** Proaktives FINMA Engagement und Compliance-by-Design
+### Regulatory Risks --> Sicherstellung der internationalen Kompatibilität
+- **Mitigation:** Proaktives Einbinden relevanter Bundesstellen und Compliance-by-Design
 - **Vorbereitung:** Legal Framework Templates und Privacy Impact Assessments
 - **Anpassung:** Flexible Architektur für regulatorische Änderungen
 - **Legal Expert Engagement:** Qualifizierte Rechtsberatung von Projektbeginn
 - **Industry Coordination:** Gemeinsame rechtliche Positionen zur Risikominimierung
 
 ### Market Risks
-- **Mitigation:** Starke Pilot Community mit Market Validation
-- **Diversifizierung:** Multiple Use Cases reduzieren Single-Point-of-Failure
+- **Mitigation:** Starke OpenBankingProject Community mit Market Validation
+- **Diversifizierung:** Multiple MVPs reduzieren Single-Point-of-Failure
 - **Internationale Vorbereitung:** Standards Alignment für Cross-Border Expansion
 
 ---
 
-## Key Performance Indicators
+## Key Performance Indicators --> nur Phase 1
 
 ### Phase 1 KPIs
 - 3-5 Pilot Partner erfolgreich onboarded
