@@ -97,7 +97,7 @@ reference for all tasks in the following sections!!
 
 ## Demos
 
-**Demos:**
+**Demos Context:**
 - Reference files: 
     - `documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md`
     - `documentation/Fachliche Conclusions Open API Kundenbeziehung/03 Referenzprozess.md`
@@ -109,7 +109,13 @@ reference for all tasks in the following sections!!
 - Demos should visualize the functionality of the Open API Kundenbeziehung, not be a full implementation
 - Demos should appeal to an audience mostly from the financial industry, with an extensive theoretical and professional background, but not necessarily with a deep technical understanding of APIs or software development
 - Use visually appealing graphics and animations for the demos
-- Demos to be created: (or adapted from existing ones)
+
+**Simplified Demos:**
+The current demos do not visualize the processes/flows at all. I have created a simplified version of the referenzprozess demo in HTML that visualizes the 10 step Referenzprozess. Analogue to that, create simplified demos for the other use cases and processes as listed below. The demos should be simple and concise, but still provide a good overview of the functionality of the Open API Kundenbeziehung. Use context listed under **Demos Context**.
+
+[] delete all existing .js demo files in the api directory
+[] leave the description files as basis for the new demos
+[] create new demos in the api/demo directory (in corresponding subdirectories)
     - **Demo 1: Referenzprozess**: basic functionality of the Open API Kundenbeziehung shown through the 10 step Referenzprozess
         - **Demo 1.1: Use Case Kundenbeziehungseröffnung**: Show the 10 step Referenzprozess for the use case of Kundenbeziehungseröffnung
         - **Demo 1.2: Use Case Re-Identifikation**: Show the 10 step Referenzprozess for the use case of Re-Identifikation
@@ -119,10 +125,11 @@ reference for all tasks in the following sections!!
     - **Demo 3: Consent and Security Flow**: Show the Consent and Security Flow of the Open API Kundenbeziehung
     - **Demo 4: Verification Process**: Show the Verification Process of the Open API Kundenbeziehung
     - **Demo 5: MVP Implementation**: Show the MVP implementation of the Open API Kundenbeziehung
-- For each demo, create a script that describes the flow and functionality to be shown
-- For each demo, create a file "Demo X: *name* description.md" in the same directory as the demo file that describes the demo and its functionality snd provides instructions on how to run it
+[] For each demo, create an HTML file that visualizes the flow and functionality to be shown ("api/demo/demo-referenzprozess-simplified-example.html" as an example)
+[] Create a main landing page (for when running on localhost) where all demos are listed with a short description and a link to the respective demo file (e.g. "api/demo/index.html")
+    - The main landing page should be visually appealing and provide an overview of the demos
+    - Each demo should have a link to the respective demo file and a short description of the demo
 - Update the DEMO-INSTRUCTIONS.md file with the new demos and their descriptions and links to the demo files as well as the demo description files
-- Update the run-all-demos.sh script to include the new demos and their descriptions
 
 ----------
 
