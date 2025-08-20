@@ -65,6 +65,8 @@ I added the hex codes for the most important colours here:
 **TODOs J**:
 [] complete README.md file including graphics for our vision and some sort of navigation overview for the repo
 [] create missing mermaid diagrams
+[] Presentation for Summit: Übersicht Ergebnisse schön Darstellen
+[] Get demos to run and make them look nice
 
 
 
