@@ -51,7 +51,7 @@
 
         .framework-overview {
             background: white;
-            border-radius: 20px;
+            border-radius: 8px;
             padding: 40px;
             margin-bottom: 50px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -80,7 +80,7 @@
         .principle {
             background: #f9fafb;
             padding: 25px;
-            border-radius: 15px;
+            border-radius: 8px;
             border-left: 5px solid #F85F3D;
         }
 
@@ -115,12 +115,27 @@
 
         .demo-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 8px;
             padding: 35px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .demo-card.core {
+            border-left: 6px solid #0070C0;
+        }
+
+        .demo-card.use-case {
+            border-left: 6px solid #F85F3D;
+        }
+
+        .demo-card.quality {
+            border-left: 6px solid #B469FF;
         }
 
         .demo-card:hover {
@@ -128,28 +143,6 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
         }
 
-        .demo-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .demo-badge.core {
-            background: #00b02cff;
-        }
-
-        .demo-badge.use-case {
-            background: #0070C0;
-        }
-
-        .demo-badge.quality {
-            background: #B469FF;
-        }
 
         .demo-header {
             margin-bottom: 20px;
@@ -210,11 +203,12 @@
         .demo-actions {
             display: flex;
             gap: 15px;
+            margin-top: auto;
         }
 
         .btn {
             padding: 12px 25px;
-            border-radius: 10px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
@@ -246,7 +240,7 @@
 
         .architecture-overview {
             background: white;
-            border-radius: 20px;
+            border-radius: 8px;
             padding: 40px;
             margin-bottom: 50px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -262,7 +256,7 @@
         .arch-item {
             background: #f8fafc;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             text-align: center;
         }
 
@@ -336,8 +330,7 @@
             <h2 class="section-title">Core Framework Demos</h2>
             <div class="demos-grid">
                 <!-- Universal Reference Process -->
-                <div class="demo-card">
-                    <div class="demo-badge core">Core</div>
+                <div class="demo-card core">
                     <div class="demo-header">
                         <div class="demo-title">Universal 10-Step Reference Process</div>
                         <div class="demo-subtitle">Industry-Agnostic Foundation</div>
@@ -355,7 +348,7 @@
                         </ul>
                     </div>
                     <div class="demo-actions">
-                        <a href="demo-referenzprozess-simplified-example.html" class="btn btn-primary">
+                        <a href="referenzprozess/demo-1-referenzprozess.html" class="btn btn-primary">
                             ▶️ Launch Demo
                         </a>
                         <a href="referenzprozess/Demo-1-Referenzprozess-description.html" class="btn btn-secondary">
@@ -365,8 +358,7 @@
                 </div>
 
                 <!-- Data Onboarding -->
-                <div class="demo-card">
-                    <div class="demo-badge core">Core</div>
+                <div class="demo-card core">
                     <div class="demo-header">
                         <div class="demo-title">Data Onboarding & Maintenance</div>
                         <div class="demo-subtitle">Modular "Blöckli" Architecture</div>
@@ -394,8 +386,7 @@
                 </div>
 
                 <!-- Consent & Security Flow -->
-                <div class="demo-card">
-                    <div class="demo-badge core">Core</div>
+                <div class="demo-card core">
                     <div class="demo-header">
                         <div class="demo-title">Consent & Security Flow</div>
                         <div class="demo-subtitle">FAPI 2.0 Advanced Security</div>
@@ -429,8 +420,7 @@
             <h2 class="section-title">Use Case Demonstrations</h2>
             <div class="demos-grid">
                 <!-- Banking Account Opening -->
-                <div class="demo-card">
-                    <div class="demo-badge use-case">Use Case</div>
+                <div class="demo-card use-case">
                     <div class="demo-header">
                         <div class="demo-title">Banking Account Opening</div>
                         <div class="demo-subtitle">Zielbild 1: Kundenbeziehungseröffnung</div>
@@ -458,8 +448,7 @@
                 </div>
 
                 <!-- Re-Identification -->
-                <div class="demo-card">
-                    <div class="demo-badge use-case">Use Case</div>
+                <div class="demo-card use-case">
                     <div class="demo-header">
                         <div class="demo-title">Customer Re-Identification</div>
                         <div class="demo-subtitle">Trust Network Data Reuse</div>
@@ -487,8 +476,7 @@
                 </div>
 
                 <!-- Age Verification -->
-                <div class="demo-card">
-                    <div class="demo-badge use-case">Use Case</div>
+                <div class="demo-card use-case">
                     <div class="demo-header">
                         <div class="demo-title">Age Verification</div>
                         <div class="demo-subtitle">Privacy-Preserving Cross-Industry</div>
@@ -516,8 +504,7 @@
                 </div>
 
                 <!-- EVV Lifecycle Management -->
-                <div class="demo-card">
-                    <div class="demo-badge use-case">Use Case</div>
+                <div class="demo-card use-case">
                     <div class="demo-header">
                         <div class="demo-title">EVV Lifecycle Management</div>
                         <div class="demo-subtitle">Wealth Management Integration</div>
@@ -551,8 +538,7 @@
             <h2 class="section-title">Quality Assurance & Production Readiness</h2>
             <div class="demos-grid">
                 <!-- Verification Process -->
-                <div class="demo-card">
-                    <div class="demo-badge quality">Quality</div>
+                <div class="demo-card quality">
                     <div class="demo-header">
                         <div class="demo-title">Verification Process</div>
                         <div class="demo-subtitle">4-Layer Testing Strategy</div>
@@ -580,8 +566,7 @@
                 </div>
 
                 <!-- MVP Implementation -->
-                <div class="demo-card">
-                    <div class="demo-badge quality">MVP</div>
+                <div class="demo-card quality">
                     <div class="demo-header">
                         <div class="demo-title">MVP Implementation</div>
                         <div class="demo-subtitle">Production-Ready Core</div>

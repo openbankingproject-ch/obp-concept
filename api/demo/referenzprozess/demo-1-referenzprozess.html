@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo 1: Universal 10-Step Reference Process</title>
+    <title>Universal Reference Process - Demo 1</title>
     <style>
         * {
             margin: 0;
@@ -25,14 +25,14 @@
 
         .header {
             background: white;
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
             margin-bottom: 30px;
         }
 
         .header h1 {
-            color: #1e3a8a;
+            color: #253165;
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
@@ -121,7 +121,7 @@
         .btn {
             padding: 10px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.2s ease;
@@ -165,7 +165,7 @@
         .speed-select {
             padding: 8px 12px;
             border: 1px solid #d1d5db;
-            border-radius: 6px;
+            border-radius: 8px;
             background: white;
         }
 
@@ -208,13 +208,13 @@
 
         .step-details {
             background: white;
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
         }
 
         .step-details h2 {
-            color: #1e3a8a;
+            color: #253165;
             font-size: 1.5rem;
             margin-bottom: 20px;
         }
@@ -258,7 +258,7 @@
             gap: 10px;
             margin-bottom: 8px;
             padding: 8px;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.3s ease;
             transform: translateX(0);
             opacity: 1;
@@ -374,7 +374,7 @@
 
         .console {
             background: #1f2937;
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
             color: #10b981;
@@ -468,15 +468,122 @@
             font-style: italic;
         }
 
+        .api-call-block {
+            background: #0f172a;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .api-request {
+            border-left: 3px solid #3b82f6;
+            padding-left: 10px;
+            margin: 10px 0;
+        }
+
+        .api-response {
+            border-left: 3px solid #10b981;
+            padding-left: 10px;
+            margin: 10px 0;
+        }
+
+        .json-payload {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .step-completion-summary {
+            background: #dcfce7;
+            border: 1px solid #22c55e;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            animation: completionSlideIn 0.5s ease-out;
+        }
+
+        .step-completion-summary h4 {
+            color: #15803d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .completion-checkmark {
+            width: 20px;
+            height: 20px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            animation: checkmarkPop 0.6s ease-out;
+        }
+
+        .completed-actions-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .completed-actions-list li {
+            padding: 5px 0;
+            color: #15803d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .completed-actions-list li::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        @keyframes completionSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes checkmarkPop {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
         .capabilities {
             background: white;
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
         }
 
         .capabilities h2 {
-            color: #1e3a8a;
+            color: #253165;
             font-size: 1.5rem;
             margin-bottom: 20px;
         }
@@ -561,7 +668,7 @@
             text-align: center;
             background: rgba(37, 49, 101, 0.1);
             padding: 10px;
-            border-radius: 6px;
+            border-radius: 8px;
         }
 
         .step-card {
@@ -684,7 +791,7 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>Demo 1: Universal 10-Step Reference Process</h1>
+            <h1>Universal Reference Process</h1>
             <p>Interactive demonstration of the generic framework that powers customer onboarding across ALL industries and ecosystems</p>
             
             <!-- Progress Indicator -->
@@ -1115,7 +1222,7 @@
             }
         }
 
-        // Generate realistic API console output
+        // Generate realistic API console output with comprehensive details
         function addApiLog(step, action, type = 'info') {
             const timestamp = new Date().toLocaleTimeString();
             const stepData = demoSteps[currentStep];
@@ -1126,83 +1233,152 @@
                 case 1:
                     if (action === "Service Discovery") {
                         logEntry = `
-                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">GET /api/v1/discovery/services HTTP/1.1</span>
-                            <span class="log-info">Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...</span>
-                            <span class="log-success">200 OK - Services discovered: [banking, identity, consent]</span>
+                            <div class="api-call-block">
+                                <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}] SERVICE DISCOVERY</span>
+                                <div class="api-request">
+                                    <span class="log-info">→ GET /api/v1/obp/discovery/services HTTP/1.1</span>
+                                    <span class="log-info">→ Host: api.openbanking.swiss</span>
+                                    <span class="log-info">→ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjdXN0b21lcl9pZCIsImF1ZCI6WyJhcGkub2JwLnN3aXNzIl0sInNjb3BlIjoiZGlzY292ZXJ5OnJlYWQifQ...</span>
+                                    <span class="log-info">→ Content-Type: application/json</span>
+                                    <span class="log-info">→ Accept: application/json</span>
+                                    <span class="log-info">→ X-Request-ID: req_disc_${Date.now()}</span>
+                                </div>
+                                <div class="api-response">
+                                    <span class="log-success">← 200 OK</span>
+                                    <span class="log-success">← Content-Type: application/json</span>
+                                    <div class="json-payload">
+{
+  "services": [
+    {"name": "banking", "version": "v1", "endpoint": "/api/v1/banking"},
+    {"name": "identity", "version": "v1", "endpoint": "/api/v1/identity"},
+    {"name": "consent", "version": "v1", "endpoint": "/api/v1/consent"},
+    {"name": "compliance", "version": "v1", "endpoint": "/api/v1/compliance"}
+  ],
+  "capabilities": ["account_opening", "data_sharing", "consent_management"],
+  "security_profile": "FAPI_2_0_ADVANCED"
+}</div>
+                                </div>
+                            </div>
                         `;
-                    } else if (action === "Customer Intent Analysis") {
+                    } else if (action === "Customer Intent Capture") {
                         logEntry = `
-                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">POST /api/v1/intent/analyze HTTP/1.1</span>
-                            <span class="log-info">Content-Type: application/json</span>
-                            <span class="log-success">200 OK - Intent: "account_opening", confidence: 0.95</span>
+                            <div class="api-call-block">
+                                <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}] INTENT ANALYSIS</span>
+                                <div class="api-request">
+                                    <span class="log-info">→ POST /api/v1/obp/intent/analyze HTTP/1.1</span>
+                                    <span class="log-info">→ Host: api.openbanking.swiss</span>
+                                    <span class="log-info">→ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjdXN0b21lcl9pZCJ9...</span>
+                                    <span class="log-info">→ Content-Type: application/json</span>
+                                    <span class="log-info">→ X-Customer-Context: account_opening_journey</span>
+                                    <div class="json-payload">
+{
+  "customer_input": "I would like to open a new bank account",
+  "session_id": "sess_${Date.now()}",
+  "channel": "web_portal"
+}</div>
+                                </div>
+                                <div class="api-response">
+                                    <span class="log-success">← 200 OK</span>
+                                    <div class="json-payload">
+{
+  "intent": "account_opening",
+  "confidence": 0.95,
+  "required_steps": [1,2,3,4,5,6,7,8,9,10],
+  "estimated_duration": "180s",
+  "data_requirements": ["identity", "address", "income", "risk_profile"]
+}</div>
+                                </div>
+                            </div>
                         `;
                     }
                     break;
                 case 2:
-                    if (action === "Customer Authentication") {
+                    if (action === "Eligibility Check") {
                         logEntry = `
-                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">POST /api/v1/auth/customer HTTP/1.1</span>
-                            <span class="log-info">mTLS Certificate: CN=customer.swiss-id.ch</span>
-                            <span class="log-success">200 OK - Authentication successful, Level: eIDAS Substantial</span>
+                            <div class="api-call-block">
+                                <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}] ELIGIBILITY ASSESSMENT</span>
+                                <div class="api-request">
+                                    <span class="log-info">→ POST /api/v1/obp/eligibility/check HTTP/1.1</span>
+                                    <span class="log-info">→ Host: api.openbanking.swiss</span>
+                                    <span class="log-info">→ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...</span>
+                                    <span class="log-info">→ X-mTLS-Certificate: CN=customer.swiss-id.ch, O=SwissID</span>
+                                    <span class="log-info">→ Content-Type: application/json</span>
+                                    <div class="json-payload">
+{
+  "customer_id": "ch_cust_temp_${Date.now()}",
+  "product_type": "current_account",
+  "requested_features": ["online_banking", "mobile_app", "debit_card"],
+  "risk_tolerance": "moderate"
+}</div>
+                                </div>
+                                <div class="api-response">
+                                    <span class="log-success">← 200 OK</span>
+                                    <div class="json-payload">
+{
+  "eligibility_status": "APPROVED",
+  "eligibility_score": 85,
+  "risk_assessment": "LOW_MEDIUM",
+  "required_documents": ["id_verification", "address_proof", "income_statement"],
+  "estimated_approval_time": "24h",
+  "next_steps": ["compliance_check", "data_collection"]
+}</div>
+                                </div>
+                            </div>
                         `;
                     }
                     break;
                 case 3:
-                    if (action === "Data Requirements Analysis") {
+                    if (action === "Compliance Validation") {
                         logEntry = `
                             <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">GET /api/v1/requirements/banking/account-opening HTTP/1.1</span>
-                            <span class="log-success">200 OK - Required fields: [identity, address, income, risk_profile]</span>
+                            <span class="log-info">GET /api/v1/compliance/fatca HTTP/1.1</span>
+                            <span class="log-success">200 OK - FATCA Status: NON_US_PERSON, Tax Domicile: CH</span>
                         `;
                     }
                     break;
                 case 4:
-                    if (action === "Available Data Sources Discovery") {
+                    if (action === "Data Quality Assessment") {
                         logEntry = `
                             <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">GET /api/v1/sources/available?customer_id=ch_12345 HTTP/1.1</span>
-                            <span class="log-success">200 OK - Sources: [government, telecom, bank_history, utility]</span>
+                            <span class="log-info">GET /api/v1/data/quality/assess HTTP/1.1</span>
+                            <span class="log-success">200 OK - Quality Score: 94%, Completeness: 98%</span>
                         `;
                     }
                     break;
                 case 5:
-                    if (action === "Access Rights Verification") {
+                    if (action === "Risk Assessment & Profiling") {
                         logEntry = `
                             <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">POST /api/v1/access/verify HTTP/1.1</span>
-                            <span class="log-success">200 OK - Access granted for sources: 4/4</span>
+                            <span class="log-info">POST /api/v1/risk/assess HTTP/1.1</span>
+                            <span class="log-success">200 OK - Risk Category: LOW_MEDIUM, Score: 25/100</span>
                         `;
                     }
                     break;
                 case 6:
-                    if (action === "Customer Consent Collection") {
+                    if (action === "Biometric Verification Processing") {
                         logEntry = `
                             <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">POST /api/v1/consent/collect HTTP/1.1</span>
+                            <span class="log-info">POST /api/v1/identity/biometric HTTP/1.1</span>
                             <span class="log-info">FAPI 2.0 DPoP Token: eyJ0eXAiOiJkcG9wK2p3dCIsImFsZyI6IlJTMjU2In0...</span>
-                            <span class="log-success">201 Created - Consent ID: consent_abc123xyz</span>
+                            <span class="log-success">200 OK - Match: 98.7%, Level: QEAA_SUBSTANTIAL</span>
                         `;
                     }
                     break;
                 case 7:
-                    if (action === "Data Request Processing") {
+                    if (action === "AML Risk Assessment") {
                         logEntry = `
                             <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">POST /api/v1/data/request HTTP/1.1</span>
-                            <span class="log-success">202 Accepted - Request queued, Processing ID: req_789def</span>
-                            <span class="log-success">200 OK - Data retrieved from 4 sources (2.3s)</span>
+                            <span class="log-info">POST /api/v1/aml/assess HTTP/1.1</span>
+                            <span class="log-success">200 OK - AML Risk: LOW, PEP: CLEAR, Sanctions: CLEAR</span>
                         `;
                     }
                     break;
                 case 8:
-                    if (action === "Data Quality Validation") {
+                    if (action === "Legal Agreement Establishment") {
                         logEntry = `
                             <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
-                            <span class="log-info">POST /api/v1/validation/quality HTTP/1.1</span>
-                            <span class="log-success">200 OK - Quality score: 96.5%, Completeness: 98.2%</span>
+                            <span class="log-info">POST /api/v1/contract/establish HTTP/1.1</span>
+                            <span class="log-success">200 OK - Contract ID: contract_ch_123456, Status: READY_FOR_SIGNATURE</span>
                         `;
                     }
                     break;
@@ -1222,7 +1398,7 @@
                             <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
                             <span class="log-info">PUT /api/v1/integration/distribute HTTP/1.1</span>
                             <span class="log-success">200 OK - Account activated, Customer ID: ch_cust_12345</span>
-                            <span class="log-success">Process completed in 180s (67% improvement vs. manual)</span>
+                            <span class="log-success">✓ Process completed successfully in 180s</span>
                         `;
                     }
                     break;
@@ -1350,7 +1526,21 @@
                 }
             });
             
-            newLogs.push({ type: 'success', message: `✓ Step ${step.id} Complete - API calls executed successfully`, timestamp });
+            // Add comprehensive step completion summary
+            const completionSummary = `
+                <div class="step-completion-summary">
+                    <h4>
+                        <div class="completion-checkmark">✓</div>
+                        Step ${step.id} Completed Successfully
+                    </h4>
+                    <p><strong>Duration:</strong> ${Math.floor(Math.random() * 5 + 3)}s | <strong>API Calls:</strong> ${step.actions.length} | <strong>Status:</strong> All systems operational</p>
+                    <ul class="completed-actions-list">
+                        ${step.actions.map(action => `<li>${action}</li>`).join('')}
+                    </ul>
+                    <p><small>All API endpoints responded within acceptable thresholds. Data integrity verified. Ready for next step.</small></p>
+                </div>
+            `;
+            newLogs.push({ type: 'success', message: completionSummary, timestamp, isHtml: true });
             
             logs.push(...newLogs);
             updateConsole();
@@ -1369,7 +1559,7 @@
             logs.forEach(log => {
                 const logDiv = document.createElement('div');
                 logDiv.className = `log-entry log-${log.type}`;
-                if (log.type === 'api') {
+                if (log.type === 'api' || log.isHtml) {
                     logDiv.innerHTML = log.message;
                 } else {
                     logDiv.innerHTML = `<span class="log-timestamp">[${log.timestamp}]</span> ${log.message}`;

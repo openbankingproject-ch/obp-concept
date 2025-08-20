@@ -109,16 +109,10 @@
         }
 
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 30px;
             margin-bottom: 30px;
-        }
-
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
         }
 
         .consent-flow {
@@ -126,6 +120,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
+            width: 100%;
             animation: fadeInUp 0.8s ease-out;
         }
 
@@ -140,6 +135,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
+            width: 100%;
             animation: fadeInUp 0.8s ease-out 0.2s;
         }
 
@@ -147,6 +143,14 @@
             color: #253165;
             font-size: 1.5rem;
             margin-bottom: 20px;
+        }
+
+        /* Security layers grid layout for better full-width usage */
+        .security-layer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .consent-step {
@@ -325,7 +329,7 @@
             padding: 30px;
             color: #10b981;
             font-family: 'Courier New', monospace;
-            grid-column: 1 / -1;
+            width: 100%;
             animation: fadeInUp 0.8s ease-out 0.4s;
         }
 
@@ -452,6 +456,206 @@
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
         }
+
+        /* Sequence Diagram Styles */
+        .sequence-diagram {
+            position: relative;
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            height: 700px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .participants {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .participant {
+            text-align: center;
+            background: white;
+            border: 2px solid #253165;
+            border-radius: 8px;
+            padding: 15px 10px;
+            min-width: 100px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .participant.active {
+            background: #fef3c7;
+            border-color: #F85F3D;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(248, 95, 61, 0.3);
+        }
+
+        .participant-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: #253165;
+            font-size: 0.8rem;
+        }
+
+        .lifelines {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            right: 20px;
+            height: 450px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1;
+        }
+
+        .lifeline {
+            width: 2px;
+            height: 100%;
+            background: #d1d5db;
+            position: relative;
+        }
+
+        .lifeline.active {
+            background: #F85F3D;
+            box-shadow: 0 0 10px rgba(248, 95, 61, 0.5);
+        }
+
+        .messages {
+            position: absolute;
+            top: 120px;
+            left: 20px;
+            right: 20px;
+            height: 400px;
+            z-index: 2;
+        }
+
+        .sequence-message {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            height: 30px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .sequence-message.active {
+            opacity: 1;
+        }
+
+        .message-arrow {
+            height: 2px;
+            background: #F85F3D;
+            position: relative;
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+
+        .message-arrow::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid #F85F3D;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+        }
+
+        .message-arrow.return {
+            background: #0070C0;
+        }
+
+        .message-arrow.return::after {
+            border-left-color: #0070C0;
+            right: auto;
+            left: -8px;
+            transform: rotate(180deg);
+        }
+
+        .message-text {
+            background: white;
+            padding: 4px 8px;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #374151;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .phase-indicators {
+            position: absolute;
+            top: 80px;
+            left: 0;
+            right: 0;
+            height: 450px;
+            z-index: 0;
+        }
+
+        .phase-indicator {
+            position: absolute;
+            left: -10px;
+            right: -10px;
+            height: 70px;
+            background: rgba(37, 49, 101, 0.05);
+            border-left: 4px solid #253165;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            font-weight: 600;
+            color: #253165;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .phase-indicator.active {
+            opacity: 1;
+            background: rgba(248, 95, 61, 0.1);
+            border-left-color: #F85F3D;
+        }
+
+        .sequence-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .sequence-step.active {
+            background: #f0f9ff;
+            border-left: 4px solid #0070C0;
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .sequence-step.completed {
+            background: #dcfce7;
+            border-left: 4px solid #00b02cff;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -488,77 +692,70 @@
         </div>
 
         <div class="main-content">
-            <!-- Consent Flow Steps -->
+            <!-- Animated Sequence Diagram -->
             <div class="consent-flow">
-                <h2>Consent & Authorization Flow</h2>
+                <h2>FAPI 2.0 Authentication & Consent Flow</h2>
                 
-                <div id="consentSteps">
-                    <div class="consent-step" data-step="1">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <div class="step-title">Client Registration & mTLS Setup</div>
-                            <div class="step-description">Establish mutual TLS connection with client certificate validation</div>
+                <!-- Sequence Diagram Container -->
+                <div class="sequence-diagram" id="sequenceDiagram">
+                    <!-- Participants -->
+                    <div class="participants">
+                        <div class="participant" data-id="customer">
+                            <div class="participant-icon">👤</div>
+                            <div class="participant-name">Customer</div>
+                        </div>
+                        <div class="participant" data-id="integrator">
+                            <div class="participant-icon">📱</div>
+                            <div class="participant-name">Integrator</div>
+                        </div>
+                        <div class="participant" data-id="authserver">
+                            <div class="participant-icon">🔐</div>
+                            <div class="participant-name">Auth Server</div>
+                        </div>
+                        <div class="participant" data-id="producer">
+                            <div class="participant-icon">🏦</div>
+                            <div class="participant-name">Data Producer</div>
+                        </div>
+                        <div class="participant" data-id="consent">
+                            <div class="participant-icon">✅</div>
+                            <div class="participant-name">Consent Mgmt</div>
+                        </div>
+                        <div class="participant" data-id="audit">
+                            <div class="participant-icon">📋</div>
+                            <div class="participant-name">Audit System</div>
                         </div>
                     </div>
-
-                    <div class="consent-step" data-step="2">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <div class="step-title">Authorization Request (PAR)</div>
-                            <div class="step-description">Pushed Authorization Request with PKCE and consent scope definition</div>
-                        </div>
+                    
+                    <!-- Lifelines -->
+                    <div class="lifelines">
+                        <div class="lifeline" data-participant="customer"></div>
+                        <div class="lifeline" data-participant="integrator"></div>
+                        <div class="lifeline" data-participant="authserver"></div>
+                        <div class="lifeline" data-participant="producer"></div>
+                        <div class="lifeline" data-participant="consent"></div>
+                        <div class="lifeline" data-participant="audit"></div>
                     </div>
-
-                    <div class="consent-step" data-step="3">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <div class="step-title">User Authentication</div>
-                            <div class="step-description">Multi-factor authentication with biometric validation</div>
-                        </div>
+                    
+                    <!-- Messages -->
+                    <div class="messages" id="sequenceMessages">
+                        <!-- Messages will be dynamically added here -->
                     </div>
-
-                    <div class="consent-step" data-step="4">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <div class="step-title">Granular Consent Collection</div>
-                            <div class="step-description">Field-level permissions with clear purpose specification</div>
-                        </div>
-                    </div>
-
-                    <div class="consent-step" data-step="5">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <div class="step-title">DPoP Token Binding</div>
-                            <div class="step-description">Proof-of-possession token generation and binding</div>
-                        </div>
-                    </div>
-
-                    <div class="consent-step" data-step="6">
-                        <div class="step-number">6</div>
-                        <div class="step-content">
-                            <div class="step-title">Consent Enforcement</div>
-                            <div class="step-description">Real-time permission validation and data access control</div>
-                        </div>
+                    
+                    <!-- Phase Indicators -->
+                    <div class="phase-indicators" id="phaseIndicators">
+                        <div class="phase-indicator" data-phase="1">Phase 1: Customer Initiation</div>
+                        <div class="phase-indicator" data-phase="2">Phase 2: Authorization Request (PAR)</div>
+                        <div class="phase-indicator" data-phase="3">Phase 3: Customer Authentication</div>
+                        <div class="phase-indicator" data-phase="4">Phase 4: Consent Management</div>
+                        <div class="phase-indicator" data-phase="5">Phase 5: Token Exchange</div>
+                        <div class="phase-indicator" data-phase="6">Phase 6: Data Access</div>
                     </div>
                 </div>
 
                 <div class="consent-details" id="consentDetails">
-                    <h4>Current Permissions</h4>
-                    <div class="permission-item">
-                        <span>Identity Data Access</span>
-                        <div class="permission-toggle" onclick="togglePermission(this)"></div>
-                    </div>
-                    <div class="permission-item">
-                        <span>Financial Data Access</span>
-                        <div class="permission-toggle" onclick="togglePermission(this)"></div>
-                    </div>
-                    <div class="permission-item">
-                        <span>Transaction History</span>
-                        <div class="permission-toggle" onclick="togglePermission(this)"></div>
-                    </div>
-                    <div class="permission-item">
-                        <span>Risk Profile Data</span>
-                        <div class="permission-toggle" onclick="togglePermission(this)"></div>
+                    <h4>Current Step Details</h4>
+                    <div id="stepDetails">
+                        <p>Click "Start Flow" to begin the FAPI 2.0 authentication and consent sequence.</p>
                     </div>
                 </div>
             </div>
@@ -567,34 +764,36 @@
             <div class="security-layers">
                 <h2>FAPI 2.0 Security Layers</h2>
                 
-                <div class="security-layer" data-layer="mtls">
-                    <div class="layer-icon">🔐</div>
-                    <div class="layer-title">Mutual TLS (mTLS)</div>
-                    <div class="layer-description">Certificate-based client authentication with bi-directional verification</div>
-                </div>
+                <div class="security-layer-grid">
+                    <div class="security-layer" data-layer="mtls">
+                        <div class="layer-icon">🔐</div>
+                        <div class="layer-title">Mutual TLS (mTLS)</div>
+                        <div class="layer-description">Certificate-based client authentication with bi-directional verification</div>
+                    </div>
 
-                <div class="security-layer" data-layer="dpop">
-                    <div class="layer-icon">🔑</div>
-                    <div class="layer-title">DPoP Token Binding</div>
-                    <div class="layer-description">Proof-of-possession tokens bound to client certificates</div>
-                </div>
+                    <div class="security-layer" data-layer="dpop">
+                        <div class="layer-icon">🔑</div>
+                        <div class="layer-title">DPoP Token Binding</div>
+                        <div class="layer-description">Proof-of-possession tokens bound to client certificates</div>
+                    </div>
 
-                <div class="security-layer" data-layer="par">
-                    <div class="layer-icon">📋</div>
-                    <div class="layer-title">Pushed Authorization Request</div>
-                    <div class="layer-description">Secure parameter transmission with request validation</div>
-                </div>
+                    <div class="security-layer" data-layer="par">
+                        <div class="layer-icon">📋</div>
+                        <div class="layer-title">Pushed Authorization Request</div>
+                        <div class="layer-description">Secure parameter transmission with request validation</div>
+                    </div>
 
-                <div class="security-layer" data-layer="consent">
-                    <div class="layer-icon">✅</div>
-                    <div class="layer-title">Granular Consent</div>
-                    <div class="layer-description">Field-level permissions with purpose binding and lifecycle management</div>
-                </div>
+                    <div class="security-layer" data-layer="consent">
+                        <div class="layer-icon">✅</div>
+                        <div class="layer-title">Granular Consent</div>
+                        <div class="layer-description">Field-level permissions with purpose binding and lifecycle management</div>
+                    </div>
 
-                <div class="security-layer" data-layer="privacy">
-                    <div class="layer-icon">🛡️</div>
-                    <div class="layer-title">Privacy by Design</div>
-                    <div class="layer-description">Data minimization with GDPR Article 7 compliance</div>
+                    <div class="security-layer" data-layer="privacy">
+                        <div class="layer-icon">🛡️</div>
+                        <div class="layer-title">Privacy by Design</div>
+                        <div class="layer-description">Data minimization with GDPR Article 7 compliance</div>
+                    </div>
                 </div>
             </div>
 
@@ -615,101 +814,336 @@
         let playInterval;
         let logs = [];
 
-        const consentSteps = [
+        // Sequence diagram steps based on the documentation
+        const sequenceSteps = [
+            // Phase 1: Customer Initiation
             {
+                phase: 1,
                 step: 1,
-                title: "mTLS Connection Establishment",
-                security_layer: "mtls",
-                actions: [
-                    "Validating client certificate",
-                    "Establishing mutual TLS connection",
-                    "Verifying certificate chain",
-                    "Completing handshake protocol"
-                ],
+                from: "customer",
+                to: "integrator",
+                message: "Request service (account opening)",
+                description: "Customer initiates account opening process",
                 logs: [
-                    { type: 'security', message: 'Client certificate received and validated' },
-                    { type: 'security', message: 'mTLS connection established successfully' },
-                    { type: 'info', message: 'Certificate chain verified against trusted CA' }
+                    { type: 'info', message: 'Customer requests account opening service' },
+                    { type: 'info', message: 'Integrator receives customer request' }
                 ]
             },
             {
+                phase: 1,
                 step: 2,
-                title: "Pushed Authorization Request",
-                security_layer: "par",
-                actions: [
-                    "Creating PKCE challenge",
-                    "Preparing authorization request",
-                    "Pushing request to authorization server",
-                    "Receiving request URI"
-                ],
+                from: "integrator",
+                to: "customer",
+                message: "Explain data requirements & purpose",
+                description: "Integrator explains what data is needed and why",
                 logs: [
-                    { type: 'info', message: 'PKCE code challenge generated' },
-                    { type: 'security', message: 'Authorization request pushed securely' },
-                    { type: 'success', message: 'Request URI issued: urn:ietf:params:oauth:request_uri:6esc_1l' }
+                    { type: 'info', message: 'Data requirements explained to customer' },
+                    { type: 'info', message: 'Purpose and scope of data usage clarified' }
                 ]
             },
             {
+                phase: 1,
                 step: 3,
-                title: "User Authentication",
-                security_layer: "privacy",
-                actions: [
-                    "Initiating user authentication",
-                    "Biometric verification",
-                    "Multi-factor authentication",
-                    "Session establishment"
-                ],
+                from: "customer",
+                to: "integrator",
+                message: "Agree to proceed with data sharing",
+                description: "Customer agrees to data sharing process",
                 logs: [
-                    { type: 'info', message: 'User authentication initiated' },
-                    { type: 'success', message: 'Biometric verification completed' },
-                    { type: 'success', message: 'MFA challenge passed' }
+                    { type: 'success', message: 'Customer agrees to data sharing process' }
                 ]
             },
+
+            // Phase 2: Authorization Request (PAR)
             {
+                phase: 2,
                 step: 4,
-                title: "Granular Consent Collection",
-                security_layer: "consent",
-                actions: [
-                    "Presenting consent interface",
-                    "Collecting granular permissions",
-                    "Validating consent decisions",
-                    "Recording consent proof"
-                ],
+                from: "integrator",
+                to: "integrator",
+                message: "Generate PKCE code_verifier & code_challenge",
+                description: "PKCE security parameters generated",
                 logs: [
-                    { type: 'info', message: 'Consent interface presented to user' },
-                    { type: 'success', message: 'Granular permissions collected' },
-                    { type: 'success', message: 'Consent recorded with digital signature' }
+                    { type: 'security', message: 'PKCE code_verifier generated' },
+                    { type: 'security', message: 'PKCE code_challenge created' }
                 ]
             },
             {
+                phase: 2,
                 step: 5,
-                title: "DPoP Token Generation",
-                security_layer: "dpop",
-                actions: [
-                    "Generating proof-of-possession key",
-                    "Creating DPoP proof",
-                    "Binding token to certificate",
-                    "Issuing access token"
-                ],
+                from: "integrator",
+                to: "authserver",
+                message: "POST /par (Pushed Authorization Request)",
+                description: "Authorization request securely pushed to server",
                 logs: [
-                    { type: 'security', message: 'DPoP proof-of-possession key generated' },
-                    { type: 'security', message: 'Access token bound to client certificate' },
-                    { type: 'success', message: 'Bearer token issued with DPoP binding' }
+                    { type: 'security', message: 'Pushed Authorization Request initiated' },
+                    { type: 'info', message: 'Request includes: client_id, scope, code_challenge, purpose' }
                 ]
             },
             {
+                phase: 2,
                 step: 6,
-                title: "Consent Enforcement",
-                security_layer: "consent",
-                actions: [
-                    "Validating access permissions",
-                    "Enforcing data minimization",
-                    "Logging access requests",
-                    "Providing audit trail"
-                ],
+                from: "authserver",
+                to: "integrator",
+                message: "Return request_uri (60s expiry)",
+                description: "Temporary request URI issued",
                 logs: [
-                    { type: 'info', message: 'Access permissions validated against consent' },
-                    { type: 'success', message: 'Data minimization enforced' },
-                    { type: 'info', message: 'Audit trail generated for compliance' }
+                    { type: 'success', message: 'Request URI issued: urn:ietf:params:oauth:request_uri:abc123' },
+                    { type: 'warning', message: 'Request URI expires in 60 seconds' }
+                ]
+            },
+
+            // Phase 3: Customer Authentication
+            {
+                phase: 3,
+                step: 7,
+                from: "integrator",
+                to: "customer",
+                message: "Redirect to authorization endpoint",
+                description: "Customer redirected for authentication",
+                logs: [
+                    { type: 'info', message: 'Customer redirected to authorization server' }
+                ]
+            },
+            {
+                phase: 3,
+                step: 8,
+                from: "customer",
+                to: "authserver",
+                message: "GET /authorize?request_uri=...",
+                description: "Customer accesses authorization endpoint",
+                logs: [
+                    { type: 'info', message: 'Authorization endpoint accessed' },
+                    { type: 'info', message: 'Request URI validated' }
+                ]
+            },
+            {
+                phase: 3,
+                step: 9,
+                from: "authserver",
+                to: "customer",
+                message: "Present authentication challenge",
+                description: "Multi-factor authentication initiated",
+                logs: [
+                    { type: 'security', message: 'Strong Customer Authentication initiated' },
+                    { type: 'info', message: 'Primary factor: Password/PIN/Biometric' }
+                ]
+            },
+            {
+                phase: 3,
+                step: 10,
+                from: "customer",
+                to: "authserver",
+                message: "Complete strong authentication",
+                description: "Customer completes MFA process",
+                logs: [
+                    { type: 'success', message: 'Primary authentication factor verified' },
+                    { type: 'success', message: 'Secondary factor (SMS/App) verified' },
+                    { type: 'success', message: 'Strong Customer Authentication completed' }
+                ]
+            },
+
+            // Phase 4: Consent Management
+            {
+                phase: 4,
+                step: 11,
+                from: "authserver",
+                to: "consent",
+                message: "Check existing consents",
+                description: "Verify if valid consent already exists",
+                logs: [
+                    { type: 'info', message: 'Checking for existing valid consents' }
+                ]
+            },
+            {
+                phase: 4,
+                step: 12,
+                from: "consent",
+                to: "authserver",
+                message: "No valid consent / consent expired",
+                description: "New consent required",
+                logs: [
+                    { type: 'warning', message: 'No valid consent found' },
+                    { type: 'info', message: 'New consent collection required' }
+                ]
+            },
+            {
+                phase: 4,
+                step: 13,
+                from: "authserver",
+                to: "customer",
+                message: "Present detailed consent screen",
+                description: "Granular consent options shown to customer",
+                logs: [
+                    { type: 'info', message: 'Consent screen presented with granular options' },
+                    { type: 'info', message: 'Options: Basic identity, Contact info, KYC attributes' }
+                ]
+            },
+            {
+                phase: 4,
+                step: 14,
+                from: "customer",
+                to: "authserver",
+                message: "Grant specific data permissions",
+                description: "Customer selects specific permissions",
+                logs: [
+                    { type: 'success', message: 'Customer grants specific data permissions' }
+                ]
+            },
+            {
+                phase: 4,
+                step: 15,
+                from: "authserver",
+                to: "consent",
+                message: "Record consent with granular scope",
+                description: "Consent recorded with detailed audit trail",
+                logs: [
+                    { type: 'success', message: 'Consent recorded with granular scope' }
+                ]
+            },
+            {
+                phase: 4,
+                step: 16,
+                from: "consent",
+                to: "audit",
+                message: "Log consent decision with full details",
+                description: "Audit trail created for compliance",
+                logs: [
+                    { type: 'success', message: 'Consent decision logged for audit compliance' },
+                    { type: 'info', message: 'Digital signature and timestamp recorded' }
+                ]
+            },
+
+            // Phase 5: Token Exchange
+            {
+                phase: 5,
+                step: 17,
+                from: "authserver",
+                to: "customer",
+                message: "Redirect with authorization code",
+                description: "Authorization code issued to customer",
+                logs: [
+                    { type: 'success', message: 'Authorization code issued' },
+                    { type: 'info', message: 'Code valid for 10 minutes' }
+                ]
+            },
+            {
+                phase: 5,
+                step: 18,
+                from: "integrator",
+                to: "authserver",
+                message: "POST /token (via mTLS)",
+                description: "Token exchange with mutual TLS",
+                logs: [
+                    { type: 'security', message: 'Token exchange via mTLS connection' },
+                    { type: 'security', message: 'Client certificate verified' },
+                    { type: 'security', message: 'PKCE code_verifier validated' }
+                ]
+            },
+            {
+                phase: 5,
+                step: 19,
+                from: "authserver",
+                to: "integrator",
+                message: "Access token + ID token + Refresh token",
+                description: "Tokens issued with consent scope",
+                logs: [
+                    { type: 'success', message: 'Access token issued with DPoP binding' },
+                    { type: 'success', message: 'ID token with customer claims included' },
+                    { type: 'info', message: 'Tokens bound to consent scope' }
+                ]
+            },
+
+            // Phase 6: Data Access
+            {
+                phase: 6,
+                step: 20,
+                from: "integrator",
+                to: "producer",
+                message: "GET /customer/data (with access token)",
+                description: "API call to retrieve customer data",
+                logs: [
+                    { type: 'info', message: 'API request sent to data producer' },
+                    { type: 'security', message: 'Access token included in request' }
+                ]
+            },
+            {
+                phase: 6,
+                step: 21,
+                from: "producer",
+                to: "authserver",
+                message: "Introspect access token & validate consent",
+                description: "Token and consent validation",
+                logs: [
+                    { type: 'info', message: 'Access token introspection requested' },
+                    { type: 'security', message: 'Token validity and scope verified' }
+                ]
+            },
+            {
+                phase: 6,
+                step: 22,
+                from: "authserver",
+                to: "producer",
+                message: "Token valid + consent scope details",
+                description: "Validation successful with scope information",
+                logs: [
+                    { type: 'success', message: 'Token validated successfully' },
+                    { type: 'info', message: 'Consent scope details provided' }
+                ]
+            },
+            {
+                phase: 6,
+                step: 23,
+                from: "producer",
+                to: "consent",
+                message: "Verify consent is still active",
+                description: "Real-time consent status check",
+                logs: [
+                    { type: 'info', message: 'Consent status verification requested' }
+                ]
+            },
+            {
+                phase: 6,
+                step: 24,
+                from: "consent",
+                to: "producer",
+                message: "Consent active for requested data",
+                description: "Consent confirmed as active and valid",
+                logs: [
+                    { type: 'success', message: 'Consent confirmed active for requested scope' }
+                ]
+            },
+            {
+                phase: 6,
+                step: 25,
+                from: "producer",
+                to: "audit",
+                message: "Log data access with consent reference",
+                description: "Audit entry for data access created",
+                logs: [
+                    { type: 'info', message: 'Data access logged with consent reference' }
+                ]
+            },
+            {
+                phase: 6,
+                step: 26,
+                from: "producer",
+                to: "integrator",
+                message: "Return requested customer data (minimized)",
+                description: "Data returned with privacy protections applied",
+                logs: [
+                    { type: 'success', message: 'Customer data returned' },
+                    { type: 'info', message: 'Data minimization applied based on consent' }
+                ]
+            },
+            {
+                phase: 6,
+                step: 27,
+                from: "integrator",
+                to: "customer",
+                message: "Service delivered with imported data",
+                description: "Account opening completed successfully",
+                logs: [
+                    { type: 'success', message: 'Account opening service completed' },
+                    { type: 'success', message: 'Customer data successfully imported' }
                 ]
             }
         ];
@@ -717,9 +1151,9 @@
         function getSpeed() {
             const speed = document.getElementById('speedControl').value;
             switch(speed) {
-                case 'fast': return 1000;
-                case 'slow': return 4000;
-                default: return 2000;
+                case 'fast': return 800;
+                case 'slow': return 3000;
+                default: return 1500;
             }
         }
 
@@ -733,7 +1167,7 @@
             const consoleOutput = document.getElementById('consoleOutput');
             
             if (logs.length === 0) {
-                consoleOutput.innerHTML = '<div class="ready-message">Ready to start consent and security flow demonstration...</div>';
+                consoleOutput.innerHTML = '<div class="ready-message">Ready to start FAPI 2.0 sequence demonstration...</div>';
                 return;
             }
             
@@ -761,25 +1195,125 @@
             }
         }
 
-        function updateConsentSteps(step) {
-            document.querySelectorAll('.consent-step').forEach(stepEl => {
-                const stepNum = parseInt(stepEl.dataset.step);
-                stepEl.classList.remove('active', 'completed');
+        function updateParticipants(fromParticipant, toParticipant) {
+            document.querySelectorAll('.participant').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.lifeline').forEach(l => l.classList.remove('active'));
+            
+            if (fromParticipant) {
+                const fromEl = document.querySelector(`[data-id="${fromParticipant}"]`);
+                if (fromEl) fromEl.classList.add('active');
                 
-                if (stepNum === step) {
-                    stepEl.classList.add('active');
-                } else if (stepNum < step) {
-                    stepEl.classList.add('completed');
-                }
+                const fromLifeline = document.querySelector(`[data-participant="${fromParticipant}"]`);
+                if (fromLifeline) fromLifeline.classList.add('active');
+            }
+            
+            if (toParticipant && toParticipant !== fromParticipant) {
+                const toEl = document.querySelector(`[data-id="${toParticipant}"]`);
+                if (toEl) toEl.classList.add('active');
+                
+                const toLifeline = document.querySelector(`[data-participant="${toParticipant}"]`);
+                if (toLifeline) toLifeline.classList.add('active');
+            }
+        }
+
+        function updatePhaseIndicator(phase) {
+            document.querySelectorAll('.phase-indicator').forEach(indicator => {
+                indicator.classList.remove('active');
             });
+            
+            const phaseEl = document.querySelector(`[data-phase="${phase}"]`);
+            if (phaseEl) {
+                phaseEl.classList.add('active');
+            }
+        }
+
+        function createSequenceMessage(step, stepIndex) {
+            const messagesContainer = document.getElementById('sequenceMessages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'sequence-message';
+            messageDiv.style.top = `${stepIndex * 15}px`;
+            
+            // Calculate positions based on participants
+            const participants = ['customer', 'integrator', 'authserver', 'producer', 'consent', 'audit'];
+            const fromIndex = participants.indexOf(step.from);
+            const toIndex = participants.indexOf(step.to);
+            
+            if (fromIndex === -1 || toIndex === -1) return;
+            
+            const totalWidth = messagesContainer.offsetWidth;
+            const participantWidth = totalWidth / participants.length;
+            
+            let left = fromIndex * participantWidth + participantWidth / 2;
+            let right = toIndex * participantWidth + participantWidth / 2;
+            
+            if (fromIndex === toIndex) {
+                // Self message
+                messageDiv.innerHTML = `
+                    <div class="message-text">${step.message}</div>
+                `;
+                messageDiv.style.left = `${left - 50}px`;
+                messageDiv.style.width = '100px';
+            } else {
+                // Regular message
+                if (left > right) {
+                    [left, right] = [right, left];
+                }
+                
+                const width = right - left;
+                messageDiv.innerHTML = `
+                    <div class="message-arrow ${toIndex < fromIndex ? 'return' : ''}"></div>
+                    <div class="message-text">${step.message}</div>
+                `;
+                messageDiv.style.left = `${left}px`;
+                messageDiv.style.width = `${width}px`;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            return messageDiv;
+        }
+
+        function updateStepDetails(step) {
+            const stepDetails = document.getElementById('stepDetails');
+            stepDetails.innerHTML = `
+                <h5>Phase ${step.phase}: Step ${step.step}</h5>
+                <p><strong>Action:</strong> ${step.message}</p>
+                <p><strong>Description:</strong> ${step.description}</p>
+            `;
         }
 
         function executeStep(stepIndex) {
-            if (stepIndex >= consentSteps.length) return;
+            if (stepIndex >= sequenceSteps.length) return;
             
-            const step = consentSteps[stepIndex];
-            updateConsentSteps(step.step);
-            updateSecurityLayers(step.security_layer);
+            const step = sequenceSteps[stepIndex];
+            
+            // Update phase indicator
+            updatePhaseIndicator(step.phase);
+            
+            // Update participants
+            updateParticipants(step.from, step.to);
+            
+            // Create and show sequence message
+            const messageEl = createSequenceMessage(step, stepIndex);
+            if (messageEl) {
+                setTimeout(() => {
+                    messageEl.classList.add('active');
+                }, 200);
+            }
+            
+            // Update step details
+            updateStepDetails(step);
+            
+            // Update security layers based on step
+            const securityLayers = {
+                1: 'mtls', 2: 'mtls', 3: 'mtls',
+                4: 'par', 5: 'par', 6: 'par',
+                7: 'privacy', 8: 'privacy', 9: 'privacy', 10: 'privacy',
+                11: 'consent', 12: 'consent', 13: 'consent', 14: 'consent', 15: 'consent', 16: 'consent',
+                17: 'dpop', 18: 'dpop', 19: 'dpop',
+                20: 'consent', 21: 'consent', 22: 'consent', 23: 'consent', 24: 'consent', 25: 'consent', 26: 'consent', 27: 'consent'
+            };
+            updateSecurityLayers(securityLayers[step.step]);
             
             // Add step logs
             step.logs.forEach((log, index) => {
@@ -789,14 +1323,20 @@
             });
         }
 
+        function clearSequenceMessages() {
+            const messagesContainer = document.getElementById('sequenceMessages');
+            messagesContainer.innerHTML = '';
+        }
+
         function playDemo() {
             if (isPlaying) return;
             
             isPlaying = true;
             document.getElementById('playBtn').disabled = true;
+            document.getElementById('playBtn').textContent = '▶️ Playing...';
             
             playInterval = setInterval(() => {
-                if (currentStep < consentSteps.length) {
+                if (currentStep < sequenceSteps.length) {
                     executeStep(currentStep);
                     currentStep++;
                 } else {
@@ -808,6 +1348,7 @@
         function pauseDemo() {
             isPlaying = false;
             document.getElementById('playBtn').disabled = false;
+            document.getElementById('playBtn').textContent = '▶️ Start Consent Flow';
             if (playInterval) {
                 clearInterval(playInterval);
                 playInterval = null;
@@ -819,8 +1360,13 @@
             currentStep = 0;
             logs = [];
             updateConsole();
-            updateConsentSteps(0);
+            clearSequenceMessages();
+            updateParticipants(null, null);
+            updatePhaseIndicator(0);
             updateSecurityLayers(null);
+            
+            const stepDetails = document.getElementById('stepDetails');
+            stepDetails.innerHTML = '<p>Click "Start Consent Flow" to begin the FAPI 2.0 authentication and consent sequence.</p>';
         }
 
         function togglePermission(element) {
@@ -830,7 +1376,12 @@
         // Initialize demo
         document.addEventListener('DOMContentLoaded', function() {
             updateConsole();
-            updateConsentSteps(0);
+            
+            // Position phase indicators
+            const phaseIndicators = document.querySelectorAll('.phase-indicator');
+            phaseIndicators.forEach((indicator, index) => {
+                indicator.style.top = `${index * 70}px`;
+            });
         });
     </script>
 </body>

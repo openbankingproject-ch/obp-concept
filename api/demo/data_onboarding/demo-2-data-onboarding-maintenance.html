@@ -362,9 +362,168 @@
             color: #64748b;
         }
 
+        /* Database Visualization Styles */
+        .database-visualization {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .database-visualization h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .customer-record {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .customer-record h3 {
+            color: #253165;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .data-fields-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .data-field {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid transparent;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .data-field.fresh {
+            border-left-color: #10b981;
+            animation: fresh-pulse 2s ease-in-out infinite;
+        }
+
+        .data-field.aging {
+            border-left-color: #f59e0b;
+            animation: aging-fade 3s ease-in-out infinite;
+        }
+
+        .data-field.expired {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+            animation: expired-blink 1s ease-in-out infinite;
+        }
+
+        .data-field.missing {
+            border-left-color: #9ca3af;
+            background: #f9fafb;
+            opacity: 0.6;
+        }
+
+        .data-field.updating {
+            border-left-color: #3b82f6;
+            animation: updating-spin 1s linear infinite;
+        }
+
+        @keyframes fresh-pulse {
+            0%, 100% { background: white; }
+            50% { background: #f0fdf4; }
+        }
+
+        @keyframes aging-fade {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes expired-blink {
+            0%, 100% { background: #fef2f2; }
+            50% { background: #fee2e2; }
+        }
+
+        @keyframes updating-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .field-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field-value {
+            font-size: 0.95rem;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .field-timestamp {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .freshness-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .freshness-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .freshness-indicator.fresh {
+            background: #10b981;
+        }
+
+        .freshness-indicator.aging {
+            background: #f59e0b;
+        }
+
+        .freshness-indicator.expired {
+            background: #ef4444;
+        }
+
+        .freshness-indicator.missing {
+            background: #9ca3af;
+        }
+
         .console {
             background: #1f2937;
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
             color: #10b981;
@@ -523,6 +682,35 @@
         </div>
 
         <div class="main-content">
+            <!-- Customer Database Visualization -->
+            <div class="database-visualization">
+                <h2>Customer Data Repository</h2>
+                <div class="customer-record">
+                    <h3>Customer: Hans Müller (ID: CH_12345)</h3>
+                    <div class="data-fields-grid" id="dataFieldsGrid">
+                        <!-- Data fields will be populated by JavaScript -->
+                    </div>
+                    <div class="freshness-legend">
+                        <div class="legend-item">
+                            <div class="freshness-indicator fresh"></div>
+                            <span>Fresh (< 30 days)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="freshness-indicator aging"></div>
+                            <span>Aging (30-90 days)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="freshness-indicator expired"></div>
+                            <span>Expired (> 90 days)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="freshness-indicator missing"></div>
+                            <span>Missing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Data Pipeline Steps -->
             <div class="data-pipeline">
                 <h2>4-Phase Data Lifecycle</h2>
@@ -695,6 +883,158 @@
         let logs = [];
         let activeBlocks = [];
 
+        // Customer data structure with freshness indicators
+        let customerData = {
+            'personal_info': {
+                label: 'Personal Info',
+                value: 'Hans Müller, Born 1985',
+                timestamp: '2024-01-15',
+                source: 'Government Registry',
+                status: 'fresh'
+            },
+            'address': {
+                label: 'Address',
+                value: 'Bahnhofstrasse 123, 8001 Zürich',
+                timestamp: '2023-11-20',
+                source: 'Postal Service',
+                status: 'aging'
+            },
+            'phone': {
+                label: 'Phone Number',
+                value: '+41 44 123 4567',
+                timestamp: '2023-08-15',
+                source: 'Telecom Provider',
+                status: 'expired'
+            },
+            'email': {
+                label: 'Email',
+                value: 'hans.mueller@example.ch',
+                timestamp: '2024-01-10',
+                source: 'Customer Portal',
+                status: 'fresh'
+            },
+            'employment': {
+                label: 'Employment',
+                value: 'Software Engineer, TechCorp AG',
+                timestamp: '2023-12-01',
+                source: 'HR System',
+                status: 'aging'
+            },
+            'income': {
+                label: 'Annual Income',
+                value: 'CHF 95,000',
+                timestamp: '2023-06-01',
+                source: 'Tax Authority',
+                status: 'expired'
+            },
+            'credit_score': {
+                label: 'Credit Score',
+                value: '785 (Excellent)',
+                timestamp: '2024-01-05',
+                source: 'Credit Bureau',
+                status: 'fresh'
+            },
+            'bank_history': {
+                label: 'Banking History',
+                value: '12 years with UBS',
+                timestamp: '2023-10-15',
+                source: 'Banking Network',
+                status: 'aging'
+            },
+            'risk_profile': {
+                label: 'Risk Profile',
+                value: '',
+                timestamp: '',
+                source: '',
+                status: 'missing'
+            },
+            'kyc_status': {
+                label: 'KYC Status',
+                value: '',
+                timestamp: '',
+                source: '',
+                status: 'missing'
+            }
+        };
+
+        // Initialize customer data visualization
+        function initCustomerData() {
+            const grid = document.getElementById('dataFieldsGrid');
+            grid.innerHTML = '';
+            
+            Object.entries(customerData).forEach(([key, field]) => {
+                const fieldDiv = document.createElement('div');
+                fieldDiv.className = `data-field ${field.status}`;
+                fieldDiv.dataset.field = key;
+                
+                let content = `
+                    <div class="field-label">${field.label}</div>
+                    <div class="field-value">${field.value || 'Not available'}</div>
+                `;
+                
+                if (field.timestamp) {
+                    content += `<div class="field-timestamp">Updated: ${field.timestamp} (${field.source})</div>`;
+                } else {
+                    content += `<div class="field-timestamp">No data available</div>`;
+                }
+                
+                fieldDiv.innerHTML = content;
+                grid.appendChild(fieldDiv);
+            });
+        }
+
+        // Update field freshness and data
+        function updateCustomerField(fieldKey, newValue, source) {
+            if (customerData[fieldKey]) {
+                const field = customerData[fieldKey];
+                const fieldElement = document.querySelector(`[data-field="${fieldKey}"]`);
+                
+                // Add updating animation
+                fieldElement.classList.add('updating');
+                
+                setTimeout(() => {
+                    // Update data
+                    field.value = newValue;
+                    field.timestamp = new Date().toISOString().split('T')[0];
+                    field.source = source;
+                    field.status = 'fresh';
+                    
+                    // Update visual
+                    fieldElement.className = `data-field ${field.status}`;
+                    fieldElement.querySelector('.field-value').textContent = newValue;
+                    fieldElement.querySelector('.field-timestamp').textContent = 
+                        `Updated: ${field.timestamp} (${field.source})`;
+                    
+                    fieldElement.classList.remove('updating');
+                }, 1000);
+            }
+        }
+
+        // Simulate data aging over time
+        function simulateDataAging() {
+            Object.entries(customerData).forEach(([key, field]) => {
+                if (field.status === 'fresh') {
+                    // Randomly age some fresh data to demonstrate lifecycle
+                    if (Math.random() < 0.1) {
+                        field.status = 'aging';
+                        const fieldElement = document.querySelector(`[data-field="${key}"]`);
+                        if (fieldElement) {
+                            fieldElement.className = `data-field ${field.status}`;
+                        }
+                    }
+                } else if (field.status === 'aging') {
+                    // Randomly expire some aging data
+                    if (Math.random() < 0.05) {
+                        field.status = 'expired';
+                        const fieldElement = document.querySelector(`[data-field="${key}"]`);
+                        if (fieldElement) {
+                            fieldElement.className = `data-field ${field.status}`;
+                        }
+                    }
+                }
+            });
+        }
+
         const dataPhases = [
             {
                 phase: 1,
@@ -848,12 +1188,42 @@
             updateMetrics(phase.metrics);
             updateBlocks(phase.blocks);
             
+            // Update customer data based on phase
+            updateCustomerDataForPhase(phaseIndex);
+            
             // Add phase logs
             phase.logs.forEach((log, index) => {
                 setTimeout(() => {
                     addLog(log);
                 }, index * 400);
             });
+        }
+
+        // Update customer data based on current phase
+        function updateCustomerDataForPhase(phaseIndex) {
+            switch(phaseIndex) {
+                case 0: // Initial Assessment
+                    // No updates yet, showing initial state
+                    break;
+                case 1: // Multi-Source Enrichment
+                    setTimeout(() => {
+                        updateCustomerField('phone', '+41 44 789 0123', 'Telecom Provider');
+                        updateCustomerField('address', 'Bahnhofstrasse 456, 8001 Zürich', 'Postal Service');
+                    }, 1000);
+                    break;
+                case 2: // Quality Assurance
+                    setTimeout(() => {
+                        updateCustomerField('income', 'CHF 105,000', 'Tax Authority');
+                        updateCustomerField('risk_profile', 'Conservative Investor', 'Risk Assessment AI');
+                    }, 1500);
+                    break;
+                case 3: // Ongoing Maintenance
+                    setTimeout(() => {
+                        updateCustomerField('kyc_status', 'Verified - Enhanced Due Diligence', 'Compliance System');
+                        updateCustomerField('employment', 'Senior Software Engineer, TechCorp AG', 'HR System');
+                    }, 2000);
+                    break;
+            }
         }
 
         function playDemo() {
@@ -891,6 +1261,9 @@
             updatePipelineSteps(0);
             updateBlocks([]);
             
+            // Reset customer data
+            initCustomerData();
+            
             // Reset all metrics
             document.getElementById('completeness').textContent = '0%';
             document.getElementById('accuracy').textContent = '0%';
@@ -905,9 +1278,13 @@
 
         // Initialize demo
         document.addEventListener('DOMContentLoaded', function() {
+            initCustomerData();
             updateConsole();
             updatePipelineSteps(0);
             updateBlocks([]);
+            
+            // Start data aging simulation
+            setInterval(simulateDataAging, 10000); // Every 10 seconds
         });
     </script>
 </body>
