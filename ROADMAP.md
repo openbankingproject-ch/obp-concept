@@ -29,8 +29,8 @@ Phase 1 (bis 06/26):
 - Weiterentwicklung und Verifikation dieses Funktionsumfanges in der Community vom OpenBankingProject
 - Veröffentlichung dieser Version durch die Community und e.B. eCH getesteten und verifizierten Schnittstelle
 - Konzeptionelle Grundlagen für die Verwendung im Netzwerk: z.B. Governance für föderative Sturkturen, regulatorische Abklärungen
-- Umsetzung eines MVPs mit dem Fokus "Identifikation Privatkunden" und Weitergabe im Netzwerk 
-  Phase 2 (ab 07/26)
+- Umsetzung eines MVPs mit dem Fokus "Identifikation Privatkunden" und Weitergabe im Netzwerk
+Phase 2 (ab 07/26)
 - Konzeption der Weiterentwicklung (z.B. Governance im föderativen System)
 - Erweiterung des ersten MVPs "Identifikation Privatkunden" und Weitergabe im Netzwerk mit 5-10 zusätzlichen Unternehmen
 - Aufgleisen von weiteren MVPs 
