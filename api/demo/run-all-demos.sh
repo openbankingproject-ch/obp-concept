@@ -9,11 +9,11 @@
 #   ./run-all-demos.sh [--quick] [--technical] [--help]
 #
 # Options:
-#   --quick      Run quick overview session (15-20 minutes)
-#   --technical  Run technical deep dive session (20-30 minutes)
+#   --quick      Run quick overview session (17-21 minutes)
+#   --technical  Run technical deep dive session (27-35 minutes)
 #   --help       Show this help message
 #
-# Default: Full demonstration session (45-60 minutes)
+# Default: Full demonstration session (53-69 minutes)
 
 # Color definitions for output
 RED='\033[0;31m'
@@ -30,14 +30,15 @@ LOG_FILE="demo-execution-$(date +%Y%m%d_%H%M%S).log"
 
 # Demo script definitions
 declare -A DEMOS=(
-    ["reference"]="reference-process-demo.js"
-    ["consent"]="consent-flow-demo.js"
-    ["uc1"]="uc1-banking-account-opening-demo.js"
-    ["uc2"]="uc2-reidentification-demo.js"
-    ["uc3"]="uc3-age-verification-demo.js"
-    ["uc4"]="uc4-evv-lifecycle-demo.js"
-    ["mvp"]="banking-mvp-demo.js"
-    ["verification"]="verification-process-demo.js"
+    ["reference"]="referenzprozess/reference-process-demo.js"
+    ["consent"]="consent_security/consent-flow-demo.js"
+    ["uc1"]="referenzprozess/use-cases/uc1-banking-account-opening-demo.js"
+    ["uc2"]="referenzprozess/use-cases/uc2-reidentification-demo.js"
+    ["uc3"]="referenzprozess/use-cases/uc3-age-verification-demo.js"
+    ["uc4"]="referenzprozess/use-cases/uc4-evv-lifecycle-demo.js"
+    ["data_onboarding"]="data_onboarding/data-onboarding-demo.js"
+    ["mvp"]="MVP/banking-mvp-demo.js"
+    ["verification"]="verification/verification-process-demo.js"
 )
 
 declare -A DEMO_NAMES=(
@@ -47,12 +48,14 @@ declare -A DEMO_NAMES=(
     ["uc2"]="UC2: Re-identification Process"
     ["uc3"]="UC3: Age Verification"
     ["uc4"]="UC4: EVV Lifecycle Management"
+    ["data_onboarding"]="Data Onboarding and Maintenance"
     ["mvp"]="Banking MVP Demo"
     ["verification"]="Verification Process Demo"
 )
 
 declare -A DEMO_TIMES=(
-    ["reference"]=4
+    ["reference"]=5
+    ["data_onboarding"]=6
     ["consent"]=5
     ["uc1"]=4
     ["uc2"]=4
@@ -63,9 +66,9 @@ declare -A DEMO_TIMES=(
 )
 
 # Demo execution orders for different session types
-FULL_SESSION=("reference" "consent" "uc1" "uc2" "uc3" "uc4" "verification")
+FULL_SESSION=("reference" "data_onboarding" "consent" "uc1" "uc2" "uc3" "uc4" "mvp" "verification")
 QUICK_SESSION=("reference" "uc1" "uc3" "verification")
-TECHNICAL_SESSION=("consent" "mvp" "uc2" "uc4" "verification")
+TECHNICAL_SESSION=("data_onboarding" "consent" "mvp" "uc2" "uc4" "verification")
 
 # Function to print colored output
 print_color() {
@@ -92,17 +95,17 @@ USAGE:
     ./run-all-demos.sh [OPTIONS]
 
 OPTIONS:
-    --quick      Run quick overview session (15-20 minutes)
+    --quick      Run quick overview session (17-21 minutes)
                  Demos: Reference Process, UC1, UC3, Verification
     
-    --technical  Run technical deep dive session (20-30 minutes)
-                 Demos: Consent Flow, Banking MVP, UC2, UC4, Verification
+    --technical  Run technical deep dive session (27-35 minutes)
+                 Demos: Data Onboarding, Consent Flow, Banking MVP, UC2, UC4, Verification
     
     --help       Show this help message
 
 DEFAULT:
-    Full demonstration session (45-60 minutes)
-    All demos in recommended order
+    Full demonstration session (53-69 minutes)
+    All demos in recommended order including MVP
 
 ENVIRONMENT VARIABLES:
     API_BASE_URL    API server URL (default: http://localhost:3000)
@@ -249,17 +252,17 @@ run_session() {
         "quick")
             demos_array=("${QUICK_SESSION[@]}")
             session_name="Quick Overview Session"
-            estimated_total=16
+            estimated_total=18
             ;;
         "technical")
             demos_array=("${TECHNICAL_SESSION[@]}")
             session_name="Technical Deep Dive Session"
-            estimated_total=25
+            estimated_total=31
             ;;
         "full"|*)
             demos_array=("${FULL_SESSION[@]}")
             session_name="Full Demonstration Session"
-            estimated_total=34
+            estimated_total=61
             ;;
     esac
     

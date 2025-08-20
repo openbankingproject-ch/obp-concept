@@ -89,25 +89,57 @@ node [demo-script-name].js
 node reference-process-demo.js
 ```
 
-**Duration**: ~3-4 minutes
+**Duration**: ~4-5 minutes
 
 **Expected Output**:
-- Process initialization and framework readiness check
-- Step-by-step execution of all 10 stages
-- Process summary with timing and completion metrics
-- Framework capabilities overview
+- Framework overview with cross-industry universal applicability
+- Sequential execution of all 10 steps with realistic business scenarios
+- Comprehensive progress tracking with business rule validation
+- Cross-industry efficiency analysis (67% improvement) and framework scalability demonstration
+
+**Description File**: [Demo 1: Referenzprozess description.md](referenzprozess/Demo%201:%20Referenzprozess%20description.md)
 
 ---
 
-### 2. Consent Flow Demo (`consent-flow-demo.js`)
+### 2. Data Onboarding and Maintenance Demo (`data-onboarding-demo.js`)
 
-**Purpose**: Demonstrates FAPI 2.0 compliant consent management system with granular permissions and secure authentication flow.
+**Purpose**: Demonstrates modular "Blöckli" data architecture with 94% efficiency improvement through standardized, cross-industry reusable data building blocks.
 
 **Key Features**:
-- FAPI 2.0 Advanced security implementation
-- Granular field-level consent control
-- Complete consent lifecycle management
-- GDPR/DSG compliant consent handling
+- Intelligent data quality assessment and enrichment capabilities
+- Multi-source data enrichment from trusted sources
+- Real-time data quality monitoring and maintenance
+- Automated compliance validation and regulatory reporting
+
+**Usage**:
+```bash
+node data-onboarding-demo.js
+```
+
+**Duration**: ~5-6 minutes
+
+**Expected Output**:
+- Initial data assessment and quality analysis
+- Multi-source data enrichment process
+- Data validation and compliance checks
+- Ongoing maintenance and monitoring demonstration
+- Analytics and business impact reporting
+
+**Business Value**: 94% efficiency improvement through modular Blöckli architecture, €139 savings per customer, cross-industry reusable data building blocks with comprehensive GDPR/Swiss DPA compliance.
+
+**Description File**: [Demo 2: Daten Onboarding und Pflege description.md](data_onboarding/Demo%202:%20Daten%20Onboarding%20und%20Pflege%20description.md)
+
+---
+
+### 3. Consent Flow Demo (`consent-flow-demo.js`)
+
+**Purpose**: Demonstrates FAPI 2.0 Advanced security profile with mTLS certificate-bound authentication, DPoP proof-of-possession, and comprehensive privacy-by-design consent management.
+
+**Key Features**:
+- FAPI 2.0 Advanced with mTLS and DPoP token binding
+- Granular consent management with real-time enforcement
+- Complete consent lifecycle with immediate revocation capability
+- Advanced GDPR Article 7 and Swiss FADP compliant architecture
 
 **Usage**:
 ```bash
@@ -117,22 +149,24 @@ node consent-flow-demo.js
 **Duration**: ~4-5 minutes
 
 **Expected Output**:
-- 8-step consent lifecycle demonstration
-- Service discovery and data requirements specification
-- Granular consent selection and approval process
-- Real-time consent enforcement and revocation
+- FAPI 2.0 Advanced security flow with mTLS/DPoP implementation
+- Service discovery with transparent data requirement specification
+- Granular field-level consent selection with privacy controls
+- Real-time consent enforcement, modification, and system-wide revocation
+
+**Description File**: [Demo 3: Consent and Security Flow description.md](consent_security/Demo%203:%20Consent%20and%20Security%20Flow%20description.md)
 
 ---
 
-### 3. UC1: Banking Account Opening Demo (`uc1-banking-account-opening-demo.js`)
+### 4. UC1: Banking Account Opening Demo (`uc1-banking-account-opening-demo.js`)
 
-**Purpose**: Demonstrates efficiency gains of API-based banking account opening compared to traditional manual processes.
+**Purpose**: Demonstrates Zielbild 1 direct customer relationship model with 67% efficiency improvement through Swiss API-based banking account opening.
 
 **Key Features**:
-- Shows 67% time reduction through data reuse
-- Compares traditional vs API-based processes
-- Demonstrates seamless integration between banks during bank switching
-- Addresses standardized data modules from the Referenzprozess
+- Zielbild 1 direct customer relationship with full bank control
+- 67% time reduction through standardized Swiss framework data reuse
+- Comprehensive comparison of traditional vs API-based onboarding
+- UC1 Kundenbeziehungseroeffnung with complete regulatory compliance
 
 **Usage**:
 ```bash
@@ -142,16 +176,18 @@ node uc1-banking-account-opening-demo.js
 **Duration**: ~3-4 minutes
 
 **Expected Output**:
-- Traditional process simulation (90 minutes simulated)
-- API-based process demonstration (30 minutes simulated)
-- Efficiency comparison and business impact analysis
-- Regulatory compliance benefits
+- Traditional manual process simulation (90 minutes)
+- Zielbild 1 API-based process execution (30 minutes)
+- Detailed efficiency comparison with 67% improvement metrics
+- Swiss banking regulatory compliance validation and business ROI analysis
 
-**Business Value**: Reduces customer onboarding time by 67%, improves customer satisfaction, and decreases operational costs.
+**Business Value**: 67% time reduction, €156 cost savings per customer, improved customer satisfaction (9.2/10), and enhanced competitive positioning through Zielbild 1 implementation.
+
+**Description File**: [Demo 1.1: Use Case Kundenbeziehungseröffnung description.md](referenzprozess/use-cases/Demo%201.1:%20Use%20Case%20Kundenbeziehungsero%CC%88ffnung%20description.md)
 
 ---
 
-### 4. UC2: Re-identification Process Demo (`uc2-reidentification-demo.js`)
+### 5. UC2: Re-identification Process Demo (`uc2-reidentification-demo.js`)
 
 **Purpose**: Demonstrates efficiency gains of API-based customer re-identification using verified data reuse.
 
@@ -169,24 +205,26 @@ node uc2-reidentification-demo.js
 **Duration**: ~3-4 minutes
 
 **Expected Output**:
-- Traditional re-identification process (125 minutes simulated)
-- API-based re-identification (19 minutes simulated)
-- Privacy-preserving identity verification
-- Cross-provider identity data reuse
+- Traditional re-identification process (127 minutes simulated)
+- Swiss API-based re-identification (19 minutes simulated)
+- Privacy-preserving identity verification with trust network integration
+- GwG-compliant cross-provider data reuse with Level of Assurance mapping
 
-**Business Value**: Reduces re-identification costs for providers, improves customer experience, and increases security through standardized verification.
+**Business Value**: 85% efficiency improvement, €76 savings per customer, enhanced security through trust network validation, and significantly improved customer experience (9.4/10 satisfaction).
+
+**Description File**: [Demo 1.2: Use Case Re-Identifikation description.md](referenzprozess/use-cases/Demo%201.2:%20Use%20Case%20Re-Identifikation%20description.md)
 
 ---
 
-### 5. UC3: Age Verification Demo (`uc3-age-verification-demo.js`)
+### 6. UC3: Age Verification Demo (`uc3-age-verification-demo.js`)
 
-**Purpose**: Demonstrates privacy-preserving age verification through attribute-based verification without full identity disclosure.
+**Purpose**: Demonstrates privacy-preserving attribute verification using zero-knowledge proofs across 8+ industries without identity disclosure.
 
 **Key Features**:
-- Attribute-only disclosure (age ≥18: YES/NO) without revealing actual age
-- Privacy-by-Design implementation
-- Cross-industry reusability (6+ industry scenarios)
-- GDPR data minimization compliance
+- Privacy-preserving attribute verification (age ≥18: YES/NO) with zero-knowledge proofs
+- Privacy-by-Design architecture with comprehensive data minimization
+- Universal cross-industry reusability (banking, gaming, e-commerce, media, healthcare)
+- GDPR Article 5 data minimization and Article 7 consent compliance
 
 **Usage**:
 ```bash
@@ -196,25 +234,27 @@ node uc3-age-verification-demo.js
 **Duration**: ~4-5 minutes
 
 **Expected Output**:
-- Traditional age verification with full identity exposure
-- Attribute-based verification for adult customer (access granted)
-- Attribute-based verification for minor customer (access denied with alternatives)
-- Cross-industry application scenarios
-- GDPR compliance analysis
+- Traditional approach with full identity disclosure demonstration
+- Privacy-preserving adult verification (access granted with attribute-only disclosure)
+- Privacy-preserving minor verification (access denied with alternative suggestions)
+- Cross-industry application across 8+ sectors with different age thresholds
+- Comprehensive GDPR Article 5 and 7 compliance validation
 
-**Business Value**: Provides privacy-compliant age verification, reduces costs through reusability, and ensures compliance across industries.
+**Business Value**: 98% data disclosure reduction, 94% verification reusability across industries, 89% cost reduction compared to traditional methods, and 92% customer approval for privacy protection.
+
+**Description File**: [Demo 1.3: Use Case Altersverifikation description.md](referenzprozess/use-cases/Demo%201.3:%20Use%20Case%20Altersverifikation%20description.md)
 
 ---
 
-### 6. UC4: EVV Lifecycle Management Demo (`uc4-evv-lifecycle-demo.js`)
+### 7. UC4: EVV Lifecycle Management Demo (`uc4-evv-lifecycle-demo.js`)
 
 **Purpose**: Demonstrates integrated customer lifecycle management for External Wealth Management (EVV) clients across different providers.
 
 **Key Features**:
-- Portfolio data synchronization across providers
-- KYC data reuse for verified wealth management clients
-- MiFID II suitability assessment integration
-- Automated portfolio transfer coordination
+- Real-time portfolio synchronization across multiple wealth management providers
+- Enhanced KYC data reuse for high-net-worth clients with regulatory compliance
+- Automated MiFID II suitability assessment and ongoing compliance monitoring
+- Coordinated portfolio transfer and lifecycle management with 78% efficiency improvement
 
 **Usage**:
 ```bash
@@ -224,24 +264,26 @@ node uc4-evv-lifecycle-demo.js
 **Duration**: ~4-5 minutes
 
 **Expected Output**:
-- Traditional EVV lifecycle with fragmented data (325 minutes simulated)
-- Integrated EVV lifecycle management (71 minutes simulated)
-- Portfolio synchronization and transfer coordination
-- Regulatory compliance for wealth management
+- Traditional fragmented EVV management (327 minutes simulated)
+- Swiss integrated CLM platform execution (72 minutes simulated)
+- Real-time portfolio synchronization with comprehensive performance analytics
+- MiFID II compliance automation and regulatory reporting
 
-**Business Value**: Improves data quality, reduces compliance costs, enhances client experience, and strengthens competitive dynamics.
+**Business Value**: 78% efficiency improvement, 255 minutes saved per client event, 99.4% portfolio data accuracy, 56% reduction in compliance costs, and significantly enhanced client satisfaction (9.6/10).
+
+**Description File**: [Demo 1.4: Use Case CLM von EVV-Endkunden description.md](referenzprozess/use-cases/Demo%201.4:%20Use%20Case%20CLM%20von%20EVV-Endkunden%20description.md)
 
 ---
 
-### 7. Banking MVP Demo (`banking-mvp-demo.js`)
+### 8. Banking MVP Demo (`banking-mvp-demo.js`)
 
-**Purpose**: Demonstrates the minimum viable product implementation focusing on core banking functionalities.
+**Purpose**: Demonstrates Zielbild 1 MVP implementation with architectural distinction between Basisdaten and Erweiterte Daten processing.
 
 **Key Features**:
-- Core banking API functionality
-- Basic customer data management
-- Essential compliance features
-- Foundation for extended use cases
+- Zielbild 1 direct customer relationship with production-ready core banking functionality
+- Basisdaten (essential) vs Erweiterte Daten (enhanced) architectural distinction
+- UC1 Kundenbeziehungseröffnung implementation with 67% efficiency improvement
+- Complete bank control with 0-3 month time-to-market capability
 
 **Usage**:
 ```bash
@@ -251,21 +293,24 @@ node banking-mvp-demo.js
 **Duration**: ~2-3 minutes
 
 **Expected Output**:
-- Core banking operations demonstration
-- Customer data flow examples
-- Basic API interactions
+- Zielbild 1 direct customer relationship demonstration
+- Basisdaten and Erweiterte Daten processing distinction
+- UC1 account opening with 67% efficiency improvement
+- Production-ready MVP with clear ROI metrics and expansion path
+
+**Description File**: [Demo 5: MVP Implementation description.md](MVP/Demo%205:%20MVP%20Implementation%20description.md)
 
 ---
 
-### 8. Verification Process Demo (`verification-process-demo.js`)
+### 9. Verification Process Demo (`verification-process-demo.js`)
 
-**Purpose**: Demonstrates the comprehensive testing and verification framework with multi-layer testing strategy.
+**Purpose**: Demonstrates comprehensive 4-layer testing strategy with community-driven validation and >95% test coverage for production readiness.
 
 **Key Features**:
-- Multi-layer testing (Unit → Integration → System → Acceptance)
-- Community-based validation and external reviews
-- Real-time quality metrics and compliance monitoring
-- Production readiness assessment
+- 4-layer testing strategy (Unit → Integration → System → Acceptance) with >95% coverage
+- Community-driven validation with 25+ industry experts and partner participation
+- Real-time quality dashboard with comprehensive compliance monitoring
+- Multi-stakeholder production readiness certification process
 
 **Usage**:
 ```bash
@@ -275,10 +320,12 @@ node verification-process-demo.js
 **Duration**: ~3-4 minutes
 
 **Expected Output**:
-- Layer-by-layer test execution results
-- Community validation with partner feedback
-- Quality dashboard with production readiness status
-- Independent audit results
+- Comprehensive 4-layer test execution with detailed coverage metrics (>95%)
+- Community validation process with 25+ expert reviews and partner feedback
+- Real-time quality dashboard showing production readiness certification
+- Independent third-party audit results with compliance validation
+
+**Description File**: [Demo 4: Verification Process description.md](verification/Demo%204:%20Verification%20Process%20description.md)
 
 ---
 
@@ -286,6 +333,7 @@ node verification-process-demo.js
 
 ### Core Framework Demos
 - **Reference Process Demo**: Universal 10-step process
+- **Data Onboarding and Maintenance Demo**: Comprehensive data lifecycle management
 - **Consent Flow Demo**: FAPI 2.0 consent management
 - **Banking MVP Demo**: Core banking functionality
 
@@ -390,27 +438,30 @@ NODE_ENV=production API_BASE_URL=https://your-api-server.com node [demo-script].
 
 ## Demo Execution Order Recommendations
 
-### Full Demonstration Session (45-60 minutes)
-1. **Reference Process Demo** (4 min) - Foundation overview
-2. **Consent Flow Demo** (5 min) - Security and privacy
-3. **UC1: Banking Account Opening** (4 min) - Primary use case
-4. **UC2: Re-identification Process** (4 min) - Data reuse
-5. **UC3: Age Verification** (5 min) - Cross-industry application
-6. **UC4: EVV Lifecycle Management** (5 min) - Advanced use case
-7. **Verification Process Demo** (4 min) - Quality assurance
+### Full Demonstration Session (53-69 minutes)
+1. **Reference Process Demo** (5 min) - Universal foundation with cross-industry efficiency
+2. **Data Onboarding and Maintenance Demo** (6 min) - Blöckli architecture lifecycle management
+3. **Consent Flow Demo** (5 min) - FAPI 2.0 Advanced security and privacy
+4. **UC1: Banking Account Opening** (4 min) - Zielbild 1 primary use case
+5. **UC2: Re-identification Process** (4 min) - Trust network data reuse
+6. **UC3: Age Verification** (5 min) - Cross-industry zero-knowledge privacy
+7. **UC4: EVV Lifecycle Management** (5 min) - Wealth management integration
+8. **Banking MVP Demo** (3 min) - Basisdaten/Erweiterte production readiness
+9. **Verification Process Demo** (4 min) - Community-driven quality assurance
 
-### Quick Overview Session (15-20 minutes)
-1. **Reference Process Demo** (4 min)
-2. **UC1: Banking Account Opening** (4 min)
-3. **UC3: Age Verification** (3 min)
-4. **Verification Process Demo** (3 min)
+### Quick Overview Session (17-21 minutes)
+1. **Reference Process Demo** (5 min) - Universal framework
+2. **UC1: Banking Account Opening** (4 min) - Zielbild 1 core value
+3. **UC3: Age Verification** (5 min) - Privacy-by-design cross-industry
+4. **Verification Process Demo** (4 min) - Production readiness
 
-### Technical Deep Dive Session (20-30 minutes)
-1. **Consent Flow Demo** (5 min)
-2. **Banking MVP Demo** (3 min)
-3. **UC2: Re-identification Process** (4 min)
-4. **UC4: EVV Lifecycle Management** (5 min)
-5. **Verification Process Demo** (4 min)
+### Technical Deep Dive Session (27-35 minutes)
+1. **Data Onboarding and Maintenance Demo** (6 min) - Blöckli architecture
+2. **Consent Flow Demo** (5 min) - FAPI 2.0 Advanced implementation
+3. **Banking MVP Demo** (3 min) - Production-ready MVP
+4. **UC2: Re-identification Process** (4 min) - Trust network integration
+5. **UC4: EVV Lifecycle Management** (5 min) - Wealth management sophistication
+6. **Verification Process Demo** (4 min) - Quality and compliance validation
 
 ---
 
@@ -420,14 +471,15 @@ NODE_ENV=production API_BASE_URL=https://your-api-server.com node [demo-script].
 
 | Demo | Expected Duration | API Calls | Key Metrics |
 |------|------------------|-----------|-------------|
-| Reference Process | 3-4 min | ~15 | 10 steps, 100% completion |
-| Consent Flow | 4-5 min | ~12 | 8 steps, FAPI 2.0 compliance |
-| UC1 Banking | 3-4 min | ~8 | 67% time reduction |
-| UC2 Re-identification | 3-4 min | ~6 | 85% efficiency improvement |
-| UC3 Age Verification | 4-5 min | ~5 | 6 industry scenarios |
-| UC4 EVV Lifecycle | 4-5 min | ~10 | 78% time reduction |
-| Banking MVP | 2-3 min | ~6 | Core functionality |
-| Verification Process | 3-4 min | ~0 | Quality dashboard |
+| Reference Process | 4-5 min | ~25 | 10 steps, 67% cross-industry improvement |
+| Data Onboarding | 5-6 min | ~30 | 94% efficiency, Blöckli architecture |
+| Consent Flow | 4-5 min | ~18 | FAPI 2.0 Advanced, mTLS, DPoP |
+| UC1 Banking | 3-4 min | ~12 | Zielbild 1, 67% time reduction |
+| UC2 Re-identification | 3-4 min | ~8 | 85% efficiency, trust network |
+| UC3 Age Verification | 4-5 min | ~7 | 8 industry scenarios, zero-knowledge |
+| UC4 EVV Lifecycle | 4-5 min | ~15 | 78% improvement, wealth management |
+| Banking MVP | 2-3 min | ~8 | Basisdaten/Erweiterte distinction |
+| Verification Process | 3-4 min | ~5 | >95% coverage, community validation |
 
 ### System Resource Requirements
 
