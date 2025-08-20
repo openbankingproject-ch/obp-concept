@@ -16,7 +16,7 @@ professional documentation (conclusions) written from the perspective of an econ
 - if some information is not available in the resources, please use professional and reliable sources to fill the gaps, and make sure to document the sources properly
 
 **General guidelines for the language:**
-- even though the conclusions are written in german, please use "Ecosystem" instead of "Ökosystem" and "API" instead of "Schnittstelle" (this is a common term in the industry and should be used consistently)
+- even though the conclusions are written in german, please use "Ecosystem" instead of "Ökosystem" 
 - no ß, use ss instead (we are swiss not german!!)
 - no emojis or slang, use professional language
 
