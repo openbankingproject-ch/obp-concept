@@ -1,0 +1,34 @@
+# SSL Certificate Security - Do not commit sensitive files
+
+# Private keys (NEVER commit these!)
+*.key
+*.pem
+
+# Certificate passwords
+*password*.txt
+p12-password.txt
+
+# PKCS#12 bundles (contain private keys)
+*.p12
+*.pfx
+
+# Certificate serial numbers and database
+*.srl
+*.old
+
+# Temporary files
+*.csr
+*.tmp
+
+# Certificate information with sensitive details
+certificate-info.txt
+
+# Keep directory structure but ignore sensitive content
+!.gitkeep
+!README.md
+!generate-certificates.sh
+
+# Allow certificate files (.crt, .cert) but be cautious
+# Uncomment if you want to commit public certificates:
+# !*.crt
+# !*.cert

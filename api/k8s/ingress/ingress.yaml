@@ -1,0 +1,200 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: swiss-openapi-ingress
+  namespace: swiss-openapi-kundenbeziehung
+  labels:
+    app: swiss-openapi-api
+    component: ingress
+    tier: frontend
+  annotations:
+    # General ingress annotations
+    kubernetes.io/ingress.class: "nginx"  # or your ingress controller
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    
+    # FAPI 2.0 Security Headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header X-Content-Type-Options nosniff always;
+      add_header X-Frame-Options DENY always;
+      add_header X-XSS-Protection "1; mode=block" always;
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+      add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';" always;
+    
+    # Rate limiting
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    nginx.ingress.kubernetes.io/rate-limit-connections: "10"
+    
+    # Client certificate for mTLS (FAPI 2.0)
+    nginx.ingress.kubernetes.io/auth-tls-verify-client: "optional"
+    nginx.ingress.kubernetes.io/auth-tls-secret: "swiss-openapi-kundenbeziehung/ca-certificates"
+    nginx.ingress.kubernetes.io/auth-tls-verify-depth: "2"
+    nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
+    
+    # OAuth/Token endpoints require mTLS
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location /token {
+        if ($ssl_client_verify != SUCCESS) {
+          return 400 '{"error":"invalid_client","error_description":"Valid client certificate required"}';
+        }
+        proxy_set_header X-SSL-Client-Verify $ssl_client_verify;
+        proxy_set_header X-SSL-Client-DN $ssl_client_s_dn;
+        proxy_set_header X-SSL-Client-Serial $ssl_client_serial;
+        proxy_set_header X-SSL-Client-Fingerprint $ssl_client_fingerprint;
+        proxy_set_header X-SSL-Client-Cert $ssl_client_escaped_cert;
+      }
+      
+      location ~ ^/(par|introspect|revoke) {
+        proxy_set_header X-SSL-Client-Verify $ssl_client_verify;
+        proxy_set_header X-SSL-Client-DN $ssl_client_s_dn;
+        proxy_set_header X-SSL-Client-Fingerprint $ssl_client_fingerprint;
+        proxy_set_header X-SSL-Client-Cert $ssl_client_escaped_cert;
+      }
+    
+    # Cache control for sensitive endpoints
+    nginx.ingress.kubernetes.io/location-snippet: |
+      if ($request_uri ~* "^/(token|authorize|userinfo|introspect)") {
+        add_header Cache-Control "no-store, no-cache, must-revalidate, private" always;
+        add_header Pragma "no-cache" always;
+      }
+      if ($request_uri ~* "^/.well-known/") {
+        add_header Cache-Control "public, max-age=3600" always;
+      }
+    
+    # Request size limits
+    nginx.ingress.kubernetes.io/proxy-body-size: "64k"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "10"
+    
+    # Enable CORS for API endpoints (adjust origins as needed)
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://demo-bank.ch,https://demo-insurance.ch,https://demo-gov.ch"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,DPoP"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    
+    # Certificate manager (if using cert-manager)
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # or your issuer
+spec:
+  tls:
+  - hosts:
+    - api.kundenbeziehung.ch
+    - "*.kundenbeziehung.ch"
+    secretName: tls-certificates  # This should contain your TLS certificate
+  rules:
+  - host: api.kundenbeziehung.ch
+    http:
+      paths:
+      # Health check endpoint (no authentication)
+      - path: /health
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      
+      # OAuth/OIDC endpoints
+      - path: /authorize
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      - path: /token
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      - path: /par
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      - path: /userinfo
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      - path: /introspect
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      - path: /revoke
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      
+      # Discovery endpoints
+      - path: /.well-known/
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      
+      # API endpoints
+      - path: /v1/
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+      
+      # Default catch-all
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
+
+---
+# Additional ingress for wildcard subdomains (if needed)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: swiss-openapi-wildcard-ingress
+  namespace: swiss-openapi-kundenbeziehung
+  labels:
+    app: swiss-openapi-api
+    component: ingress-wildcard
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/permanent-redirect: "https://api.kundenbeziehung.ch$request_uri"
+spec:
+  tls:
+  - hosts:
+    - "*.kundenbeziehung.ch"
+    secretName: tls-certificates
+  rules:
+  - host: "*.kundenbeziehung.ch"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 443
