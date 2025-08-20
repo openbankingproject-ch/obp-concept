@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 1.2: Customer Re-Identification - Trust Network Data Reuse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #253165;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .trust-badge {
+            background: #FA9F8A;
+            color: #253165;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid #253165;
+        }
+
+        .phase-indicator {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .phase {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .phase.current {
+            background: #253165;
+            color: white;
+        }
+
+        .phase.completed {
+            background: #00b02cff;
+            color: white;
+        }
+
+        .phase.pending {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+
+        .phase-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .phase-subtitle {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #F85F3D;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #e04e2c;
+        }
+
+        .btn-secondary {
+            background: #0070C0;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #005a9f;
+        }
+
+        .btn-gray {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-gray:hover:not(:disabled) {
+            background: #4b5563;
+        }
+
+        .speed-select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .step-counter {
+            margin-left: auto;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .step-details {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .step-details h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .phase-badge {
+            background: #FA9F8A;
+            color: #253165;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid #253165;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        .step-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .actions-list {
+            margin-bottom: 20px;
+        }
+
+        .actions-list h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .action-item:hover {
+            background: #f9fafb;
+        }
+
+        .action-dot {
+            width: 8px;
+            height: 8px;
+            background: #0070C0;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .data-display {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .data-display h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .data-display pre {
+            font-size: 0.85rem;
+            color: #4b5563;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .console {
+            background: #1f2937;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            color: #10b981;
+            font-family: 'Courier New', monospace;
+        }
+
+        .console h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        .console-output {
+            height: 400px;
+            overflow-y: auto;
+            background: #111827;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .log-timestamp {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .log-step {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .log-success {
+            color: #00b02cff;
+        }
+
+        .log-info {
+            color: #B469FF;
+        }
+
+        .log-action {
+            color: #d1d5db;
+        }
+
+        .log-trust {
+            color: #0070C0;
+        }
+
+        .ready-message {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .capabilities {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .capabilities h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .capability {
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .capability h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        .capability p {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: #374151;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #6b7280;
+            border-radius: 3px;
+        }
+
+        .efficiency-metrics {
+            background: #f0f9f0;
+            border: 1px solid #00b02cff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .efficiency-metrics h4 {
+            color: #00b02cff;
+            margin-bottom: 10px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #00b02cff;
+        }
+
+        .trust-indicator {
+            background: #f0f4ff;
+            border: 1px solid #0070C0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        .trust-level {
+            color: #0070C0;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="trust-badge">Trust Network Integration - Decentralized Architecture</div>
+            <h1>Demo 1.2: Customer Re-Identification</h1>
+            <p>Demonstrating 85% efficiency improvement through secure identity data reuse across trusted providers with GwG compliance</p>
+            
+            <!-- Progress Indicator -->
+            <div class="phase-indicator" id="phaseIndicator">
+                <div class="phase current" data-phase="1">
+                    <div class="phase-title">Phase 1</div>
+                    <div class="phase-subtitle">Identity Source Discovery</div>
+                </div>
+                <div class="phase pending" data-phase="2">
+                    <div class="phase-title">Phase 2</div>
+                    <div class="phase-subtitle">Data Validation & Trust</div>
+                </div>
+                <div class="phase pending" data-phase="3">
+                    <div class="phase-title">Phase 3</div>
+                    <div class="phase-subtitle">Risk Assessment & Transfer</div>
+                </div>
+                <div class="phase pending" data-phase="4">
+                    <div class="phase-title">Phase 4</div>
+                    <div class="phase-subtitle">Integration & Activation</div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <button class="btn btn-gray" onclick="resetDemo()" id="resetBtn">
+                    <span>🔄</span> Reset
+                </button>
+                
+                <button class="btn btn-secondary" onclick="previousStep()" id="prevBtn" disabled>
+                    <span>⏮️</span> Previous
+                </button>
+                
+                <button class="btn btn-primary" onclick="togglePlayPause()" id="playBtn">
+                    <span id="playIcon">▶️</span> <span id="playText">Play</span>
+                </button>
+                
+                <button class="btn btn-secondary" onclick="nextStep()" id="nextBtn">
+                    Next <span>⏭️</span>
+                </button>
+
+                <select class="speed-select" id="speedSelect" onchange="changeSpeed()">
+                    <option value="fast">Fast</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="slow">Slow</option>
+                </select>
+
+                <div class="step-counter">
+                    Step <span id="currentStepNum">1</span> of <span id="totalSteps">10</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Current Step Details -->
+            <div class="step-details">
+                <h2>Current Step</h2>
+                
+                <div id="stepContent">
+                    <div class="phase-badge" id="phaseBadge">Identity Source Discovery</div>
+                    
+                    <h3 class="step-title" id="stepTitle">Step 1: Trust Network Discovery</h3>
+                    
+                    <p class="step-description" id="stepDescription">Initialize re-identification process by discovering existing identity data in trusted provider network</p>
+                    
+                    <div class="actions-list">
+                        <h4>Actions in this step:</h4>
+                        <div id="actionsList">
+                            <!-- Actions will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="data-display">
+                        <h4>Trust Network Data:</h4>
+                        <pre id="sampleData">Ready to start re-identification demo...</pre>
+                    </div>
+
+                    <div class="trust-indicator" id="trustIndicator" style="display: none;">
+                        <div class="trust-level" id="trustLevel">Trust Level: High</div>
+                        <div style="font-size: 0.8rem; color: #0369a1; margin-top: 5px;" id="trustDetails">Provider verified and compliant</div>
+                    </div>
+
+                    <div class="efficiency-metrics" id="efficiencyMetrics" style="display: none;">
+                        <h4>Re-Identification Efficiency Gains</h4>
+                        <div class="metric-row">
+                            <span>Time Reduction:</span>
+                            <span class="metric-value">85% (108 min saved)</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Cost Reduction:</span>
+                            <span class="metric-value">€76 per customer</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Customer Satisfaction:</span>
+                            <span class="metric-value">9.4/10 (was 7.2/10)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Console Output -->
+            <div class="console">
+                <h2>Trust Network Console</h2>
+                
+                <div class="console-output scrollbar-thin" id="consoleOutput">
+                    <div class="ready-message">Ready to start re-identification demo... Click Play to begin</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trust Network Capabilities Overview -->
+        <div class="capabilities">
+            <h2>Trust Network Re-Identification Capabilities</h2>
+            
+            <div class="capabilities-grid">
+                <div class="capability">
+                    <h3>🔗 Trust Network Integration</h3>
+                    <p>Secure identity data reuse across verified trusted providers</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>⚡ 85% Efficiency Gain</h3>
+                    <p>From 127 minutes to 19 minutes through verified data reuse</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>🛡️ GwG Compliance</h3>
+                    <p>Anti-money laundering compliant cross-provider data transfer</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>🔒 Privacy-Preserving</h3>
+                    <p>Minimal data exposure with cryptographic validation</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>📊 Level of Assurance</h3>
+                    <p>Proper risk assessment and QEAA compliance mapping</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>✅ Audit Trail</h3>
+                    <p>Complete documentation for regulatory oversight</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo data and configuration for re-identification
+        let currentStep = 0;
+        let isPlaying = false;
+        let playInterval = null;
+        let completedSteps = new Set();
+        let logs = [];
+        let startTime = null;
+
+        const speedSettings = {
+            fast: 1000,
+            normal: 2500,
+            slow: 5000
+        };
+
+        let currentSpeed = 'normal';
+
+        const demoSteps = [
+            {
+                id: 1,
+                title: "Trust Network Discovery",
+                phase: "Identity Source Discovery",
+                phaseNumber: 1,
+                description: "Initialize re-identification process by discovering existing identity data in trusted provider network",
+                actions: [
+                    "Trust Network Health Check",
+                    "Provider Registry Query", 
+                    "Available Identity Sources Discovery",
+                    "Customer Consent Verification"
+                ],
+                data: {
+                    process: 're-identification',
+                    trustNetwork: 'decentralized-peer-to-peer',
+                    availableProviders: ['Swiss Bank Alpha', 'PostFinance', 'E-ID Provider'],
+                    consentStatus: 'active'
+                },
+                trustLevel: 'Network Available',
+                trustDetails: 'Trust network operational with 3 verified providers'
+            },
+            {
+                id: 2,
+                title: "Provider Authentication & Authorization",
+                phase: "Identity Source Discovery",
+                phaseNumber: 1,
+                description: "Authenticate with trusted providers and verify authorization for identity data access",
+                actions: [
+                    "Provider Certificate Validation",
+                    "Authorization Token Exchange",
+                    "Access Level Verification",
+                    "Data Availability Assessment"
+                ],
+                data: {
+                    authenticatedProviders: ['Swiss Bank Alpha'],
+                    certificates: 'valid',
+                    authorizationLevel: 'identity-verification-data',
+                    dataAvailability: 'full-profile-available'
+                },
+                trustLevel: 'High Trust',
+                trustDetails: 'Provider authenticated with valid certificates'
+            },
+            {
+                id: 3,
+                title: "Identity Data Request & Retrieval",
+                phase: "Data Validation & Trust",
+                phaseNumber: 2,
+                description: "Request and retrieve existing identity verification data from trusted provider",
+                actions: [
+                    "Secure Identity Data Request",
+                    "Encrypted Data Transfer",
+                    "Data Integrity Verification",
+                    "Completeness Assessment"
+                ],
+                data: {
+                    dataSource: 'Swiss Bank Alpha',
+                    retrievedData: {
+                        personalData: 'verified',
+                        identityVerification: 'QEAA-level',
+                        verificationDate: '2024-11-15',
+                        documentVerification: 'completed'
+                    },
+                    dataIntegrity: 'valid',
+                    completeness: '95%'
+                },
+                trustLevel: 'High Trust',
+                trustDetails: 'Data integrity verified with cryptographic signatures'
+            },
+            {
+                id: 4,
+                title: "Level of Assurance Validation",
+                phase: "Data Validation & Trust",
+                phaseNumber: 2,
+                description: "Validate and map Level of Assurance from source provider to current requirements",
+                actions: [
+                    "Source LoA Assessment",
+                    "Target Requirements Mapping",
+                    "Risk Level Evaluation",
+                    "Compliance Gap Analysis"
+                ],
+                data: {
+                    sourceLoA: 'QEAA',
+                    targetRequirements: 'QEAA',
+                    riskMapping: 'compatible',
+                    complianceGap: 'none',
+                    validationResult: 'accepted'
+                },
+                trustLevel: 'QEAA Verified',
+                trustDetails: 'Level of Assurance mapping successful'
+            },
+            {
+                id: 5,
+                title: "Cross-Provider Data Validation",
+                phase: "Data Validation & Trust",
+                phaseNumber: 2,
+                description: "Validate identity data consistency across multiple trusted providers",
+                actions: [
+                    "Multi-Provider Data Comparison",
+                    "Consistency Verification",
+                    "Conflict Resolution",
+                    "Data Quality Scoring"
+                ],
+                data: {
+                    providers: ['Swiss Bank Alpha', 'E-ID Provider'],
+                    consistency: 'high',
+                    conflicts: 'none',
+                    qualityScore: 97.5,
+                    recommendedSource: 'Swiss Bank Alpha'
+                },
+                trustLevel: 'Multi-Provider Verified',
+                trustDetails: 'Data consistent across trusted network providers'
+            },
+            {
+                id: 6,
+                title: "GwG Compliance Assessment",
+                phase: "Risk Assessment & Transfer",
+                phaseNumber: 3,
+                description: "Assess anti-money laundering compliance for cross-provider identity data transfer",
+                actions: [
+                    "GwG Compliance Check",
+                    "AML Risk Assessment",
+                    "Regulatory Requirements Validation",
+                    "Transfer Authorization"
+                ],
+                data: {
+                    gwgCompliance: 'verified',
+                    amlRiskLevel: 'low',
+                    regulatoryRequirements: 'met',
+                    transferAuthorization: 'approved',
+                    documentationLevel: 'complete'
+                },
+                trustLevel: 'GwG Compliant',
+                trustDetails: 'Anti-money laundering requirements fully satisfied'
+            },
+            {
+                id: 7,
+                title: "Risk Assessment & Supplemental Verification",
+                phase: "Risk Assessment & Transfer",
+                phaseNumber: 3,
+                description: "Assess residual risks and determine need for supplemental verification",
+                actions: [
+                    "Residual Risk Analysis",
+                    "Time Decay Assessment",
+                    "Supplemental Verification Decision",
+                    "Risk Acceptance Documentation"
+                ],
+                data: {
+                    residualRisk: 'minimal',
+                    timeDecay: 'acceptable',
+                    dataAge: '3 months',
+                    supplementalVerification: 'not-required',
+                    riskAcceptance: 'approved'
+                },
+                trustLevel: 'Risk Assessed',
+                trustDetails: 'Minimal residual risk with recent verification data'
+            },
+            {
+                id: 8,
+                title: "Identity Data Transfer & Integration",
+                phase: "Integration & Activation",
+                phaseNumber: 4,
+                description: "Complete secure transfer and integration of verified identity data",
+                actions: [
+                    "Secure Data Transfer Protocol",
+                    "Local System Integration",
+                    "Audit Trail Generation",
+                    "Data Transfer Certificate Creation"
+                ],
+                data: {
+                    transferMethod: 'encrypted-api',
+                    integrationStatus: 'successful',
+                    auditTrail: 'generated',
+                    transferCertificate: 'cert_reident_a1b2c3d4',
+                    dataMapping: 'complete'
+                },
+                trustLevel: 'Transfer Complete',
+                trustDetails: 'Secure transfer completed with full audit trail'
+            },
+            {
+                id: 9,
+                title: "Customer Profile Activation",
+                phase: "Integration & Activation",
+                phaseNumber: 4,
+                description: "Activate customer profile with transferred identity data and establish new service relationship",
+                actions: [
+                    "Customer Profile Creation",
+                    "Service Relationship Establishment",
+                    "Access Level Configuration",
+                    "Welcome Process Initiation"
+                ],
+                data: {
+                    profileStatus: 'active',
+                    serviceRelationship: 'established',
+                    accessLevel: 'full-service',
+                    verificationStatus: 'reused-from-trusted-source',
+                    activationTime: '19 minutes'
+                },
+                trustLevel: 'Service Active',
+                trustDetails: 'Customer profile activated with trusted identity data'
+            },
+            {
+                id: 10,
+                title: "Process Completion & Audit Documentation",
+                phase: "Integration & Activation",
+                phaseNumber: 4,
+                description: "Finalize re-identification process with comprehensive audit documentation",
+                actions: [
+                    "Process Completion Verification",
+                    "Comprehensive Audit Report",
+                    "Regulatory Documentation",
+                    "Efficiency Metrics Calculation",
+                    "Trust Network Feedback"
+                ],
+                data: {
+                    processStatus: 'completed',
+                    auditReport: 'comprehensive',
+                    regulatoryDocs: 'complete',
+                    timeToCompletion: '19 minutes',
+                    traditionalTime: '127 minutes',
+                    efficiencyGain: '85%',
+                    trustNetworkFeedback: 'positive',
+                    customerSatisfaction: 9.4
+                },
+                trustLevel: 'Process Complete',
+                trustDetails: '85% efficiency improvement through trust network integration'
+            }
+        ];
+
+        // Initialize demo
+        function initDemo() {
+            updateStepDisplay();
+            updatePhaseIndicator();
+            updateButtons();
+            document.getElementById('totalSteps').textContent = demoSteps.length;
+        }
+
+        // Update step display
+        function updateStepDisplay() {
+            const step = demoSteps[currentStep];
+            
+            document.getElementById('phaseBadge').textContent = step.phase;
+            document.getElementById('stepTitle').textContent = `Step ${step.id}: ${step.title}`;
+            document.getElementById('stepDescription').textContent = step.description;
+            document.getElementById('currentStepNum').textContent = step.id;
+            
+            // Update actions list
+            const actionsList = document.getElementById('actionsList');
+            actionsList.innerHTML = '';
+            step.actions.forEach(action => {
+                const actionDiv = document.createElement('div');
+                actionDiv.className = 'action-item';
+                actionDiv.innerHTML = `
+                    <div class="action-dot"></div>
+                    <span>${action}</span>
+                `;
+                actionsList.appendChild(actionDiv);
+            });
+            
+            // Update sample data
+            document.getElementById('sampleData').textContent = JSON.stringify(step.data, null, 2);
+            
+            // Update trust indicator
+            const trustIndicator = document.getElementById('trustIndicator');
+            const trustLevel = document.getElementById('trustLevel');
+            const trustDetails = document.getElementById('trustDetails');
+            
+            if (step.trustLevel) {
+                trustIndicator.style.display = 'block';
+                trustLevel.textContent = `Trust Level: ${step.trustLevel}`;
+                trustDetails.textContent = step.trustDetails;
+            } else {
+                trustIndicator.style.display = 'none';
+            }
+            
+            // Show efficiency metrics on final step
+            const efficiencyMetrics = document.getElementById('efficiencyMetrics');
+            if (step.id === 10) {
+                efficiencyMetrics.style.display = 'block';
+            } else {
+                efficiencyMetrics.style.display = 'none';
+            }
+        }
+
+        // Update phase indicator
+        function updatePhaseIndicator() {
+            const currentPhase = demoSteps[currentStep].phaseNumber;
+            const phases = document.querySelectorAll('.phase');
+            
+            phases.forEach((phase, index) => {
+                const phaseNum = index + 1;
+                phase.className = 'phase ';
+                
+                if (phaseNum < currentPhase) {
+                    phase.className += 'completed';
+                } else if (phaseNum === currentPhase) {
+                    phase.className += 'current';
+                } else {
+                    phase.className += 'pending';
+                }
+            });
+        }
+
+        // Update button states
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentStep === 0;
+            document.getElementById('nextBtn').disabled = currentStep >= demoSteps.length - 1;
+        }
+
+        // Execute step
+        function executeStep() {
+            if (!startTime) {
+                startTime = Date.now();
+            }
+
+            const step = demoSteps[currentStep];
+            const timestamp = new Date().toLocaleTimeString();
+            
+            completedSteps.add(step.id);
+            
+            // Add logs for this step
+            const newLogs = [
+                { type: 'step', message: `RE-IDENTIFICATION STEP ${step.id}: ${step.title}`, timestamp },
+                { type: 'info', message: step.description, timestamp }
+            ];
+            
+            step.actions.forEach(action => {
+                newLogs.push({ type: 'trust', message: `→ ${action}`, timestamp });
+            });
+            
+            // Add trust network specific log details
+            if (step.id === 2) {
+                newLogs.push({ type: 'info', message: `✓ Provider Swiss Bank Alpha authenticated`, timestamp });
+            } else if (step.id === 4) {
+                newLogs.push({ type: 'info', message: `✓ QEAA Level of Assurance validated`, timestamp });
+            } else if (step.id === 6) {
+                newLogs.push({ type: 'info', message: `✓ GwG compliance requirements met`, timestamp });
+            } else if (step.id === 10) {
+                newLogs.push({ type: 'success', message: `✓ Re-identification completed in 19 minutes`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ 85% efficiency improvement (108 minutes saved)`, timestamp });
+            }
+            
+            if (step.trustLevel) {
+                newLogs.push({ type: 'trust', message: `Trust Status: ${step.trustLevel}`, timestamp });
+            }
+            
+            newLogs.push({ type: 'success', message: `✓ Re-Identification Step ${step.id} Complete`, timestamp });
+            
+            logs.push(...newLogs);
+            updateConsole();
+        }
+
+        // Update console output
+        function updateConsole() {
+            const consoleOutput = document.getElementById('consoleOutput');
+            
+            if (logs.length === 0) {
+                consoleOutput.innerHTML = '<div class="ready-message">Ready to start re-identification demo... Click Play to begin</div>';
+                return;
+            }
+            
+            consoleOutput.innerHTML = '';
+            logs.forEach(log => {
+                const logDiv = document.createElement('div');
+                logDiv.className = `log-entry log-${log.type}`;
+                logDiv.innerHTML = `<span class="log-timestamp">[${log.timestamp}]</span> ${log.message}`;
+                consoleOutput.appendChild(logDiv);
+            });
+            
+            // Scroll to bottom
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        // Control functions
+        function togglePlayPause() {
+            if (isPlaying) {
+                pauseDemo();
+            } else {
+                playDemo();
+            }
+        }
+
+        function playDemo() {
+            isPlaying = true;
+            document.getElementById('playIcon').textContent = '⏸️';
+            document.getElementById('playText').textContent = 'Pause';
+            
+            if (currentStep < demoSteps.length - 1) {
+                playInterval = setInterval(() => {
+                    nextStep();
+                    if (currentStep >= demoSteps.length - 1) {
+                        pauseDemo();
+                    }
+                }, speedSettings[currentSpeed]);
+            }
+        }
+
+        function pauseDemo() {
+            isPlaying = false;
+            document.getElementById('playIcon').textContent = '▶️';
+            document.getElementById('playText').textContent = 'Play';
+            
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < demoSteps.length - 1) {
+                currentStep++;
+                executeStep();
+                updateStepDisplay();
+                updatePhaseIndicator();
+                updateButtons();
+            }
+            
+            if (currentStep >= demoSteps.length - 1) {
+                pauseDemo();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStepDisplay();
+                updatePhaseIndicator();
+                updateButtons();
+            }
+        }
+
+        function resetDemo() {
+            pauseDemo();
+            currentStep = 0;
+            completedSteps.clear();
+            logs = [];
+            startTime = null;
+            
+            updateStepDisplay();
+            updatePhaseIndicator();
+            updateButtons();
+            updateConsole();
+        }
+
+        function changeSpeed() {
+            currentSpeed = document.getElementById('speedSelect').value;
+            
+            if (isPlaying) {
+                pauseDemo();
+                playDemo();
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initDemo);
+    </script>
+</body>
+</html>
