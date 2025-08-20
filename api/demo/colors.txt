@@ -1,0 +1,15 @@
+# Color Scheme for HTML Demos
+
+Primary:        #253165   
+Secondary:      #F85F3D   
+Accent:         #FA9F8A   
+Accent 2:       #0070C0
+Background:     #f9fafb   
+Surface:        #ffffff   
+Text:           #1e293b   
+Muted Text:     #64748b   
+Border:         #E5CAFF  
+Error:          #ff3370ff   
+Success:        #00b02cff  
+Warning:        #FFC000   
+Info:           #B469FF   

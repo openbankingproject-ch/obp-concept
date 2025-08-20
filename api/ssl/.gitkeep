@@ -1,0 +1,2 @@
+# Keep this directory in version control
+# SSL certificates will be generated here by generate-certificates.sh

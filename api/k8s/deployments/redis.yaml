@@ -1,0 +1,161 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: swiss-openapi-kundenbeziehung
+  labels:
+    app: redis
+    component: cache
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+        component: cache
+        tier: backend
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        fsGroup: 999
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+          name: redis
+        command:
+        - redis-server
+        - /etc/redis/redis.conf
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: api-secrets
+              key: REDIS_PASSWORD
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        - name: redis-config
+          mountPath: /etc/redis
+          readOnly: true
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 3
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-pvc
+      - name: redis-config
+        configMap:
+          name: redis-config
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-pvc
+  namespace: swiss-openapi-kundenbeziehung
+  labels:
+    app: redis
+    component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ssd  # Adjust based on your storage class
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: swiss-openapi-kundenbeziehung
+  labels:
+    app: redis
+    component: configuration
+data:
+  redis.conf: |
+    # Redis Configuration for Swiss Open API Kundenbeziehung
+    # Production-optimized configuration with security
+    
+    # Network and security
+    bind 0.0.0.0
+    port 6379
+    protected-mode yes
+    
+    # Authentication (password will be set via environment variable)
+    # requirepass will be configured via REDIS_PASSWORD
+    
+    # Memory management
+    maxmemory 512mb
+    maxmemory-policy allkeys-lru
+    
+    # Persistence
+    save 900 1     # Save snapshot if at least 1 key changed in 900 seconds
+    save 300 10    # Save snapshot if at least 10 keys changed in 300 seconds
+    save 60 10000  # Save snapshot if at least 10000 keys changed in 60 seconds
+    
+    # Enable AOF persistence for better durability
+    appendonly yes
+    appendfilename "appendonly.aof"
+    appendfsync everysec
+    
+    # Logging
+    loglevel notice
+    logfile ""
+    
+    # Client connections
+    timeout 300
+    tcp-keepalive 60
+    
+    # Performance tuning
+    tcp-backlog 511
+    databases 16
+    
+    # Security settings
+    rename-command FLUSHDB ""
+    rename-command FLUSHALL ""
+    rename-command DEBUG ""
+    rename-command CONFIG "CONFIG_b835d8b5f3f8"
+    
+    # Disable dangerous commands in production
+    rename-command SHUTDOWN SHUTDOWN_SECURE_KEY
+    
+    # Slow log configuration
+    slowlog-log-slower-than 10000
+    slowlog-max-len 128
+    
+    # Key expiration and cleanup
+    hz 10

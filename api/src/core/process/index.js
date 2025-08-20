@@ -43,144 +43,191 @@ class ProcessOrchestrator {
    * Initialize universal process definitions
    */
   initializeUniversalProcesses() {
-    // Universal 10-Step Customer Data Exchange Process
-    this.processDefinitions.set('customer_data_exchange', {
-      processId: 'customer_data_exchange',
-      name: 'Universal Customer Data Exchange',
+    // Universal 10-Step Customer Onboarding Reference Process
+    // Based on Conclusion 03: Referenzprozess
+    this.processDefinitions.set('referenzprozess_complete', {
+      processId: 'referenzprozess_complete',
+      name: 'Universal 10-Step Customer Onboarding Reference Process',
       version: '1.0',
-      description: 'Generic 10-step process for customer data exchange across any industry',
+      description: 'Complete 10-step reference process for customer relationship establishment across any industry',
+      
+      phases: [
+        { phaseId: 'phase_1', name: 'Setup und Produktauswahl', steps: ['step_1', 'step_2'] },
+        { phaseId: 'phase_2', name: 'Datenerfassung', steps: ['step_3', 'step_4', 'step_5'] },
+        { phaseId: 'phase_3', name: 'Verifikation und Compliance', steps: ['step_6', 'step_7'] },
+        { phaseId: 'phase_4', name: 'Vertragsabschluss', steps: ['step_8', 'step_9', 'step_10'] }
+      ],
       
       steps: [
         {
-          stepId: 'step_1_customer_check',
-          name: 'Customer Existence Check',
-          type: 'validation',
-          description: 'Check if customer exists in providing system',
-          required: true,
-          timeout: 10000,
-          retries: 2,
-          inputs: ['customerId', 'basicData'],
-          outputs: ['customerExists', 'identificationDate', 'levelOfAssurance']
-        },
-        
-        {
-          stepId: 'step_2_participant_validation',
-          name: 'Participant Validation',
-          type: 'validation',
-          description: 'Validate requesting and providing participants',
-          required: true,
-          timeout: 5000,
-          retries: 1,
-          inputs: ['requestingParticipant', 'providingParticipant'],
-          outputs: ['participantsValid', 'trustLevel']
-        },
-        
-        {
-          stepId: 'step_3_consent_initiation',
-          name: 'Consent Request Initiation',
-          type: 'external_call',
-          description: 'Create consent request for customer approval',
-          required: true,
-          timeout: 15000,
-          retries: 2,
-          inputs: ['customerId', 'dataCategories', 'purpose', 'expiryDate'],
-          outputs: ['consentId', 'consentUrl', 'qrCode']
-        },
-        
-        {
-          stepId: 'step_4_customer_notification',
-          name: 'Customer Notification',
-          type: 'notification',
-          description: 'Notify customer about consent request',
-          required: false,
-          timeout: 10000,
-          retries: 1,
-          parallel: true,
-          inputs: ['customerId', 'consentUrl', 'contactMethod'],
-          outputs: ['notificationSent', 'deliveryStatus']
-        },
-        
-        {
-          stepId: 'step_5_consent_validation',
-          name: 'Consent Validation',
-          type: 'validation',
-          description: 'Validate customer consent approval',
-          required: true,
-          timeout: 300000, // 5 minutes for customer to respond
-          retries: 0,
-          inputs: ['consentId'],
-          outputs: ['consentStatus', 'approvedCategories', 'permissions']
-        },
-        
-        {
-          stepId: 'step_6_data_preparation',
-          name: 'Data Preparation',
-          type: 'transformation',
-          description: 'Prepare customer data based on consent',
-          required: true,
-          timeout: 20000,
-          retries: 2,
-          inputs: ['customerId', 'approvedCategories', 'permissions'],
-          outputs: ['customerData', 'dataQualityScore']
-        },
-        
-        {
-          stepId: 'step_7_data_validation',
-          name: 'Data Validation',
-          type: 'validation',
-          description: 'Validate prepared data quality and completeness',
-          required: true,
-          timeout: 15000,
-          retries: 1,
-          inputs: ['customerData', 'validationRules'],
-          outputs: ['validationResult', 'qualityScore', 'warnings']
-        },
-        
-        {
-          stepId: 'step_8_secure_transmission',
-          name: 'Secure Data Transmission',
-          type: 'external_call',
-          description: 'Securely transmit data to requesting participant',
+          stepId: 'step_1_initialisierung',
+          name: 'Initialisierung',
+          phase: 'phase_1',
+          type: 'initialization',
+          description: 'Information des Kunden und initiale Consent-Abgabe',
+          owner: 'customer',
+          purpose: 'Information des Kunden und initiale Consent-Abgabe',
+          levelOfAssurance: 'self-declared',
           required: true,
           timeout: 30000,
-          retries: 2,
-          inputs: ['customerData', 'requestingParticipant', 'encryptionKeys'],
-          outputs: ['transmissionId', 'deliveryConfirmation']
-        },
-        
-        {
-          stepId: 'step_9_audit_logging',
-          name: 'Audit Trail Logging',
-          type: 'storage',
-          description: 'Log complete audit trail of data exchange',
-          required: true,
-          timeout: 10000,
-          retries: 2,
-          parallel: true,
-          inputs: ['processId', 'allStepResults', 'participants'],
-          outputs: ['auditId', 'auditRecordStored']
-        },
-        
-        {
-          stepId: 'step_10_completion_notification',
-          name: 'Process Completion Notification',
-          type: 'notification',
-          description: 'Notify all parties of successful completion',
-          required: false,
-          timeout: 10000,
           retries: 1,
-          parallel: true,
-          inputs: ['processId', 'participants', 'summary'],
-          outputs: ['notificationsSent', 'completionTime']
+          inputs: ['serviceSelection', 'countrySelection', 'initialConsent'],
+          outputs: ['cookieConsent', 'initialConsentStatus', 'selectedCountry', 'selectedServices']
+        },
+        
+        {
+          stepId: 'step_2_produktauswahl',
+          name: 'Produktauswahl',
+          phase: 'phase_1',
+          type: 'configuration',
+          description: 'Bedürfnisbefriedigung und Produktkonfiguration',
+          owner: 'customer',
+          purpose: 'Bedürfnisbefriedigung',
+          levelOfAssurance: 'self-declared',
+          required: false, // Out of scope for MVP
+          timeout: 60000,
+          retries: 1,
+          inputs: ['availableProducts', 'customerProfile'],
+          outputs: ['selectedProducts', 'productConfiguration', 'suitabilityAssessment']
+        },
+        
+        {
+          stepId: 'step_3_selbstdeklaration',
+          name: 'Selbstdeklaration',
+          phase: 'phase_2',
+          type: 'data_collection',
+          description: 'Information bzgl. FATCA, MIFID, Compliance',
+          owner: 'customer',
+          purpose: 'Information bzgl. FATCA, MIFID, Compliance',
+          levelOfAssurance: 'self-declared',
+          required: true,
+          timeout: 300000, // 5 minutes
+          retries: 2,
+          inputs: ['taxResidency', 'usPerson', 'fatcaData'],
+          outputs: ['economicOwnership', 'taxDomicile', 'usPersonStatus', 'fatcaSelfDeclaration', 'sourceOfFunds']
+        },
+        
+        {
+          stepId: 'step_4_basisdaten',
+          name: 'Erhebung Basisdaten',
+          phase: 'phase_2',
+          type: 'data_collection',
+          description: 'Erfassung von Kontaktangaben und Personalien (Core Identity)',
+          owner: 'customer',
+          purpose: 'Erfassung von Kontaktangaben und Personalien',
+          levelOfAssurance: 'self-declared',
+          required: true,
+          timeout: 300000, // 5 minutes
+          retries: 2,
+          inputs: ['personalData', 'contactData', 'addressData'],
+          outputs: ['name', 'birthData', 'nationality', 'address', 'contactDetails', 'basicKycData']
+        },
+        
+        {
+          stepId: 'step_5_erweiterte_daten',
+          name: 'Erweiterte Daten',
+          phase: 'phase_2',
+          type: 'data_collection',
+          description: 'Risiko-/Potenzialermittlung des Kunden (Ecosystem-spezifisch)',
+          owner: 'customer',
+          purpose: 'Risiko-/Potenzialermittlung des Kunden',
+          levelOfAssurance: 'self-declared',
+          required: false, // Out of scope for MVP
+          timeout: 600000, // 10 minutes
+          retries: 2,
+          inputs: ['financialData', 'professionalData', 'investmentProfile'],
+          outputs: ['totalWealth', 'income', 'profession', 'riskProfile', 'investmentExperience']
+        },
+        
+        {
+          stepId: 'step_6_identifikation',
+          name: 'Identifikation',
+          phase: 'phase_3',
+          type: 'verification',
+          description: 'Identifikation der Vertragspartei (QEAA/EAA Level)',
+          owner: 'provider',
+          purpose: 'Identifikation der Vertragspartei',
+          levelOfAssurance: 'QEAA', // Qualified Entity-Assured-Assurance
+          required: true,
+          timeout: 1800000, // 30 minutes for video ident
+          retries: 3,
+          inputs: ['identityDocument', 'biometricData', 'addressProof'],
+          outputs: ['identityVerified', 'documentData', 'biometricMatch', 'auditTrail']
+        },
+        
+        {
+          stepId: 'step_7_background_checks',
+          name: 'Background Checks',
+          phase: 'phase_3',
+          type: 'compliance',
+          description: 'Know-Your-Customer (KYC) und Compliance',
+          owner: 'provider',
+          purpose: 'Know-Your-Customer (KYC) und Compliance',
+          levelOfAssurance: 'QEAA',
+          required: true,
+          timeout: 120000, // 2 minutes
+          retries: 2,
+          inputs: ['customerData', 'sanctionsLists', 'pepLists'],
+          outputs: ['sanctionsCheck', 'pepCheck', 'crimeCheck', 'adverseMediaCheck', 'complianceStatus']
+        },
+        
+        {
+          stepId: 'step_8_vertragsabschluss',
+          name: 'Vertragsabschluss',
+          phase: 'phase_4',
+          type: 'legal',
+          description: 'Akzeptanz Geschäftsbedingungen',
+          owner: 'customer',
+          purpose: 'Akzeptanz Geschäftsbedingungen',
+          levelOfAssurance: 'self-declared',
+          required: true,
+          timeout: 600000, // 10 minutes
+          retries: 1,
+          inputs: ['termsAndConditions', 'privacyPolicy', 'productConditions'],
+          outputs: ['agbAcceptance', 'privacyConsent', 'marketingConsent', 'additionalAgreements']
+        },
+        
+        {
+          stepId: 'step_9_signatur',
+          name: 'Signatur',
+          phase: 'phase_4',
+          type: 'signature',
+          description: 'Vertragsunterzeichnung',
+          owner: 'customer',
+          purpose: 'Vertragsunterzeichnung',
+          levelOfAssurance: 'QEAA',
+          required: true,
+          timeout: 300000, // 5 minutes
+          retries: 2,
+          inputs: ['contractDocument', 'signatureMethod'],
+          outputs: ['signature', 'signatureTimestamp', 'signatureMethod', 'certificateChain']
+        },
+        
+        {
+          stepId: 'step_10_metadaten_verteilung',
+          name: 'Metadaten und Verteilung',
+          phase: 'phase_4',
+          type: 'system_processing',
+          description: 'Erfassung, Verarbeitung und Systemintegration',
+          owner: 'system',
+          purpose: 'Erfassung, Verarbeitung und finale Verteilung',
+          levelOfAssurance: 'system',
+          required: true,
+          timeout: 60000,
+          retries: 3,
+          inputs: ['customerData', 'signedContract', 'complianceResults'],
+          outputs: ['accountProvisioned', 'servicesActivated', 'documentArchived', 'customerNotified']
         }
       ],
       
       // Process-level configuration
       configuration: {
-        maxExecutionTime: 3600000, // 1 hour
+        maxExecutionTime: 7200000, // 2 hours for complete onboarding
         enableRollback: true,
         auditLevel: 'full',
-        securityLevel: 'high'
+        securityLevel: 'high',
+        complianceRequired: true,
+        dataProtectionMode: 'gdpr_compliant'
       }
     });
 
@@ -275,6 +322,56 @@ class ProcessOrchestrator {
    * Register universal step handlers
    */
   registerUniversalStepHandlers() {
+    // Initialization step handler (Referenzprozess Step 1)
+    this.stepHandlers.set('initialization', async (stepConfig, inputs, context) => {
+      return await this.handleInitialization(inputs, context);
+    });
+
+    // Configuration step handler (Referenzprozess Step 2)
+    this.stepHandlers.set('configuration', async (stepConfig, inputs, context) => {
+      return await this.handleProductConfiguration(inputs, context);
+    });
+
+    // Data collection step handler (Referenzprozess Steps 3-5)
+    this.stepHandlers.set('data_collection', async (stepConfig, inputs, context) => {
+      if (stepConfig.stepId === 'step_3_selbstdeklaration') {
+        return await this.handleSelfDeclaration(inputs, context);
+      }
+      if (stepConfig.stepId === 'step_4_basisdaten') {
+        return await this.handleBasicDataCollection(inputs, context);
+      }
+      if (stepConfig.stepId === 'step_5_erweiterte_daten') {
+        return await this.handleExtendedDataCollection(inputs, context);
+      }
+      return { success: true };
+    });
+
+    // Verification step handler (Referenzprozess Step 6)
+    this.stepHandlers.set('verification', async (stepConfig, inputs, context) => {
+      return await this.handleIdentityVerification(inputs, context);
+    });
+
+    // Compliance step handler (Referenzprozess Step 7)
+    this.stepHandlers.set('compliance', async (stepConfig, inputs, context) => {
+      return await this.handleBackgroundChecks(inputs, context);
+    });
+
+    // Legal step handler (Referenzprozess Step 8)
+    this.stepHandlers.set('legal', async (stepConfig, inputs, context) => {
+      return await this.handleContractAcceptance(inputs, context);
+    });
+
+    // Signature step handler (Referenzprozess Step 9)
+    this.stepHandlers.set('signature', async (stepConfig, inputs, context) => {
+      return await this.handleDigitalSignature(inputs, context);
+    });
+
+    // System processing step handler (Referenzprozess Step 10)
+    this.stepHandlers.set('system_processing', async (stepConfig, inputs, context) => {
+      return await this.handleSystemProcessing(inputs, context);
+    });
+
+    // Legacy handlers for backward compatibility
     // Validation step handler
     this.stepHandlers.set('validation', async (stepConfig, inputs, context) => {
       const { validationEngine } = context.coreComponents;
@@ -658,6 +755,210 @@ class ProcessOrchestrator {
       auditRecorded: true,
       auditId: uuidv4(),
       timestamp: new Date().toISOString()
+    };
+  }
+
+  /**
+   * New Referenzprozess step handlers
+   */
+  
+  // Step 1: Initialisierung
+  async handleInitialization(inputs, context) {
+    console.log('Processing initialization step with cookie consent and service selection');
+    return {
+      cookieConsent: inputs.initialConsent === 'accepted',
+      initialConsentStatus: 'granted',
+      selectedCountry: inputs.countrySelection || 'CH',
+      selectedServices: inputs.serviceSelection || ['basic_banking']
+    };
+  }
+
+  // Step 2: Produktauswahl
+  async handleProductConfiguration(inputs, context) {
+    console.log('Processing product configuration and suitability assessment');
+    return {
+      selectedProducts: inputs.availableProducts || ['savings_account'],
+      productConfiguration: {
+        accountType: 'private',
+        serviceLevel: 'basic'
+      },
+      suitabilityAssessment: {
+        eligible: true,
+        riskMatch: 'conservative'
+      }
+    };
+  }
+
+  // Step 3: Selbstdeklaration
+  async handleSelfDeclaration(inputs, context) {
+    console.log('Processing self-declaration for FATCA/MIFID compliance');
+    return {
+      economicOwnership: inputs.taxResidency === 'self',
+      taxDomicile: inputs.taxResidency || 'CH',
+      usPersonStatus: inputs.usPerson || false,
+      fatcaSelfDeclaration: {
+        compliant: true,
+        timestamp: new Date().toISOString()
+      },
+      sourceOfFunds: inputs.sourceOfFunds || 'employment'
+    };
+  }
+
+  // Step 4: Basisdaten
+  async handleBasicDataCollection(inputs, context) {
+    console.log('Processing basic data collection (core identity)');
+    return {
+      name: {
+        firstName: inputs.personalData?.firstName,
+        lastName: inputs.personalData?.lastName,
+        title: inputs.personalData?.title
+      },
+      birthData: {
+        birthDate: inputs.personalData?.birthDate,
+        birthPlace: inputs.personalData?.birthPlace
+      },
+      nationality: inputs.personalData?.nationality || 'CH',
+      address: {
+        street: inputs.addressData?.street,
+        postalCode: inputs.addressData?.postalCode,
+        city: inputs.addressData?.city,
+        country: inputs.addressData?.country || 'CH'
+      },
+      contactDetails: {
+        email: inputs.contactData?.email,
+        phone: inputs.contactData?.phone,
+        mobile: inputs.contactData?.mobile
+      },
+      basicKycData: {
+        profession: inputs.personalData?.profession,
+        employer: inputs.personalData?.employer
+      }
+    };
+  }
+
+  // Step 5: Erweiterte Daten
+  async handleExtendedDataCollection(inputs, context) {
+    console.log('Processing extended data collection for risk assessment');
+    return {
+      totalWealth: inputs.financialData?.totalWealth,
+      income: inputs.financialData?.annualIncome,
+      profession: inputs.professionalData?.profession,
+      riskProfile: {
+        tolerance: inputs.investmentProfile?.riskTolerance || 'conservative',
+        horizon: inputs.investmentProfile?.timeHorizon || 'long_term'
+      },
+      investmentExperience: inputs.investmentProfile?.experience || 'beginner'
+    };
+  }
+
+  // Step 6: Identifikation
+  async handleIdentityVerification(inputs, context) {
+    console.log('Processing identity verification (QEAA level)');
+    // This would integrate with identity verification providers
+    return {
+      identityVerified: true,
+      documentData: {
+        documentType: inputs.identityDocument?.type || 'passport',
+        documentNumber: inputs.identityDocument?.number,
+        expiryDate: inputs.identityDocument?.expiryDate
+      },
+      biometricMatch: {
+        faceMatch: true,
+        livenessCheck: true,
+        score: 0.95
+      },
+      auditTrail: {
+        verificationId: uuidv4(),
+        timestamp: new Date().toISOString(),
+        method: 'video_ident',
+        provider: 'identity_service_provider'
+      }
+    };
+  }
+
+  // Step 7: Background Checks
+  async handleBackgroundChecks(inputs, context) {
+    console.log('Processing background checks for KYC/AML compliance');
+    // This would integrate with compliance service providers
+    return {
+      sanctionsCheck: { status: 'clear', score: 0.0, timestamp: new Date().toISOString() },
+      pepCheck: { status: 'clear', score: 0.0, timestamp: new Date().toISOString() },
+      crimeCheck: { status: 'clear', score: 0.0, timestamp: new Date().toISOString() },
+      adverseMediaCheck: { status: 'clear', score: 0.0, timestamp: new Date().toISOString() },
+      complianceStatus: {
+        overall: 'approved',
+        riskLevel: 'low',
+        requiresReview: false
+      }
+    };
+  }
+
+  // Step 8: Vertragsabschluss
+  async handleContractAcceptance(inputs, context) {
+    console.log('Processing contract terms acceptance');
+    return {
+      agbAcceptance: {
+        accepted: true,
+        timestamp: new Date().toISOString(),
+        version: '1.0'
+      },
+      privacyConsent: {
+        granted: true,
+        timestamp: new Date().toISOString(),
+        dataCategories: ['basic', 'contact', 'financial']
+      },
+      marketingConsent: {
+        granted: inputs.marketingConsent || false,
+        timestamp: new Date().toISOString()
+      },
+      additionalAgreements: []
+    };
+  }
+
+  // Step 9: Signatur
+  async handleDigitalSignature(inputs, context) {
+    console.log('Processing digital signature');
+    // This would integrate with qualified signature providers
+    return {
+      signature: {
+        type: inputs.signatureMethod || 'QES',
+        value: 'digital_signature_placeholder',
+        algorithm: 'RSA-PSS'
+      },
+      signatureTimestamp: new Date().toISOString(),
+      signatureMethod: inputs.signatureMethod || 'QES',
+      certificateChain: {
+        signerCert: 'cert_placeholder',
+        issuerCert: 'issuer_cert_placeholder',
+        rootCert: 'root_cert_placeholder'
+      }
+    };
+  }
+
+  // Step 10: Metadaten und Verteilung
+  async handleSystemProcessing(inputs, context) {
+    console.log('Processing final system integration and service activation');
+    return {
+      accountProvisioned: {
+        accountId: uuidv4(),
+        accountNumber: 'CH' + Math.random().toString(36).substring(2, 15).toUpperCase(),
+        status: 'active'
+      },
+      servicesActivated: {
+        onlineBanking: true,
+        mobileApp: true,
+        debitCard: true
+      },
+      documentArchived: {
+        contractId: uuidv4(),
+        archiveLocation: 'secure_document_store',
+        retentionPeriod: '10_years'
+      },
+      customerNotified: {
+        welcomeEmailSent: true,
+        onboardingPackageSent: true,
+        timestamp: new Date().toISOString()
+      }
     };
   }
 

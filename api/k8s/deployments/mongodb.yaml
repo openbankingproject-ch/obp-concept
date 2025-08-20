@@ -1,0 +1,221 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: swiss-openapi-kundenbeziehung
+  labels:
+    app: mongodb
+    component: database
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+        component: database
+        tier: backend
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        fsGroup: 999
+      containers:
+      - name: mongodb
+        image: mongo:7
+        ports:
+        - containerPort: 27017
+          name: mongodb
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secrets
+              key: MONGO_INITDB_ROOT_USERNAME
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secrets
+              key: MONGO_INITDB_ROOT_PASSWORD
+        - name: MONGO_INITDB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secrets
+              key: MONGO_INITDB_DATABASE
+        - name: MONGO_API_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secrets
+              key: MONGO_API_PASSWORD
+        volumeMounts:
+        - name: mongodb-data
+          mountPath: /data/db
+        - name: mongodb-init
+          mountPath: /docker-entrypoint-initdb.d
+          readOnly: true
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          exec:
+            command:
+            - mongosh
+            - --eval
+            - "db.runCommand('ping').ok"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 6
+        readinessProbe:
+          exec:
+            command:
+            - mongosh
+            - --eval
+            - "db.runCommand('ping').ok"
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 3
+      volumes:
+      - name: mongodb-data
+        persistentVolumeClaim:
+          claimName: mongodb-pvc
+      - name: mongodb-init
+        configMap:
+          name: mongodb-init-scripts
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pvc
+  namespace: swiss-openapi-kundenbeziehung
+  labels:
+    app: mongodb
+    component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: ssd  # Adjust based on your storage class
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-init-scripts
+  namespace: swiss-openapi-kundenbeziehung
+  labels:
+    app: mongodb
+    component: initialization
+data:
+  01-create-database.js: |
+    /**
+     * MongoDB Initialization Script - Database Creation
+     * Swiss Open API Kundenbeziehung - Production Database Setup
+     */
+    
+    const dbName = 'openapi-kundenbeziehung';
+    db = db.getSiblingDB(dbName);
+    
+    print('=== Swiss Open API Kundenbeziehung - Database Initialization ===');
+    print(`Initializing database: ${dbName}`);
+    
+    // Create application user with appropriate permissions
+    db.createUser({
+      user: 'api-service',
+      pwd: process.env.MONGO_API_PASSWORD,
+      roles: [
+        {
+          role: 'readWrite',
+          db: dbName
+        },
+        {
+          role: 'dbAdmin',
+          db: dbName
+        }
+      ]
+    });
+    
+    print('✓ Application service user created: api-service');
+    
+    // Collections for core framework
+    const coreCollections = [
+      'participants', 'trust_networks', 'processes', 'consent_records',
+      'data_schemas', 'audit_logs', 'extensions', 'validations'
+    ];
+    
+    // Collections for OAuth 2.1/OIDC/FAPI 2.0
+    const oauthCollections = [
+      'oauth_clients', 'oauth_codes', 'oauth_tokens', 'oauth_consents',
+      'oauth_sessions', 'oauth_par_requests', 'jwk_keys', 'dpop_nonces'
+    ];
+    
+    // Collections for use case data
+    const useCaseCollections = [
+      'customers', 'identifications', 'account_applications', 'verification_requests',
+      'evv_lifecycles', 'documents', 'signatures', 'compliance_reports'
+    ];
+    
+    // Create all collections
+    [...coreCollections, ...oauthCollections, ...useCaseCollections].forEach(collectionName => {
+      db.createCollection(collectionName);
+      print(`✓ Collection created: ${collectionName}`);
+    });
+    
+    print('Database initialization complete.');
+
+  02-create-indexes.js: |
+    /**
+     * MongoDB Initialization Script - Index Creation
+     */
+    
+    const dbName = 'openapi-kundenbeziehung';
+    db = db.getSiblingDB(dbName);
+    
+    print('Creating database indexes for performance and compliance...');
+    
+    // Core Framework Indexes
+    db.participants.createIndex({ "participantId": 1 }, { unique: true });
+    db.participants.createIndex({ "industry": 1, "status": 1 });
+    db.participants.createIndex({ "certificateFingerprint": 1 }, { sparse: true });
+    
+    db.trust_networks.createIndex({ "networkId": 1 }, { unique: true });
+    db.trust_networks.createIndex({ "participants": 1 });
+    db.trust_networks.createIndex({ "status": 1, "validUntil": 1 });
+    
+    db.processes.createIndex({ "processId": 1, "instanceId": 1 }, { unique: true });
+    db.processes.createIndex({ "processType": 1, "status": 1 });
+    db.processes.createIndex({ "expiresAt": 1 }, { expireAfterSeconds: 0 });
+    
+    db.consent_records.createIndex({ "consentId": 1 }, { unique: true });
+    db.consent_records.createIndex({ "userId": 1, "status": 1 });
+    db.consent_records.createIndex({ "expiresAt": 1 }, { expireAfterSeconds: 0 });
+    
+    db.audit_logs.createIndex({ "auditId": 1 }, { unique: true });
+    db.audit_logs.createIndex({ "eventType": 1, "timestamp": 1 });
+    db.audit_logs.createIndex({ "timestamp": 1 }, { expireAfterSeconds: 7776000 }); // 90 days
+    
+    // OAuth Indexes
+    db.oauth_clients.createIndex({ "client_id": 1 }, { unique: true });
+    db.oauth_codes.createIndex({ "code": 1 }, { unique: true });
+    db.oauth_codes.createIndex({ "expires_at": 1 }, { expireAfterSeconds: 0 });
+    db.oauth_tokens.createIndex({ "token_id": 1 }, { unique: true });
+    db.oauth_tokens.createIndex({ "expires_at": 1 }, { expireAfterSeconds: 0 });
+    
+    // Use Case Indexes
+    db.customers.createIndex({ "customerId": 1 }, { unique: true });
+    db.customers.createIndex({ "sharedCustomerHash": 1 }, { unique: true, sparse: true });
+    
+    print('Database indexes created successfully.');

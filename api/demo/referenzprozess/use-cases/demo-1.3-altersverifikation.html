@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 1.3: Privacy-Preserving Age Verification - Cross-Industry Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #253165;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .privacy-badge {
+            background: #FA9F8A;
+            color: #253165;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid #253165;
+        }
+
+        .phase-indicator {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .phase {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .phase.current {
+            background: #253165;
+            color: white;
+        }
+
+        .phase.completed {
+            background: #00b02cff;
+            color: white;
+        }
+
+        .phase.pending {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+
+        .phase-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .phase-subtitle {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #F85F3D;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #e04e2c;
+        }
+
+        .btn-secondary {
+            background: #0070C0;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #005a9f;
+        }
+
+        .btn-gray {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-gray:hover:not(:disabled) {
+            background: #4b5563;
+        }
+
+        .speed-select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .step-counter {
+            margin-left: auto;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .step-details {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .step-details h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .phase-badge {
+            background: #FA9F8A;
+            color: #253165;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid #253165;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        .step-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .actions-list {
+            margin-bottom: 20px;
+        }
+
+        .actions-list h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .action-item:hover {
+            background: #f9fafb;
+        }
+
+        .action-dot {
+            width: 8px;
+            height: 8px;
+            background: #B469FF;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .data-display {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .data-display h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .data-display pre {
+            font-size: 0.85rem;
+            color: #4b5563;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .console {
+            background: #1f2937;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            color: #10b981;
+            font-family: 'Courier New', monospace;
+        }
+
+        .console h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        .console-output {
+            height: 400px;
+            overflow-y: auto;
+            background: #111827;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .log-timestamp {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .log-step {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .log-success {
+            color: #00b02cff;
+        }
+
+        .log-info {
+            color: #B469FF;
+        }
+
+        .log-action {
+            color: #d1d5db;
+        }
+
+        .log-privacy {
+            color: #B469FF;
+        }
+
+        .ready-message {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .capabilities {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .capabilities h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .capability {
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .capability h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        .capability p {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: #374151;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #6b7280;
+            border-radius: 3px;
+        }
+
+        .industry-showcase {
+            background: #f8fafc;
+            border: 1px solid #B469FF;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .industry-showcase h4 {
+            color: #B469FF;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+        }
+
+        .industry-item {
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #B469FF;
+            font-weight: 500;
+        }
+
+        .privacy-metrics {
+            background: #f9f5ff;
+            border: 1px solid #B469FF;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .privacy-metrics h4 {
+            color: #B469FF;
+            margin-bottom: 10px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #B469FF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="privacy-badge">Privacy-by-Design - Zero-Knowledge Proof Architecture</div>
+            <h1>Demo 1.3: Age Verification</h1>
+            <p>Privacy-preserving attribute verification across 8+ industries with GDPR Article 5 compliance</p>
+            
+            <!-- Progress Indicator -->
+            <div class="phase-indicator" id="phaseIndicator">
+                <div class="phase current" data-phase="1">
+                    <div class="phase-title">Phase 1</div>
+                    <div class="phase-subtitle">Attribute Request & Setup</div>
+                </div>
+                <div class="phase pending" data-phase="2">
+                    <div class="phase-title">Phase 2</div>
+                    <div class="phase-subtitle">Cryptographic Validation</div>
+                </div>
+                <div class="phase pending" data-phase="3">
+                    <div class="phase-title">Phase 3</div>
+                    <div class="phase-subtitle">Cross-Industry Reuse</div>
+                </div>
+                <div class="phase pending" data-phase="4">
+                    <div class="phase-title">Phase 4</div>
+                    <div class="phase-subtitle">Audit & Compliance</div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <button class="btn btn-gray" onclick="resetDemo()" id="resetBtn">
+                    <span>🔄</span> Reset
+                </button>
+                
+                <button class="btn btn-secondary" onclick="previousStep()" id="prevBtn" disabled>
+                    <span>⏮️</span> Previous
+                </button>
+                
+                <button class="btn btn-primary" onclick="togglePlayPause()" id="playBtn">
+                    <span id="playIcon">▶️</span> <span id="playText">Play</span>
+                </button>
+                
+                <button class="btn btn-secondary" onclick="nextStep()" id="nextBtn">
+                    Next <span>⏭️</span>
+                </button>
+
+                <select class="speed-select" id="speedSelect" onchange="changeSpeed()">
+                    <option value="fast">Fast</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="slow">Slow</option>
+                </select>
+
+                <div class="step-counter">
+                    Step <span id="currentStepNum">1</span> of <span id="totalSteps">10</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Current Step Details -->
+            <div class="step-details">
+                <h2>Current Step</h2>
+                
+                <div id="stepContent">
+                    <div class="phase-badge" id="phaseBadge">Attribute Request & Setup</div>
+                    
+                    <h3 class="step-title" id="stepTitle">Step 1: Privacy-Preserving Service Discovery</h3>
+                    
+                    <p class="step-description" id="stepDescription">Initialize privacy-preserving age verification with service discovery and attribute specification</p>
+                    
+                    <div class="actions-list">
+                        <h4>Actions in this step:</h4>
+                        <div id="actionsList">
+                            <!-- Actions will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="data-display">
+                        <h4>Privacy-Preserving Data:</h4>
+                        <pre id="sampleData">Ready to start privacy-preserving age verification demo...</pre>
+                    </div>
+
+                    <div class="industry-showcase" id="industryShowcase" style="display: none;">
+                        <h4>Cross-Industry Applications</h4>
+                        <div class="industry-grid">
+                            <div class="industry-item">Banking</div>
+                            <div class="industry-item">Gaming</div>
+                            <div class="industry-item">E-Commerce</div>
+                            <div class="industry-item">Media</div>
+                            <div class="industry-item">Healthcare</div>
+                            <div class="industry-item">Insurance</div>
+                            <div class="industry-item">Mobility</div>
+                            <div class="industry-item">Retail</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Console Output -->
+            <div class="console">
+                <h2>Privacy-Preserving Console</h2>
+                
+                <div class="console-output scrollbar-thin" id="consoleOutput">
+                    <div class="ready-message">Ready to start age verification demo... Click Play to begin</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy-by-Design Capabilities Overview -->
+        <div class="capabilities">
+            <h2>Privacy-by-Design Age Verification Capabilities</h2>
+            
+            <div class="capabilities-grid">
+                <div class="capability">
+                    <h3>🔐 Zero-Knowledge Proofs</h3>
+                    <p>Age verification without identity disclosure using mathematical proofs</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>🌍 Cross-Industry Reuse</h3>
+                    <p>Single verification across 8+ industries with flexible age thresholds</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>⚖️ GDPR Article 5 Compliant</h3>
+                    <p>Built-in data minimization with privacy-by-design architecture</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>📊 Privacy Protection</h3>
+                    <p>Minimal data exposure compared to traditional verification methods</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>🔄 Reusable Verification</h3>
+                    <p>High verification reusability across different service providers</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>✅ Cryptographic Security</h3>
+                    <p>Mathematically secure verification with audit trail</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo data and configuration for age verification
+        let currentStep = 0;
+        let isPlaying = false;
+        let playInterval = null;
+        let completedSteps = new Set();
+        let logs = [];
+        let startTime = null;
+
+        const speedSettings = {
+            fast: 1000,
+            normal: 2500,
+            slow: 5000
+        };
+
+        let currentSpeed = 'normal';
+
+        const demoSteps = [
+            {
+                id: 1,
+                title: "Privacy-Preserving Service Discovery",
+                phase: "Attribute Request & Setup",
+                phaseNumber: 1,
+                description: "Initialize privacy-preserving age verification with service discovery and attribute specification",
+                actions: [
+                    "Privacy Framework Initialization",
+                    "Service Provider Age Threshold Request", 
+                    "Privacy-by-Design Architecture Setup",
+                    "Attribute Verification Service Discovery"
+                ],
+                data: {
+                    serviceType: 'age-verification',
+                    privacyModel: 'zero-knowledge-proof',
+                    ageThreshold: 18,
+                    attributeRequired: 'age_verification_18_plus',
+                    industryContext: 'multi-sector'
+                }
+            },
+            {
+                id: 2,
+                title: "Customer Privacy Consent & Attribute Selection",
+                phase: "Attribute Request & Setup",
+                phaseNumber: 1,
+                description: "Obtain customer consent for privacy-preserving attribute verification",
+                actions: [
+                    "Privacy-Preserving Consent Interface",
+                    "Attribute-Only Verification Explanation",
+                    "Customer Privacy Consent Collection",
+                    "Selective Disclosure Configuration"
+                ],
+                data: {
+                    consentType: 'attribute-only-verification',
+                    dataMinimization: 'enabled',
+                    consentScope: 'age-threshold-only',
+                    privacyLevel: 'maximum-protection',
+                    disclosureType: 'yes-no-only'
+                }
+            },
+            {
+                id: 3,
+                title: "Identity Provider Privacy Protocol Setup",
+                phase: "Cryptographic Validation",
+                phaseNumber: 2,
+                description: "Establish secure communication with identity provider for privacy-preserving verification",
+                actions: [
+                    "Privacy-Preserving Protocol Negotiation",
+                    "Zero-Knowledge Proof Parameters",
+                    "Cryptographic Channel Establishment",
+                    "Attribute Verification Request Preparation"
+                ],
+                data: {
+                    protocol: 'zk-age-verification-v2',
+                    cryptography: 'zero-knowledge-snark',
+                    identityProvider: 'Swiss Identity Hub',
+                    privacyGuarantee: 'no-identity-disclosure',
+                    proofParameters: 'age-threshold-18'
+                }
+            },
+            {
+                id: 4,
+                title: "Zero-Knowledge Proof Generation",
+                phase: "Cryptographic Validation",
+                phaseNumber: 2,
+                description: "Generate mathematical proof of age threshold compliance without identity disclosure",
+                actions: [
+                    "Customer Age Data Cryptographic Processing",
+                    "Zero-Knowledge SNARK Proof Generation",
+                    "Age Threshold Mathematical Verification",
+                    "Proof Validity Cryptographic Signature"
+                ],
+                data: {
+                    proofType: 'zk-SNARK',
+                    verificationResult: 'age_18_plus: TRUE',
+                    actualAge: '[REDACTED - Privacy Protected]',
+                    proofSignature: 'zk_proof_a1b2c3d4e5f6',
+                    privacyLevel: 'maximum'
+                }
+            },
+            {
+                id: 5,
+                title: "Cryptographic Proof Validation",
+                phase: "Cryptographic Validation",
+                phaseNumber: 2,
+                description: "Validate zero-knowledge proof authenticity and accuracy",
+                actions: [
+                    "Cryptographic Proof Verification",
+                    "Identity Provider Signature Validation",
+                    "Mathematical Proof Accuracy Check",
+                    "Privacy Protection Verification"
+                ],
+                data: {
+                    proofValidation: 'mathematically-verified',
+                    signatureValidation: 'authentic',
+                    privacyIntegrity: 'no-leakage-detected',
+                    verificationCertificate: 'age_cert_789xyz',
+                    validityPeriod: '6 months'
+                }
+            },
+            {
+                id: 6,
+                title: "Cross-Industry Reusability Setup",
+                phase: "Cross-Industry Reuse",
+                phaseNumber: 3,
+                description: "Configure age verification certificate for cross-industry reuse",
+                actions: [
+                    "Universal Industry Compatibility Check",
+                    "Age Threshold Mapping Configuration",
+                    "Cross-Sector Reusability Certificate",
+                    "Industry-Specific Compliance Validation"
+                ],
+                data: {
+                    industries: ['banking', 'gaming', 'e-commerce', 'media', 'healthcare', 'insurance', 'mobility', 'retail'],
+                    reusabilityScore: 'high',
+                    universalCertificate: 'multi_industry_age_cert_456',
+                    complianceMapping: 'gdpr-article-5-compliant'
+                }
+            },
+            {
+                id: 7,
+                title: "Privacy-Preserving Certificate Storage",
+                phase: "Cross-Industry Reuse",
+                phaseNumber: 3,
+                description: "Securely store reusable age verification certificate with privacy protection",
+                actions: [
+                    "Encrypted Certificate Storage",
+                    "Privacy-Preserving Index Creation",
+                    "Cross-Provider Access Configuration",
+                    "Data Minimization Validation"
+                ],
+                data: {
+                    storageType: 'privacy-preserving-encrypted',
+                    certificateIndex: 'privacy_protected_index',
+                    accessControl: 'attribute-based-only',
+                    dataMinimization: 'maximum',
+                    privacyCompliance: 'gdpr-article-5-verified'
+                }
+            },
+            {
+                id: 8,
+                title: "Service Provider Integration",
+                phase: "Cross-Industry Reuse",
+                phaseNumber: 3,
+                description: "Integrate age verification result with requesting service provider",
+                actions: [
+                    "Age Verification Result Delivery",
+                    "Service Access Authorization",
+                    "Privacy-Compliant Integration",
+                    "Audit Trail Generation"
+                ],
+                data: {
+                    verificationResult: 'AGE_18_PLUS: TRUE',
+                    serviceAuthorization: 'GRANTED',
+                    privacyCompliance: 'zero-personal-data-shared',
+                    auditTrail: 'privacy_compliant_log_123',
+                    integrationMethod: 'attribute-only-api'
+                }
+            },
+            {
+                id: 9,
+                title: "GDPR Article 5 & 7 Compliance Validation",
+                phase: "Audit & Compliance",
+                phaseNumber: 4,
+                description: "Validate comprehensive GDPR compliance for data minimization and consent",
+                actions: [
+                    "Data Minimization Principle Validation",
+                    "Purpose Limitation Compliance Check",
+                    "Consent Lawfulness Verification",
+                    "Privacy Rights Implementation Validation"
+                ],
+                data: {
+                    gdprArticle5: 'data-minimization-compliant',
+                    gdprArticle7: 'consent-requirements-met',
+                    dataPurpose: 'age-verification-only',
+                    dataRetention: 'minimal-necessary',
+                    privacyRights: 'fully-implemented'
+                }
+            },
+            {
+                id: 10,
+                title: "Privacy Impact Assessment & Completion",
+                phase: "Audit & Compliance",
+                phaseNumber: 4,
+                description: "Complete privacy impact assessment and finalize cross-industry age verification",
+                actions: [
+                    "Privacy Impact Assessment Completion",
+                    "Cross-Industry Reusability Metrics",
+                    "Customer Privacy Satisfaction Survey",
+                    "Regulatory Compliance Documentation",
+                    "Privacy-by-Design Validation"
+                ],
+                data: {
+                    privacyImpact: 'minimal-risk',
+                    dataDisclosureLevel: 'minimal',
+                    crossIndustryReuse: 'high',
+                    customerPrivacySatisfaction: 'excellent',
+                    regulatoryCompliance: 'full-gdpr-compliance',
+                    privacyByDesign: 'verified'
+                }
+            }
+        ];
+
+        // Initialize demo
+        function initDemo() {
+            updateStepDisplay();
+            updatePhaseIndicator();
+            updateButtons();
+            document.getElementById('totalSteps').textContent = demoSteps.length;
+        }
+
+        // Update step display
+        function updateStepDisplay() {
+            const step = demoSteps[currentStep];
+            
+            document.getElementById('phaseBadge').textContent = step.phase;
+            document.getElementById('stepTitle').textContent = `Step ${step.id}: ${step.title}`;
+            document.getElementById('stepDescription').textContent = step.description;
+            document.getElementById('currentStepNum').textContent = step.id;
+            
+            // Update actions list
+            const actionsList = document.getElementById('actionsList');
+            actionsList.innerHTML = '';
+            step.actions.forEach(action => {
+                const actionDiv = document.createElement('div');
+                actionDiv.className = 'action-item';
+                actionDiv.innerHTML = `
+                    <div class="action-dot"></div>
+                    <span>${action}</span>
+                `;
+                actionsList.appendChild(actionDiv);
+            });
+            
+            // Update sample data
+            document.getElementById('sampleData').textContent = JSON.stringify(step.data, null, 2);
+            
+            // Show industry showcase on step 6
+            const industryShowcase = document.getElementById('industryShowcase');
+            if (step.id >= 6) {
+                industryShowcase.style.display = 'block';
+            } else {
+                industryShowcase.style.display = 'none';
+            }
+            
+            // Show privacy metrics on final step
+            const privacyMetrics = document.getElementById('privacyMetrics');
+            if (step.id === 10) {
+                privacyMetrics.style.display = 'block';
+            } else {
+                privacyMetrics.style.display = 'none';
+            }
+        }
+
+        // Update phase indicator
+        function updatePhaseIndicator() {
+            const currentPhase = demoSteps[currentStep].phaseNumber;
+            const phases = document.querySelectorAll('.phase');
+            
+            phases.forEach((phase, index) => {
+                const phaseNum = index + 1;
+                phase.className = 'phase ';
+                
+                if (phaseNum < currentPhase) {
+                    phase.className += 'completed';
+                } else if (phaseNum === currentPhase) {
+                    phase.className += 'current';
+                } else {
+                    phase.className += 'pending';
+                }
+            });
+        }
+
+        // Update button states
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentStep === 0;
+            document.getElementById('nextBtn').disabled = currentStep >= demoSteps.length - 1;
+        }
+
+        // Execute step
+        function executeStep() {
+            if (!startTime) {
+                startTime = Date.now();
+            }
+
+            const step = demoSteps[currentStep];
+            const timestamp = new Date().toLocaleTimeString();
+            
+            completedSteps.add(step.id);
+            
+            // Add logs for this step
+            const newLogs = [
+                { type: 'step', message: `AGE VERIFICATION STEP ${step.id}: ${step.title}`, timestamp },
+                { type: 'info', message: step.description, timestamp }
+            ];
+            
+            step.actions.forEach(action => {
+                newLogs.push({ type: 'privacy', message: `→ ${action}`, timestamp });
+            });
+            
+            // Add privacy-specific log details
+            if (step.id === 4) {
+                newLogs.push({ type: 'info', message: `✓ Zero-Knowledge Proof Generated (No Identity Disclosed)`, timestamp });
+            } else if (step.id === 6) {
+                newLogs.push({ type: 'info', message: `✓ Cross-Industry Certificate Created (8+ Sectors)`, timestamp });
+            } else if (step.id === 9) {
+                newLogs.push({ type: 'info', message: `✓ GDPR Article 5 & 7 Compliance Verified`, timestamp });
+            } else if (step.id === 10) {
+                newLogs.push({ type: 'success', message: `✓ Age Verification Completed with Privacy Protection`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ Cross-Industry Reusability Established`, timestamp });
+            }
+            
+            newLogs.push({ type: 'success', message: `✓ Privacy-Preserving Step ${step.id} Complete`, timestamp });
+            
+            logs.push(...newLogs);
+            updateConsole();
+        }
+
+        // Update console output
+        function updateConsole() {
+            const consoleOutput = document.getElementById('consoleOutput');
+            
+            if (logs.length === 0) {
+                consoleOutput.innerHTML = '<div class="ready-message">Ready to start age verification demo... Click Play to begin</div>';
+                return;
+            }
+            
+            consoleOutput.innerHTML = '';
+            logs.forEach(log => {
+                const logDiv = document.createElement('div');
+                logDiv.className = `log-entry log-${log.type}`;
+                logDiv.innerHTML = `<span class="log-timestamp">[${log.timestamp}]</span> ${log.message}`;
+                consoleOutput.appendChild(logDiv);
+            });
+            
+            // Scroll to bottom
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        // Control functions
+        function togglePlayPause() {
+            if (isPlaying) {
+                pauseDemo();
+            } else {
+                playDemo();
+            }
+        }
+
+        function playDemo() {
+            isPlaying = true;
+            document.getElementById('playIcon').textContent = '⏸️';
+            document.getElementById('playText').textContent = 'Pause';
+            
+            if (currentStep < demoSteps.length - 1) {
+                playInterval = setInterval(() => {
+                    nextStep();
+                    if (currentStep >= demoSteps.length - 1) {
+                        pauseDemo();
+                    }
+                }, speedSettings[currentSpeed]);
+            }
+        }
+
+        function pauseDemo() {
+            isPlaying = false;
+            document.getElementById('playIcon').textContent = '▶️';
+            document.getElementById('playText').textContent = 'Play';
+            
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < demoSteps.length - 1) {
+                currentStep++;
+                executeStep();
+                updateStepDisplay();
+                updatePhaseIndicator();
+                updateButtons();
+            }
+            
+            if (currentStep >= demoSteps.length - 1) {
+                pauseDemo();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStepDisplay();
+                updatePhaseIndicator();
+                updateButtons();
+            }
+        }
+
+        function resetDemo() {
+            pauseDemo();
+            currentStep = 0;
+            completedSteps.clear();
+            logs = [];
+            startTime = null;
+            
+            updateStepDisplay();
+            updatePhaseIndicator();
+            updateButtons();
+            updateConsole();
+        }
+
+        function changeSpeed() {
+            currentSpeed = document.getElementById('speedSelect').value;
+            
+            if (isPlaying) {
+                pauseDemo();
+                playDemo();
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initDemo);
+    </script>
+</body>
+</html>

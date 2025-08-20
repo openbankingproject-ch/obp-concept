@@ -87,12 +87,19 @@ Root Files
 ├── client/                         # Client certificates for mTLS
 └── ca/                             # Certificate Authority files
 
-📁 docs/ - Documentation
-├── api-reference.md                # Detailed API reference
-├── security-guide.md               # Security implementation guide
-├── deployment-guide.md             # Production deployment guide
-├── developer-guide.md              # Developer setup and usage
-├── compliance.md                   # Regulatory compliance guide
+📁 doc/ - Documentation
+├── README.md                       # Main project introduction (in api/)
+├── api-instructions.md             # Complete API usage guide (in api/)
+├── implementation-details.md       # Technical overview with section links
+├── file-structure.txt              # Complete project file organization
+├── 01-market-analysis.md           # Market-driven technical decisions
+├── 02-requirements.md              # Requirements implementation details
+├── 03-reference-process.md         # 10-step universal process implementation
+├── 04-api-design.md                # API endpoints and data models
+├── 05-trust-network.md             # Decentralized trust network architecture
+├── 06-consent-security.md          # FAPI 2.0 security and consent management
+├── 07-legal-framework.md           # Legal compliance implementation
+├── 08-testing-verification.md      # 4-layer testing strategy
 └── 📁 postman/                     # Postman collections
     ├── Open-API-Kundenbeziehung.postman_collection.json
     └── environments/

@@ -1,469 +1,426 @@
-# Open API Kundenbeziehung - Demo Instructions
+# Open API Kundenbeziehung - Interactive Demo Instructions
 
-This document provides comprehensive instructions for running all demonstration scripts of the Open API Kundenbeziehung framework. Each demo showcases specific aspects of the system based on the requirements and specifications from the conclusions documentation.
+This document provides comprehensive instructions for accessing and using the interactive HTML demonstrations of the Open API Kundenbeziehung framework. Each demo showcases specific aspects of the system based on the requirements and specifications from the conclusions documentation.
 
 ## Table of Contents
 
-1. [Prerequisites](#prerequisites)
-2. [Quick Start](#quick-start)
-3. [Individual Demo Scripts](#individual-demo-scripts)
-4. [Demo Categories](#demo-categories)
-5. [Troubleshooting](#troubleshooting)
-6. [Advanced Configuration](#advanced-configuration)
-
----
-
-## Prerequisites
-
-### System Requirements
-
-- **Node.js**: Version 16.x or higher
-- **npm**: Version 8.x or higher
-- **Operating System**: Windows, macOS, or Linux
-- **Terminal/Command Line**: Access to command line interface
-
-### Required Dependencies
-
-Install the required dependencies before running any demos:
-
-```bash
-npm install axios chalk
-```
-
-### API Server
-
-Most demos require the API server to be running. Start the server before running demos:
-
-```bash
-# Navigate to the API directory
-cd api
-
-# Install dependencies (first time only)
-npm install
-
-# Start the API server
-npm start
-```
-
-The API server will be available at `http://localhost:3000` by default.
+1. [Quick Start](#quick-start)
+2. [Interactive HTML Demos](#interactive-html-demos)
+3. [Demo Categories](#demo-categories)
+4. [Technical Requirements](#technical-requirements)
+5. [Demo Features](#demo-features)
+6. [Advanced Usage](#advanced-usage)
 
 ---
 
 ## Quick Start
 
-### Run All Demos Sequentially
+### Access Demo Landing Page
 
-Use the provided script to run all demonstrations in the recommended order:
+The main demo landing page provides access to all interactive demonstrations:
 
-```bash
-# Make the script executable (Linux/macOS only)
-chmod +x run-all-demos.sh
+1. Open your web browser
+2. Navigate to: `api/demo/index.html`
+3. Browse available demos by category
+4. Click "Launch Demo" to start any demonstration
 
-# Run all demos
-./run-all-demos.sh
-```
+### Direct Demo Access
 
-### Run Individual Demo
+You can also access individual demos directly:
 
-To run a specific demo, execute the corresponding script:
-
-```bash
-node [demo-script-name].js
-```
+- **Universal Reference Process**: `demo-referenzprozess-simplified-example.html`
+- **Data Onboarding & Maintenance**: `data_onboarding/demo-2-data-onboarding-maintenance.html`
+- **Consent & Security Flow**: `consent_security/demo-3-consent-security-flow.html`
+- **Banking Account Opening**: `referenzprozess/use-cases/demo-1.1-kundenbeziehungseroeffnung.html`
+- **Customer Re-Identification**: `referenzprozess/use-cases/demo-1.2-re-identifikation.html`
+- **Age Verification**: `referenzprozess/use-cases/demo-1.3-altersverifikation.html`
+- **EVV Lifecycle Management**: `referenzprozess/use-cases/demo-1.4-evv-lifecycle-management.html`
+- **Verification Process**: `verification/demo-4-verification-process.html`
+- **MVP Implementation**: `MVP/demo-5-mvp-implementation.html`
 
 ---
 
-## Individual Demo Scripts
+## Interactive HTML Demos
 
-### 1. Reference Process Demo (`reference-process-demo.js`)
+All demos are now browser-based HTML applications with interactive features:
+
+### Demo Controls
+- **Play/Pause**: Automatic step progression
+- **Speed Control**: Fast, Normal, Slow execution
+- **Step Navigation**: Previous/Next manual control
+- **Reset**: Return to beginning
+- **Progress Tracking**: Visual phase and step indicators
+
+### No Server Required
+- All demos run entirely in the browser
+- No API server or dependencies needed
+- Compatible with all modern browsers
+- Offline capable for presentations
+
+---
+
+## Core Framework Demos
+
+### 1. Universal 10-Step Reference Process
+
+**File**: `demo-referenzprozess-simplified-example.html`
 
 **Purpose**: Demonstrates the generic 10-step universal reference process that works across all industries and ecosystems.
 
 **Key Features**:
-- Shows the complete 10-step framework from initialization to completion
-- Industry-agnostic business logic and modular process execution
-- Demonstrates cross-industry compatibility and extensible architecture
+- Interactive 10-step framework visualization
+- Cross-industry universal applicability
+- Real-time console output with professional logging
+- Comprehensive progress tracking with phase indicators
 
-**Usage**:
-```bash
-node reference-process-demo.js
-```
+**Duration**: ~5 minutes
 
-**Duration**: ~3-4 minutes
+**Business Value**: 67% cross-industry efficiency improvement
 
-**Expected Output**:
-- Process initialization and framework readiness check
-- Step-by-step execution of all 10 stages
-- Process summary with timing and completion metrics
-- Framework capabilities overview
+**Description File**: [Demo 1: Referenzprozess description.md](referenzprozess/Demo%201:%20Referenzprozess%20description.md)
 
 ---
 
-### 2. Consent Flow Demo (`consent-flow-demo.js`)
+### 2. Data Onboarding & Maintenance
 
-**Purpose**: Demonstrates FAPI 2.0 compliant consent management system with granular permissions and secure authentication flow.
+**File**: `data_onboarding/demo-2-data-onboarding-maintenance.html`
+
+**Purpose**: Showcases modular "Blöckli" data architecture with comprehensive data lifecycle management.
 
 **Key Features**:
-- FAPI 2.0 Advanced security implementation
-- Granular field-level consent control
-- Complete consent lifecycle management
-- GDPR/DSG compliant consent handling
+- Intelligent data quality assessment and enrichment
+- Multi-source data enrichment from trusted sources
+- Real-time data quality monitoring and maintenance
+- Cross-industry reusable data building blocks
 
-**Usage**:
-```bash
-node consent-flow-demo.js
-```
+**Duration**: ~6 minutes
 
-**Duration**: ~4-5 minutes
+**Business Value**: Comprehensive data lifecycle management with modular architecture
 
-**Expected Output**:
-- 8-step consent lifecycle demonstration
-- Service discovery and data requirements specification
-- Granular consent selection and approval process
-- Real-time consent enforcement and revocation
+**Description File**: [Demo 2: Data Onboarding & Maintenance description.html](data_onboarding/Demo-2-Data-Onboarding-description.html)
 
 ---
 
-### 3. UC1: Banking Account Opening Demo (`uc1-banking-account-opening-demo.js`)
+### 3. Consent & Security Flow
 
-**Purpose**: Demonstrates efficiency gains of API-based banking account opening compared to traditional manual processes.
+**File**: `consent_security/demo-3-consent-security-flow.html`
+
+**Purpose**: Demonstrates FAPI 2.0 Advanced security profile with comprehensive consent management.
 
 **Key Features**:
-- Shows 67% time reduction through data reuse
-- Compares traditional vs API-based processes
-- Demonstrates seamless integration between banks during bank switching
-- Addresses standardized data modules from the Referenzprozess
+- FAPI 2.0 Advanced with mTLS and DPoP implementation
+- Granular field-level consent selection with privacy controls
+- Real-time consent enforcement and modification capabilities
+- Network-agnostic security framework
 
-**Usage**:
-```bash
-node uc1-banking-account-opening-demo.js
-```
+**Duration**: ~5 minutes
 
-**Duration**: ~3-4 minutes
+**Business Value**: Financial-grade security with privacy-by-design architecture
 
-**Expected Output**:
-- Traditional process simulation (90 minutes simulated)
-- API-based process demonstration (30 minutes simulated)
-- Efficiency comparison and business impact analysis
-- Regulatory compliance benefits
-
-**Business Value**: Reduces customer onboarding time by 67%, improves customer satisfaction, and decreases operational costs.
+**Description File**: [Demo 3: Consent and Security Flow description.html](consent_security/Demo%203:%20Consent%20and%20Security%20Flow%20description.html)
 
 ---
 
-### 4. UC2: Re-identification Process Demo (`uc2-reidentification-demo.js`)
+## Use Case Demonstrations
 
-**Purpose**: Demonstrates efficiency gains of API-based customer re-identification using verified data reuse.
+### 1. Banking Account Opening (UC1)
+
+**File**: `referenzprozess/use-cases/demo-1.1-kundenbeziehungseroeffnung.html`
+
+**Purpose**: Demonstrates Zielbild 1 direct customer relationship model with 67% efficiency improvement through Swiss API-based banking account opening.
 
 **Key Features**:
-- Shows 85% efficiency improvement
-- Leverages existing identity verification from other providers
-- GwG-compliant data transfer with proper Level of Assurance
-- Eliminates redundant verification processes
+- Zielbild 1 direct customer relationship with full bank control
+- Swiss banking regulatory compliance (FINMA, KYC/AML)
+- Real-time banking process visualization
+- Traditional vs API-based efficiency comparison
 
-**Usage**:
-```bash
-node uc2-reidentification-demo.js
-```
+**Duration**: ~4 minutes
 
-**Duration**: ~3-4 minutes
+**Business Value**: 67% time reduction, €156 cost savings, 9.2/10 customer satisfaction
 
-**Expected Output**:
-- Traditional re-identification process (125 minutes simulated)
-- API-based re-identification (19 minutes simulated)
+**Description File**: [Demo 1.1: Use Case Kundenbeziehungseröffnung description.md](referenzprozess/use-cases/Demo%201.1:%20Use%20Case%20Kundenbeziehungseröffnung%20description.md)
+
+---
+
+### 2. Customer Re-Identification (UC2)
+
+**File**: `referenzprozess/use-cases/demo-1.2-re-identifikation.html`
+
+**Purpose**: Demonstrates 85% efficiency improvement through secure identity data reuse across trusted providers.
+
+**Key Features**:
+- Trust network integration with decentralized architecture
 - Privacy-preserving identity verification
-- Cross-provider identity data reuse
+- GwG-compliant cross-provider data transfer
+- QEAA level assurance mapping
 
-**Business Value**: Reduces re-identification costs for providers, improves customer experience, and increases security through standardized verification.
+**Duration**: ~4 minutes
+
+**Business Value**: 85% efficiency improvement, €76 savings, 9.4/10 satisfaction
+
+**Description File**: [Demo 1.2: Use Case Re-Identifikation description.md](referenzprozess/use-cases/Demo%201.2:%20Use%20Case%20Re-Identifikation%20description.md)
 
 ---
 
-### 5. UC3: Age Verification Demo (`uc3-age-verification-demo.js`)
+### 3. Age Verification (UC3)
 
-**Purpose**: Demonstrates privacy-preserving age verification through attribute-based verification without full identity disclosure.
+**File**: `referenzprozess/use-cases/demo-1.3-altersverifikation.html`
+
+**Purpose**: Showcases privacy-preserving attribute verification using zero-knowledge proofs across 8+ industries.
 
 **Key Features**:
-- Attribute-only disclosure (age ≥18: YES/NO) without revealing actual age
-- Privacy-by-Design implementation
-- Cross-industry reusability (6+ industry scenarios)
-- GDPR data minimization compliance
+- Zero-knowledge proof implementation for privacy protection
+- Cross-industry reusability (banking, gaming, e-commerce, media, etc.)
+- GDPR Article 5 data minimization compliance
+- Attribute-only verification without identity disclosure
 
-**Usage**:
-```bash
-node uc3-age-verification-demo.js
-```
+**Duration**: ~5 minutes
 
-**Duration**: ~4-5 minutes
+**Business Value**: 98% data disclosure reduction, 94% cross-industry reusability, 92% privacy approval
 
-**Expected Output**:
-- Traditional age verification with full identity exposure
-- Attribute-based verification for adult customer (access granted)
-- Attribute-based verification for minor customer (access denied with alternatives)
-- Cross-industry application scenarios
-- GDPR compliance analysis
-
-**Business Value**: Provides privacy-compliant age verification, reduces costs through reusability, and ensures compliance across industries.
+**Description File**: [Demo 1.3: Use Case Altersverifikation description.md](referenzprozess/use-cases/Demo%201.3:%20Use%20Case%20Altersverifikation%20description.md)
 
 ---
 
-### 6. UC4: EVV Lifecycle Management Demo (`uc4-evv-lifecycle-demo.js`)
+### 4. EVV Lifecycle Management (UC4)
 
-**Purpose**: Demonstrates integrated customer lifecycle management for External Wealth Management (EVV) clients across different providers.
+**File**: `referenzprozess/use-cases/demo-1.4-evv-lifecycle-management.html`
+
+**Purpose**: Demonstrates integrated customer lifecycle management for External Wealth Management clients.
 
 **Key Features**:
-- Portfolio data synchronization across providers
-- KYC data reuse for verified wealth management clients
-- MiFID II suitability assessment integration
-- Automated portfolio transfer coordination
+- Real-time portfolio synchronization across multiple providers
+- Enhanced KYC data reuse for high-net-worth clients
+- Automated MiFID II suitability assessment
+- Coordinated portfolio transfer and lifecycle management
 
-**Usage**:
-```bash
-node uc4-evv-lifecycle-demo.js
-```
+**Duration**: ~5 minutes
 
-**Duration**: ~4-5 minutes
+**Business Value**: Integrated wealth management with multi-provider coordination
 
-**Expected Output**:
-- Traditional EVV lifecycle with fragmented data (325 minutes simulated)
-- Integrated EVV lifecycle management (71 minutes simulated)
-- Portfolio synchronization and transfer coordination
-- Regulatory compliance for wealth management
-
-**Business Value**: Improves data quality, reduces compliance costs, enhances client experience, and strengthens competitive dynamics.
+**Description File**: [Demo 1.4: Use Case CLM von EVV-Endkunden description.html](referenzprozess/use-cases/Demo%201.4:%20Use%20Case%20CLM%20von%20EVV-Endkunden%20description.html)
 
 ---
 
-### 7. Banking MVP Demo (`banking-mvp-demo.js`)
+## Quality Assurance Demos
 
-**Purpose**: Demonstrates the minimum viable product implementation focusing on core banking functionalities.
+### 1. Verification Process
+
+**File**: `verification/demo-4-verification-process.html`
+
+**Purpose**: Showcases comprehensive 4-layer testing strategy with community-driven validation.
 
 **Key Features**:
-- Core banking API functionality
-- Basic customer data management
-- Essential compliance features
-- Foundation for extended use cases
+- 4-layer testing strategy (Unit → Integration → System → Acceptance)
+- Community-driven validation with 25+ industry experts
+- Real-time quality dashboard with production readiness metrics
+- Multi-stakeholder certification process
 
-**Usage**:
-```bash
-node banking-mvp-demo.js
-```
+**Duration**: ~4 minutes
 
-**Duration**: ~2-3 minutes
+**Business Value**: Comprehensive quality assurance with production readiness certification
 
-**Expected Output**:
-- Core banking operations demonstration
-- Customer data flow examples
-- Basic API interactions
+**Description File**: [Demo 4: Verification Process description.html](verification/Demo%204:%20Verification%20Process%20description.html)
 
 ---
 
-### 8. Verification Process Demo (`verification-process-demo.js`)
+### 2. MVP Implementation
 
-**Purpose**: Demonstrates the comprehensive testing and verification framework with multi-layer testing strategy.
+**File**: `MVP/demo-5-mvp-implementation.html`
+
+**Purpose**: Demonstrates Zielbild 1 MVP implementation with architectural distinction between Basisdaten and Erweiterte Daten.
 
 **Key Features**:
-- Multi-layer testing (Unit → Integration → System → Acceptance)
-- Community-based validation and external reviews
-- Real-time quality metrics and compliance monitoring
-- Production readiness assessment
+- Production-ready MVP with direct customer relationship model
+- Clear architectural distinction between core and extended data
+- 0-3 month time-to-market capability demonstration
+- ROI metrics and expansion path visualization
 
-**Usage**:
-```bash
-node verification-process-demo.js
-```
+**Duration**: ~3 minutes
 
-**Duration**: ~3-4 minutes
+**Business Value**: Production-ready MVP with clear ROI metrics and expansion path
 
-**Expected Output**:
-- Layer-by-layer test execution results
-- Community validation with partner feedback
-- Quality dashboard with production readiness status
-- Independent audit results
+**Description File**: [Demo 5: MVP Implementation description.html](MVP/Demo%205:%20MVP%20Implementation%20description.html)
 
 ---
 
-## Demo Categories
+## Technical Requirements
 
-### Core Framework Demos
-- **Reference Process Demo**: Universal 10-step process
-- **Consent Flow Demo**: FAPI 2.0 consent management
-- **Banking MVP Demo**: Core banking functionality
+### Browser Compatibility
+- **Modern Browsers**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- **JavaScript**: ES6+ support required
+- **No Plugins**: Pure HTML/CSS/JavaScript implementation
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
 
-### Use Case Demonstrations
-- **UC1: Banking Account Opening**: 67% time reduction
-- **UC2: Re-identification Process**: 85% efficiency improvement  
-- **UC3: Age Verification**: Privacy-by-design cross-industry solution
-- **UC4: EVV Lifecycle Management**: Wealth management data integration
-
-### Quality Assurance Demo
-- **Verification Process Demo**: Testing framework and production readiness
+### System Requirements
+- **No Server Dependencies**: All demos run client-side in the browser
+- **No Installation**: Simply open HTML files in web browser
+- **Offline Capable**: All demos work without internet connection
+- **Cross-Platform**: Compatible with Windows, macOS, Linux
 
 ---
 
-## Troubleshooting
+## Demo Features
+
+### Interactive Controls
+- **Play/Pause Button**: Automatic progression through demo steps
+- **Speed Control**: Adjustable execution speed (Fast/Normal/Slow)
+- **Step Navigation**: Manual forward/backward step control
+- **Reset Function**: Return to demo beginning at any time
+- **Progress Tracking**: Visual indicators for current phase and step
+
+### Visual Design
+- **Professional Aesthetic**: Financial industry appropriate styling
+- **Real-time Console**: Timestamped logging with color-coded messages
+- **Progress Indicators**: Clear phase-based progression visualization
+- **Responsive Layout**: Adapts to different screen sizes
+- **Data Visualization**: JSON sample data display for each step
+
+### Content Integration
+- **Framework Coherent**: Based on conclusions documentation
+- **Business Focused**: Appeals to financial industry stakeholders
+- **Realistic Data**: Swiss context with authentic sample data
+- **Efficiency Metrics**: Quantified business value and ROI
+
+---
+
+## Advanced Usage
+
+### Presentation Mode
+All demos are designed for professional presentations:
+
+1. **Full Screen**: Use browser full-screen mode (F11)
+2. **Speed Control**: Adjust timing for audience engagement
+3. **Step Control**: Pause at key points for discussion
+4. **Reset Capability**: Restart demo for multiple audiences
+
+### Demo Customization
+Demos can be customized for specific contexts:
+
+- **Speed Settings**: Modify timing in JavaScript configuration
+- **Sample Data**: Update JSON data to reflect specific use cases
+- **Branding**: Customize colors and styling via CSS
+- **Content**: Adapt descriptions for different audiences
+
+### Integration Options
+- **Embed in Presentations**: Use as interactive slides
+- **Training Materials**: Self-paced learning modules
+- **Stakeholder Demos**: Live demonstration capability
+- **Documentation**: Visual process documentation
+
+---
+
+## Demo Execution Order
+
+### Complete Framework Overview (30-40 minutes)
+1. **Universal Reference Process** (5 min) - Framework foundation
+2. **Banking Account Opening** (4 min) - Zielbild 1 primary use case
+3. **Customer Re-Identification** (4 min) - Trust network integration
+4. **Age Verification** (5 min) - Privacy-by-design cross-industry
+
+### Technical Deep Dive (15-20 minutes)
+1. **Universal Reference Process** (5 min) - Technical foundation
+2. **Banking Account Opening** (4 min) - Production implementation
+3. **Age Verification** (5 min) - Advanced cryptographic features
+
+### Business Value Focus (15-20 minutes)
+1. **Banking Account Opening** (4 min) - ROI and efficiency gains
+2. **Customer Re-Identification** (4 min) - Trust network benefits
+3. **Age Verification** (5 min) - Cross-industry value proposition
+
+---
+
+## Support and Troubleshooting
 
 ### Common Issues
 
-**1. "API server not available" Error**
-```
-Solution: Ensure the API server is running
-> cd api && npm start
-```
+**Demo Not Loading**:
+- Ensure modern browser with JavaScript enabled
+- Check browser console for error messages
+- Verify HTML file path and permissions
 
-**2. "Missing dependency" Error**
-```
-Solution: Install required dependencies
-> npm install axios chalk
-```
+**Interactive Controls Not Working**:
+- Refresh browser page
+- Check browser JavaScript console
+- Ensure no browser extensions blocking JavaScript
 
-**3. "Permission denied" Error (Linux/macOS)**
-```
-Solution: Make scripts executable
-> chmod +x *.js
-> chmod +x run-all-demos.sh
-```
+**Display Issues**:
+- Try different browser or browser window size
+- Check browser zoom level (100% recommended)
+- Ensure screen resolution supports responsive design
 
-**4. Connection Timeout**
-```
-Solution: Check if API server is responsive
-> curl http://localhost:3000/health
-```
-
-### Debug Mode
-
-For detailed debugging information, set the debug environment variable:
-
-```bash
-DEBUG=true node [demo-script].js
-```
-
-### API Server Issues
-
-If the API server fails to start:
-
-1. Check port availability: `netstat -an | grep 3000`
-2. Kill existing processes: `pkill -f "node.*3000"`
-3. Restart with: `cd api && npm start`
+### Performance Optimization
+- **Browser Resources**: Demos are lightweight and efficient
+- **Memory Usage**: Minimal memory footprint
+- **CPU Usage**: Low CPU utilization during playback
+- **Network**: No network requests after initial load
 
 ---
 
-## Advanced Configuration
+**Version**: 2.0 - Interactive HTML Demos  
+**Last Updated**: January 2025  
+**Compatibility**: Modern browsers with ES6+ support
 
-### Environment Variables
-
-Configure demos using environment variables:
-
-```bash
-# API server URL (default: http://localhost:3000)
-export API_BASE_URL=http://localhost:3000
-
-# Demo execution speed (default: normal)
-export DEMO_SPEED=fast|normal|slow
-
-# Enable debug output
-export DEBUG=true
-```
-
-### Custom Configuration
-
-Create a `.env` file in the root directory:
-
-```
-API_BASE_URL=http://localhost:3000
-DEMO_TIMEOUT=30000
-LOG_LEVEL=info
-```
-
-### Running Demos in Different Environments
-
-**Development Environment**:
-```bash
-NODE_ENV=development node [demo-script].js
-```
-
-**Production-like Testing**:
-```bash
-NODE_ENV=production API_BASE_URL=https://your-api-server.com node [demo-script].js
-```
 
 ---
 
 ## Demo Execution Order Recommendations
 
-### Full Demonstration Session (45-60 minutes)
-1. **Reference Process Demo** (4 min) - Foundation overview
-2. **Consent Flow Demo** (5 min) - Security and privacy
-3. **UC1: Banking Account Opening** (4 min) - Primary use case
-4. **UC2: Re-identification Process** (4 min) - Data reuse
-5. **UC3: Age Verification** (5 min) - Cross-industry application
-6. **UC4: EVV Lifecycle Management** (5 min) - Advanced use case
-7. **Verification Process Demo** (4 min) - Quality assurance
+### Complete Framework Overview (35-40 minutes)
+1. **Universal Reference Process** (5 min) - Framework foundation
+2. **Data Onboarding & Maintenance** (6 min) - Modular "Blöckli" architecture
+3. **Consent & Security Flow** (5 min) - FAPI 2.0 Advanced security
+4. **Banking Account Opening** (4 min) - Zielbild 1 primary use case
+5. **Customer Re-Identification** (4 min) - Trust network integration
+6. **Age Verification** (5 min) - Privacy-by-design cross-industry
+7. **EVV Lifecycle Management** (5 min) - Wealth management integration
+8. **MVP Implementation** (3 min) - Production-ready core
+9. **Verification Process** (4 min) - Quality assurance framework
 
-### Quick Overview Session (15-20 minutes)
-1. **Reference Process Demo** (4 min)
-2. **UC1: Banking Account Opening** (4 min)
-3. **UC3: Age Verification** (3 min)
-4. **Verification Process Demo** (3 min)
+### Quick Overview Session (17-21 minutes)
+1. **Universal Reference Process** (5 min) - Framework foundation
+2. **Banking Account Opening** (4 min) - Zielbild 1 core value
+3. **Age Verification** (5 min) - Privacy-by-design cross-industry
+4. **Verification Process** (4 min) - Production readiness
 
-### Technical Deep Dive Session (20-30 minutes)
-1. **Consent Flow Demo** (5 min)
-2. **Banking MVP Demo** (3 min)
-3. **UC2: Re-identification Process** (4 min)
-4. **UC4: EVV Lifecycle Management** (5 min)
-5. **Verification Process Demo** (4 min)
-
----
-
-## Expected Performance Metrics
-
-### Demo Performance Benchmarks
-
-| Demo | Expected Duration | API Calls | Key Metrics |
-|------|------------------|-----------|-------------|
-| Reference Process | 3-4 min | ~15 | 10 steps, 100% completion |
-| Consent Flow | 4-5 min | ~12 | 8 steps, FAPI 2.0 compliance |
-| UC1 Banking | 3-4 min | ~8 | 67% time reduction |
-| UC2 Re-identification | 3-4 min | ~6 | 85% efficiency improvement |
-| UC3 Age Verification | 4-5 min | ~5 | 6 industry scenarios |
-| UC4 EVV Lifecycle | 4-5 min | ~10 | 78% time reduction |
-| Banking MVP | 2-3 min | ~6 | Core functionality |
-| Verification Process | 3-4 min | ~0 | Quality dashboard |
-
-### System Resource Requirements
-
-- **Memory**: ~50MB per demo
-- **CPU**: Low utilization (primarily I/O bound)
-- **Network**: Requires API server connectivity
-- **Disk**: Minimal (logging only)
+### Technical Deep Dive Session (27-35 minutes)
+1. **Data Onboarding & Maintenance** (6 min) - Blöckli architecture
+2. **Consent & Security Flow** (5 min) - FAPI 2.0 Advanced implementation
+3. **MVP Implementation** (3 min) - Production-ready MVP
+4. **Customer Re-Identification** (4 min) - Trust network integration
+5. **EVV Lifecycle Management** (5 min) - Wealth management sophistication
+6. **Verification Process** (4 min) - Quality and compliance validation
 
 ---
 
-## Support and Documentation
+## Support and Troubleshooting
 
-### Additional Resources
+### Common Issues
 
-- **API Documentation**: `/api/docs` (when server is running)
-- **Conclusion Documents**: `/documentation/Fachliche Conclusions Open API Kundenbeziehung/`
-- **Technical Implementation**: `/documentation/Umsetzung und Implementierung/`
+**Demo Not Loading**:
+- Ensure modern browser with JavaScript enabled
+- Check browser console for error messages
+- Verify HTML file path and permissions
 
-### Getting Help
+**Interactive Controls Not Working**:
+- Refresh browser page
+- Check browser JavaScript console
+- Ensure no browser extensions blocking JavaScript
 
-If you encounter issues:
+**Display Issues**:
+- Try different browser or browser window size
+- Check browser zoom level (100% recommended)
+- Ensure screen resolution supports responsive design
 
-1. Check this documentation first
-2. Verify API server is running and accessible
-3. Check the console output for specific error messages
-4. Review the individual demo script documentation
-
-### Demo Feedback
-
-For demo improvements or questions:
-- Document any issues encountered
-- Note performance variations from expected benchmarks
-- Provide feedback on clarity and business value demonstration
+### Performance Optimization
+- **Browser Resources**: Demos are lightweight and efficient
+- **Memory Usage**: Minimal memory footprint
+- **CPU Usage**: Low CPU utilization during playback
+- **Network**: No network requests after initial load
 
 ---
 
-**Version**: 1.0  
-**Last Updated**: December 2024  
-**Compatibility**: Node.js 16+, All major operating systems
+**Version**: 2.0 - Interactive HTML Demos  
+**Last Updated**: January 2025  
+**Compatibility**: Modern browsers with ES6+ support
