@@ -465,7 +465,7 @@
             border-radius: 12px;
             padding: 20px;
             margin: 20px 0;
-            height: 700px;
+            height: 900px;
             width: 100%;
             overflow: hidden;
         }
@@ -484,8 +484,9 @@
             background: white;
             border: 2px solid #253165;
             border-radius: 8px;
-            padding: 15px 10px;
-            min-width: 100px;
+            padding: 15px 12px;
+            min-width: 120px;
+            max-width: 140px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
@@ -505,7 +506,8 @@
         .participant-name {
             font-weight: 600;
             color: #253165;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            line-height: 1.2;
         }
 
         .lifelines {
@@ -513,7 +515,7 @@
             top: 100px;
             left: 20px;
             right: 20px;
-            height: 450px;
+            height: 700px;
             display: flex;
             justify-content: space-between;
             z-index: 1;
@@ -536,7 +538,7 @@
             top: 120px;
             left: 20px;
             right: 20px;
-            height: 400px;
+            height: 650px;
             z-index: 2;
         }
 
@@ -544,7 +546,7 @@
             position: absolute;
             display: flex;
             align-items: center;
-            height: 30px;
+            height: 35px;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
@@ -586,18 +588,21 @@
 
         .message-text {
             background: white;
-            padding: 4px 8px;
+            padding: 6px 12px;
             border: 1px solid #e5e7eb;
-            border-radius: 4px;
-            font-size: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
             font-weight: 500;
             color: #374151;
             white-space: nowrap;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: absolute;
-            top: -20px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .phase-indicators {
@@ -605,7 +610,7 @@
             top: 80px;
             left: 0;
             right: 0;
-            height: 450px;
+            height: 700px;
             z-index: 0;
         }
 
@@ -613,16 +618,16 @@
             position: absolute;
             left: -10px;
             right: -10px;
-            height: 70px;
+            height: 100px;
             background: rgba(37, 49, 101, 0.05);
             border-left: 4px solid #253165;
             border-radius: 0 8px 8px 0;
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 15px;
             font-weight: 600;
             color: #253165;
-            font-size: 0.9rem;
+            font-size: 1rem;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
@@ -1232,7 +1237,7 @@
             
             const messageDiv = document.createElement('div');
             messageDiv.className = 'sequence-message';
-            messageDiv.style.top = `${stepIndex * 15}px`;
+            messageDiv.style.top = `${stepIndex * 25}px`;
             
             // Calculate positions based on participants
             const participants = ['customer', 'integrator', 'authserver', 'producer', 'consent', 'audit'];
@@ -1380,7 +1385,7 @@
             // Position phase indicators
             const phaseIndicators = document.querySelectorAll('.phase-indicator');
             phaseIndicators.forEach((indicator, index) => {
-                indicator.style.top = `${index * 70}px`;
+                indicator.style.top = `${index * 115}px`;
             });
         });
     </script>
