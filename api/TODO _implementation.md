@@ -3,11 +3,16 @@
 ------------
 
 ## Guidelines and Context
+reference for all tasks in the following sections!!
 
 **General guidelines for the content:**
 - Generic and modular design of an Open API Kundenbeziehung that can be extended and adapted to different use cases and requirements in all Ecosystems
 - Alpha version that can be evolved into a swiss standard for Open API Kundenbeziehung to manage customer data in and between all Ecosystems
 - Implementation must be coherent with the content of the Conclusions in the directory `documentation/Fachliche Conclusions Open API Kundenbeziehung`
+- professional and coherent implementation of the Open API Kundenbeziehung that can be used in real-world applications
+- no unnecessary complexity, keep it simple and coherent with the conclusions
+- simple and concise documenation within the code files
+- absolutely no emojis!!!
 
 **Requirements:**
 - Reference files: 
