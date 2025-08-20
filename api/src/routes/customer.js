@@ -6,6 +6,24 @@ const { requireConsent } = require('../middleware/auth');
 
 const router = express.Router();
 
+// Service layer references (injected by app.js)
+let serviceManager = null;
+let coreFramework = null;
+
+/**
+ * Set service manager reference
+ */
+function setServiceManager(manager) {
+  serviceManager = manager;
+}
+
+/**
+ * Set core framework reference
+ */
+function setCoreFramework(framework) {
+  coreFramework = framework;
+}
+
 // Mock customer database (use real database in production)
 const customers = new Map();
 
@@ -109,19 +127,61 @@ const generateSharedCustomerHash = (basicData) => {
 };
 
 /**
- * Check customer existence
+ * Check customer existence (Enhanced with Banking MVP)
  * POST /customer/check
  */
-router.post('/check', validateRequest('customerCheck'), (req, res) => {
+router.post('/check', validateRequest('customerCheck'), async (req, res) => {
   try {
     const { sharedCustomerHash, basicData } = req.body;
     
-    logger.info('Customer check request', {
+    logger.info('Banking MVP - Customer check request', {
       sharedCustomerHash,
       institutionId: req.user.institutionId,
       ip: req.ip
     });
 
+    // Use service layer if available, fallback to legacy implementation
+    if (serviceManager) {
+      const customerService = serviceManager.getService('customer');
+      
+      const checkResult = await customerService.checkCustomer(
+        { sharedCustomerHash, basicData },
+        {
+          institutionId: req.user.institutionId,
+          userId: req.user.id,
+          ipAddress: req.ip,
+          userAgent: req.get('User-Agent')
+        }
+      );
+
+      if (checkResult.success) {
+        logger.info('Banking MVP - Customer check successful (service layer)', {
+          sharedCustomerHash,
+          match: checkResult.match,
+          processInstance: checkResult.processInstance
+        });
+
+        return res.json({
+          match: checkResult.match,
+          identificationDate: checkResult.identificationDate,
+          levelOfAssurance: checkResult.levelOfAssurance,
+          validUntil: checkResult.validUntil,
+          processedBy: 'banking_mvp_service_layer',
+          framework: 'core_framework_v1'
+        });
+      } else {
+        logger.error('Banking MVP - Customer check failed (service layer)', checkResult);
+        return res.status(400).json({
+          error: checkResult.error,
+          message: checkResult.message || 'Customer check failed',
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+
+    // Legacy fallback implementation
+    logger.warn('Using legacy customer check - service layer not available');
+    
     // Verify hash matches provided basic data
     const calculatedHash = generateSharedCustomerHash(basicData);
     if (calculatedHash !== sharedCustomerHash) {
@@ -135,9 +195,10 @@ router.post('/check', validateRequest('customerCheck'), (req, res) => {
     const customer = customers.get(sharedCustomerHash);
     
     if (!customer) {
-      logger.info('Customer not found', { sharedCustomerHash });
+      logger.info('Customer not found (legacy)', { sharedCustomerHash });
       return res.json({
-        match: false
+        match: false,
+        processedBy: 'legacy_implementation'
       });
     }
 
@@ -149,9 +210,10 @@ router.post('/check', validateRequest('customerCheck'), (req, res) => {
       JSON.stringify(customer.basicData.nationality.sort()) === JSON.stringify(basicData.nationality.sort());
 
     if (!dataMatches) {
-      logger.warn('Customer data mismatch', { sharedCustomerHash });
+      logger.warn('Customer data mismatch (legacy)', { sharedCustomerHash });
       return res.json({
-        match: false
+        match: false,
+        processedBy: 'legacy_implementation'
       });
     }
 
@@ -161,7 +223,7 @@ router.post('/check', validateRequest('customerCheck'), (req, res) => {
     const validUntil = new Date(identificationDate.getTime() + validityPeriod);
     const isValid = validUntil > new Date();
 
-    logger.info('Customer check successful', {
+    logger.info('Customer check successful (legacy)', {
       sharedCustomerHash,
       match: true,
       valid: isValid
@@ -171,7 +233,8 @@ router.post('/check', validateRequest('customerCheck'), (req, res) => {
       match: true,
       identificationDate: customer.identification.verificationDate,
       levelOfAssurance: customer.identification.levelOfAssurance,
-      validUntil: validUntil.toISOString()
+      validUntil: validUntil.toISOString(),
+      processedBy: 'legacy_implementation'
     });
 
   } catch (error) {
@@ -185,23 +248,71 @@ router.post('/check', validateRequest('customerCheck'), (req, res) => {
 });
 
 /**
- * Request full customer dataset
- * POST /customer/fullRequest
+ * Request full customer dataset (Enhanced with Banking MVP)
+ * POST /customer/data
  */
-router.post('/fullRequest', 
+router.post('/data', 
   validateRequest('fullDataRequest'),
   requireConsent('accountOpening'),
-  (req, res) => {
+  async (req, res) => {
     try {
       const { sharedCustomerHash, purpose, consentToken } = req.body;
 
-      logger.info('Full customer data request', {
+      logger.info('Banking MVP - Full customer data request', {
         sharedCustomerHash,
         purpose,
         institutionId: req.user.institutionId,
         userId: req.user.id
       });
 
+      // Use service layer if available, fallback to legacy implementation
+      if (serviceManager) {
+        const customerService = serviceManager.getService('customer');
+        
+        const dataResult = await customerService.requestFullCustomerData(
+          { sharedCustomerHash, purpose, consentToken },
+          {
+            institutionId: req.user.institutionId,
+            userId: req.user.id,
+            ipAddress: req.ip,
+            userAgent: req.get('User-Agent'),
+            permissions: req.user.consent?.dataCategories || []
+          }
+        );
+
+        if (dataResult.success) {
+          logger.info('Banking MVP - Customer data request successful (service layer)', {
+            sharedCustomerHash,
+            categoriesProvided: Object.keys(dataResult.customerData || {}),
+            processInstance: dataResult.processInstance
+          });
+
+          return res.json({
+            customerData: dataResult.customerData,
+            processedBy: 'banking_mvp_service_layer',
+            framework: 'core_framework_v1',
+            auditRecorded: dataResult.auditRecorded,
+            metadata: {
+              accessedAt: new Date().toISOString(),
+              accessedBy: req.user.institutionId,
+              userId: req.user.id,
+              purpose,
+              consentToken
+            }
+          });
+        } else {
+          logger.error('Banking MVP - Customer data request failed (service layer)', dataResult);
+          return res.status(dataResult.error === 'NOT_FOUND' ? 404 : 400).json({
+            error: dataResult.error,
+            message: dataResult.message || 'Customer data request failed',
+            timestamp: new Date().toISOString()
+          });
+        }
+      }
+
+      // Legacy fallback implementation
+      logger.warn('Using legacy customer data request - service layer not available');
+      
       const customer = customers.get(sharedCustomerHash);
       
       if (!customer) {
@@ -264,16 +375,21 @@ router.post('/fullRequest',
         ...customer.metadata,
         accessedAt: new Date().toISOString(),
         accessedBy: req.user.institutionId,
-        purpose
+        userId: req.user.id,
+        purpose,
+        processedBy: 'legacy_implementation'
       };
 
-      logger.info('Customer data provided', {
+      logger.info('Customer data provided (legacy)', {
         sharedCustomerHash,
         categories: allowedCategories,
         institutionId: req.user.institutionId
       });
 
-      res.json(responseData);
+      res.json({
+        customerData: responseData,
+        processedBy: 'legacy_implementation'
+      });
 
     } catch (error) {
       logger.error('Error providing customer data:', error);
@@ -283,6 +399,20 @@ router.post('/fullRequest',
         timestamp: new Date().toISOString()
       });
     }
+  }
+);
+
+/**
+ * Legacy endpoint for backward compatibility
+ * POST /customer/fullRequest
+ */
+router.post('/fullRequest', 
+  validateRequest('fullDataRequest'),
+  requireConsent('accountOpening'),
+  async (req, res) => {
+    // Redirect to new endpoint
+    req.url = '/data';
+    return router.handle(req, res);
   }
 );
 
@@ -365,3 +495,5 @@ router.put('/:sharedCustomerHash', validateRequest('updateCustomer'), (req, res)
 });
 
 module.exports = router;
+module.exports.setServiceManager = setServiceManager;
+module.exports.setCoreFramework = setCoreFramework;
