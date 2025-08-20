@@ -16,7 +16,7 @@ professional documentation (conclusions) written from the perspective of an econ
 - if some information is not available in the resources, please use professional and reliable sources to fill the gaps, and make sure to document the sources properly
 
 **General guidelines for the language:**
-- even though the conclusions are written in german, please use "Ecosystem" instead of "Ökosystem" and "API" instead of "Schnittstelle" (this is a common term in the industry and should be used consistently)
+- even though the conclusions are written in german, please use "Ecosystem" instead of "Ökosystem" 
 - no ß, use ss instead (we are swiss not german!!)
 - no emojis or slang, use professional language
 
@@ -25,10 +25,9 @@ professional documentation (conclusions) written from the perspective of an econ
 - https://docs.airlock.com/iam/latest/index/1639690251538.html
 
 
-**context and TODO for each conclusion:**
+**context for each conclusion:**
 01 Marktanalyse:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/01 Marktanalyse.md"
-    - remove section about the E-ID as it's already covered in conclusion 02 Anforderungen
 
 02 Anforderungen: 
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md"
@@ -41,25 +40,26 @@ professional documentation (conclusions) written from the perspective of an econ
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md"
     - make sure to use the exact data fields defined in the resources where applicable (1:1 mapping) and add any missing fields that are necessary for the API Endpoint Design
     - needs to be coherent with the Referenzprozess and the data fields defined there, make sure structure matches and that everything described conceptually in the Referenzprozess is then described in detail in the API Endpoint Design conclusion
-
 05 Vertrauensnetzwerk:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/05 Vertrauensnetzwerk.md"
-
 06 Consent und Security Flow:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/06 Consent und Security Flow.md"
     - define generic flows for our API that are applicable to any of the trust network architectures and the corresponding trust network flows
-
 07 Rechtliche Rahmenbedingungen:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/07 Rechtliche Rahmenbedingungen.md"
-
 08 Testing und Verifikation:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
 
-**TODOs concerning all conclusions:**
-[] for each conclusion seperately: evaluate structure and content, focus on coherency and no redundancy and check grammar and general language, make sure it is professional and coherent. After extensive review, give me feedback and suggestions for improvements for each conclusion.
-[] check for redundancies and coherency across all conclusions: instead of duplicate content link to relevant sections in other conclusions
-[] make sure to add all sources and references to the file "Quellen und Referenzen"
-[] update the file "Konklusion Open API Kundenbeziehung.md" that it matches the conclusions and the structure of the documentation
-[] complete the file "Navigation Documentation"
+**TODOs:**
+[] add missing graphics as outlined in the file
+[] for each conclusion seperately: 
+    - evaluate structure and content, focus on coherency and no redundancy and check grammar and general language, make sure it is professional and coherent
+    - look at the mermaid graphs (online in github), make sure they are displayed correctly and readable (if not please add a TODO here so that I can fix it)
+[] verify that the file "Konklusion Open API Kundenbeziehung.md" matches the conclusions and the structure of the documentation
+[] complete README.md file including some sort of navigation overview for the repo
+
+Only if you have time to spare:
+[] verify sources and references in the file "Quellen und Referenzen", delete unneccessary or unprofessional sources and if missing add link
+
 
 
