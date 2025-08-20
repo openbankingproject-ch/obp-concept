@@ -24,6 +24,7 @@ Diese offene Schnittstelle steht nach der Fertigstellung Allen offen zur Verfüg
 
 Roadmap:
 Phase 1 (bis 06/26): 
+- Sicherstellung der konzeptionellen Grundlagen (Marktanalyse, Anforderungen, Referenzprozesse und Daten, API Design, föderatives Netzwerk, Consent & Security Flow, rechtliche Rahmenbedingungen, Testkonzept)
 - Bereitstellung einer Alpha Version mit der Funktionalität Onboarding und Pflege für Bürger der Schweiz und der EU mit dem Domizil in der Schweiz
 - Weiterentwicklung und Verifikation dieses Funktionsumfanges in der Community vom OpenBankingProject
 - Veröffentlichung dieser Version durch die Community und e.B. eCH getesteten und verifizierten Schnittstelle
