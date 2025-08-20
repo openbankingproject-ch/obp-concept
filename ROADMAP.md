@@ -6,6 +6,8 @@ Diese Master-Roadmap konsolidiert alle Implementierungs-Timelines des Open API K
 
 **Strategisches Ziel:** Die Schweiz als führenden Markt für Kundendatenportabilität und Finanzservice-Integration durch sichere, standardisierte APIs etablieren.
 
+![Aufbau Customer Onboarding: Ziel und 4 Stufen](documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/Resources/images/Anforderungen%20Grafiken/Aufbau%20Customer%20Onboarding%20Ziel%20und%204%20Stufen.png)
+
 ---
 
 ## Master Implementierungs-Timeline
