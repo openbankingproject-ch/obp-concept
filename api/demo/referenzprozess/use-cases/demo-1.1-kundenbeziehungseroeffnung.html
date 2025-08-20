@@ -180,6 +180,24 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
+            transition: all 0.5s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .step-details.transitioning {
+            transform: translateY(-10px);
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                transform: translateY(20px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1; 
+            }
         }
 
         .step-details h2 {
@@ -228,11 +246,39 @@
             margin-bottom: 8px;
             padding: 8px;
             border-radius: 6px;
-            transition: background 0.2s ease;
+            transition: all 0.3s ease;
+            transform: translateX(0);
+            opacity: 1;
         }
 
         .action-item:hover {
-            background: #f9fafb;
+            background: #f0f9ff;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        }
+
+        .action-item.processing {
+            background: #fef3c7;
+            animation: bankingPulse 2s infinite;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+        }
+
+        .action-item.completed {
+            background: #dcfce7;
+            transform: translateX(0);
+            animation: bankingBounce 0.6s ease-out;
+        }
+
+        @keyframes bankingPulse {
+            0%, 100% { transform: scale(1.02); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        @keyframes bankingBounce {
+            0% { transform: scale(1.02); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
         }
 
         .action-dot {
@@ -248,6 +294,25 @@
             padding: 20px;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
+            transition: all 0.4s ease;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .data-display.updating {
+            background: #fefce8;
+            border-color: #f59e0b;
+            transform: scale(1.02);
+        }
+
+        @keyframes slideInRight {
+            from { 
+                transform: translateX(20px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateX(0); 
+                opacity: 1; 
+            }
         }
 
         .data-display h4 {
@@ -375,18 +440,6 @@
             border-radius: 3px;
         }
 
-        .efficiency-metrics {
-            background: #f0f9f0;
-            border: 1px solid #00b02cff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-
-        .efficiency-metrics h4 {
-            color: #00b02cff;
-            margin-bottom: 10px;
-        }
 
         .metric-row {
             display: flex;
@@ -407,7 +460,7 @@
         <div class="header">
             <div class="zielbild-badge">Zielbild 1: Direct Customer Relationship</div>
             <h1>Demo 1.1: Banking Account Opening</h1>
-            <p>Kundenbeziehungseröffnung - Demonstrating 67% efficiency improvement through Swiss Open API framework with direct bank-customer relationship model</p>
+            <p>Kundenbeziehungseröffnung - Swiss Open API framework with direct bank-customer relationship model</p>
             
             <!-- Progress Indicator -->
             <div class="phase-indicator" id="phaseIndicator">
@@ -483,21 +536,6 @@
                         <pre id="sampleData">Ready to start banking account opening demo...</pre>
                     </div>
 
-                    <div class="efficiency-metrics" id="efficiencyMetrics" style="display: none;">
-                        <h4>Efficiency Improvements</h4>
-                        <div class="metric-row">
-                            <span>Time Reduction:</span>
-                            <span class="metric-value">67% (60 min saved)</span>
-                        </div>
-                        <div class="metric-row">
-                            <span>Cost Reduction:</span>
-                            <span class="metric-value">€156 per customer</span>
-                        </div>
-                        <div class="metric-row">
-                            <span>Customer Satisfaction:</span>
-                            <span class="metric-value">9.2/10 (was 6.8/10)</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -522,8 +560,8 @@
                 </div>
                 
                 <div class="capability">
-                    <h3>⚡ 67% Time Reduction</h3>
-                    <p>From 90 minutes to 30 minutes through API-based automation</p>
+                    <h3>⚡ Automated Processing</h3>
+                    <p>Streamlined API-based customer onboarding automation</p>
                 </div>
                 
                 <div class="capability">
@@ -532,8 +570,8 @@
                 </div>
                 
                 <div class="capability">
-                    <h3>💰 Cost Efficiency</h3>
-                    <p>€156 savings per customer through standardized data reuse</p>
+                    <h3>💰 Cost Optimization</h3>
+                    <p>Reduced operational overhead through standardized data reuse</p>
                 </div>
                 
                 <div class="capability">
@@ -793,9 +831,9 @@
                         complianceAccuracy: 100,
                         customerSatisfaction: 9.2 
                     },
-                    timeToCompletion: '30 minutes',
-                    traditionalTime: '90 minutes',
-                    efficiencyGain: '67%'
+                    processStatus: 'optimized',
+                    implementationApproach: 'automated',
+                    complianceLevel: 'validated'
                 }
             }
         ];
@@ -833,12 +871,9 @@
             // Update sample data
             document.getElementById('sampleData').textContent = JSON.stringify(step.data, null, 2);
             
-            // Show efficiency metrics on final step
-            const efficiencyMetrics = document.getElementById('efficiencyMetrics');
+            // Final step processing
             if (step.id === 10) {
-                efficiencyMetrics.style.display = 'block';
-            } else {
-                efficiencyMetrics.style.display = 'none';
+                // Demo completed
             }
         }
 
@@ -897,7 +932,7 @@
                 newLogs.push({ type: 'info', message: `✓ FINMA Compliance Check Passed`, timestamp });
             } else if (step.id === 10) {
                 newLogs.push({ type: 'success', message: `✓ Account ${step.data.accountNumber} Successfully Created`, timestamp });
-                newLogs.push({ type: 'success', message: `✓ 67% Efficiency Gain Achieved (30 min vs 90 min traditional)`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ Customer Onboarding Process Completed Successfully`, timestamp });
             }
             
             newLogs.push({ type: 'success', message: `✓ Banking Step ${step.id} Complete`, timestamp });

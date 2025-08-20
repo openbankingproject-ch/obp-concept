@@ -377,18 +377,6 @@
             border-radius: 3px;
         }
 
-        .efficiency-metrics {
-            background: #f0f9f0;
-            border: 1px solid #00b02cff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-
-        .efficiency-metrics h4 {
-            color: #00b02cff;
-            margin-bottom: 10px;
-        }
 
         .metric-row {
             display: flex;
@@ -423,7 +411,7 @@
         <div class="header">
             <div class="trust-badge">Trust Network Integration - Decentralized Architecture</div>
             <h1>Demo 1.2: Customer Re-Identification</h1>
-            <p>Demonstrating 85% efficiency improvement through secure identity data reuse across trusted providers with GwG compliance</p>
+            <p>Secure identity data reuse across trusted providers with GwG compliance</p>
             
             <!-- Progress Indicator -->
             <div class="phase-indicator" id="phaseIndicator">
@@ -504,21 +492,6 @@
                         <div style="font-size: 0.8rem; color: #0369a1; margin-top: 5px;" id="trustDetails">Provider verified and compliant</div>
                     </div>
 
-                    <div class="efficiency-metrics" id="efficiencyMetrics" style="display: none;">
-                        <h4>Re-Identification Efficiency Gains</h4>
-                        <div class="metric-row">
-                            <span>Time Reduction:</span>
-                            <span class="metric-value">85% (108 min saved)</span>
-                        </div>
-                        <div class="metric-row">
-                            <span>Cost Reduction:</span>
-                            <span class="metric-value">€76 per customer</span>
-                        </div>
-                        <div class="metric-row">
-                            <span>Customer Satisfaction:</span>
-                            <span class="metric-value">9.4/10 (was 7.2/10)</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -543,8 +516,8 @@
                 </div>
                 
                 <div class="capability">
-                    <h3>⚡ 85% Efficiency Gain</h3>
-                    <p>From 127 minutes to 19 minutes through verified data reuse</p>
+                    <h3>⚡ Verified Data Reuse</h3>
+                    <p>Streamlined processing through trusted network integration</p>
                 </div>
                 
                 <div class="capability">
@@ -783,7 +756,7 @@
                     serviceRelationship: 'established',
                     accessLevel: 'full-service',
                     verificationStatus: 'reused-from-trusted-source',
-                    activationTime: '19 minutes'
+                    activationTime: 'optimized'
                 },
                 trustLevel: 'Service Active',
                 trustDetails: 'Customer profile activated with trusted identity data'
@@ -805,14 +778,14 @@
                     processStatus: 'completed',
                     auditReport: 'comprehensive',
                     regulatoryDocs: 'complete',
-                    timeToCompletion: '19 minutes',
-                    traditionalTime: '127 minutes',
-                    efficiencyGain: '85%',
+                    processStatus: 'optimized',
+                    implementationApproach: 'trust-network',
+                    complianceLevel: 'verified',
                     trustNetworkFeedback: 'positive',
                     customerSatisfaction: 9.4
                 },
                 trustLevel: 'Process Complete',
-                trustDetails: '85% efficiency improvement through trust network integration'
+                trustDetails: 'Streamlined processing through trust network integration'
             }
         ];
 
@@ -862,12 +835,9 @@
                 trustIndicator.style.display = 'none';
             }
             
-            // Show efficiency metrics on final step
-            const efficiencyMetrics = document.getElementById('efficiencyMetrics');
+            // Final step processing
             if (step.id === 10) {
-                efficiencyMetrics.style.display = 'block';
-            } else {
-                efficiencyMetrics.style.display = 'none';
+                // Demo completed
             }
         }
 
@@ -925,8 +895,8 @@
             } else if (step.id === 6) {
                 newLogs.push({ type: 'info', message: `✓ GwG compliance requirements met`, timestamp });
             } else if (step.id === 10) {
-                newLogs.push({ type: 'success', message: `✓ Re-identification completed in 19 minutes`, timestamp });
-                newLogs.push({ type: 'success', message: `✓ 85% efficiency improvement (108 minutes saved)`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ Re-identification process completed`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ Trust network integration successful`, timestamp });
             }
             
             if (step.trustLevel) {

@@ -407,18 +407,6 @@
             font-weight: 500;
         }
 
-        .efficiency-metrics {
-            background: #f0f9f0;
-            border: 1px solid #00b02cff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-
-        .efficiency-metrics h4 {
-            color: #00b02cff;
-            margin-bottom: 10px;
-        }
 
         .metric-row {
             display: flex;
@@ -453,7 +441,7 @@
         <div class="header">
             <div class="wealth-badge">External Wealth Management (EVV) - Multi-Provider Integration</div>
             <h1>Demo 1.4: EVV Lifecycle Management</h1>
-            <p>Demonstrating 78% efficiency improvement through integrated customer lifecycle management across multiple wealth management providers with MiFID II compliance</p>
+            <p>Integrated customer lifecycle management across multiple wealth management providers with MiFID II compliance</p>
             
             <!-- Progress Indicator -->
             <div class="phase-indicator" id="phaseIndicator">
@@ -546,21 +534,6 @@
                         </div>
                     </div>
 
-                    <div class="efficiency-metrics" id="efficiencyMetrics" style="display: none;">
-                        <h4>EVV Lifecycle Efficiency Gains</h4>
-                        <div class="metric-row">
-                            <span>Time Reduction:</span>
-                            <span class="metric-value">78% (255 min saved)</span>
-                        </div>
-                        <div class="metric-row">
-                            <span>Portfolio Data Accuracy:</span>
-                            <span class="metric-value">99.4%</span>
-                        </div>
-                        <div class="metric-row">
-                            <span>Client Satisfaction:</span>
-                            <span class="metric-value">9.6/10</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -585,8 +558,8 @@
                 </div>
                 
                 <div class="capability">
-                    <h3>⚡ 78% Efficiency Gain</h3>
-                    <p>From 327 minutes to 72 minutes through integrated lifecycle management</p>
+                    <h3>⚡ Integrated Processing</h3>
+                    <p>Streamlined lifecycle management through provider coordination</p>
                 </div>
                 
                 <div class="capability">
@@ -606,7 +579,7 @@
                 
                 <div class="capability">
                     <h3>🔄 Real-time Sync</h3>
-                    <p>99.4% portfolio data accuracy with automated reconciliation</p>
+                    <p>High portfolio data accuracy with automated reconciliation</p>
                 </div>
             </div>
         </div>
@@ -716,7 +689,7 @@
                     providerConnections: 'active'
                 },
                 wealthLevel: 'Real-time Sync',
-                wealthDetails: '99.4% data accuracy with automated reconciliation'
+                wealthDetails: 'High data accuracy with automated reconciliation'
             },
             {
                 id: 5,
@@ -851,16 +824,16 @@
                 ],
                 data: {
                     lifecycleStatus: 'optimized',
-                    timeToCompletion: '72 minutes',
-                    traditionalTime: '327 minutes',
-                    efficiencyGain: '78%',
-                    portfolioAccuracy: '99.4%',
+                    processStatus: 'optimized',
+                    implementationApproach: 'integrated',
+                    complianceLevel: 'mifid-compliant',
+                    portfolioAccuracy: 'high',
                     clientSatisfaction: 9.6,
                     ongoingMonitoring: 'active',
                     complianceScore: 100
                 },
                 wealthLevel: 'Lifecycle Complete',
-                wealthDetails: '78% efficiency improvement with optimal client outcomes'
+                wealthDetails: 'Integrated lifecycle management with optimal client outcomes'
             }
         ];
 
@@ -918,12 +891,9 @@
                 portfolioShowcase.style.display = 'none';
             }
             
-            // Show efficiency metrics on final step
-            const efficiencyMetrics = document.getElementById('efficiencyMetrics');
+            // Final step processing
             if (step.id === 10) {
-                efficiencyMetrics.style.display = 'block';
-            } else {
-                efficiencyMetrics.style.display = 'none';
+                // Demo completed
             }
         }
 
@@ -981,9 +951,9 @@
             } else if (step.id === 6) {
                 newLogs.push({ type: 'info', message: `✓ MiFID II Continuous Compliance Monitoring Active`, timestamp });
             } else if (step.id === 10) {
-                newLogs.push({ type: 'success', message: `✓ EVV Lifecycle Management Completed in 72 minutes`, timestamp });
-                newLogs.push({ type: 'success', message: `✓ 78% Efficiency Improvement (255 minutes saved)`, timestamp });
-                newLogs.push({ type: 'success', message: `✓ 99.4% Portfolio Data Accuracy Achieved`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ EVV Lifecycle Management Completed`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ Integrated Provider Coordination Successful`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ High Portfolio Data Accuracy Achieved`, timestamp });
             }
             
             if (step.wealthLevel) {

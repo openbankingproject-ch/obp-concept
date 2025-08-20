@@ -439,7 +439,7 @@
         <div class="header">
             <div class="privacy-badge">Privacy-by-Design - Zero-Knowledge Proof Architecture</div>
             <h1>Demo 1.3: Age Verification</h1>
-            <p>Privacy-preserving attribute verification across 8+ industries with 98% data disclosure reduction and GDPR Article 5 compliance</p>
+            <p>Privacy-preserving attribute verification across 8+ industries with GDPR Article 5 compliance</p>
             
             <!-- Progress Indicator -->
             <div class="phase-indicator" id="phaseIndicator">
@@ -529,21 +529,6 @@
                         </div>
                     </div>
 
-                    <div class="privacy-metrics" id="privacyMetrics" style="display: none;">
-                        <h4>Privacy Protection Achievements</h4>
-                        <div class="metric-row">
-                            <span>Data Disclosure Reduction:</span>
-                            <span class="metric-value">98%</span>
-                        </div>
-                        <div class="metric-row">
-                            <span>Cross-Industry Reusability:</span>
-                            <span class="metric-value">94%</span>
-                        </div>
-                        <div class="metric-row">
-                            <span>Customer Privacy Approval:</span>
-                            <span class="metric-value">92%</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -578,13 +563,13 @@
                 </div>
                 
                 <div class="capability">
-                    <h3>📊 98% Data Reduction</h3>
+                    <h3>📊 Privacy Protection</h3>
                     <p>Minimal data exposure compared to traditional verification methods</p>
                 </div>
                 
                 <div class="capability">
                     <h3>🔄 Reusable Verification</h3>
-                    <p>94% verification reusability across different service providers</p>
+                    <p>High verification reusability across different service providers</p>
                 </div>
                 
                 <div class="capability">
@@ -727,7 +712,7 @@
                 ],
                 data: {
                     industries: ['banking', 'gaming', 'e-commerce', 'media', 'healthcare', 'insurance', 'mobility', 'retail'],
-                    reusabilityScore: '94%',
+                    reusabilityScore: 'high',
                     universalCertificate: 'multi_industry_age_cert_456',
                     complianceMapping: 'gdpr-article-5-compliant'
                 }
@@ -807,9 +792,9 @@
                 ],
                 data: {
                     privacyImpact: 'minimal-risk',
-                    dataDisclosureReduction: '98%',
-                    crossIndustryReuse: '94%',
-                    customerPrivacySatisfaction: '92%',
+                    dataDisclosureLevel: 'minimal',
+                    crossIndustryReuse: 'high',
+                    customerPrivacySatisfaction: 'excellent',
                     regulatoryCompliance: 'full-gdpr-compliance',
                     privacyByDesign: 'verified'
                 }
@@ -920,8 +905,8 @@
             } else if (step.id === 9) {
                 newLogs.push({ type: 'info', message: `✓ GDPR Article 5 & 7 Compliance Verified`, timestamp });
             } else if (step.id === 10) {
-                newLogs.push({ type: 'success', message: `✓ Age Verification Completed with 98% Data Reduction`, timestamp });
-                newLogs.push({ type: 'success', message: `✓ 94% Cross-Industry Reusability Achieved`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ Age Verification Completed with Privacy Protection`, timestamp });
+                newLogs.push({ type: 'success', message: `✓ Cross-Industry Reusability Established`, timestamp });
             }
             
             newLogs.push({ type: 'success', message: `✓ Privacy-Preserving Step ${step.id} Complete`, timestamp });

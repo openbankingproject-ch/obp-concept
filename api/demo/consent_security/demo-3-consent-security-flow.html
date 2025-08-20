@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 3: Consent & Security Flow - FAPI 2.0 Advanced</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #253165 0%, #0070C0 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .header h1 {
+            color: #253165;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .security-badge {
+            background: #B469FF;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .demo-controls {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #F85F3D;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #e04e2c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #E5CAFF;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #e2e8f0;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .consent-flow {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .consent-flow h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .security-layers {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeInUp 0.8s ease-out 0.2s;
+        }
+
+        .security-layers h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .consent-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .consent-step.active {
+            background: #f0f9ff;
+            border-left: 4px solid #0070C0;
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .consent-step.completed {
+            background: #dcfce7;
+            border-left: 4px solid #00b02cff;
+            opacity: 1;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: #e5e7eb;
+            color: #6b7280;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .consent-step.active .step-number {
+            background: #0070C0;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .consent-step.completed .step-number {
+            background: #00b02cff;
+            color: white;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #1f2937;
+        }
+
+        .step-description {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .security-layer {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 2px solid #E5CAFF;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .security-layer:hover {
+            border-color: #B469FF;
+            transform: translateY(-2px);
+        }
+
+        .security-layer.active {
+            background: linear-gradient(135deg, #fef3c7 0%, #fefce8 100%);
+            border-color: #FFC000;
+            box-shadow: 0 4px 12px rgba(255, 192, 0, 0.2);
+        }
+
+        .layer-icon {
+            width: 40px;
+            height: 40px;
+            background: #B469FF;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .security-layer.active .layer-icon {
+            background: #FFC000;
+            animation: glow 2s infinite alternate;
+        }
+
+        .layer-title {
+            font-weight: 600;
+            color: #253165;
+            margin-bottom: 8px;
+        }
+
+        .layer-description {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .consent-details {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            margin-top: 20px;
+        }
+
+        .consent-details h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .permission-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .permission-item:last-child {
+            border-bottom: none;
+        }
+
+        .permission-toggle {
+            width: 40px;
+            height: 20px;
+            background: #d1d5db;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .permission-toggle.active {
+            background: #00b02cff;
+        }
+
+        .permission-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .permission-toggle.active::after {
+            transform: translateX(20px);
+        }
+
+        .console {
+            background: #1f2937;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            color: #10b981;
+            font-family: 'Courier New', monospace;
+            grid-column: 1 / -1;
+            animation: fadeInUp 0.8s ease-out 0.4s;
+        }
+
+        .console h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        .console-output {
+            height: 300px;
+            overflow-y: auto;
+            background: #111827;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            animation: slideInLog 0.5s ease-out;
+        }
+
+        .log-timestamp {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .log-info {
+            color: #3b82f6;
+        }
+
+        .log-warning {
+            color: #f59e0b;
+        }
+
+        .log-security {
+            color: #B469FF;
+        }
+
+        .ready-message {
+            color: #6b7280;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLog {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 112, 192, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 4px rgba(0, 112, 192, 0.1);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(255, 192, 0, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(255, 192, 0, 0.8);
+            }
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-button">← Back to Demo Overview</a>
+        
+        <div class="header">
+            <div class="security-badge">FAPI 2.0 Advanced Security</div>
+            <h1>Demo 3: Consent & Security Flow</h1>
+            <p>Comprehensive privacy-by-design with granular consent management and financial-grade API security</p>
+        </div>
+
+        <div class="demo-controls">
+            <div>
+                <label for="speedControl">Demo Speed:</label>
+                <select id="speedControl">
+                    <option value="fast">Fast</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="slow">Slow</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="playDemo()" id="playBtn">
+                    ▶️ Start Consent Flow
+                </button>
+                <button class="btn btn-secondary" onclick="pauseDemo()" id="pauseBtn">
+                    ⏸️ Pause
+                </button>
+                <button class="btn btn-secondary" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Consent Flow Steps -->
+            <div class="consent-flow">
+                <h2>Consent & Authorization Flow</h2>
+                
+                <div id="consentSteps">
+                    <div class="consent-step" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Client Registration & mTLS Setup</div>
+                            <div class="step-description">Establish mutual TLS connection with client certificate validation</div>
+                        </div>
+                    </div>
+
+                    <div class="consent-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Authorization Request (PAR)</div>
+                            <div class="step-description">Pushed Authorization Request with PKCE and consent scope definition</div>
+                        </div>
+                    </div>
+
+                    <div class="consent-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">User Authentication</div>
+                            <div class="step-description">Multi-factor authentication with biometric validation</div>
+                        </div>
+                    </div>
+
+                    <div class="consent-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-title">Granular Consent Collection</div>
+                            <div class="step-description">Field-level permissions with clear purpose specification</div>
+                        </div>
+                    </div>
+
+                    <div class="consent-step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <div class="step-title">DPoP Token Binding</div>
+                            <div class="step-description">Proof-of-possession token generation and binding</div>
+                        </div>
+                    </div>
+
+                    <div class="consent-step" data-step="6">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <div class="step-title">Consent Enforcement</div>
+                            <div class="step-description">Real-time permission validation and data access control</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="consent-details" id="consentDetails">
+                    <h4>Current Permissions</h4>
+                    <div class="permission-item">
+                        <span>Identity Data Access</span>
+                        <div class="permission-toggle" onclick="togglePermission(this)"></div>
+                    </div>
+                    <div class="permission-item">
+                        <span>Financial Data Access</span>
+                        <div class="permission-toggle" onclick="togglePermission(this)"></div>
+                    </div>
+                    <div class="permission-item">
+                        <span>Transaction History</span>
+                        <div class="permission-toggle" onclick="togglePermission(this)"></div>
+                    </div>
+                    <div class="permission-item">
+                        <span>Risk Profile Data</span>
+                        <div class="permission-toggle" onclick="togglePermission(this)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Layers -->
+            <div class="security-layers">
+                <h2>FAPI 2.0 Security Layers</h2>
+                
+                <div class="security-layer" data-layer="mtls">
+                    <div class="layer-icon">🔐</div>
+                    <div class="layer-title">Mutual TLS (mTLS)</div>
+                    <div class="layer-description">Certificate-based client authentication with bi-directional verification</div>
+                </div>
+
+                <div class="security-layer" data-layer="dpop">
+                    <div class="layer-icon">🔑</div>
+                    <div class="layer-title">DPoP Token Binding</div>
+                    <div class="layer-description">Proof-of-possession tokens bound to client certificates</div>
+                </div>
+
+                <div class="security-layer" data-layer="par">
+                    <div class="layer-icon">📋</div>
+                    <div class="layer-title">Pushed Authorization Request</div>
+                    <div class="layer-description">Secure parameter transmission with request validation</div>
+                </div>
+
+                <div class="security-layer" data-layer="consent">
+                    <div class="layer-icon">✅</div>
+                    <div class="layer-title">Granular Consent</div>
+                    <div class="layer-description">Field-level permissions with purpose binding and lifecycle management</div>
+                </div>
+
+                <div class="security-layer" data-layer="privacy">
+                    <div class="layer-icon">🛡️</div>
+                    <div class="layer-title">Privacy by Design</div>
+                    <div class="layer-description">Data minimization with GDPR Article 7 compliance</div>
+                </div>
+            </div>
+
+            <!-- Console Output -->
+            <div class="console">
+                <h2>Security & Consent Log</h2>
+                
+                <div class="console-output" id="consoleOutput">
+                    <div class="ready-message">Ready to start consent and security flow demonstration...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let isPlaying = false;
+        let playInterval;
+        let logs = [];
+
+        const consentSteps = [
+            {
+                step: 1,
+                title: "mTLS Connection Establishment",
+                security_layer: "mtls",
+                actions: [
+                    "Validating client certificate",
+                    "Establishing mutual TLS connection",
+                    "Verifying certificate chain",
+                    "Completing handshake protocol"
+                ],
+                logs: [
+                    { type: 'security', message: 'Client certificate received and validated' },
+                    { type: 'security', message: 'mTLS connection established successfully' },
+                    { type: 'info', message: 'Certificate chain verified against trusted CA' }
+                ]
+            },
+            {
+                step: 2,
+                title: "Pushed Authorization Request",
+                security_layer: "par",
+                actions: [
+                    "Creating PKCE challenge",
+                    "Preparing authorization request",
+                    "Pushing request to authorization server",
+                    "Receiving request URI"
+                ],
+                logs: [
+                    { type: 'info', message: 'PKCE code challenge generated' },
+                    { type: 'security', message: 'Authorization request pushed securely' },
+                    { type: 'success', message: 'Request URI issued: urn:ietf:params:oauth:request_uri:6esc_1l' }
+                ]
+            },
+            {
+                step: 3,
+                title: "User Authentication",
+                security_layer: "privacy",
+                actions: [
+                    "Initiating user authentication",
+                    "Biometric verification",
+                    "Multi-factor authentication",
+                    "Session establishment"
+                ],
+                logs: [
+                    { type: 'info', message: 'User authentication initiated' },
+                    { type: 'success', message: 'Biometric verification completed' },
+                    { type: 'success', message: 'MFA challenge passed' }
+                ]
+            },
+            {
+                step: 4,
+                title: "Granular Consent Collection",
+                security_layer: "consent",
+                actions: [
+                    "Presenting consent interface",
+                    "Collecting granular permissions",
+                    "Validating consent decisions",
+                    "Recording consent proof"
+                ],
+                logs: [
+                    { type: 'info', message: 'Consent interface presented to user' },
+                    { type: 'success', message: 'Granular permissions collected' },
+                    { type: 'success', message: 'Consent recorded with digital signature' }
+                ]
+            },
+            {
+                step: 5,
+                title: "DPoP Token Generation",
+                security_layer: "dpop",
+                actions: [
+                    "Generating proof-of-possession key",
+                    "Creating DPoP proof",
+                    "Binding token to certificate",
+                    "Issuing access token"
+                ],
+                logs: [
+                    { type: 'security', message: 'DPoP proof-of-possession key generated' },
+                    { type: 'security', message: 'Access token bound to client certificate' },
+                    { type: 'success', message: 'Bearer token issued with DPoP binding' }
+                ]
+            },
+            {
+                step: 6,
+                title: "Consent Enforcement",
+                security_layer: "consent",
+                actions: [
+                    "Validating access permissions",
+                    "Enforcing data minimization",
+                    "Logging access requests",
+                    "Providing audit trail"
+                ],
+                logs: [
+                    { type: 'info', message: 'Access permissions validated against consent' },
+                    { type: 'success', message: 'Data minimization enforced' },
+                    { type: 'info', message: 'Audit trail generated for compliance' }
+                ]
+            }
+        ];
+
+        function getSpeed() {
+            const speed = document.getElementById('speedControl').value;
+            switch(speed) {
+                case 'fast': return 1000;
+                case 'slow': return 4000;
+                default: return 2000;
+            }
+        }
+
+        function addLog(entry) {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.push({...entry, timestamp});
+            updateConsole();
+        }
+
+        function updateConsole() {
+            const consoleOutput = document.getElementById('consoleOutput');
+            
+            if (logs.length === 0) {
+                consoleOutput.innerHTML = '<div class="ready-message">Ready to start consent and security flow demonstration...</div>';
+                return;
+            }
+            
+            consoleOutput.innerHTML = '';
+            logs.forEach(log => {
+                const logDiv = document.createElement('div');
+                logDiv.className = `log-entry log-${log.type}`;
+                logDiv.innerHTML = `<span class="log-timestamp">[${log.timestamp}]</span> ${log.message}`;
+                consoleOutput.appendChild(logDiv);
+            });
+            
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function updateSecurityLayers(activeLayer) {
+            document.querySelectorAll('.security-layer').forEach(layer => {
+                layer.classList.remove('active');
+            });
+            
+            if (activeLayer) {
+                const layerElement = document.querySelector(`[data-layer="${activeLayer}"]`);
+                if (layerElement) {
+                    layerElement.classList.add('active');
+                }
+            }
+        }
+
+        function updateConsentSteps(step) {
+            document.querySelectorAll('.consent-step').forEach(stepEl => {
+                const stepNum = parseInt(stepEl.dataset.step);
+                stepEl.classList.remove('active', 'completed');
+                
+                if (stepNum === step) {
+                    stepEl.classList.add('active');
+                } else if (stepNum < step) {
+                    stepEl.classList.add('completed');
+                }
+            });
+        }
+
+        function executeStep(stepIndex) {
+            if (stepIndex >= consentSteps.length) return;
+            
+            const step = consentSteps[stepIndex];
+            updateConsentSteps(step.step);
+            updateSecurityLayers(step.security_layer);
+            
+            // Add step logs
+            step.logs.forEach((log, index) => {
+                setTimeout(() => {
+                    addLog(log);
+                }, index * 300);
+            });
+        }
+
+        function playDemo() {
+            if (isPlaying) return;
+            
+            isPlaying = true;
+            document.getElementById('playBtn').disabled = true;
+            
+            playInterval = setInterval(() => {
+                if (currentStep < consentSteps.length) {
+                    executeStep(currentStep);
+                    currentStep++;
+                } else {
+                    pauseDemo();
+                }
+            }, getSpeed());
+        }
+
+        function pauseDemo() {
+            isPlaying = false;
+            document.getElementById('playBtn').disabled = false;
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+            }
+        }
+
+        function resetDemo() {
+            pauseDemo();
+            currentStep = 0;
+            logs = [];
+            updateConsole();
+            updateConsentSteps(0);
+            updateSecurityLayers(null);
+        }
+
+        function togglePermission(element) {
+            element.classList.toggle('active');
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            updateConsole();
+            updateConsentSteps(0);
+        });
+    </script>
+</body>
+</html>

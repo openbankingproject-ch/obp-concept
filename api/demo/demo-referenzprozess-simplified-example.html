@@ -48,29 +48,53 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             margin-bottom: 30px;
+            animation: slideInRight 0.8s ease-out;
         }
 
         .phase {
             padding: 15px;
             border-radius: 8px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             cursor: pointer;
+            transform: scale(1);
         }
 
         .phase.current {
             background: #3b82f6;
             color: white;
+            transform: scale(1.05);
+            animation: phaseActive 2s infinite alternate;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
 
         .phase.completed {
             background: #10b981;
             color: white;
+            transform: scale(1.02);
+            animation: phaseCompleted 0.8s ease-out;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
         }
 
         .phase.pending {
             background: #e5e7eb;
             color: #6b7280;
+            opacity: 0.8;
+        }
+
+        .phase:hover {
+            transform: scale(1.03);
+        }
+
+        @keyframes phaseActive {
+            0%, 100% { transform: scale(1.05); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+            50% { transform: scale(1.08); box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); }
+        }
+
+        @keyframes phaseCompleted {
+            0% { transform: scale(1.02); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.2); }
+            100% { transform: scale(1.02); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
         }
 
         .phase-title {
@@ -149,6 +173,24 @@
             margin-left: auto;
             color: #6b7280;
             font-size: 0.9rem;
+            padding: 8px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .step-counter.updating {
+            background: rgba(245, 158, 11, 0.2);
+            color: #d97706;
+            transform: scale(1.05);
+            animation: stepUpdate 0.5s ease-out;
+        }
+
+        @keyframes stepUpdate {
+            0% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1.05); }
         }
 
         .main-content {
@@ -217,11 +259,28 @@
             margin-bottom: 8px;
             padding: 8px;
             border-radius: 6px;
-            transition: background 0.2s ease;
+            transition: all 0.3s ease;
+            transform: translateX(0);
+            opacity: 1;
         }
 
         .action-item:hover {
-            background: #f9fafb;
+            background: #f0f9ff;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        }
+
+        .action-item.processing {
+            background: #fef3c7;
+            animation: pulse 2s infinite;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+        }
+
+        .action-item.completed {
+            background: #dcfce7;
+            transform: translateX(0);
+            animation: completeBounce 0.6s ease-out;
         }
 
         .action-dot {
@@ -230,6 +289,45 @@
             background: #3b82f6;
             border-radius: 50%;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .action-item.processing .action-dot {
+            background: #f59e0b;
+            animation: dotPulse 1.5s infinite;
+            transform: scale(1.3);
+        }
+
+        .action-item.completed .action-dot {
+            background: #10b981;
+            transform: scale(1.2);
+        }
+
+        /* Keyframe Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.02); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        @keyframes completeBounce {
+            0% { transform: scale(1.02); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1.3); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            50% { transform: scale(1.5); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1); }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .data-display {
@@ -237,6 +335,28 @@
             padding: 20px;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
+            transition: all 0.4s ease;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .data-display.updating {
+            background: #fefce8;
+            border-color: #f59e0b;
+            transform: scale(1.02);
+        }
+
+        .step-details {
+            transition: all 0.5s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .step-details.transitioning {
+            transform: translateY(-10px);
+            opacity: 0.8;
+        }
+
+        #stepContent {
+            animation: slideInRight 0.6s ease-out;
         }
 
         .data-display h4 {
@@ -259,6 +379,12 @@
             padding: 30px;
             color: #10b981;
             font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .console:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .console h2 {
@@ -281,6 +407,38 @@
             margin-bottom: 8px;
             font-size: 0.85rem;
             line-height: 1.4;
+            animation: logSlideIn 0.5s ease-out;
+            transform: translateX(0);
+        }
+
+        .log-entry.new-entry {
+            animation: logTypeIn 0.8s ease-out;
+        }
+
+        @keyframes logSlideIn {
+            from { 
+                transform: translateX(-10px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateX(0); 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes logTypeIn {
+            from { 
+                transform: translateX(-10px);
+                opacity: 0;
+                max-width: 0;
+                overflow: hidden;
+            }
+            to { 
+                transform: translateX(0);
+                opacity: 1;
+                max-width: 100%;
+                overflow: visible;
+            }
         }
 
         .log-timestamp {
@@ -693,22 +851,49 @@
         function updateStepDisplay() {
             const step = demoSteps[currentStep];
             
-            document.getElementById('phaseBadge').textContent = step.phase;
-            document.getElementById('stepTitle').textContent = `Step ${step.id}: ${step.title}`;
-            document.getElementById('stepDescription').textContent = step.description;
-            document.getElementById('currentStepNum').textContent = step.id;
+            // Add transition effect
+            const stepDetails = document.querySelector('.step-details');
+            const stepCounter = document.querySelector('.step-counter');
+            const dataDisplay = document.querySelector('.data-display');
             
-            // Update actions list
+            stepDetails.classList.add('transitioning');
+            stepCounter.classList.add('updating');
+            dataDisplay.classList.add('updating');
+            
+            setTimeout(() => {
+                document.getElementById('phaseBadge').textContent = step.phase;
+                document.getElementById('stepTitle').textContent = `Step ${step.id}: ${step.title}`;
+                document.getElementById('stepDescription').textContent = step.description;
+                document.getElementById('currentStepNum').textContent = step.id;
+                
+                // Remove transition classes
+                setTimeout(() => {
+                    stepDetails.classList.remove('transitioning');
+                    stepCounter.classList.remove('updating');
+                    dataDisplay.classList.remove('updating');
+                }, 100);
+            }, 200);
+            
+            // Update actions list with staggered animations
             const actionsList = document.getElementById('actionsList');
             actionsList.innerHTML = '';
-            step.actions.forEach(action => {
+            step.actions.forEach((action, index) => {
                 const actionDiv = document.createElement('div');
                 actionDiv.className = 'action-item';
+                actionDiv.style.opacity = '0';
+                actionDiv.style.transform = 'translateX(-20px)';
                 actionDiv.innerHTML = `
                     <div class="action-dot"></div>
                     <span>${action}</span>
                 `;
                 actionsList.appendChild(actionDiv);
+                
+                // Staggered animation
+                setTimeout(() => {
+                    actionDiv.style.transition = 'all 0.4s ease';
+                    actionDiv.style.opacity = '1';
+                    actionDiv.style.transform = 'translateX(0)';
+                }, index * 100 + 300);
             });
             
             // Update sample data
@@ -825,11 +1010,26 @@
 
         function nextStep() {
             if (currentStep < demoSteps.length - 1) {
-                currentStep++;
-                executeStep();
-                updateStepDisplay();
-                updatePhaseIndicator();
-                updateButtons();
+                // Animate action processing for current step
+                const actionItems = document.querySelectorAll('.action-item');
+                actionItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add('processing');
+                        setTimeout(() => {
+                            item.classList.remove('processing');
+                            item.classList.add('completed');
+                        }, 800);
+                    }, index * 200);
+                });
+                
+                // Move to next step after processing animations
+                setTimeout(() => {
+                    currentStep++;
+                    executeStep();
+                    updateStepDisplay();
+                    updatePhaseIndicator();
+                    updateButtons();
+                }, actionItems.length * 200 + 1000);
             }
             
             if (currentStep >= demoSteps.length - 1) {

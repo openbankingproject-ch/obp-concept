@@ -66,9 +66,15 @@
 
         .key-principles {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
             margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .key-principles {
+                grid-template-columns: 1fr;
+            }
         }
 
         .principle {
@@ -103,7 +109,7 @@
 
         .demos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
         }
 
@@ -169,30 +175,6 @@
             line-height: 1.6;
         }
 
-        .demo-metrics {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: #f1f5f9;
-            border-radius: 10px;
-        }
-
-        .metric {
-            text-align: center;
-        }
-
-        .metric-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #00b02cff;
-        }
-
-        .metric-label {
-            font-size: 0.8rem;
-            color: #64748b;
-            font-weight: 500;
-        }
 
         .demo-features {
             margin-bottom: 25px;
@@ -315,15 +297,6 @@
             }
         }
 
-        .duration-badge {
-            background: #FFC000;
-            color: #253165;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-left: 10px;
-        }
     </style>
 </head>
 <body>
@@ -367,24 +340,10 @@
                     <div class="demo-badge core">Core</div>
                     <div class="demo-header">
                         <div class="demo-title">Universal 10-Step Reference Process</div>
-                        <div class="demo-subtitle">Industry-Agnostic Foundation <span class="duration-badge">5 min</span></div>
+                        <div class="demo-subtitle">Industry-Agnostic Foundation</div>
                     </div>
                     <div class="demo-description">
-                        Demonstrates the universal 10-step framework that works across all industries and ecosystems, providing the foundational process for customer onboarding with 67% cross-industry efficiency improvement.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">67%</div>
-                            <div class="metric-label">Efficiency</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">10</div>
-                            <div class="metric-label">Steps</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">All</div>
-                            <div class="metric-label">Industries</div>
-                        </div>
+                        Demonstrates the universal 10-step framework that works across all industries and ecosystems, providing the foundational process for customer onboarding.
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -399,7 +358,7 @@
                         <a href="demo-referenzprozess-simplified-example.html" class="btn btn-primary">
                             ▶️ Launch Demo
                         </a>
-                        <a href="referenzprozess/Demo 1: Referenzprozess description.md" class="btn btn-secondary">
+                        <a href="referenzprozess/Demo-1-Referenzprozess-description.html" class="btn btn-secondary">
                             📄 Details
                         </a>
                     </div>
@@ -410,24 +369,10 @@
                     <div class="demo-badge core">Core</div>
                     <div class="demo-header">
                         <div class="demo-title">Data Onboarding & Maintenance</div>
-                        <div class="demo-subtitle">Modular "Blöckli" Architecture <span class="duration-badge">6 min</span></div>
+                        <div class="demo-subtitle">Modular "Blöckli" Architecture</div>
                     </div>
                     <div class="demo-description">
-                        Showcases comprehensive data lifecycle management with 94% efficiency improvement through standardized, cross-industry reusable data building blocks.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">94%</div>
-                            <div class="metric-label">Efficiency</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">€139</div>
-                            <div class="metric-label">Savings</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">GDPR</div>
-                            <div class="metric-label">Compliant</div>
-                        </div>
+                        Showcases comprehensive data lifecycle management through standardized, cross-industry reusable data building blocks.
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -439,10 +384,10 @@
                         </ul>
                     </div>
                     <div class="demo-actions">
-                        <a href="#" class="btn btn-primary" onclick="alert('Demo coming soon - HTML version in development')">
-                            🚧 Coming Soon
+                        <a href="data_onboarding/demo-2-data-onboarding-maintenance.html" class="btn btn-primary">
+                            ▶️ Launch Demo
                         </a>
-                        <a href="data_onboarding/Demo 2: Daten Onboarding und Pflege description.md" class="btn btn-secondary">
+                        <a href="data_onboarding/Demo-2-Data-Onboarding-description.html" class="btn btn-secondary">
                             📄 Details
                         </a>
                     </div>
@@ -453,24 +398,10 @@
                     <div class="demo-badge core">Core</div>
                     <div class="demo-header">
                         <div class="demo-title">Consent & Security Flow</div>
-                        <div class="demo-subtitle">FAPI 2.0 Advanced Security <span class="duration-badge">5 min</span></div>
+                        <div class="demo-subtitle">FAPI 2.0 Advanced Security</div>
                     </div>
                     <div class="demo-description">
                         Demonstrates FAPI 2.0 Advanced security profile with mTLS certificate-bound authentication, DPoP proof-of-possession, and comprehensive privacy-by-design consent management.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">FAPI 2.0</div>
-                            <div class="metric-label">Security</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">mTLS</div>
-                            <div class="metric-label">Auth</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">Real-time</div>
-                            <div class="metric-label">Consent</div>
-                        </div>
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -482,10 +413,10 @@
                         </ul>
                     </div>
                     <div class="demo-actions">
-                        <a href="#" class="btn btn-primary" onclick="alert('Demo coming soon - HTML version in development')">
-                            🚧 Coming Soon
+                        <a href="consent_security/demo-3-consent-security-flow.html" class="btn btn-primary">
+                            ▶️ Launch Demo
                         </a>
-                        <a href="consent_security/Demo 3: Consent and Security Flow description.md" class="btn btn-secondary">
+                        <a href="consent_security/Demo 3: Consent and Security Flow description.html" class="btn btn-secondary">
                             📄 Details
                         </a>
                     </div>
@@ -502,24 +433,10 @@
                     <div class="demo-badge use-case">Use Case</div>
                     <div class="demo-header">
                         <div class="demo-title">Banking Account Opening</div>
-                        <div class="demo-subtitle">Zielbild 1: Kundenbeziehungseröffnung <span class="duration-badge">4 min</span></div>
+                        <div class="demo-subtitle">Zielbild 1: Kundenbeziehungseröffnung</div>
                     </div>
                     <div class="demo-description">
-                        Showcases 67% time reduction through Zielbild 1 direct customer relationship model with Swiss API-based banking account opening compared to traditional manual processes.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">67%</div>
-                            <div class="metric-label">Time Saved</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">€156</div>
-                            <div class="metric-label">Cost Saved</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">9.2/10</div>
-                            <div class="metric-label">Satisfaction</div>
-                        </div>
+                        Showcases Zielbild 1 direct customer relationship model with Swiss API-based banking account opening compared to traditional manual processes.
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -534,7 +451,7 @@
                         <a href="referenzprozess/use-cases/demo-1.1-kundenbeziehungseroeffnung.html" class="btn btn-primary">
                             ▶️ Launch Demo
                         </a>
-                        <a href="referenzprozess/use-cases/Demo 1.1: Use Case Kundenbeziehungseröffnung description.md" class="btn btn-secondary">
+                        <a href="referenzprozess/use-cases/Demo-1.1-Banking-Account-Opening-description.html" class="btn btn-secondary">
                             📄 Details
                         </a>
                     </div>
@@ -545,24 +462,10 @@
                     <div class="demo-badge use-case">Use Case</div>
                     <div class="demo-header">
                         <div class="demo-title">Customer Re-Identification</div>
-                        <div class="demo-subtitle">Trust Network Data Reuse <span class="duration-badge">4 min</span></div>
+                        <div class="demo-subtitle">Trust Network Data Reuse</div>
                     </div>
                     <div class="demo-description">
-                        Demonstrates 85% efficiency improvement through secure identity data reuse across trusted providers with GwG-compliant cross-provider data transfer.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">85%</div>
-                            <div class="metric-label">Efficiency</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">€76</div>
-                            <div class="metric-label">Savings</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">9.4/10</div>
-                            <div class="metric-label">Satisfaction</div>
-                        </div>
+                        Demonstrates secure identity data reuse across trusted providers with GwG-compliant cross-provider data transfer.
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -588,24 +491,10 @@
                     <div class="demo-badge use-case">Use Case</div>
                     <div class="demo-header">
                         <div class="demo-title">Age Verification</div>
-                        <div class="demo-subtitle">Privacy-Preserving Cross-Industry <span class="duration-badge">5 min</span></div>
+                        <div class="demo-subtitle">Privacy-Preserving Cross-Industry</div>
                     </div>
                     <div class="demo-description">
-                        Showcases privacy-preserving attribute verification using zero-knowledge proofs across 8+ industries without identity disclosure, achieving 98% data disclosure reduction.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">98%</div>
-                            <div class="metric-label">Data Reduced</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">8+</div>
-                            <div class="metric-label">Industries</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">92%</div>
-                            <div class="metric-label">Privacy Approval</div>
-                        </div>
+                        Showcases privacy-preserving attribute verification using zero-knowledge proofs across multiple industries without identity disclosure.
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -631,24 +520,10 @@
                     <div class="demo-badge use-case">Use Case</div>
                     <div class="demo-header">
                         <div class="demo-title">EVV Lifecycle Management</div>
-                        <div class="demo-subtitle">Wealth Management Integration <span class="duration-badge">5 min</span></div>
+                        <div class="demo-subtitle">Wealth Management Integration</div>
                     </div>
                     <div class="demo-description">
-                        Demonstrates integrated customer lifecycle management for External Wealth Management clients with 78% efficiency improvement and real-time portfolio synchronization.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">78%</div>
-                            <div class="metric-label">Efficiency</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">255min</div>
-                            <div class="metric-label">Time Saved</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">9.6/10</div>
-                            <div class="metric-label">Client Satisfaction</div>
-                        </div>
+                        Demonstrates integrated customer lifecycle management for External Wealth Management clients with real-time portfolio synchronization.
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -680,24 +555,10 @@
                     <div class="demo-badge quality">Quality</div>
                     <div class="demo-header">
                         <div class="demo-title">Verification Process</div>
-                        <div class="demo-subtitle">4-Layer Testing Strategy <span class="duration-badge">4 min</span></div>
+                        <div class="demo-subtitle">4-Layer Testing Strategy</div>
                     </div>
                     <div class="demo-description">
-                        Showcases comprehensive 4-layer testing strategy with community-driven validation and >95% test coverage for production readiness certification.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">>95%</div>
-                            <div class="metric-label">Coverage</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">25+</div>
-                            <div class="metric-label">Experts</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">4</div>
-                            <div class="metric-label">Test Layers</div>
-                        </div>
+                        Showcases comprehensive 4-layer testing strategy with community-driven validation for production readiness certification.
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -709,10 +570,10 @@
                         </ul>
                     </div>
                     <div class="demo-actions">
-                        <a href="#" class="btn btn-primary" onclick="alert('Demo coming soon - HTML version in development')">
-                            🚧 Coming Soon
+                        <a href="verification/demo-4-verification-process.html" class="btn btn-primary">
+                            ▶️ Launch Demo
                         </a>
-                        <a href="verification/Demo 4: Verification Process description.md" class="btn btn-secondary">
+                        <a href="verification/Demo 4: Verification Process description.html" class="btn btn-secondary">
                             📄 Details
                         </a>
                     </div>
@@ -723,24 +584,10 @@
                     <div class="demo-badge quality">MVP</div>
                     <div class="demo-header">
                         <div class="demo-title">MVP Implementation</div>
-                        <div class="demo-subtitle">Production-Ready Core <span class="duration-badge">3 min</span></div>
+                        <div class="demo-subtitle">Production-Ready Core</div>
                     </div>
                     <div class="demo-description">
-                        Demonstrates Zielbild 1 MVP implementation with architectural distinction between Basisdaten and Erweiterte Daten processing for 0-3 month time-to-market.
-                    </div>
-                    <div class="demo-metrics">
-                        <div class="metric">
-                            <div class="metric-value">0-3</div>
-                            <div class="metric-label">Months</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">67%</div>
-                            <div class="metric-label">Efficiency</div>
-                        </div>
-                        <div class="metric">
-                            <div class="metric-value">Zielbild 1</div>
-                            <div class="metric-label">Direct</div>
-                        </div>
+                        Demonstrates Zielbild 1 MVP implementation with architectural distinction between Basisdaten and Erweiterte Daten processing.
                     </div>
                     <div class="demo-features">
                         <h4>Key Features:</h4>
@@ -752,10 +599,10 @@
                         </ul>
                     </div>
                     <div class="demo-actions">
-                        <a href="#" class="btn btn-primary" onclick="alert('Demo coming soon - HTML version in development')">
-                            🚧 Coming Soon
+                        <a href="MVP/demo-5-mvp-implementation.html" class="btn btn-primary">
+                            ▶️ Launch Demo
                         </a>
-                        <a href="MVP/Demo 5: MVP Implementation description.md" class="btn btn-secondary">
+                        <a href="MVP/Demo 5: MVP Implementation description.html" class="btn btn-secondary">
                             📄 Details
                         </a>
                     </div>
@@ -782,6 +629,22 @@
                 <div class="arch-item">
                     <h4>Data Architecture</h4>
                     <p>Modular "Blöckli" system with Basisdaten + Erweiterte Daten</p>
+                </div>
+            </div>
+            
+            <!-- GitHub Repository Section -->
+            <div style="margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 10px; text-align: center;">
+                <h3 style="color: #253165; margin-bottom: 15px;">📂 GitHub Repository</h3>
+                <p style="color: #64748b; margin-bottom: 15px; font-size: 0.95rem;">
+                    Access the complete alpha version, vision & roadmap, conclusions, and technical documentation:
+                </p>
+                <div style="display: inline-flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                    <a href="https://github.com/your-org/obp-concept" style="background: #F85F3D; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                        🚀 View Repository
+                    </a>
+                    <a href="https://github.com/your-org/obp-concept/blob/main/README.md" style="background: #253165; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                        📋 Documentation
+                    </a>
                 </div>
             </div>
         </div>
