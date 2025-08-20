@@ -30,6 +30,8 @@ Der Open API Kundenbeziehung Referenzprozess definiert einen standardisierten, b
 
 Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compliance-by-Design Prinzipien. Der Fokus liegt auf einer selbstbestimmten digitalen Kundenbeziehung mit messbaren Effizienzsteigerungen.
 
+![Branchenunabhängige Serviceerschließung Ecosystem](Resources/images/Referenzprozess%20Grafiken/Branchenunabh%C3%A4ngige%20Serviceerschlie%C3%9Fung%20Ecosystem.png)
+
 **Zentrale Erkenntnisse:**
 - Modulare Prozessbausteine ermöglichen branchenübergreifende Wiederverwendung
 - 10-Stufen Framework deckt kompletten Customer Lifecycle ab
@@ -64,8 +66,6 @@ Der Referenzprozess gliedert sich in vier thematische Phasen mit je 2-3 Einzelst
 - Stufe 9: Vertragsunterzeichnung
 - Stufe 10: Metadatenerfassung, Systemverarbeitung und finale Verteilung
 
-
-
 Der lineare Ablauf ermöglicht eine systematische Datenerfassung mit integrierten Qualitäts- und Compliance-Checkpoints.
 
 ### Modulare "Blöckli"-Architektur
@@ -91,6 +91,8 @@ Die modulare Architektur organisiert den Referenzprozess in vier thematische Bl�
 - Vertragsabschluss-Baustein: AGB Zustimmung, Risiko-Disclaimer
 - Signatur-Baustein: Digitale Signatur, Qualified Signature
 - Metadaten-und-Verteilungs-Baustein: Dokumentenarchivierung, Prozessabschluss, Systemintegration
+
+![Wiederverwendung von Datenbausteinen](Resources/images/Referenzprozess%20Grafiken/Wiederverwendung%20Datenbausteine.png)
 
 **Sequenzielle Verkettung:** Jeder Baustein baut auf den Ergebnissen des vorhergehenden auf, wodurch eine logische Progression von der Initialisierung bis zur finalen Kontoeröffnung gewährleistet wird.
 

@@ -38,6 +38,8 @@ Phase 2 (ab 07/26)
 
 
 
+![Aufbau Customer Onboarding: Ziel und 4 Stufen](documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/Resources/images/Anforderungen%20Grafiken/Aufbau%20Customer%20Onboarding%20Ziel%20und%204%20Stufen.png)
+
 ---
 
 ## Master Implementierungs-Timeline

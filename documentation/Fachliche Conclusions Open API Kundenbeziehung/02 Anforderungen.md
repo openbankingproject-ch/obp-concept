@@ -37,6 +37,8 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 
 ### Die 5 Zielbilder der digitalen Kundennähe
 
+![Zielbilder Übersicht](Resources/images/Anforderungen%20Grafiken/Zielbilder%20%C3%9Cbersicht%20Grafik.png)
+
 #### **Zielbild 1: Direkt (Klassisch)**
 
 **Konzeptionelle Struktur:** Direkte Kundenbeziehung zwischen Kunde und Finanzdienstleister ohne Intermediäre.

@@ -52,6 +52,8 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 - **SFTI Mortgage API** (Swiss Fintech Innovation)
 - **Singapore Financial Data Exchange** (MAS/SNDGG)
 
+![Globale Open Banking Initiativen – Übersicht](./Resources/images/Marktanalyse%20Grafiken/World%20Map%20Visual.png)
+
 ---
 
 | Initiative                         | Owner                                                                         | Land/Region            |
@@ -143,6 +145,9 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 ---
 
 ## Sechs zentrale Key Takeaways
+
+![Key Takeaways Marktanalyse](./Resources/images/Marktanalyse%20Grafiken/Key%20Takeaways%20Marktanalyse.png)
+
 
 ### 1. Technologische Standards sind nicht global vereinheitlicht
 
