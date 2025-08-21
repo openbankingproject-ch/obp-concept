@@ -17,56 +17,43 @@
 ## Tasks
 **Context Demo**: Fix the following issues in the context demo:
 [] General Improvements:
-  - python script serve_demo.py is buggy - browser freezes and sometimes does not load the demo at all
-  - ensure that cleanup of the demo is done properly after each run
-  - decrease margins on the left and right side of the demo to give more space to the content
-  - add a button to run the entire demo (go through all steps at a reasonable speed), a pause button and a reset button to reset the demo to the initial state. 
-  - changes in font sizes for the following titles/subtitles:
-    - 'Open API Kundenbeziehung Demo Alpha Version 1.0' a lot smaller and aligned to the left
-    - 'Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow' a bit smaller and next to the title 'Open API Kundenbeziehung Demo Alpha Version 1.0' 
+  - logo in loading page needs to be waaay bigger
+  - increase maximum width of the demo to 1800px
+  - header: divide text into two columns.
+    - left column: 'Open API Kundenbeziehung Demo Alpha Version 1.0' (left aligned)
+    - right column: 'Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow' (center aligned)
+  - change font to Verdana and make text bold for the following section titles:
     - '10-Stufen Referenzprozess' a lot smaller, but bold
     - 'Generischer Consent Flow' a lot smaller, but bold
     - 'Daten Onboarding Prozess' keep same font size, but bold
-  - change font of demo:
-    - for everything, unless specified otherwise, use 'Verdana'
-    - for titles and subtitles listed below use 'Courier New'
-      - 'Open API Kundenbeziehung Demo Alpha Version 1.0'
-      - 'Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow'
-      - '10-Stufen Referenzprozess'
-      - 'Generischer Consent Flow'
-      - 'Daten Onboarding Prozess'
+  - background: mute graphic and overlay with a 50% opacity light grey color
   
 [] Referenzprozess:
   - Numbering of the 10 main steps: Add the numbering to the Step names (like "1. Initialisierung") instead of the current numbering in the boxes
-  - with the new numbering, the icons (pictograms) can be sized up a little bit to make them more visible
-  - 4 Phases: Instead of creating "background" boxes, add a bracket above the steps to indicate the 4 phases of the Referenzprozess like this:
-    |---Phase 1: Setup und Produktauswahl---|
-    [1. Initialisierung]  [2. Identifikation]
-  - boxes of the 10 main steps need to be the same size: try to make them smaller so that they fit on one screen, change text to "Selbst- deklaration" so that it can be displayed on two lines and the box is smaller
+  - size up icons (pictograms) a little bit to make them more visible
+  - 4 Phases: the brackets look terrible, replace with just simple boxes containing the phase names (not rounded corners) and span them to the same width as the corresponding steps for that phase
+  - boxes of the 10 main steps need to be the same width and height!! all uniform!
+  - add a small margin at the bottom of each step box to make it more readable
   - colors of the boxes: 
     - Not started: keep as is
     - In progress: 
       - border: #F85F3D and make border thicker
       - fill: #FA9F8A
     - Completed: 
-      - border: #0070C0
-      - fill: #73c3fcff
+      - border: #4cb867ff
+      - fill: white
 
 [] Consent Flow:
-  - **IMPORTANT**: verify that the sequence diagram of the demo matches the sequence diagram in the documentation **exactly** ('Dokumentation Fachliche Perspektive/Fachliche Conclusions Open API Kundenbeziehung/Resources/graphics/06-consent-security/generic-consent-flow.mmd') and that each step is exactly as in the sequence diagram generic-consent-flow.mmd!!!!!
+  - remove dark blue header box around the participants
+  - no rounded cordners please, all boxes should have sharp corners
   - map the appearance of the steps in the Consent Flow to the 10 main steps of the Referenzprozess not the 4 phases of the Referenzprozess
-  - do not start the entire flow again with each step of the Referenzprozess, but rather continue from the last step and leave elements that are already completed in the previous steps
-  - add more vertical space between the steps to make it more readable (and more space between the participants and the animated sequence diagram, the text of the first arrow cannot be read)
-  - like in the sequece diagram generic-consent-flow.mmd, the boxes defining start of one of the 4 phases should be in front of the sequence diagram, and divide the steps of the Consent Flow (arrows for steps shouldn't overlap with the boxes)
-  - add the information box about granular consent options, just like in the sequence diagram generic-consent-flow.mmd, but make it smaller and place it on the right side of the Consent Flow
-  - phase box colors: (fill, no border)
-    - not started: #E5CAFF
-    - in progress: #f3765aff
-    - completed: #73c3fcff
+  - do not start the entire flow again when moving on to the next step of the Referenzprozess: the sequence diagram should slowly become complete as the steps of the Consent Flow are completed and never be reset in between!
+  - fix spacing between steps so that the entire diagram is readable and visible (just a little bit more space between the steps)
+  - add the information box about granular consent options, just like in the sequence diagram generic-consent-flow.mmd, but make it smaller and place it on the left side of the Consent Flow centered to the same height as the step "grant specific consents"
   - arrow colors:
     - not started: do not display arrows for steps that are not started yet
     - in progress: #F85F3D
-    - completed: #73c3fcff
+    - completed: choose color from colors.txt in the section "extra colors for code elements" that match the step it is connected to
   - information boxes above arrows:
     - not started: do not display information boxes for steps that are not started yet
     - in progress: 
@@ -74,14 +61,14 @@
       - fill: #f3c9c1ff
       - text: #F85F3D
     - completed:
-      - border: #0070C0
-      - fill: #73c3fcff
-      - text: #0070C0
+      - border: same color as the arrow it is connected to
+      - fill: white
+      - text: #1e293b
 
   
 [] Data Onboarding Process:
-  - implement a categorized data onboarding process with step-by-step appearance of data fields: categorize data according to the content of the conclusions, not the Referenzprozess
   - make sure that for each step of the demo the correct data fields are updated (also consider the individual steps of the consent flow within the Referenzprozess step and match accordingly)
+  - do not start the entire process of adding data fields again when moving on to the next step of the Referenzprozess: the data list should slowly become complete as the steps of the demo are completed and never be reset in between!
   - Data Category Box Color: #253165 (text white)
   - Individual Data Field Colors: 
     - not received: 
