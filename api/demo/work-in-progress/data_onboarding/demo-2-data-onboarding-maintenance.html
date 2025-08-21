@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 2: Data Onboarding & Maintenance - Modular "Blöckli" System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #253165 0%, #0070C0 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .header h1 {
+            color: #253165;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .core-badge {
+            background: #00b02cff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .demo-controls {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #F85F3D;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #e04e2c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #E5CAFF;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #e2e8f0;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .data-pipeline {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .data-pipeline h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .quality-dashboard {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeInUp 0.8s ease-out 0.2s;
+        }
+
+        .quality-dashboard h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .pipeline-step {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 2px solid #E5CAFF;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pipeline-step:hover {
+            border-color: #00b02cff;
+            transform: translateY(-2px);
+        }
+
+        .pipeline-step.active {
+            background: linear-gradient(135deg, #dbeafe 0%, #f0f9ff 100%);
+            border-color: #0070C0;
+            box-shadow: 0 4px 12px rgba(0, 112, 192, 0.2);
+        }
+
+        .pipeline-step.completed {
+            background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%);
+            border-color: #00b02cff;
+            box-shadow: 0 4px 12px rgba(0, 176, 44, 0.2);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: #E5CAFF;
+            color: #6b7280;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .pipeline-step.active .step-icon {
+            background: #0070C0;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .pipeline-step.completed .step-icon {
+            background: #00b02cff;
+            color: white;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #253165;
+            font-size: 1.1rem;
+        }
+
+        .step-description {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .source-badge {
+            text-align: center;
+            padding: 8px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .pipeline-step.active .source-badge {
+            background: #dbeafe;
+            border-color: #0070C0;
+            color: #0070C0;
+        }
+
+        .pipeline-step.completed .source-badge {
+            background: #dcfce7;
+            border-color: #00b02cff;
+            color: #00b02cff;
+        }
+
+        .quality-metric {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 2px solid #E5CAFF;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .quality-metric:hover {
+            border-color: #B469FF;
+            transform: scale(1.05);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #253165;
+            margin-bottom: 5px;
+            transition: all 0.5s ease;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .metric-progress {
+            background: #f1f5f9;
+            border-radius: 4px;
+            height: 6px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #B469FF;
+            width: 0%;
+            transition: width 0.8s ease;
+        }
+
+        .blockkli-showcase {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            grid-column: 1 / -1;
+            animation: fadeInUp 0.8s ease-out 0.4s;
+        }
+
+        .blockkli-showcase h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .blockkli-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .blockkli-item {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 2px solid #E5CAFF;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blockkli-item:hover {
+            border-color: #0070C0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 112, 192, 0.15);
+        }
+
+        .blockkli-item.active {
+            background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%);
+            border-color: #00b02cff;
+        }
+
+        .blockkli-icon {
+            width: 50px;
+            height: 50px;
+            background: #E5CAFF;
+            color: #6b7280;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 10px;
+        }
+
+        .blockkli-item.active .blockkli-icon {
+            background: #00b02cff;
+            color: white;
+        }
+
+        .blockkli-title {
+            font-weight: 600;
+            color: #253165;
+            margin-bottom: 8px;
+        }
+
+        .blockkli-description {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Database Visualization Styles */
+        .database-visualization {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .database-visualization h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .customer-record {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .customer-record h3 {
+            color: #253165;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .data-fields-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .data-field {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid transparent;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .data-field.fresh {
+            border-left-color: #10b981;
+            animation: fresh-pulse 2s ease-in-out infinite;
+        }
+
+        .data-field.aging {
+            border-left-color: #f59e0b;
+            animation: aging-fade 3s ease-in-out infinite;
+        }
+
+        .data-field.expired {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+            animation: expired-blink 1s ease-in-out infinite;
+        }
+
+        .data-field.missing {
+            border-left-color: #9ca3af;
+            background: #f9fafb;
+            opacity: 0.6;
+        }
+
+        .data-field.updating {
+            border-left-color: #3b82f6;
+            animation: updating-spin 1s linear infinite;
+        }
+
+        @keyframes fresh-pulse {
+            0%, 100% { background: white; }
+            50% { background: #f0fdf4; }
+        }
+
+        @keyframes aging-fade {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes expired-blink {
+            0%, 100% { background: #fef2f2; }
+            50% { background: #fee2e2; }
+        }
+
+        @keyframes updating-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .field-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field-value {
+            font-size: 0.95rem;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .field-timestamp {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .freshness-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .freshness-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .freshness-indicator.fresh {
+            background: #10b981;
+        }
+
+        .freshness-indicator.aging {
+            background: #f59e0b;
+        }
+
+        .freshness-indicator.expired {
+            background: #ef4444;
+        }
+
+        .freshness-indicator.missing {
+            background: #9ca3af;
+        }
+
+        .console {
+            background: #1f2937;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            color: #10b981;
+            font-family: 'Courier New', monospace;
+            grid-column: 1 / -1;
+            animation: fadeInUp 0.8s ease-out 0.6s;
+        }
+
+        .console h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        .console-output {
+            height: 300px;
+            overflow-y: auto;
+            background: #111827;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            animation: slideInLog 0.5s ease-out;
+        }
+
+        .log-timestamp {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .log-info {
+            color: #3b82f6;
+        }
+
+        .log-warning {
+            color: #f59e0b;
+        }
+
+        .log-data {
+            color: #00b02cff;
+        }
+
+        .ready-message {
+            color: #6b7280;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLog {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 112, 192, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 4px rgba(0, 112, 192, 0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-button">← Back to Demo Overview</a>
+        
+        <div class="header">
+            <div class="core-badge">Core Framework</div>
+            <h1>Demo 2: Data Onboarding & Maintenance</h1>
+            <p>Modular "Blöckli" architecture with intelligent data lifecycle management and cross-industry reusability</p>
+        </div>
+
+        <div class="demo-controls">
+            <div>
+                <label for="speedControl">Demo Speed:</label>
+                <select id="speedControl">
+                    <option value="fast">Fast</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="slow">Slow</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="playDemo()" id="playBtn">
+                    🧱 Start Data Pipeline
+                </button>
+                <button class="btn btn-secondary" onclick="pauseDemo()" id="pauseBtn">
+                    ⏸️ Pause
+                </button>
+                <button class="btn btn-secondary" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Customer Database Visualization -->
+            <div class="database-visualization">
+                <h2>Customer Data Repository</h2>
+                <div class="customer-record">
+                    <h3>Customer: Hans Müller (ID: CH_12345)</h3>
+                    <div class="data-fields-grid" id="dataFieldsGrid">
+                        <!-- Data fields will be populated by JavaScript -->
+                    </div>
+                    <div class="freshness-legend">
+                        <div class="legend-item">
+                            <div class="freshness-indicator fresh"></div>
+                            <span>Fresh (< 30 days)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="freshness-indicator aging"></div>
+                            <span>Aging (30-90 days)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="freshness-indicator expired"></div>
+                            <span>Expired (> 90 days)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="freshness-indicator missing"></div>
+                            <span>Missing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Pipeline Steps -->
+            <div class="data-pipeline">
+                <h2>4-Phase Data Lifecycle</h2>
+                
+                <div id="pipelineSteps">
+                    <div class="pipeline-step" data-phase="1">
+                        <div class="step-header">
+                            <div class="step-icon">🎯</div>
+                            <div class="step-title">Initial Assessment</div>
+                        </div>
+                        <div class="step-description">ML-powered quality evaluation and gap analysis</div>
+                        <div class="data-sources">
+                            <div class="source-badge">Quality Check</div>
+                            <div class="source-badge">Completeness</div>
+                            <div class="source-badge">Compliance</div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-step" data-phase="2">
+                        <div class="step-header">
+                            <div class="step-icon">🔗</div>
+                            <div class="step-title">Multi-Source Enrichment</div>
+                        </div>
+                        <div class="step-description">Parallel data retrieval from trusted sources</div>
+                        <div class="data-sources">
+                            <div class="source-badge">Government</div>
+                            <div class="source-badge">Financial</div>
+                            <div class="source-badge">Utility</div>
+                            <div class="source-badge">Telecom</div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-step" data-phase="3">
+                        <div class="step-header">
+                            <div class="step-icon">✅</div>
+                            <div class="step-title">Quality Assurance</div>
+                        </div>
+                        <div class="step-description">Multi-layer validation and consistency checks</div>
+                        <div class="data-sources">
+                            <div class="source-badge">Validation</div>
+                            <div class="source-badge">Cross-Check</div>
+                            <div class="source-badge">Business Rules</div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-step" data-phase="4">
+                        <div class="step-header">
+                            <div class="step-icon">🔄</div>
+                            <div class="step-title">Ongoing Maintenance</div>
+                        </div>
+                        <div class="step-description">Automated refresh and change detection</div>
+                        <div class="data-sources">
+                            <div class="source-badge">Auto Refresh</div>
+                            <div class="source-badge">Monitoring</div>
+                            <div class="source-badge">Optimization</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quality Dashboard -->
+            <div class="quality-dashboard">
+                <h2>Real-Time Quality Metrics</h2>
+                
+                <div class="quality-metric">
+                    <div class="metric-value" id="completeness">0%</div>
+                    <div class="metric-label">Data Completeness</div>
+                    <div class="metric-progress">
+                        <div class="progress-bar" id="completeness-bar"></div>
+                    </div>
+                </div>
+
+                <div class="quality-metric">
+                    <div class="metric-value" id="accuracy">0%</div>
+                    <div class="metric-label">Data Accuracy</div>
+                    <div class="metric-progress">
+                        <div class="progress-bar" id="accuracy-bar"></div>
+                    </div>
+                </div>
+
+                <div class="quality-metric">
+                    <div class="metric-value" id="sources">0</div>
+                    <div class="metric-label">Active Sources</div>
+                    <div class="metric-progress">
+                        <div class="progress-bar" id="sources-bar"></div>
+                    </div>
+                </div>
+
+                <div class="quality-metric">
+                    <div class="metric-value" id="compliance">0%</div>
+                    <div class="metric-label">Compliance Score</div>
+                    <div class="metric-progress">
+                        <div class="progress-bar" id="compliance-bar"></div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fefce8 100%); border: 2px solid #FFC000; border-radius: 10px; padding: 15px; margin-top: 15px;">
+                    <h3 style="color: #92400e; margin-bottom: 10px;">🧱 Blöckli Architecture</h3>
+                    <p style="color: #92400e; font-size: 0.85rem;">Modular data building blocks enable cross-industry reusability and standardized quality management</p>
+                </div>
+            </div>
+
+            <!-- Modular Blöckli Showcase -->
+            <div class="blockkli-showcase">
+                <h2>Modular "Blöckli" Data Building Blocks</h2>
+                <div class="blockkli-grid">
+                    <div class="blockkli-item" data-block="identity">
+                        <div class="blockkli-icon">🆔</div>
+                        <div class="blockkli-title">Identity Block</div>
+                        <div class="blockkli-description">Core identity verification and management</div>
+                    </div>
+                    
+                    <div class="blockkli-item" data-block="address">
+                        <div class="blockkli-icon">📍</div>
+                        <div class="blockkli-title">Address Block</div>
+                        <div class="blockkli-description">Multi-source address validation</div>
+                    </div>
+                    
+                    <div class="blockkli-item" data-block="financial">
+                        <div class="blockkli-icon">💰</div>
+                        <div class="blockkli-title">Financial Block</div>
+                        <div class="blockkli-description">Credit and financial data assessment</div>
+                    </div>
+                    
+                    <div class="blockkli-item" data-block="contact">
+                        <div class="blockkli-icon">📞</div>
+                        <div class="blockkli-title">Contact Block</div>
+                        <div class="blockkli-description">Communication channel verification</div>
+                    </div>
+                    
+                    <div class="blockkli-item" data-block="compliance">
+                        <div class="blockkli-icon">✅</div>
+                        <div class="blockkli-title">Compliance Block</div>
+                        <div class="blockkli-description">Regulatory compliance automation</div>
+                    </div>
+                    
+                    <div class="blockkli-item" data-block="risk">
+                        <div class="blockkli-icon">⚖️</div>
+                        <div class="blockkli-title">Risk Block</div>
+                        <div class="blockkli-description">Risk assessment and profiling</div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <div style="background: linear-gradient(135deg, #253165 0%, #0070C0 100%); color: white; padding: 20px; border-radius: 10px;">
+                        <h3>Cross-Industry Reusability</h3>
+                        <p style="margin: 10px 0; opacity: 0.9;">Banking • Insurance • Government • Healthcare • Fintech</p>
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 8px; padding: 10px; margin-top: 10px;">
+                            <strong>One Framework, All Industries</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Console Output -->
+            <div class="console">
+                <h2>Data Lifecycle Management Log</h2>
+                
+                <div class="console-output" id="consoleOutput">
+                    <div class="ready-message">Ready to demonstrate modular data onboarding and maintenance pipeline...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPhase = 0;
+        let isPlaying = false;
+        let playInterval;
+        let logs = [];
+        let activeBlocks = [];
+
+        // Customer data structure with freshness indicators
+        let customerData = {
+            'personal_info': {
+                label: 'Personal Info',
+                value: 'Hans Müller, Born 1985',
+                timestamp: '2024-01-15',
+                source: 'Government Registry',
+                status: 'fresh'
+            },
+            'address': {
+                label: 'Address',
+                value: 'Bahnhofstrasse 123, 8001 Zürich',
+                timestamp: '2023-11-20',
+                source: 'Postal Service',
+                status: 'aging'
+            },
+            'phone': {
+                label: 'Phone Number',
+                value: '+41 44 123 4567',
+                timestamp: '2023-08-15',
+                source: 'Telecom Provider',
+                status: 'expired'
+            },
+            'email': {
+                label: 'Email',
+                value: 'hans.mueller@example.ch',
+                timestamp: '2024-01-10',
+                source: 'Customer Portal',
+                status: 'fresh'
+            },
+            'employment': {
+                label: 'Employment',
+                value: 'Software Engineer, TechCorp AG',
+                timestamp: '2023-12-01',
+                source: 'HR System',
+                status: 'aging'
+            },
+            'income': {
+                label: 'Annual Income',
+                value: 'CHF 95,000',
+                timestamp: '2023-06-01',
+                source: 'Tax Authority',
+                status: 'expired'
+            },
+            'credit_score': {
+                label: 'Credit Score',
+                value: '785 (Excellent)',
+                timestamp: '2024-01-05',
+                source: 'Credit Bureau',
+                status: 'fresh'
+            },
+            'bank_history': {
+                label: 'Banking History',
+                value: '12 years with UBS',
+                timestamp: '2023-10-15',
+                source: 'Banking Network',
+                status: 'aging'
+            },
+            'risk_profile': {
+                label: 'Risk Profile',
+                value: '',
+                timestamp: '',
+                source: '',
+                status: 'missing'
+            },
+            'kyc_status': {
+                label: 'KYC Status',
+                value: '',
+                timestamp: '',
+                source: '',
+                status: 'missing'
+            }
+        };
+
+        // Initialize customer data visualization
+        function initCustomerData() {
+            const grid = document.getElementById('dataFieldsGrid');
+            grid.innerHTML = '';
+            
+            Object.entries(customerData).forEach(([key, field]) => {
+                const fieldDiv = document.createElement('div');
+                fieldDiv.className = `data-field ${field.status}`;
+                fieldDiv.dataset.field = key;
+                
+                let content = `
+                    <div class="field-label">${field.label}</div>
+                    <div class="field-value">${field.value || 'Not available'}</div>
+                `;
+                
+                if (field.timestamp) {
+                    content += `<div class="field-timestamp">Updated: ${field.timestamp} (${field.source})</div>`;
+                } else {
+                    content += `<div class="field-timestamp">No data available</div>`;
+                }
+                
+                fieldDiv.innerHTML = content;
+                grid.appendChild(fieldDiv);
+            });
+        }
+
+        // Update field freshness and data
+        function updateCustomerField(fieldKey, newValue, source) {
+            if (customerData[fieldKey]) {
+                const field = customerData[fieldKey];
+                const fieldElement = document.querySelector(`[data-field="${fieldKey}"]`);
+                
+                // Add updating animation
+                fieldElement.classList.add('updating');
+                
+                setTimeout(() => {
+                    // Update data
+                    field.value = newValue;
+                    field.timestamp = new Date().toISOString().split('T')[0];
+                    field.source = source;
+                    field.status = 'fresh';
+                    
+                    // Update visual
+                    fieldElement.className = `data-field ${field.status}`;
+                    fieldElement.querySelector('.field-value').textContent = newValue;
+                    fieldElement.querySelector('.field-timestamp').textContent = 
+                        `Updated: ${field.timestamp} (${field.source})`;
+                    
+                    fieldElement.classList.remove('updating');
+                }, 1000);
+            }
+        }
+
+        // Simulate data aging over time
+        function simulateDataAging() {
+            Object.entries(customerData).forEach(([key, field]) => {
+                if (field.status === 'fresh') {
+                    // Randomly age some fresh data to demonstrate lifecycle
+                    if (Math.random() < 0.1) {
+                        field.status = 'aging';
+                        const fieldElement = document.querySelector(`[data-field="${key}"]`);
+                        if (fieldElement) {
+                            fieldElement.className = `data-field ${field.status}`;
+                        }
+                    }
+                } else if (field.status === 'aging') {
+                    // Randomly expire some aging data
+                    if (Math.random() < 0.05) {
+                        field.status = 'expired';
+                        const fieldElement = document.querySelector(`[data-field="${key}"]`);
+                        if (fieldElement) {
+                            fieldElement.className = `data-field ${field.status}`;
+                        }
+                    }
+                }
+            });
+        }
+
+        const dataPhases = [
+            {
+                phase: 1,
+                title: "Initial Assessment",
+                metrics: { completeness: 45, accuracy: 67, sources: 1, compliance: 72 },
+                blocks: ['identity'],
+                logs: [
+                    { type: 'data', message: 'Starting ML-powered data quality assessment' },
+                    { type: 'info', message: 'Analyzing customer data completeness and accuracy' },
+                    { type: 'success', message: 'Initial data quality baseline established' },
+                    { type: 'info', message: 'Gap analysis identifies missing data elements' }
+                ]
+            },
+            {
+                phase: 2,
+                title: "Multi-Source Enrichment",
+                metrics: { completeness: 78, accuracy: 85, sources: 4, compliance: 89 },
+                blocks: ['identity', 'address', 'contact'],
+                logs: [
+                    { type: 'data', message: 'Querying trusted data sources in parallel' },
+                    { type: 'info', message: 'Government, financial, and utility data retrieved' },
+                    { type: 'success', message: 'Data enrichment from 4 sources completed' },
+                    { type: 'info', message: 'Conflict resolution algorithms applied' }
+                ]
+            },
+            {
+                phase: 3,
+                title: "Quality Assurance",
+                metrics: { completeness: 91, accuracy: 96, sources: 5, compliance: 97 },
+                blocks: ['identity', 'address', 'contact', 'financial', 'compliance'],
+                logs: [
+                    { type: 'data', message: 'Running multi-layer validation framework' },
+                    { type: 'info', message: 'Cross-system synchronization verification' },
+                    { type: 'success', message: 'Business rule validation completed' },
+                    { type: 'success', message: 'GDPR and Swiss DPA compliance validated' }
+                ]
+            },
+            {
+                phase: 4,
+                title: "Ongoing Maintenance",
+                metrics: { completeness: 97, accuracy: 98, sources: 6, compliance: 99 },
+                blocks: ['identity', 'address', 'contact', 'financial', 'compliance', 'risk'],
+                logs: [
+                    { type: 'data', message: 'Automated maintenance policies activated' },
+                    { type: 'info', message: 'Real-time change detection monitoring enabled' },
+                    { type: 'success', message: 'Performance optimization completed' },
+                    { type: 'success', message: '🏆 Data Lifecycle Management Operational' }
+                ]
+            }
+        ];
+
+        function getSpeed() {
+            const speed = document.getElementById('speedControl').value;
+            switch(speed) {
+                case 'fast': return 1800;
+                case 'slow': return 4500;
+                default: return 2800;
+            }
+        }
+
+        function addLog(entry) {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.push({...entry, timestamp});
+            updateConsole();
+        }
+
+        function updateConsole() {
+            const consoleOutput = document.getElementById('consoleOutput');
+            
+            if (logs.length === 0) {
+                consoleOutput.innerHTML = '<div class="ready-message">Ready to demonstrate modular data onboarding and maintenance pipeline...</div>';
+                return;
+            }
+            
+            consoleOutput.innerHTML = '';
+            logs.forEach(log => {
+                const logDiv = document.createElement('div');
+                logDiv.className = `log-entry log-${log.type}`;
+                logDiv.innerHTML = `<span class="log-timestamp">[${log.timestamp}]</span> ${log.message}`;
+                consoleOutput.appendChild(logDiv);
+            });
+            
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function updateMetrics(metrics) {
+            // Animate metric updates
+            animateValue('completeness', parseInt(document.getElementById('completeness').textContent), metrics.completeness, 1000, '%');
+            animateValue('accuracy', parseInt(document.getElementById('accuracy').textContent), metrics.accuracy, 1000, '%');
+            animateValue('sources', parseInt(document.getElementById('sources').textContent), metrics.sources, 1000);
+            animateValue('compliance', parseInt(document.getElementById('compliance').textContent), metrics.compliance, 1000, '%');
+            
+            // Update progress bars
+            setTimeout(() => {
+                document.getElementById('completeness-bar').style.width = metrics.completeness + '%';
+                document.getElementById('accuracy-bar').style.width = metrics.accuracy + '%';
+                document.getElementById('sources-bar').style.width = (metrics.sources * 16.66) + '%'; // Max 6 sources
+                document.getElementById('compliance-bar').style.width = metrics.compliance + '%';
+            }, 500);
+        }
+
+        function animateValue(id, start, end, duration, suffix = '') {
+            const element = document.getElementById(id);
+            const range = end - start;
+            const startTime = performance.now();
+            
+            function updateValue(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.round(start + (range * progress));
+                element.textContent = current + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateValue);
+                }
+            }
+            
+            requestAnimationFrame(updateValue);
+        }
+
+        function updatePipelineSteps(phase) {
+            document.querySelectorAll('.pipeline-step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                
+                if (index + 1 === phase) {
+                    step.classList.add('active');
+                } else if (index + 1 < phase) {
+                    step.classList.add('completed');
+                }
+            });
+        }
+
+        function updateBlocks(blocks) {
+            document.querySelectorAll('.blockkli-item').forEach(block => {
+                block.classList.remove('active');
+            });
+            
+            blocks.forEach(blockName => {
+                const blockElement = document.querySelector(`[data-block="${blockName}"]`);
+                if (blockElement) {
+                    blockElement.classList.add('active');
+                }
+            });
+        }
+
+        function executePhase(phaseIndex) {
+            if (phaseIndex >= dataPhases.length) return;
+            
+            const phase = dataPhases[phaseIndex];
+            updatePipelineSteps(phase.phase);
+            updateMetrics(phase.metrics);
+            updateBlocks(phase.blocks);
+            
+            // Update customer data based on phase
+            updateCustomerDataForPhase(phaseIndex);
+            
+            // Add phase logs
+            phase.logs.forEach((log, index) => {
+                setTimeout(() => {
+                    addLog(log);
+                }, index * 400);
+            });
+        }
+
+        // Update customer data based on current phase
+        function updateCustomerDataForPhase(phaseIndex) {
+            switch(phaseIndex) {
+                case 0: // Initial Assessment
+                    // No updates yet, showing initial state
+                    break;
+                case 1: // Multi-Source Enrichment
+                    setTimeout(() => {
+                        updateCustomerField('phone', '+41 44 789 0123', 'Telecom Provider');
+                        updateCustomerField('address', 'Bahnhofstrasse 456, 8001 Zürich', 'Postal Service');
+                    }, 1000);
+                    break;
+                case 2: // Quality Assurance
+                    setTimeout(() => {
+                        updateCustomerField('income', 'CHF 105,000', 'Tax Authority');
+                        updateCustomerField('risk_profile', 'Conservative Investor', 'Risk Assessment AI');
+                    }, 1500);
+                    break;
+                case 3: // Ongoing Maintenance
+                    setTimeout(() => {
+                        updateCustomerField('kyc_status', 'Verified - Enhanced Due Diligence', 'Compliance System');
+                        updateCustomerField('employment', 'Senior Software Engineer, TechCorp AG', 'HR System');
+                    }, 2000);
+                    break;
+            }
+        }
+
+        function playDemo() {
+            if (isPlaying) return;
+            
+            isPlaying = true;
+            document.getElementById('playBtn').disabled = true;
+            
+            playInterval = setInterval(() => {
+                if (currentPhase < dataPhases.length) {
+                    executePhase(currentPhase);
+                    currentPhase++;
+                } else {
+                    // Add final success message
+                    addLog({ type: 'success', message: '🎉 Modular Data Architecture Fully Operational' });
+                    pauseDemo();
+                }
+            }, getSpeed());
+        }
+
+        function pauseDemo() {
+            isPlaying = false;
+            document.getElementById('playBtn').disabled = false;
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+            }
+        }
+
+        function resetDemo() {
+            pauseDemo();
+            currentPhase = 0;
+            logs = [];
+            updateConsole();
+            updatePipelineSteps(0);
+            updateBlocks([]);
+            
+            // Reset customer data
+            initCustomerData();
+            
+            // Reset all metrics
+            document.getElementById('completeness').textContent = '0%';
+            document.getElementById('accuracy').textContent = '0%';
+            document.getElementById('sources').textContent = '0';
+            document.getElementById('compliance').textContent = '0%';
+            
+            // Reset progress bars
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                bar.style.width = '0%';
+            });
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            initCustomerData();
+            updateConsole();
+            updatePipelineSteps(0);
+            updateBlocks([]);
+            
+            // Start data aging simulation
+            setInterval(simulateDataAging, 10000); // Every 10 seconds
+        });
+    </script>
+</body>
+</html>

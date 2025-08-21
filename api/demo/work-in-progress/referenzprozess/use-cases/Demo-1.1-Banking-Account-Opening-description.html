@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 1.1: Banking Account Opening - Kundenbeziehungseröffnung</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #253165 0%, #0070C0 100%);
+            color: #1e293b;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .doc-header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .doc-header h1 {
+            color: #253165;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .zielbild-badge {
+            background: #FA9F8A;
+            color: #253165;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .doc-header .subtitle {
+            color: #64748b;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #F85F3D;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .back-button:hover {
+            background: #e04e2c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(248, 95, 61, 0.3);
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .traditional-process {
+            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #ff3370ff;
+        }
+
+        .api-process {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #00b02cff;
+        }
+
+        .process-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .process-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .traditional-process .process-icon {
+            background: #ff3370ff;
+            color: white;
+        }
+
+        .api-process .process-icon {
+            background: #00b02cff;
+            color: white;
+        }
+
+        h2 {
+            color: #253165;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FA9F8A;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #F85F3D;
+        }
+
+        h3 {
+            color: #0070C0;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .banking-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #E5CAFF;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #F85F3D, #FA9F8A);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(37, 49, 101, 0.15);
+            border-color: #0070C0;
+        }
+
+        .feature-card h4 {
+            color: #253165;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .step-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #E5CAFF;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .step-card:hover {
+            border-color: #0070C0;
+            transform: translateY(-3px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #253165, #0070C0);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 10px;
+        }
+
+        .regulatory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .regulatory-badge {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #253165 0%, #0070C0 100%);
+            color: white;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .regulatory-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .regulatory-badge .badge-title {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .regulatory-badge .badge-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #FA9F8A;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fefce8 100%);
+            border: 2px solid #FFC000;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .highlight-box::before {
+            content: '🏦';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #FFC000;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #00b02cff;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .banking-features,
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../../index.html" class="back-button">
+            ← Back to Demo Overview
+        </a>
+
+        <div class="doc-header">
+            <div class="zielbild-badge">Zielbild 1: Direct Customer Relationship</div>
+            <h1>Banking Account Opening</h1>
+            <p class="subtitle">Kundenbeziehungseröffnung - API-Based Process Demonstration</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Overview and Objectives</h2>
+            <p>This demonstration showcases API-based banking account opening compared to traditional manual processes, specifically focusing on the customer relationship establishment (Kundenbeziehungseröffnung) use case as defined in the Swiss Open API Kundenbeziehung framework.</p>
+            
+            <div class="comparison-section">
+                <div class="traditional-process">
+                    <div class="process-header">
+                        <div class="process-icon">📄</div>
+                        <h3>Traditional Manual Process</h3>
+                    </div>
+                    <ul>
+                        <li><strong>Manual Data Collection:</strong> Time-intensive form filling and document collection</li>
+                        <li><strong>Redundant Verification:</strong> Multiple identity and address verifications</li>
+                        <li><strong>Sequential Processing:</strong> Step-by-step manual validation and approval</li>
+                        <li><strong>System Integration Delays:</strong> Manual data entry across multiple systems</li>
+                    </ul>
+                </div>
+
+                <div class="api-process">
+                    <div class="process-header">
+                        <div class="process-icon">⚡</div>
+                        <h3>API-Based Automation</h3>
+                    </div>
+                    <ul>
+                        <li><strong>Bank-Controlled Process:</strong> Direct customer relationship with full bank ownership</li>
+                        <li><strong>Standardized Data Reuse:</strong> Leveraging existing verified customer data</li>
+                        <li><strong>Real-time API Integration:</strong> Instant verification through connected services</li>
+                        <li><strong>Parallel Processing:</strong> Simultaneous execution of verification steps</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Banking-Specific Features</h2>
+            
+            <div class="banking-features">
+                <div class="feature-card">
+                    <h4>🔍 KYC Automation</h4>
+                    <p><strong>Automated Know Your Customer processes</strong> with real-time identity verification and risk assessment integration</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>⚖️ Risk Assessment</h4>
+                    <p><strong>Real-time credit and risk evaluation</strong> using comprehensive data sources and scoring algorithms</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>🎯 Product Matching</h4>
+                    <p><strong>Intelligent product recommendation</strong> based on customer profile, needs analysis, and risk tolerance</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>📋 Regulatory Compliance</h4>
+                    <p><strong>Automated compliance validation</strong> for Swiss banking regulations including FINMA requirements</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>10-Step Banking Process</h2>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Service Discovery</h4>
+                    <p>Customer intent and product selection</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Identity Verification</h4>
+                    <p>Swiss eID and biometric validation</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Data Collection</h4>
+                    <p>Structured customer information gathering</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>Data Validation</h4>
+                    <p>Comprehensive data quality checks</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h4>Risk Assessment</h4>
+                    <p>Credit scoring and risk evaluation</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h4>KYC Processing</h4>
+                    <p>Know Your Customer compliance</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">7</div>
+                    <h4>Compliance Check</h4>
+                    <p>FINMA and regulatory validation</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">8</div>
+                    <h4>External Verification</h4>
+                    <p>Third-party data verification</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">9</div>
+                    <h4>Decision Processing</h4>
+                    <p>Automated approval/rejection</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">10</div>
+                    <h4>Account Creation</h4>
+                    <p>Final account setup and activation</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Swiss Banking Compliance</h2>
+            
+            <div class="regulatory-grid">
+                <div class="regulatory-badge">
+                    <div class="badge-title">FINMA</div>
+                    <div class="badge-label">Compliant</div>
+                </div>
+                <div class="regulatory-badge">
+                    <div class="badge-title">Banking Act</div>
+                    <div class="badge-label">Validated</div>
+                </div>
+                <div class="regulatory-badge">
+                    <div class="badge-title">KYC/AML</div>
+                    <div class="badge-label">Automated</div>
+                </div>
+                <div class="regulatory-badge">
+                    <div class="badge-title">MiFID II</div>
+                    <div class="badge-label">Integrated</div>
+                </div>
+                <div class="regulatory-badge">
+                    <div class="badge-title">Swiss DPA</div>
+                    <div class="badge-label">Privacy-First</div>
+                </div>
+                <div class="regulatory-badge">
+                    <div class="badge-title">Basel III</div>
+                    <div class="badge-label">Risk Compliant</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Regulatory Automation Benefits</h3>
+                <ul>
+                    <li><strong>Real-time Compliance:</strong> Continuous validation against all regulatory requirements</li>
+                    <li><strong>Audit Trail:</strong> Complete documentation of all compliance checks and decisions</li>
+                    <li><strong>Risk Monitoring:</strong> Ongoing risk assessment with automated alerts</li>
+                    <li><strong>Regulatory Updates:</strong> Automatic adaptation to changing regulatory requirements</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Technical Integration</h2>
+            
+            <h3>API Implementation</h3>
+            <div class="code-block">
+POST /api/v1/banking/account-opening
+Content-Type: application/json
+Authorization: Bearer [FAPI-2.0-Token]
+
+{
+  "customer_profile": {
+    "identity_verification": {
+      "swiss_eid": true,
+      "biometric_validation": true
+    }
+  },
+  "product_selection": {
+    "account_type": "standard_checking",
+    "initial_deposit": 1000
+  },
+  "compliance_requirements": {
+    "kyc_level": "enhanced",
+    "risk_tolerance": "moderate"
+  }
+}
+            </div>
+
+            <div class="highlight-box">
+                <h3>Integration Features</h3>
+                <ul>
+                    <li><strong>FAPI 2.0 Security:</strong> Financial-grade API security with mTLS and DPoP</li>
+                    <li><strong>Real-time Processing:</strong> Synchronous and asynchronous processing options</li>
+                    <li><strong>Webhook Integration:</strong> Event-driven notifications for process updates</li>
+                    <li><strong>Error Handling:</strong> Comprehensive error management and retry mechanisms</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Business Impact</h2>
+            
+            <div class="banking-features">
+                <div class="feature-card">
+                    <h4>🚀 Process Automation</h4>
+                    <p>Streamlined customer onboarding with reduced manual intervention and faster processing times</p>
+                </div>
+                <div class="feature-card">
+                    <h4>💼 Operational Excellence</h4>
+                    <p>Standardized processes ensure consistent service quality and reduced operational overhead</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎯 Enhanced Customer Experience</h4>
+                    <p>Improved customer satisfaction through faster, more reliable account opening processes</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🛡️ Risk Management</h4>
+                    <p>Enhanced risk controls with real-time monitoring and automated compliance validation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

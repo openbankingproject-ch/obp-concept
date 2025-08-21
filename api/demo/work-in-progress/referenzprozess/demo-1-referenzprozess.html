@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Reference Process - Demo 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #253165;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .phase-indicator {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .phase {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            transform: scale(1);
+        }
+
+        .phase.current {
+            background: #3b82f6;
+            color: white;
+            transform: scale(1.05);
+            animation: phaseActive 2s infinite alternate;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .phase.completed {
+            background: #10b981;
+            color: white;
+            transform: scale(1.02);
+            animation: phaseCompleted 0.8s ease-out;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .phase.pending {
+            background: #e5e7eb;
+            color: #6b7280;
+            opacity: 0.8;
+        }
+
+        .phase:hover {
+            transform: scale(1.03);
+        }
+
+        @keyframes phaseActive {
+            0%, 100% { transform: scale(1.05); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+            50% { transform: scale(1.08); box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); }
+        }
+
+        @keyframes phaseCompleted {
+            0% { transform: scale(1.02); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.2); }
+            100% { transform: scale(1.02); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+        }
+
+        .phase-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .phase-subtitle {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #2563eb;
+        }
+
+        .btn-gray {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-gray:hover:not(:disabled) {
+            background: #4b5563;
+        }
+
+        .speed-select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .step-counter {
+            margin-left: auto;
+            color: #6b7280;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .step-counter.updating {
+            background: rgba(245, 158, 11, 0.2);
+            color: #d97706;
+            transform: scale(1.05);
+            animation: stepUpdate 0.5s ease-out;
+        }
+
+        @keyframes stepUpdate {
+            0% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1.05); }
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .step-details {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .step-details h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .phase-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        .step-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .actions-list {
+            margin-bottom: 20px;
+        }
+
+        .actions-list h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .action-item:hover {
+            background: #f0f9ff;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        }
+
+        .action-item.processing {
+            background: #fef3c7;
+            animation: pulse 2s infinite;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+        }
+
+        .action-item.completed {
+            background: #dcfce7;
+            transform: translateX(0);
+            animation: completeBounce 0.6s ease-out;
+        }
+
+        .action-dot {
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .action-item.processing .action-dot {
+            background: #f59e0b;
+            animation: dotPulse 1.5s infinite;
+            transform: scale(1.3);
+        }
+
+        .action-item.completed .action-dot {
+            background: #10b981;
+            transform: scale(1.2);
+        }
+
+        /* Keyframe Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.02); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        @keyframes completeBounce {
+            0% { transform: scale(1.02); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1.3); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            50% { transform: scale(1.5); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1); }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .data-display {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.4s ease;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .data-display.updating {
+            background: #fefce8;
+            border-color: #f59e0b;
+            transform: scale(1.02);
+        }
+
+        .step-details {
+            transition: all 0.5s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .step-details.transitioning {
+            transform: translateY(-10px);
+            opacity: 0.8;
+        }
+
+        #stepContent {
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .data-display h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .data-display pre {
+            font-size: 0.85rem;
+            color: #4b5563;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .console {
+            background: #1f2937;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            color: #10b981;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .console:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .console h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        .console-output {
+            height: 400px;
+            overflow-y: auto;
+            background: #111827;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            animation: logSlideIn 0.5s ease-out;
+            transform: translateX(0);
+        }
+
+        .log-entry.new-entry {
+            animation: logTypeIn 0.8s ease-out;
+        }
+
+        @keyframes logSlideIn {
+            from { 
+                transform: translateX(-10px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateX(0); 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes logTypeIn {
+            from { 
+                transform: translateX(-10px);
+                opacity: 0;
+                max-width: 0;
+                overflow: hidden;
+            }
+            to { 
+                transform: translateX(0);
+                opacity: 1;
+                max-width: 100%;
+                overflow: visible;
+            }
+        }
+
+        .log-timestamp {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .log-step {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .log-info {
+            color: #60a5fa;
+        }
+
+        .log-action {
+            color: #d1d5db;
+        }
+
+        .ready-message {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .api-call-block {
+            background: #0f172a;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .api-request {
+            border-left: 3px solid #3b82f6;
+            padding-left: 10px;
+            margin: 10px 0;
+        }
+
+        .api-response {
+            border-left: 3px solid #10b981;
+            padding-left: 10px;
+            margin: 10px 0;
+        }
+
+        .json-payload {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .step-completion-summary {
+            background: #dcfce7;
+            border: 1px solid #22c55e;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            animation: completionSlideIn 0.5s ease-out;
+        }
+
+        .step-completion-summary h4 {
+            color: #15803d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .completion-checkmark {
+            width: 20px;
+            height: 20px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            animation: checkmarkPop 0.6s ease-out;
+        }
+
+        .completed-actions-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .completed-actions-list li {
+            padding: 5px 0;
+            color: #15803d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .completed-actions-list li::before {
+            content: "✓";
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        @keyframes completionSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes checkmarkPop {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .capabilities {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .capabilities h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .capability {
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .capability h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        .capability p {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: #374151;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #6b7280;
+            border-radius: 3px;
+        }
+
+        /* 10-Step Process Overview Styles */
+        .process-overview {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .process-overview h2 {
+            color: #253165;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .steps-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .phase-section {
+            position: relative;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(37, 49, 101, 0.05);
+            border: 1px solid rgba(37, 49, 101, 0.1);
+        }
+
+        .phase-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #253165;
+            margin-bottom: 20px;
+            text-align: center;
+            background: rgba(37, 49, 101, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .step-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .step-card:hover {
+            border-color: #F85F3D;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(248, 95, 61, 0.2);
+        }
+
+        .step-card.active {
+            border-color: #253165;
+            background: rgba(37, 49, 101, 0.05);
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(37, 49, 101, 0.2);
+        }
+
+        .step-card.completed {
+            border-color: #00b02cff;
+            background: rgba(0, 176, 44, 0.05);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #253165;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .step-card.active .step-number {
+            background: #F85F3D;
+            animation: pulse 2s infinite;
+        }
+
+        .step-card.completed .step-number {
+            background: #00b02cff;
+        }
+
+        .step-card.completed .step-number::after {
+            content: '✓';
+            font-size: 0.9rem;
+        }
+
+        .step-content h4 {
+            margin: 0 0 5px 0;
+            color: #1f2937;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .phase-section[data-phase="1"], 
+            .phase-section[data-phase="2"] {
+                display: grid;
+                grid-template-columns: auto 1fr 1fr 1fr;
+                gap: 15px;
+                align-items: start;
+            }
+
+            .phase-section[data-phase="3"] {
+                display: grid;
+                grid-template-columns: auto 1fr 1fr;
+                gap: 15px;
+                align-items: start;
+            }
+
+            .phase-section[data-phase="4"] {
+                display: grid;
+                grid-template-columns: auto 1fr 1fr;
+                gap: 15px;
+                align-items: start;
+            }
+
+            .phase-header {
+                grid-column: 1;
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+                background: #253165;
+                color: white;
+                padding: 20px 10px;
+                margin: 0;
+                text-align: center;
+                min-height: 150px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .step-card {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Universal Reference Process</h1>
+            <p>Interactive demonstration of the generic framework that powers customer onboarding across ALL industries and ecosystems</p>
+            
+            <!-- Progress Indicator -->
+            <div class="phase-indicator" id="phaseIndicator">
+                <div class="phase current" data-phase="1">
+                    <div class="phase-title">Phase 1</div>
+                    <div class="phase-subtitle">Setup und Initialisierung</div>
+                </div>
+                <div class="phase pending" data-phase="2">
+                    <div class="phase-title">Phase 2</div>
+                    <div class="phase-subtitle">Datenerfassung - Modular Data Blocks</div>
+                </div>
+                <div class="phase pending" data-phase="3">
+                    <div class="phase-title">Phase 3</div>
+                    <div class="phase-subtitle">Verifikation und Compliance</div>
+                </div>
+                <div class="phase pending" data-phase="4">
+                    <div class="phase-title">Phase 4</div>
+                    <div class="phase-subtitle">Vertragsabschluss und Aktivierung</div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <button class="btn btn-gray" onclick="resetDemo()" id="resetBtn">
+                    <span>🔄</span> Reset
+                </button>
+                
+                <button class="btn btn-secondary" onclick="previousStep()" id="prevBtn" disabled>
+                    <span>⏮️</span> Previous
+                </button>
+                
+                <button class="btn btn-primary" onclick="togglePlayPause()" id="playBtn">
+                    <span id="playIcon">▶️</span> <span id="playText">Play</span>
+                </button>
+                
+                <button class="btn btn-secondary" onclick="nextStep()" id="nextBtn">
+                    Next <span>⏭️</span>
+                </button>
+
+                <select class="speed-select" id="speedSelect" onchange="changeSpeed()">
+                    <option value="fast">Fast</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="slow">Slow</option>
+                </select>
+
+                <div class="step-counter">
+                    Step <span id="currentStepNum">1</span> of <span id="totalSteps">10</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10-Step Process Overview -->
+        <div class="process-overview">
+            <h2>10-Step Universal Reference Process</h2>
+            
+            <div class="steps-grid">
+                <!-- Phase 1: Setup und Initialisierung -->
+                <div class="phase-section" data-phase="1">
+                    <div class="phase-header">Phase 1: Setup und Initialisierung</div>
+                    <div class="step-card" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Initialisierung</h4>
+                            <p>Service Discovery & Customer Intent</p>
+                        </div>
+                    </div>
+                    <div class="step-card" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Authentifizierung</h4>
+                            <p>Customer Identity Authentication</p>
+                        </div>
+                    </div>
+                    <div class="step-card" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Anforderungsanalyse</h4>
+                            <p>Data Requirements Analysis</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: Datenidentifikation und Zugriff -->
+                <div class="phase-section" data-phase="2">
+                    <div class="phase-header">Phase 2: Datenidentifikation und Zugriff</div>
+                    <div class="step-card" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Datenquellen-Discovery</h4>
+                            <p>Available Data Sources Discovery</p>
+                        </div>
+                    </div>
+                    <div class="step-card" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Berechtigung</h4>
+                            <p>Access Rights & Permissions</p>
+                        </div>
+                    </div>
+                    <div class="step-card" data-step="6">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h4>Consent Management</h4>
+                            <p>Customer Data Consent</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3: Datenabfrage und Verarbeitung -->
+                <div class="phase-section" data-phase="3">
+                    <div class="phase-header">Phase 3: Datenabfrage und Verarbeitung</div>
+                    <div class="step-card" data-step="7">
+                        <div class="step-number">7</div>
+                        <div class="step-content">
+                            <h4>Datenanfrage</h4>
+                            <p>Data Request & Retrieval</p>
+                        </div>
+                    </div>
+                    <div class="step-card" data-step="8">
+                        <div class="step-number">8</div>
+                        <div class="step-content">
+                            <h4>Datenvalidierung</h4>
+                            <p>Data Quality & Validation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4: Vertragsabschluss und Aktivierung -->
+                <div class="phase-section" data-phase="4">
+                    <div class="phase-header">Phase 4: Vertragsabschluss und Aktivierung</div>
+                    <div class="step-card" data-step="9">
+                        <div class="step-number">9</div>
+                        <div class="step-content">
+                            <h4>Digitale Signatur</h4>
+                            <p>Qualified Electronic Signature</p>
+                        </div>
+                    </div>
+                    <div class="step-card" data-step="10">
+                        <div class="step-number">10</div>
+                        <div class="step-content">
+                            <h4>Metadaten & Verteilung</h4>
+                            <p>System Integration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Current Step Details -->
+            <div class="step-details">
+                <h2>Current Step Details</h2>
+                
+                <div id="stepContent">
+                    <div class="phase-badge" id="phaseBadge">Setup und Initialisierung</div>
+                    
+                    <h3 class="step-title" id="stepTitle">Step 1: Initialisierung - Service Discovery & Customer Intent</h3>
+                    
+                    <p class="step-description" id="stepDescription">Initialize the process framework and discover available services</p>
+                    
+                    <div class="actions-list">
+                        <h4>Actions in this step:</h4>
+                        <div id="actionsList">
+                            <!-- Actions will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="data-display">
+                        <h4>Sample Data:</h4>
+                        <pre id="sampleData">Ready to start demo...</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Console Output -->
+            <div class="console">
+                <h2>API Console Output</h2>
+                
+                <div class="console-output scrollbar-thin" id="consoleOutput">
+                    <div class="ready-message">Ready to start demo... Click Play to begin</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Framework Capabilities Overview -->
+        <div class="capabilities">
+            <h2>Framework Capabilities</h2>
+            
+            <div class="capabilities-grid">
+                <div class="capability">
+                    <h3>✨ Universal Process</h3>
+                    <p>Industry-agnostic framework that adapts to any ecosystem</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>🗃️ Modular Architecture</h3>
+                    <p>Basisdaten + Erweiterte Daten flexible combination</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>🌍 Cross-Industry</h3>
+                    <p>Banking, Insurance, Mobility, Retail compatibility</p>
+                </div>
+                
+                <div class="capability">
+                    <h3>🔧 Technical Excellence</h3>
+                    <p>FAPI 2.0 security, real-time validation, audit trails</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo data and configuration
+        let currentStep = 0;
+        let isPlaying = false;
+        let playInterval = null;
+        let completedSteps = new Set();
+        let logs = [];
+        let startTime = null;
+
+        const speedSettings = {
+            fast: 1000,
+            normal: 2500,
+            slow: 5000
+        };
+
+        let currentSpeed = 'normal';
+
+        const demoSteps = [
+            {
+                id: 1,
+                title: "Initialisierung - Service Discovery & Customer Intent",
+                phase: "Setup und Initialisierung",
+                phaseNumber: 1,
+                description: "Initialize the process framework and discover available services",
+                actions: [
+                    "Framework Health Check",
+                    "Process Instance Creation", 
+                    "Service Discovery",
+                    "Customer Intent Capture"
+                ],
+                data: {
+                    serviceType: 'banking-account-opening',
+                    ecosystem: 'financial-services',
+                    discoveredServices: ['current-account', 'savings-account', 'debit-card']
+                }
+            },
+            {
+                id: 2,
+                title: "Produktauswahl - Configuration & Eligibility Check",
+                phase: "Setup und Initialisierung",
+                phaseNumber: 1,
+                description: "Interactive product configuration and eligibility verification",
+                actions: [
+                    "Product Configuration",
+                    "Eligibility Check",
+                    "Cross-Industry Modularity Demo"
+                ],
+                data: {
+                    selectedProduct: 'premium-current-account',
+                    accountType: 'personal',
+                    currency: 'CHF',
+                    eligibilityCheck: 'passed'
+                }
+            },
+            {
+                id: 3,
+                title: "Selbstdeklaration - FATCA, MiFID & Compliance",
+                phase: "Datenerfassung - Modular Data Blocks",
+                phaseNumber: 2,
+                description: "Regulatory compliance information collection",
+                actions: [
+                    "Regulatory Self-Declaration Forms",
+                    "FATCA Status Declaration",
+                    "Compliance Validation"
+                ],
+                data: {
+                    taxDomicile: 'CH',
+                    usTaxLiability: false,
+                    fatcaStatus: 'non_us_person'
+                }
+            },
+            {
+                id: 4,
+                title: "Basisdaten Collection - Universal Core Data",
+                phase: "Datenerfassung - Modular Data Blocks",
+                phaseNumber: 2,
+                description: "Core data required across all ecosystems",
+                actions: [
+                    "Personal Data Block",
+                    "Contact Information Block",
+                    "Address Data Block",
+                    "Data Quality Assessment"
+                ],
+                data: {
+                    personalData: { lastName: 'Müller', givenName: 'Anna', birthDate: '1985-03-12' },
+                    contactInfo: { email: 'anna.mueller@example.ch', phone: '+41791234567' },
+                    address: { street: 'Bahnhofstrasse 42', city: 'Zürich', country: 'CH' }
+                }
+            },
+            {
+                id: 5,
+                title: "Erweiterte Daten - Ecosystem-Specific Extensions",
+                phase: "Datenerfassung - Modular Data Blocks", 
+                phaseNumber: 2,
+                description: "Additional data tailored to specific industry requirements",
+                actions: [
+                    "Financial Services Extension",
+                    "Cross-Ecosystem Examples",
+                    "Risk Assessment & Profiling"
+                ],
+                data: {
+                    financialData: { occupation: 'Software Engineer', annualIncome: 120000 },
+                    riskCategory: 'Low-Medium'
+                }
+            },
+            {
+                id: 6,
+                title: "Identifikation - QEAA Level Verification",
+                phase: "Verifikation und Compliance",
+                phaseNumber: 3,
+                description: "Professional identity verification to QEAA standard",
+                actions: [
+                    "Professional Identity Verification",
+                    "Biometric Verification Processing",
+                    "Integration Options Review"
+                ],
+                data: {
+                    method: 'video-ident',
+                    verificationLevel: 'QEAA',
+                    biometricMatch: 0.987
+                }
+            },
+            {
+                id: 7,
+                title: "Background Checks - KYC/AML Compliance",
+                phase: "Verifikation und Compliance",
+                phaseNumber: 3,
+                description: "Comprehensive KYC processing and compliance verification",
+                actions: [
+                    "PEP Screening",
+                    "Sanctions List Screening", 
+                    "AML Risk Assessment",
+                    "Credit Worthiness Assessment"
+                ],
+                data: {
+                    pepCheck: 'clear',
+                    sanctionsCheck: 'clear',
+                    amlRiskLevel: 'low',
+                    creditScore: 750
+                }
+            },
+            {
+                id: 8,
+                title: "Vertragsabschluss - Terms & Conditions",
+                phase: "Vertragsabschluss und Aktivierung",
+                phaseNumber: 4,
+                description: "Contract terms presentation and acceptance",
+                actions: [
+                    "Contract Terms Presentation",
+                    "Terms Acceptance Processing",
+                    "Legal Agreement Establishment"
+                ],
+                data: {
+                    contractTerms: ['General T&C', 'Product Terms', 'Privacy Policy'],
+                    acceptanceMethod: 'digital'
+                }
+            },
+            {
+                id: 9,
+                title: "Digitale Signatur - Qualified Electronic Signature",
+                phase: "Vertragsabschluss und Aktivierung", 
+                phaseNumber: 4,
+                description: "Legally binding digital signature process",
+                actions: [
+                    "QES Preparation",
+                    "Digital Signature Execution",
+                    "Signature Verification & Storage"
+                ],
+                data: {
+                    signatureType: 'QES',
+                    signatureId: 'sig_a1b2c3d4',
+                    legalValidity: 'Equivalent to handwritten signature'
+                }
+            },
+            {
+                id: 10,
+                title: "Metadaten & Verteilung - System Integration",
+                phase: "Vertragsabschluss und Aktivierung",
+                phaseNumber: 4,
+                description: "Process metadata capture and system integration",
+                actions: [
+                    "Process Metadata Capture",
+                    "Quality Metrics Collection",
+                    "System Integration & Distribution",
+                    "Final Account Activation"
+                ],
+                data: {
+                    qualityMetrics: { dataCompleteness: 97, processEfficiency: 94 },
+                    accountStatus: 'ACTIVE'
+                }
+            }
+        ];
+
+        // Update visual step indicators
+        function updateVisualSteps() {
+            // Reset all step cards
+            document.querySelectorAll('.step-card').forEach(card => {
+                card.classList.remove('active', 'completed');
+            });
+            
+            // Mark completed steps
+            for (let i = 0; i < currentStep; i++) {
+                const stepCard = document.querySelector(`[data-step="${i + 1}"]`);
+                if (stepCard) {
+                    stepCard.classList.add('completed');
+                }
+            }
+            
+            // Mark current step as active
+            const currentStepCard = document.querySelector(`[data-step="${currentStep + 1}"]`);
+            if (currentStepCard) {
+                currentStepCard.classList.add('active');
+                // Scroll current step into view
+                currentStepCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Generate realistic API console output with comprehensive details
+        function addApiLog(step, action, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const stepData = demoSteps[currentStep];
+            
+            let logEntry = '';
+            
+            switch (step.id) {
+                case 1:
+                    if (action === "Service Discovery") {
+                        logEntry = `
+                            <div class="api-call-block">
+                                <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}] SERVICE DISCOVERY</span>
+                                <div class="api-request">
+                                    <span class="log-info">→ GET /api/v1/obp/discovery/services HTTP/1.1</span>
+                                    <span class="log-info">→ Host: api.openbanking.swiss</span>
+                                    <span class="log-info">→ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjdXN0b21lcl9pZCIsImF1ZCI6WyJhcGkub2JwLnN3aXNzIl0sInNjb3BlIjoiZGlzY292ZXJ5OnJlYWQifQ...</span>
+                                    <span class="log-info">→ Content-Type: application/json</span>
+                                    <span class="log-info">→ Accept: application/json</span>
+                                    <span class="log-info">→ X-Request-ID: req_disc_${Date.now()}</span>
+                                </div>
+                                <div class="api-response">
+                                    <span class="log-success">← 200 OK</span>
+                                    <span class="log-success">← Content-Type: application/json</span>
+                                    <div class="json-payload">
+{
+  "services": [
+    {"name": "banking", "version": "v1", "endpoint": "/api/v1/banking"},
+    {"name": "identity", "version": "v1", "endpoint": "/api/v1/identity"},
+    {"name": "consent", "version": "v1", "endpoint": "/api/v1/consent"},
+    {"name": "compliance", "version": "v1", "endpoint": "/api/v1/compliance"}
+  ],
+  "capabilities": ["account_opening", "data_sharing", "consent_management"],
+  "security_profile": "FAPI_2_0_ADVANCED"
+}</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (action === "Customer Intent Capture") {
+                        logEntry = `
+                            <div class="api-call-block">
+                                <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}] INTENT ANALYSIS</span>
+                                <div class="api-request">
+                                    <span class="log-info">→ POST /api/v1/obp/intent/analyze HTTP/1.1</span>
+                                    <span class="log-info">→ Host: api.openbanking.swiss</span>
+                                    <span class="log-info">→ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJjdXN0b21lcl9pZCJ9...</span>
+                                    <span class="log-info">→ Content-Type: application/json</span>
+                                    <span class="log-info">→ X-Customer-Context: account_opening_journey</span>
+                                    <div class="json-payload">
+{
+  "customer_input": "I would like to open a new bank account",
+  "session_id": "sess_${Date.now()}",
+  "channel": "web_portal"
+}</div>
+                                </div>
+                                <div class="api-response">
+                                    <span class="log-success">← 200 OK</span>
+                                    <div class="json-payload">
+{
+  "intent": "account_opening",
+  "confidence": 0.95,
+  "required_steps": [1,2,3,4,5,6,7,8,9,10],
+  "estimated_duration": "180s",
+  "data_requirements": ["identity", "address", "income", "risk_profile"]
+}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    break;
+                case 2:
+                    if (action === "Eligibility Check") {
+                        logEntry = `
+                            <div class="api-call-block">
+                                <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}] ELIGIBILITY ASSESSMENT</span>
+                                <div class="api-request">
+                                    <span class="log-info">→ POST /api/v1/obp/eligibility/check HTTP/1.1</span>
+                                    <span class="log-info">→ Host: api.openbanking.swiss</span>
+                                    <span class="log-info">→ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...</span>
+                                    <span class="log-info">→ X-mTLS-Certificate: CN=customer.swiss-id.ch, O=SwissID</span>
+                                    <span class="log-info">→ Content-Type: application/json</span>
+                                    <div class="json-payload">
+{
+  "customer_id": "ch_cust_temp_${Date.now()}",
+  "product_type": "current_account",
+  "requested_features": ["online_banking", "mobile_app", "debit_card"],
+  "risk_tolerance": "moderate"
+}</div>
+                                </div>
+                                <div class="api-response">
+                                    <span class="log-success">← 200 OK</span>
+                                    <div class="json-payload">
+{
+  "eligibility_status": "APPROVED",
+  "eligibility_score": 85,
+  "risk_assessment": "LOW_MEDIUM",
+  "required_documents": ["id_verification", "address_proof", "income_statement"],
+  "estimated_approval_time": "24h",
+  "next_steps": ["compliance_check", "data_collection"]
+}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    break;
+                case 3:
+                    if (action === "Compliance Validation") {
+                        logEntry = `
+                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                            <span class="log-info">GET /api/v1/compliance/fatca HTTP/1.1</span>
+                            <span class="log-success">200 OK - FATCA Status: NON_US_PERSON, Tax Domicile: CH</span>
+                        `;
+                    }
+                    break;
+                case 4:
+                    if (action === "Data Quality Assessment") {
+                        logEntry = `
+                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                            <span class="log-info">GET /api/v1/data/quality/assess HTTP/1.1</span>
+                            <span class="log-success">200 OK - Quality Score: 94%, Completeness: 98%</span>
+                        `;
+                    }
+                    break;
+                case 5:
+                    if (action === "Risk Assessment & Profiling") {
+                        logEntry = `
+                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                            <span class="log-info">POST /api/v1/risk/assess HTTP/1.1</span>
+                            <span class="log-success">200 OK - Risk Category: LOW_MEDIUM, Score: 25/100</span>
+                        `;
+                    }
+                    break;
+                case 6:
+                    if (action === "Biometric Verification Processing") {
+                        logEntry = `
+                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                            <span class="log-info">POST /api/v1/identity/biometric HTTP/1.1</span>
+                            <span class="log-info">FAPI 2.0 DPoP Token: eyJ0eXAiOiJkcG9wK2p3dCIsImFsZyI6IlJTMjU2In0...</span>
+                            <span class="log-success">200 OK - Match: 98.7%, Level: QEAA_SUBSTANTIAL</span>
+                        `;
+                    }
+                    break;
+                case 7:
+                    if (action === "AML Risk Assessment") {
+                        logEntry = `
+                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                            <span class="log-info">POST /api/v1/aml/assess HTTP/1.1</span>
+                            <span class="log-success">200 OK - AML Risk: LOW, PEP: CLEAR, Sanctions: CLEAR</span>
+                        `;
+                    }
+                    break;
+                case 8:
+                    if (action === "Legal Agreement Establishment") {
+                        logEntry = `
+                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                            <span class="log-info">POST /api/v1/contract/establish HTTP/1.1</span>
+                            <span class="log-success">200 OK - Contract ID: contract_ch_123456, Status: READY_FOR_SIGNATURE</span>
+                        `;
+                    }
+                    break;
+                case 9:
+                    if (action === "Digital Signature Execution") {
+                        logEntry = `
+                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                            <span class="log-info">POST /api/v1/signature/qes HTTP/1.1</span>
+                            <span class="log-info">Certificate: CN=Swiss eID QES, O=SwissSign</span>
+                            <span class="log-success">200 OK - QES applied, Signature ID: sig_qes_456789</span>
+                        `;
+                    }
+                    break;
+                case 10:
+                    if (action === "System Integration & Distribution") {
+                        logEntry = `
+                            <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                            <span class="log-info">PUT /api/v1/integration/distribute HTTP/1.1</span>
+                            <span class="log-success">200 OK - Account activated, Customer ID: ch_cust_12345</span>
+                            <span class="log-success">✓ Process completed successfully in 180s</span>
+                        `;
+                    }
+                    break;
+                default:
+                    logEntry = `
+                        <span class="log-timestamp">${timestamp}</span> <span class="log-step">[STEP ${step.id}]</span>
+                        <span class="log-${type}">Processing: ${action}</span>
+                    `;
+            }
+            
+            return logEntry;
+        }
+
+        // Initialize demo
+        function initDemo() {
+            updateStepDisplay();
+            updatePhaseIndicator();
+            updateButtons();
+            document.getElementById('totalSteps').textContent = demoSteps.length;
+        }
+
+        // Update step display
+        function updateStepDisplay() {
+            const step = demoSteps[currentStep];
+            
+            // Update visual step indicators
+            updateVisualSteps();
+            
+            // Add transition effect
+            const stepDetails = document.querySelector('.step-details');
+            const stepCounter = document.querySelector('.step-counter');
+            const dataDisplay = document.querySelector('.data-display');
+            
+            stepDetails.classList.add('transitioning');
+            stepCounter.classList.add('updating');
+            dataDisplay.classList.add('updating');
+            
+            setTimeout(() => {
+                document.getElementById('phaseBadge').textContent = step.phase;
+                document.getElementById('stepTitle').textContent = `Step ${step.id}: ${step.title}`;
+                document.getElementById('stepDescription').textContent = step.description;
+                document.getElementById('currentStepNum').textContent = step.id;
+                
+                // Remove transition classes
+                setTimeout(() => {
+                    stepDetails.classList.remove('transitioning');
+                    stepCounter.classList.remove('updating');
+                    dataDisplay.classList.remove('updating');
+                }, 100);
+            }, 200);
+            
+            // Update actions list with staggered animations
+            const actionsList = document.getElementById('actionsList');
+            actionsList.innerHTML = '';
+            step.actions.forEach((action, index) => {
+                const actionDiv = document.createElement('div');
+                actionDiv.className = 'action-item';
+                actionDiv.style.opacity = '0';
+                actionDiv.style.transform = 'translateX(-20px)';
+                actionDiv.innerHTML = `
+                    <div class="action-dot"></div>
+                    <span>${action}</span>
+                `;
+                actionsList.appendChild(actionDiv);
+                
+                // Staggered animation
+                setTimeout(() => {
+                    actionDiv.style.transition = 'all 0.4s ease';
+                    actionDiv.style.opacity = '1';
+                    actionDiv.style.transform = 'translateX(0)';
+                }, index * 100 + 300);
+            });
+            
+            // Update sample data
+            document.getElementById('sampleData').textContent = JSON.stringify(step.data, null, 2);
+        }
+
+        // Update phase indicator
+        function updatePhaseIndicator() {
+            const currentPhase = demoSteps[currentStep].phaseNumber;
+            const phases = document.querySelectorAll('.phase');
+            
+            phases.forEach((phase, index) => {
+                const phaseNum = index + 1;
+                phase.className = 'phase ';
+                
+                if (phaseNum < currentPhase) {
+                    phase.className += 'completed';
+                } else if (phaseNum === currentPhase) {
+                    phase.className += 'current';
+                } else {
+                    phase.className += 'pending';
+                }
+            });
+        }
+
+        // Update button states
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentStep === 0;
+            document.getElementById('nextBtn').disabled = currentStep >= demoSteps.length - 1;
+        }
+
+        // Execute step
+        function executeStep() {
+            if (!startTime) {
+                startTime = Date.now();
+            }
+
+            const step = demoSteps[currentStep];
+            const timestamp = new Date().toLocaleTimeString();
+            
+            completedSteps.add(step.id);
+            
+            // Add realistic API logs for this step
+            const newLogs = [
+                { type: 'step', message: `STEP ${step.id}: ${step.title}`, timestamp }
+            ];
+            
+            step.actions.forEach(action => {
+                const apiLog = addApiLog(step, action);
+                if (apiLog) {
+                    newLogs.push({ type: 'api', message: apiLog, timestamp });
+                } else {
+                    newLogs.push({ type: 'action', message: `→ ${action}`, timestamp });
+                }
+            });
+            
+            // Add comprehensive step completion summary
+            const completionSummary = `
+                <div class="step-completion-summary">
+                    <h4>
+                        <div class="completion-checkmark">✓</div>
+                        Step ${step.id} Completed Successfully
+                    </h4>
+                    <p><strong>Duration:</strong> ${Math.floor(Math.random() * 5 + 3)}s | <strong>API Calls:</strong> ${step.actions.length} | <strong>Status:</strong> All systems operational</p>
+                    <ul class="completed-actions-list">
+                        ${step.actions.map(action => `<li>${action}</li>`).join('')}
+                    </ul>
+                    <p><small>All API endpoints responded within acceptable thresholds. Data integrity verified. Ready for next step.</small></p>
+                </div>
+            `;
+            newLogs.push({ type: 'success', message: completionSummary, timestamp, isHtml: true });
+            
+            logs.push(...newLogs);
+            updateConsole();
+        }
+
+        // Update console output
+        function updateConsole() {
+            const consoleOutput = document.getElementById('consoleOutput');
+            
+            if (logs.length === 0) {
+                consoleOutput.innerHTML = '<div class="ready-message">Ready to start demo... Click Play to begin</div>';
+                return;
+            }
+            
+            consoleOutput.innerHTML = '';
+            logs.forEach(log => {
+                const logDiv = document.createElement('div');
+                logDiv.className = `log-entry log-${log.type}`;
+                if (log.type === 'api' || log.isHtml) {
+                    logDiv.innerHTML = log.message;
+                } else {
+                    logDiv.innerHTML = `<span class="log-timestamp">[${log.timestamp}]</span> ${log.message}`;
+                }
+                consoleOutput.appendChild(logDiv);
+            });
+            
+            // Scroll to bottom
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        // Control functions
+        function togglePlayPause() {
+            if (isPlaying) {
+                pauseDemo();
+            } else {
+                playDemo();
+            }
+        }
+
+        function playDemo() {
+            isPlaying = true;
+            document.getElementById('playIcon').textContent = '⏸️';
+            document.getElementById('playText').textContent = 'Pause';
+            
+            if (currentStep < demoSteps.length - 1) {
+                playInterval = setInterval(() => {
+                    nextStep();
+                    if (currentStep >= demoSteps.length - 1) {
+                        pauseDemo();
+                    }
+                }, speedSettings[currentSpeed]);
+            }
+        }
+
+        function pauseDemo() {
+            isPlaying = false;
+            document.getElementById('playIcon').textContent = '▶️';
+            document.getElementById('playText').textContent = 'Play';
+            
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < demoSteps.length - 1) {
+                // Animate action processing for current step
+                const actionItems = document.querySelectorAll('.action-item');
+                actionItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add('processing');
+                        setTimeout(() => {
+                            item.classList.remove('processing');
+                            item.classList.add('completed');
+                        }, 800);
+                    }, index * 200);
+                });
+                
+                // Move to next step after processing animations
+                setTimeout(() => {
+                    currentStep++;
+                    executeStep();
+                    updateStepDisplay();
+                    updatePhaseIndicator();
+                    updateButtons();
+                }, actionItems.length * 200 + 1000);
+            }
+            
+            if (currentStep >= demoSteps.length - 1) {
+                pauseDemo();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStepDisplay();
+                updatePhaseIndicator();
+                updateButtons();
+            }
+        }
+
+        function resetDemo() {
+            pauseDemo();
+            currentStep = 0;
+            completedSteps.clear();
+            logs = [];
+            startTime = null;
+            
+            updateStepDisplay();
+            updatePhaseIndicator();
+            updateButtons();
+            updateConsole();
+        }
+
+        function changeSpeed() {
+            currentSpeed = document.getElementById('speedSelect').value;
+            
+            if (isPlaying) {
+                pauseDemo();
+                playDemo();
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initDemo);
+    </script>
+</body>
+</html>

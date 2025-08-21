@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 1: Referenzprozess - Technical Description</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #253165 0%, #0070C0 100%);
+            color: #1e293b;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .doc-header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .doc-header h1 {
+            color: #253165;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #253165, #0070C0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .doc-header .subtitle {
+            color: #64748b;
+            font-size: 1.3rem;
+            font-weight: 300;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #F85F3D;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .back-button:hover {
+            background: #e04e2c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(248, 95, 61, 0.3);
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .content-section:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .content-section:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        h2 {
+            color: #253165;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FA9F8A;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #F85F3D;
+        }
+
+        h3 {
+            color: #0070C0;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        h4 {
+            color: #253165;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        p {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .objectives-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .objective-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #F85F3D;
+            transition: all 0.3s ease;
+        }
+
+        .objective-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(248, 95, 61, 0.15);
+            border-left-color: #253165;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #E5CAFF;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #F85F3D, #FA9F8A);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(37, 49, 101, 0.15);
+            border-color: #0070C0;
+        }
+
+        .feature-card h4 {
+            color: #253165;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        strong {
+            color: #253165;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fefce8 100%);
+            border: 2px solid #FFC000;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .highlight-box::before {
+            content: '⚡';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #FFC000;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .tech-specs {
+            background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+            border: 2px solid #B469FF;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #00b02cff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 25px 15px;
+            background: linear-gradient(135deg, #253165 0%, #0070C0 100%);
+            color: white;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #FA9F8A;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .doc-header h1 {
+                font-size: 2rem;
+            }
+            
+            .objectives-list,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-button">
+            ← Back to Demo Overview
+        </a>
+
+        <div class="doc-header">
+            <h1>Demo 1: Universal Reference Process</h1>
+            <p class="subtitle">Technical Description & Implementation Guide</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Overview and Objectives</h2>
+            <p>This demonstration showcases the universal 10-step reference process (Referenzprozess) that forms the core foundation of the Open API Kundenbeziehung framework. The demo illustrates how this generic process can work across all industries and ecosystems while maintaining consistency and efficiency.</p>
+            
+            <div class="objectives-list">
+                <div class="objective-card">
+                    <strong>Universal Framework</strong>
+                    <p>Demonstrate the complete 10-step universal customer onboarding framework</p>
+                </div>
+                <div class="objective-card">
+                    <strong>Industry Agnostic</strong>
+                    <p>Show industry-agnostic business logic and modular process execution</p>
+                </div>
+                <div class="objective-card">
+                    <strong>Cross-Industry Compatibility</strong>
+                    <p>Illustrate cross-industry compatibility and extensible architecture</p>
+                </div>
+                <div class="objective-card">
+                    <strong>Process Orchestration</strong>
+                    <p>Highlight the process orchestration capabilities of the core framework</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Key Features Demonstrated</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🏗️ Universal Process Framework</h4>
+                    <p><strong>Generic 10-Step Structure:</strong> Shows how the same process works across banking, insurance, government, and other sectors</p>
+                    <p><strong>Modular Execution:</strong> Each step is independently configurable and executable</p>
+                    <p><strong>Industry Extensions:</strong> Demonstrates how sector-specific logic can be added without changing the core process</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>⚙️ Process Orchestration Engine</h4>
+                    <p><strong>Dynamic Process Management:</strong> Real-time process state tracking and control</p>
+                    <p><strong>Error Handling and Recovery:</strong> Robust error management with automatic retry mechanisms</p>
+                    <p><strong>Parallel Processing:</strong> Efficient execution of independent steps in parallel where possible</p>
+                </div>
+
+                <div class="feature-card">
+                    <h4>🌐 Cross-Industry Compatibility</h4>
+                    <p><strong>Unified Data Models:</strong> Standardized data structures that work across industries</p>
+                    <p><strong>Flexible Validation Rules:</strong> Configurable validation that adapts to different sector requirements</p>
+                    <p><strong>Extension Point Architecture:</strong> Clear interfaces for adding industry-specific functionality</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Technical Implementation</h2>
+            
+            <div class="tech-specs">
+                <h3>Core Architecture Components</h3>
+                <ul>
+                    <li><strong>Process Engine:</strong> State machine implementation with step-by-step execution</li>
+                    <li><strong>Data Pipeline:</strong> Modular data transformation and validation framework</li>
+                    <li><strong>Event System:</strong> Pub/sub architecture for process state notifications</li>
+                    <li><strong>Extension Framework:</strong> Plugin system for industry-specific customizations</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h3>10-Step Process Flow</h3>
+                <ol>
+                    <li><strong>Initialization:</strong> Service discovery and customer intent capture</li>
+                    <li><strong>Identity Verification:</strong> Multi-factor authentication and identity validation</li>
+                    <li><strong>Data Collection:</strong> Structured collection of required information</li>
+                    <li><strong>Data Validation:</strong> Comprehensive validation against business rules</li>
+                    <li><strong>Risk Assessment:</strong> Automated risk evaluation and scoring</li>
+                    <li><strong>Compliance Check:</strong> Regulatory compliance validation</li>
+                    <li><strong>External Verification:</strong> Third-party data verification and enrichment</li>
+                    <li><strong>Decision Processing:</strong> Automated decision making with manual override capability</li>
+                    <li><strong>Account Setup:</strong> Service provisioning and account creation</li>
+                    <li><strong>Finalization:</strong> Process completion and customer notification</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Business Impact & Metrics</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Universal Process Steps</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Industry Compatibility</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Process Standardization</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Automated Processing</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Strategic Benefits</h3>
+                <ul>
+                    <li><strong>Operational Consistency:</strong> Standardized processes across all business units and industries</li>
+                    <li><strong>Reduced Development Time:</strong> Reusable framework eliminates need to build custom processes</li>
+                    <li><strong>Compliance Automation:</strong> Built-in regulatory compliance reduces manual oversight requirements</li>
+                    <li><strong>Scalable Architecture:</strong> Framework scales from small businesses to enterprise implementations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Integration & Usage</h2>
+            
+            <h3>API Integration</h3>
+            <div class="code-block">
+POST /api/v1/process/reference
+Content-Type: application/json
+
+{
+  "industry": "banking",
+  "process_type": "customer_onboarding",
+  "customer_data": { ... },
+  "configuration": {
+    "validation_rules": "strict",
+    "parallel_processing": true,
+    "callback_url": "https://example.com/webhook"
+  }
+}
+            </div>
+
+            <h3>Configuration Options</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Industry Profiles</h4>
+                    <p>Pre-configured settings for banking, insurance, government, healthcare, and other sectors</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Validation Rules</h4>
+                    <p>Customizable validation logic with industry-specific requirements</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Processing Modes</h4>
+                    <p>Synchronous, asynchronous, and batch processing capabilities</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Next Steps</h2>
+            <p>This reference process serves as the foundation for all other demonstrations in the Open API Kundenbeziehung framework. Explore the specific use case implementations to see how this universal process adapts to different industries and scenarios.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🏦 Banking Implementation</h4>
+                    <p>See how the reference process handles banking account opening with FINMA compliance</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔒 Privacy & Security</h4>
+                    <p>Explore advanced privacy-preserving implementations with zero-knowledge proofs</p>
+                </div>
+                <div class="feature-card">
+                    <h4>💼 Wealth Management</h4>
+                    <p>Discover complex multi-provider lifecycle management scenarios</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

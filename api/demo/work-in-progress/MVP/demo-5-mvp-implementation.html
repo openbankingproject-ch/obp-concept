@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 5: MVP Implementation - Production-Ready Core</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #253165 0%, #0070C0 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .header h1 {
+            color: #253165;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .mvp-badge {
+            background: #00b02cff;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .demo-controls {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #F85F3D;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #e04e2c;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #E5CAFF;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #e2e8f0;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mvp-features {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .mvp-features h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .architecture-view {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeInUp 0.8s ease-out 0.2s;
+        }
+
+        .architecture-view h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .data-layer {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border: 2px solid #E5CAFF;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .data-layer:hover {
+            border-color: #00b02cff;
+            transform: translateY(-2px);
+        }
+
+        .data-layer.active {
+            background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%);
+            border-color: #00b02cff;
+            box-shadow: 0 4px 12px rgba(0, 176, 44, 0.2);
+        }
+
+        .layer-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .layer-icon {
+            width: 40px;
+            height: 40px;
+            background: #E5CAFF;
+            color: #6b7280;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .data-layer.active .layer-icon {
+            background: #00b02cff;
+            color: white;
+            animation: glow 2s infinite alternate;
+        }
+
+        .layer-title {
+            font-weight: 600;
+            color: #253165;
+            font-size: 1.1rem;
+        }
+
+        .layer-description {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .feature-list li {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: -15px;
+            color: #00b02cff;
+            font-weight: bold;
+        }
+
+        .mvp-timeline {
+            background: linear-gradient(135deg, #fef3c7 0%, #fefce8 100%);
+            border: 2px solid #FFC000;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .mvp-timeline h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+
+        .timeline-phase {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .phase-number {
+            width: 30px;
+            height: 30px;
+            background: #FFC000;
+            color: #92400e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .phase-text {
+            color: #92400e;
+            font-size: 0.9rem;
+        }
+
+        .roi-dashboard {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            grid-column: 1 / -1;
+            animation: fadeInUp 0.8s ease-out 0.4s;
+        }
+
+        .roi-dashboard h2 {
+            color: #253165;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .roi-metric {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #253165 0%, #0070C0 100%);
+            color: white;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .roi-metric:hover {
+            transform: scale(1.05);
+        }
+
+        .roi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #FA9F8A;
+        }
+
+        .roi-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .expansion-path {
+            background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+            border: 2px solid #0070C0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .expansion-path h3 {
+            color: #0070C0;
+            margin-bottom: 15px;
+        }
+
+        .expansion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .expansion-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border: 1px solid #0070C0;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0070C0;
+        }
+
+        .console {
+            background: #1f2937;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            color: #10b981;
+            font-family: 'Courier New', monospace;
+            grid-column: 1 / -1;
+            animation: fadeInUp 0.8s ease-out 0.6s;
+        }
+
+        .console h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        .console-output {
+            height: 300px;
+            overflow-y: auto;
+            background: #111827;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            animation: slideInLog 0.5s ease-out;
+        }
+
+        .log-timestamp {
+            color: #6b7280;
+            font-size: 0.75rem;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .log-info {
+            color: #3b82f6;
+        }
+
+        .log-mvp {
+            color: #00b02cff;
+        }
+
+        .ready-message {
+            color: #6b7280;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLog {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(0, 176, 44, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(0, 176, 44, 0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-button">← Back to Demo Overview</a>
+        
+        <div class="header">
+            <div class="mvp-badge">MVP Ready</div>
+            <h1>Demo 5: MVP Implementation</h1>
+            <p>Production-ready core banking functionality with clear expansion path and immediate ROI</p>
+        </div>
+
+        <div class="demo-controls">
+            <div>
+                <label for="speedControl">Demo Speed:</label>
+                <select id="speedControl">
+                    <option value="fast">Fast</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="slow">Slow</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="playDemo()" id="playBtn">
+                    🚀 Start MVP Demo
+                </button>
+                <button class="btn btn-secondary" onclick="pauseDemo()" id="pauseBtn">
+                    ⏸️ Pause
+                </button>
+                <button class="btn btn-secondary" onclick="resetDemo()" id="resetBtn">
+                    🔄 Reset
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- MVP Core Features -->
+            <div class="mvp-features">
+                <h2>Zielbild 1 MVP Components</h2>
+                
+                <div id="mvpComponents">
+                    <div class="data-layer" data-layer="basisdaten">
+                        <div class="layer-header">
+                            <div class="layer-icon">🏛️</div>
+                            <div class="layer-title">Basisdaten (Essential Data)</div>
+                        </div>
+                        <div class="layer-description">Core customer data required for basic banking operations</div>
+                        <ul class="feature-list">
+                            <li>Identity verification and management</li>
+                            <li>Contact information and address</li>
+                            <li>Basic financial profile</li>
+                            <li>Compliance and audit logging</li>
+                        </ul>
+                    </div>
+
+                    <div class="data-layer" data-layer="erweiterte">
+                        <div class="layer-header">
+                            <div class="layer-icon">📈</div>
+                            <div class="layer-title">Erweiterte Daten (Enhanced Data)</div>
+                        </div>
+                        <div class="layer-description">Additional data for advanced services and personalization</div>
+                        <ul class="feature-list">
+                            <li>Investment preferences and risk profile</li>
+                            <li>Transaction history and patterns</li>
+                            <li>Product usage analytics</li>
+                            <li>Customer behavior insights</li>
+                        </ul>
+                    </div>
+
+                    <div class="data-layer" data-layer="uc1">
+                        <div class="layer-header">
+                            <div class="layer-icon">🏦</div>
+                            <div class="layer-title">UC1: Account Opening</div>
+                        </div>
+                        <div class="layer-description">Complete customer relationship establishment process</div>
+                        <ul class="feature-list">
+                            <li>Automated KYC and compliance</li>
+                            <li>Real-time risk assessment</li>
+                            <li>Product matching and recommendation</li>
+                            <li>Account provisioning and activation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mvp-timeline">
+                    <h3>⏱️ MVP Implementation Timeline</h3>
+                    <div class="timeline-phase">
+                        <div class="phase-number">0</div>
+                        <div class="phase-text">Core Infrastructure Setup (Week 1-2)</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="phase-number">1</div>
+                        <div class="phase-text">Basisdaten Implementation (Week 3-6)</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="phase-number">2</div>
+                        <div class="phase-text">UC1 Account Opening (Week 7-10)</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="phase-number">3</div>
+                        <div class="phase-text">Production Deployment (Week 11-12)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture Overview -->
+            <div class="architecture-view">
+                <h2>MVP Architecture Foundation</h2>
+                
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="background: linear-gradient(135deg, #253165 0%, #0070C0 100%); color: white; padding: 20px; border-radius: 10px;">
+                        <h3>Direct Customer Relationship</h3>
+                        <p style="margin: 10px 0; opacity: 0.9;">Bank maintains full control and ownership</p>
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 8px; padding: 10px; margin-top: 10px;">
+                            <strong>Zielbild 1 Implementation</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <h4 style="color: #253165; margin-bottom: 10px;">Core API Endpoints</h4>
+                    <div style="background: #1f2937; color: #10b981; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.85rem;">
+                        <div>POST /api/v1/customers/onboarding</div>
+                        <div>GET /api/v1/customers/{id}/profile</div>
+                        <div>PUT /api/v1/customers/{id}/basisdaten</div>
+                        <div>GET /api/v1/accounts/{id}/status</div>
+                    </div>
+                </div>
+
+                <div class="expansion-path">
+                    <h3>🎯 Clear Expansion Path</h3>
+                    <div class="expansion-grid">
+                        <div class="expansion-item">UC2: Re-ID</div>
+                        <div class="expansion-item">UC3: Age Verify</div>
+                        <div class="expansion-item">UC4: EVV CLM</div>
+                        <div class="expansion-item">Multi-Provider</div>
+                        <div class="expansion-item">Trust Network</div>
+                        <div class="expansion-item">Advanced Analytics</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROI Dashboard -->
+            <div class="roi-dashboard">
+                <h2>Business Value & ROI Metrics</h2>
+                <div class="roi-grid">
+                    <div class="roi-metric">
+                        <div class="roi-value" id="implementation">3</div>
+                        <div class="roi-label">Months to Market</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-value" id="roi">9</div>
+                        <div class="roi-label">Months to Full ROI</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-value" id="coverage">95%</div>
+                        <div class="roi-label">Banking Use Cases</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-value" id="control">100%</div>
+                        <div class="roi-label">Bank Control</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-value" id="compliance">FINMA</div>
+                        <div class="roi-label">Compliance Ready</div>
+                    </div>
+                    <div class="roi-metric">
+                        <div class="roi-value" id="scalability">∞</div>
+                        <div class="roi-label">Scalability</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Console Output -->
+            <div class="console">
+                <h2>MVP Implementation Log</h2>
+                
+                <div class="console-output" id="consoleOutput">
+                    <div class="ready-message">Ready to demonstrate MVP implementation and business value...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentComponent = 0;
+        let isPlaying = false;
+        let playInterval;
+        let logs = [];
+
+        const mvpComponents = [
+            {
+                component: 'basisdaten',
+                title: 'Basisdaten Implementation',
+                logs: [
+                    { type: 'mvp', message: 'Initializing Basisdaten core infrastructure' },
+                    { type: 'info', message: 'Setting up identity management system' },
+                    { type: 'success', message: 'Customer data model established' },
+                    { type: 'info', message: 'Basic compliance framework integrated' }
+                ]
+            },
+            {
+                component: 'erweiterte',
+                title: 'Erweiterte Daten Layer',
+                logs: [
+                    { type: 'mvp', message: 'Adding enhanced data capabilities' },
+                    { type: 'info', message: 'Risk profiling system configured' },
+                    { type: 'success', message: 'Investment preference engine active' },
+                    { type: 'info', message: 'Analytics framework ready for expansion' }
+                ]
+            },
+            {
+                component: 'uc1',
+                title: 'UC1 Account Opening',
+                logs: [
+                    { type: 'mvp', message: 'Implementing customer relationship establishment' },
+                    { type: 'info', message: 'KYC automation pipeline activated' },
+                    { type: 'success', message: 'Account opening workflow operational' },
+                    { type: 'success', message: '🏆 MVP Production Ready - Zielbild 1 Complete' }
+                ]
+            }
+        ];
+
+        function getSpeed() {
+            const speed = document.getElementById('speedControl').value;
+            switch(speed) {
+                case 'fast': return 2000;
+                case 'slow': return 5000;
+                default: return 3000;
+            }
+        }
+
+        function addLog(entry) {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.push({...entry, timestamp});
+            updateConsole();
+        }
+
+        function updateConsole() {
+            const consoleOutput = document.getElementById('consoleOutput');
+            
+            if (logs.length === 0) {
+                consoleOutput.innerHTML = '<div class="ready-message">Ready to demonstrate MVP implementation and business value...</div>';
+                return;
+            }
+            
+            consoleOutput.innerHTML = '';
+            logs.forEach(log => {
+                const logDiv = document.createElement('div');
+                logDiv.className = `log-entry log-${log.type}`;
+                logDiv.innerHTML = `<span class="log-timestamp">[${log.timestamp}]</span> ${log.message}`;
+                consoleOutput.appendChild(logDiv);
+            });
+            
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function updateComponents(activeComponent) {
+            document.querySelectorAll('.data-layer').forEach(layer => {
+                layer.classList.remove('active');
+            });
+            
+            if (activeComponent) {
+                const layerElement = document.querySelector(`[data-layer="${activeComponent}"]`);
+                if (layerElement) {
+                    layerElement.classList.add('active');
+                }
+            }
+        }
+
+        function executeComponent(componentIndex) {
+            if (componentIndex >= mvpComponents.length) return;
+            
+            const component = mvpComponents[componentIndex];
+            updateComponents(component.component);
+            
+            // Add component logs
+            component.logs.forEach((log, index) => {
+                setTimeout(() => {
+                    addLog(log);
+                }, index * 400);
+            });
+        }
+
+        function playDemo() {
+            if (isPlaying) return;
+            
+            isPlaying = true;
+            document.getElementById('playBtn').disabled = true;
+            
+            playInterval = setInterval(() => {
+                if (currentComponent < mvpComponents.length) {
+                    executeComponent(currentComponent);
+                    currentComponent++;
+                } else {
+                    // Add final success message
+                    addLog({ type: 'success', message: '🎉 MVP Successfully Deployed - Ready for Customer Onboarding' });
+                    pauseDemo();
+                }
+            }, getSpeed());
+        }
+
+        function pauseDemo() {
+            isPlaying = false;
+            document.getElementById('playBtn').disabled = false;
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+            }
+        }
+
+        function resetDemo() {
+            pauseDemo();
+            currentComponent = 0;
+            logs = [];
+            updateConsole();
+            updateComponents(null);
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            updateConsole();
+            updateComponents(null);
+        });
+    </script>
+</body>
+</html>
