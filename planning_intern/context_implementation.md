@@ -60,8 +60,8 @@ reference for all tasks in the following sections!!
 ## Implementation
 
 **Generic Core Implementation:**
-- Create a generic core implementation of the Open API Kundenbeziehung that can be extended and adapted
-- The generic core implementation must be coherent with the content of the conclusions and the requirements (follow Guidelines and Context)
+- The current project state (Alpha Version 1.0) aims to implement a generic core implementation ("Basisimplementation") of the Open API Kundenbeziehung that can be extended to work with different architectures, use cases and Ecosystems, without changing the core implementation
+- The generic core implementation must be coherent with the content of the conclusions and the requirements (follow Guidelines and Context in 'planning_intern/context_fachliche_dokumentation.md')
 - Verify that all of the current core implementation is coherent with the conclusions and the requirements, if not adapt the implementation accordingly
 
 **Specific Implementations:**
@@ -92,60 +92,26 @@ reference for all tasks in the following sections!!
     - add the necessary configurations for the testing framework of the Open API Kundenbeziehung
 - if necessary, create additional files in the api directory for the implementation of the Open API Kundenbeziehung
     - ensure that the files are coherent with the conclusions and the requirements
+- **ensure that all required files are present in the api directory and that they are coherent with the conclusions and the requirements**
 
 ----------
 
-## Demos
-
-**Demos Context:**
-- Reference files: 
-    - `documentation/Fachliche Conclusions Open API Kundenbeziehung/02 Anforderungen.md`
-    - `documentation/Fachliche Conclusions Open API Kundenbeziehung/03 Referenzprozess.md`
-    - `documentation/Fachliche Conclusions Open API Kundenbeziehung/04 API Endpoint Design.md`
-    - `documentation/Fachliche Conclusions Open API Kundenbeziehung/05 Vertrauensnetzwerk.md`
-    - `documentation/Fachliche Conclusions Open API Kundenbeziehung/06 Consent und Security Flow.md`
-    - `documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md`
-- Demos must be coherent with the content of the conclusions!!
-- Demos should visualize the functionality of the Open API Kundenbeziehung, not be a full implementation
-- Demos should appeal to an audience mostly from the financial industry, with an extensive theoretical and professional background, but not necessarily with a deep technical understanding of APIs or software development
-- Use visually appealing graphics and animations for the demos
-
-**Simplified Demos:**
-The current demos do not visualize the processes/flows at all. I have created a simplified version of the referenzprozess demo in HTML that visualizes the 10 step Referenzprozess. Analogue to that, create simplified demos for the other use cases and processes as listed below. The demos should be simple and concise, but still provide a good overview of the functionality of the Open API Kundenbeziehung. Use context listed under **Demos Context**.
-
-[] delete all existing .js demo files in the api directory
-[] leave the description files as basis for the new demos
-[] create new demos in the api/demo directory (in corresponding subdirectories)
-    - **Demo 1: Referenzprozess**: basic functionality of the Open API Kundenbeziehung shown through the 10 step Referenzprozess
-        - **Demo 1.1: Use Case Kundenbeziehungseröffnung**: Show the 10 step Referenzprozess for the use case of Kundenbeziehungseröffnung
-        - **Demo 1.2: Use Case Re-Identifikation**: Show the 10 step Referenzprozess for the use case of Re-Identifikation
-        - **Demo 1.3: Use Case Altersverifikation**: Show the 10 step Referenzprozess for the use case of Altersverifikation
-        - **Demo 1.4: Use Case CLM von EVV-Endkunden**: Show the 10 step Referenzprozess for the use case of CLM von EVV-Endkunden
-    - **Demo 2: Daten Onboarding und Pflege**: Show the functionality of the Open API Kundenbeziehung for Daten Onboarding und Pflege
-    - **Demo 3: Consent and Security Flow**: Show the Consent and Security Flow of the Open API Kundenbeziehung
-    - **Demo 4: Verification Process**: Show the Verification Process of the Open API Kundenbeziehung
-    - **Demo 5: MVP Implementation**: Show the MVP implementation of the Open API Kundenbeziehung
-[] For each demo, create an HTML file that visualizes the flow and functionality to be shown ("api/demo/demo-referenzprozess-simplified-example.html" as an example)
-[] Create a main landing page (for when running on localhost) where all demos are listed with a short description and a link to the respective demo file (e.g. "api/demo/index.html")
-    - The main landing page should be visually appealing and provide an overview of the demos
-    - Each demo should have a link to the respective demo file and a short description of the demo
-- Update the DEMO-INSTRUCTIONS.md file with the new demos and their descriptions and links to the demo files as well as the demo description files
-
-----------
-
-## Documentation and Instructions
+## Code Documentation and Instructions
+!!update after every change in the code!!
 
 **Documentation:**
-- create a new README.md file in the api directory that briefly introduces the Open API Kundenbeziehung and provides links to the relevant documentation files
-- update the implementation-details.md file with the implementation details of the Open API Kundenbeziehung
-    - split into sections analogue to the conclusion files and create a file for each section, add implementation details of the section to the respective file
-    - in each section file add a link to the respective conclusion file for further details and background information
-    - adapt the file implementation-details.md to just outline the content of the sections and provide links to the respective files
-    - link file-structure.txt in the implementation-details.md file
-- update the file-structure.txt file with the new files and their descriptions
-- create a file api-instructions.md in the api directory that provides instructions on how to use the Open API Kundenbeziehung
-    - include instructions on how to run the demos and the implementation details
-    - include instructions on how to run the tests and the verification process
-    - include instructions on how to utilize the API endpoints and the data model for real-world applications
+- README.md file in the api directory briefly introduces the Open API Kundenbeziehung and provides links to the relevant documentation files
+- **implementation-details.md**: reflects the current state of the implementation details of the Open API Kundenbeziehung
+    - split into sections analogue to the conclusion files, containing implementation details of the section to the respective file
+    - in each section file: link to the respective conclusion file for further details and background information
+    - the file implementation-details.md outlines the content of the sections briefly and provides links to the respective files
+    - link to file-structure.txt in the implementation-details.md file
+- **file-structure.txt**: contains an overview of all implementation files, their descriptions and their connections to other implementation files
+    - the file-structure.txt should be updated after every change in the implementation files
+    - the file-structure.txt should be coherent with the content of the implementation-details.md file
+- **api-instructions.md**: provides instructions on how to use the Open API Kundenbeziehung
+    - includes instructions on how to run the demos and the implementation details
+    - includes instructions on how to run the tests and the verification process
+    - includes instructions on how to utilize the API endpoints and the data model for real-world applications
 
 
