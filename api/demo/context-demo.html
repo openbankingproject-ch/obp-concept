@@ -1026,6 +1026,18 @@
                 transition-duration: 0.01ms !important;
             }
         }
+        
+        /* Disable transitions for immediate state changes */
+        .no-transition {
+            transition: none !important;
+        }
+        
+        /* Disable transitions for consent message state changes while keeping opacity transition */
+        .sequence-message.no-transition .message-arrow,
+        .sequence-message.no-transition .message-arrow::after,
+        .sequence-message.no-transition .message-text {
+            transition: none !important;
+        }
     </style>
 </head>
 <body>
@@ -1491,7 +1503,7 @@
             renderProcessSteps();
             renderConsentFlowComponents();
             renderDataCategories();
-            activateStep(1);
+            // Stay in neutral state until user clicks "Run Demo" or clicks a step
             addConsoleMessage('System initialized. Ready for user interaction.', 'success');
         }
 
@@ -1629,6 +1641,13 @@
             // Show relevant data categories
             showDataCategories(stepId);
             
+            // If this is Step 10, mark everything as completed
+            if (stepId === 10) {
+                setTimeout(() => {
+                    completeEverything();
+                }, 2000); // Allow animations to complete first
+            }
+            
             // Enhanced API simulation
             const step = referenceProcessSteps.find(s => s.id === stepId);
             simulateAPICall({ id: stepId, title: step.title, description: step.description });
@@ -1645,6 +1664,44 @@
                     });
                 }, 800);
             }
+        }
+        
+        // Complete Everything - called at Step 10
+        function completeEverything() {
+            // Mark ALL steps as completed
+            document.querySelectorAll('.process-step').forEach(step => {
+                step.classList.add('no-transition');
+                step.classList.remove('active');
+                step.classList.add('completed');
+                setTimeout(() => step.classList.remove('no-transition'), 0);
+            });
+            
+            // Mark ALL messages as completed
+            document.querySelectorAll('.sequence-message').forEach(msg => {
+                msg.classList.add('no-transition');
+                msg.classList.remove('active', 'in-progress');
+                msg.classList.add('completed');
+                setTimeout(() => msg.classList.remove('no-transition'), 0);
+            });
+            
+            // Mark ALL data fields as confirmed
+            document.querySelectorAll('.data-field').forEach(field => {
+                field.classList.add('no-transition');
+                field.classList.remove('new', 'highlight', 'receiving', 'received-unconfirmed');
+                field.classList.add('confirmed');
+                setTimeout(() => field.classList.remove('no-transition'), 0);
+            });
+            
+            // Set phase display to completed
+            const phaseDisplay = document.getElementById('currentPhaseDisplay');
+            if (phaseDisplay) {
+                phaseDisplay.classList.add('no-transition');
+                phaseDisplay.classList.remove('active');
+                phaseDisplay.classList.add('completed');
+                setTimeout(() => phaseDisplay.classList.remove('no-transition'), 0);
+            }
+            
+            addConsoleMessage('Process completed. All steps, consent messages, and data points verified.', 'success');
         }
 
         // Update Step Visual States
@@ -1734,65 +1791,88 @@
                 }, 200);
             }
             
-            // Activate sequence messages progressively
-            activeMessages.forEach((messageId, index) => {
+            // Step colors for completed messages
+            const stepColors = {
+                1: '#0070C0',    // Blue
+                2: '#0095ffff',  // Blue bright
+                3: '#4cb867ff',  // Green
+                4: '#7fb88dff',  // Green muted
+                5: '#B469FF',    // Purple
+                6: '#cca2f7ff',  // Purple light
+                7: '#FFC000',    // Yellow
+                8: '#ecd07cff',  // Yellow light
+                9: '#ff3370ff',  // Pink
+                10: '#e28fb9ff'  // Pink light
+            };
+            
+            // Phase 1: Make new messages visible (with fade-in animation)
+            const newMessages = activeMessages.filter(msgId => {
+                const messageElement = document.getElementById(`message-${msgId}`);
+                return messageElement && !messageElement.classList.contains('active');
+            });
+            
+            newMessages.forEach((messageId, index) => {
                 const message = sequenceMessages.find(msg => msg.id === messageId);
                 if (message) {
                     setTimeout(() => {
                         const messageElement = document.getElementById(`message-${message.id}`);
-                        if (messageElement) {
-                            // Only update if message isn't already completed
-                            if (!messageElement.classList.contains('completed')) {
-                                if (currentStepMessages.includes(messageId)) {
-                                    messageElement.classList.add('active', 'in-progress');
-                                } else {
-                                    messageElement.classList.add('active', 'completed');
-                                    // Assign step-specific color for completed messages
-                                    const stepColors = {
-                                        1: '#0070C0',    // Blue
-                                        2: '#0095ffff',  // Blue bright
-                                        3: '#4cb867ff',  // Green
-                                        4: '#7fb88dff',  // Green muted
-                                        5: '#B469FF',    // Purple
-                                        6: '#cca2f7ff',  // Purple light
-                                        7: '#FFC000',    // Yellow
-                                        8: '#ecd07cff',  // Yellow light
-                                        9: '#ff3370ff',  // Pink
-                                        10: '#e28fb9ff'  // Pink light
-                                    };
-                                    // Find which step this message belongs to
-                                    for (let step = 1; step <= stepId; step++) {
-                                        if (stepToMessagesMapping[step] && stepToMessagesMapping[step].includes(messageId)) {
-                                            const color = stepColors[step] || '#0070C0';
-                                            messageElement.style.setProperty('--message-color', color);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
+                        if (messageElement && !messageElement.classList.contains('active')) {
+                            // Just make visible - fade-in with CSS transition
+                            messageElement.classList.add('active');
+                            
+                            // Activate participants for this message
+                            const fromParticipant = document.getElementById(`participant-${consentParticipants[message.from].id}`);
+                            const toParticipant = document.getElementById(`participant-${consentParticipants[message.to].id}`);
+                            const fromLifeline = document.getElementById(`lifeline-${consentParticipants[message.from].id}`);
+                            const toLifeline = document.getElementById(`lifeline-${consentParticipants[message.to].id}`);
+                            
+                            if (fromParticipant) fromParticipant.classList.add('active');
+                            if (toParticipant) toParticipant.classList.add('active');
+                            if (fromLifeline) fromLifeline.classList.add('active');
+                            if (toLifeline) toLifeline.classList.add('active');
                         }
-                        
-                        // Activate participants involved in this message
-                        const fromParticipant = document.getElementById(`participant-${consentParticipants[message.from].id}`);
-                        const toParticipant = document.getElementById(`participant-${consentParticipants[message.to].id}`);
-                        const fromLifeline = document.getElementById(`lifeline-${consentParticipants[message.from].id}`);
-                        const toLifeline = document.getElementById(`lifeline-${consentParticipants[message.to].id}`);
-                        
-                        if (fromParticipant) fromParticipant.classList.add('active');
-                        if (toParticipant) toParticipant.classList.add('active');
-                        if (fromLifeline) fromLifeline.classList.add('active');
-                        if (toLifeline) toLifeline.classList.add('active');
-                        
-                        // Show granular consent info when message 6 "Grant specific consents" appears
-                        if (messageId === 6 && stepId >= 3) {
-                            const granularInfo = document.querySelector('.granular-consent-info');
-                            if (granularInfo) {
-                                granularInfo.classList.add('visible');
-                            }
-                        }
-                    }, 300 + (index * 200));
+                    }, 400 + (index * 300)); // Keep fade-in timing for new messages only
                 }
             });
+            
+            // Phase 2: IMMEDIATELY update all visible message states (no delays)
+            activeMessages.forEach((messageId) => {
+                const messageElement = document.getElementById(`message-${messageId}`);
+                if (messageElement) {
+                    // Instant state change with no-transition class
+                    messageElement.classList.add('no-transition');
+                    
+                    if (currentStepMessages.includes(messageId)) {
+                        // Current step messages - orange/in-progress
+                        messageElement.classList.add('in-progress');
+                        messageElement.classList.remove('completed');
+                    } else {
+                        // Previous step messages - completed with step-specific color
+                        messageElement.classList.add('completed');
+                        messageElement.classList.remove('in-progress');
+                        
+                        // Find which step this message belongs to and apply color
+                        for (let step = 1; step <= stepId; step++) {
+                            if (stepToMessagesMapping[step] && stepToMessagesMapping[step].includes(messageId)) {
+                                const color = stepColors[step] || '#0070C0';
+                                messageElement.style.setProperty('--message-color', color);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // Remove no-transition after immediate state change
+                    setTimeout(() => messageElement.classList.remove('no-transition'), 0);
+                }
+            });
+            
+            // Show granular consent info when message 6 appears and we're at step 3+
+            if (activeMessages.includes(6) && stepId >= 3) {
+                const granularInfo = document.querySelector('.granular-consent-info');
+                if (granularInfo) {
+                    granularInfo.classList.add('visible');
+                }
+            }
         }
 
         // Show Data Categories
@@ -1816,7 +1896,7 @@
                             }, 600);
                         }
                         
-                        // Enhanced field animations with status colors
+                        // Enhanced field animations with status colors - only for relevant categories
                         const fields = categoryElement.querySelectorAll('.data-field');
                         fields.forEach((field, index) => {
                             // Only remove animation classes, preserve data state for progressive building
@@ -1824,11 +1904,11 @@
                             
                             setTimeout(() => {
                                 if (isNewCategory) {
-                                    // New category fields: receiving state
+                                    // New category fields: use proper state progression with blue animation ONCE
                                     if (!field.classList.contains('confirmed')) {
                                         field.classList.add('new', 'receiving');
                                     
-                                        // After animation, move to received-unconfirmed
+                                        // After blue animation, move to received-unconfirmed
                                         setTimeout(() => {
                                             field.classList.remove('new', 'receiving');
                                             field.classList.add('received-unconfirmed');
@@ -1841,20 +1921,15 @@
                                         }, 800);
                                     }
                                 } else {
-                                    // Existing category fields: just highlight as confirmed if not already
+                                    // Existing category fields: DON'T animate - just ensure confirmed state
                                     if (!field.classList.contains('confirmed')) {
-                                        field.classList.add('highlight', 'confirmed');
-                                    } else {
-                                        field.classList.add('highlight');
+                                        field.classList.add('confirmed'); // Direct state without animation
                                     }
-                                    
-                                    setTimeout(() => {
-                                        field.classList.remove('highlight');
-                                    }, 1200);
+                                    // No highlight animation for already confirmed fields
                                 }
-                            }, index * (isNewCategory ? 150 : 80));
+                            }, index * (isNewCategory ? 200 : 0)); // No delay for existing categories
                         });
-                    }, categoryIndex * 200 + 300);
+                    }, categoryIndex * 300 + 400);
                 } else {
                     categoryElement.classList.remove('active', 'entering');
                     
@@ -2019,6 +2094,8 @@
             addConsoleMessage('Starting automated demo sequence...', 'info');
             
             let step = 1;
+            activateStep(step);
+            step++;
             demoInterval = setInterval(() => {
                 if (!isDemoRunning || isDemoPaused) {
                     return;
@@ -2033,7 +2110,7 @@
                     updateControlButtons();
                     addConsoleMessage('Demo completed. Returning to interactive mode.', 'success');
                 }
-            }, 3000);
+            }, 4000);
         }
         
         function pauseDemo() {
