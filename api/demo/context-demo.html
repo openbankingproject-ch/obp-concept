@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open API Kundenbeziehung Demo Alpha Version 1.0</title>
+    <style>
+        :root {
+            /* OBP Color Scheme */
+            --primary: #253165;
+            --primary-accent-1: #3b4b96ff;
+            --primary-accent-2: #5168ccff;
+            --primary-accent-3: #8197faff;
+            --secondary: #F85F3D;
+            --secondary-accent-1: #f3765aff;
+            --secondary-accent-2: #FA9F8A;
+            --secondary-accent-3: #f3c9c1ff;
+            --tertiary: #0070C0;
+            --tertiary-accent-1: #379ee7ff;
+            --tertiary-accent-2: #73c3fcff;
+            --tertiary-accent-3: #608baaff;
+            
+            --background: #f9fafb;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --muted-text: #3a4b68ff;
+            --remarks: #6b7280;
+            --highlighted-text: #3e5f97ff;
+            --border: #E5CAFF;
+            
+            --success: #4cb867ff;
+            --warning: #FFC000;
+            --info: #B469FF;
+            --api-calls: #F85F3D;
+            --data-highlight: #FA9F8A;
+            --data-highlight-2: #0095ffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--background);
+            background-image: url('../graphics/background/background-graphic-standard.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        /* Header Section */
+        .header {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../graphics/background/obp-farbverlauf.jpg');
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 60px;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 85% 15%;
+            gap: 30px;
+            min-height: 80vh;
+        }
+
+        /* Main Column (85%) */
+        .main-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Reference Process Section */
+        .reference-process {
+            background: var(--surface);
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .process-phases {
+            display: grid;
+            grid-template-columns: 2fr 3fr 2fr 3fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .phase-container {
+            position: relative;
+            background: rgba(37, 49, 101, 0.05);
+            border: 1px solid rgba(37, 49, 101, 0.1);
+            border-radius: 8px;
+            padding: 25px 15px 15px 15px;
+        }
+
+        .phase-title {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .process-steps {
+            display: grid;
+            gap: 12px;
+        }
+
+        .phase-container:nth-child(1) .process-steps {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .phase-container:nth-child(2) .process-steps {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .phase-container:nth-child(3) .process-steps {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .phase-container:nth-child(4) .process-steps {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .process-step {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            padding: 15px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .process-step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 49, 101, 0.15);
+            border-color: var(--primary-accent-2);
+        }
+
+        .process-step.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-accent-1) 100%);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(37, 49, 101, 0.25);
+        }
+
+        .process-step.completed {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .step-icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 8px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .process-step.active .step-icon {
+            opacity: 1;
+        }
+
+        .process-step.completed .step-icon {
+            opacity: 0.9;
+        }
+
+        .step-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .step-number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: var(--tertiary);
+            color: white;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        /* Consent Flow Section */
+        .consent-flow {
+            background: var(--surface);
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .flow-diagram {
+            position: relative;
+            min-height: 600px;
+            background: linear-gradient(45deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .participants {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            position: relative;
+            z-index: 3;
+        }
+
+        .participant {
+            text-align: center;
+            background: white;
+            border: 2px solid var(--tertiary);
+            border-radius: 8px;
+            padding: 12px 8px;
+            min-width: 100px;
+            max-width: 120px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .participant.active {
+            background: var(--secondary-accent-3);
+            border-color: var(--secondary);
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(248, 95, 61, 0.3);
+        }
+
+        .participant-icon {
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 8px;
+            opacity: 0.8;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .lifelines {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            right: 20px;
+            height: 450px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1;
+        }
+
+        .lifeline {
+            width: 2px;
+            height: 100%;
+            background: #d1d5db;
+            position: relative;
+        }
+
+        .lifeline.active {
+            background: var(--secondary);
+            box-shadow: 0 0 10px rgba(248, 95, 61, 0.5);
+        }
+
+        .messages {
+            position: absolute;
+            top: 120px;
+            left: 20px;
+            right: 20px;
+            height: 400px;
+            z-index: 2;
+        }
+
+        .sequence-message {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            height: 35px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .sequence-message.active {
+            opacity: 1;
+        }
+
+        .message-arrow {
+            height: 2px;
+            background: var(--secondary);
+            position: relative;
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+
+        .message-arrow::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid var(--secondary);
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+        }
+
+        .message-arrow.return {
+            background: var(--tertiary);
+        }
+
+        .message-arrow.return::after {
+            border-left-color: var(--tertiary);
+            right: auto;
+            left: -8px;
+            transform: rotate(180deg);
+        }
+
+        .message-text {
+            background: white;
+            padding: 4px 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text);
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .phase-indicators {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .phase-indicator {
+            margin-bottom: 15px;
+            opacity: 0.3;
+            transform: translateY(10px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .phase-indicator.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .phase-indicator-title {
+            background: var(--tertiary);
+            color: white;
+            padding: 6px 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .phase-indicator-desc {
+            color: var(--muted-text);
+            font-size: 0.8rem;
+            padding-left: 12px;
+        }
+
+        /* Data Onboarding Column (15%) */
+        .data-column {
+            background: var(--surface);
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 25px 15px;
+            border: 1px solid var(--border);
+            height: fit-content;
+        }
+
+        .data-section-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .data-category {
+            margin-bottom: 20px;
+            opacity: 0.3;
+            transform: translateY(10px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .data-category.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .category-title {
+            background: var(--secondary);
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            border-radius: 3px;
+        }
+
+        .data-fields {
+            padding-left: 10px;
+        }
+
+        .data-field {
+            font-size: 0.7rem;
+            padding: 2px 0;
+            color: var(--muted-text);
+            border-left: 2px solid var(--data-highlight);
+            padding-left: 6px;
+            margin-bottom: 3px;
+        }
+
+        .data-field.new {
+            animation: fieldAppear 0.8s ease-out;
+        }
+
+        .data-field.highlight {
+            animation: fieldHighlight 1.2s ease-in-out;
+        }
+
+        .data-category.entering {
+            animation: categorySlideIn 0.6s ease-out;
+        }
+
+        @keyframes fieldAppear {
+            0% { 
+                opacity: 0;
+                transform: translateY(10px) scale(0.95);
+                background-color: var(--data-highlight-2);
+            }
+            50% {
+                background-color: var(--data-highlight);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                background-color: transparent;
+            }
+        }
+
+        @keyframes fieldHighlight {
+            0%, 100% { 
+                background-color: transparent;
+                transform: translateX(0);
+                box-shadow: none;
+            }
+            25% { 
+                background-color: var(--data-highlight);
+                transform: translateX(3px);
+                box-shadow: 0 2px 8px rgba(250, 159, 138, 0.3);
+            }
+            75% {
+                background-color: var(--data-highlight-2);
+                transform: translateX(-2px);
+            }
+        }
+
+        @keyframes categorySlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(-2px) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Console Output */
+        .console-section {
+            width: 100%;
+            grid-column: 1 / -1;
+            background: var(--text);
+            color: var(--surface);
+            border-radius: 0;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .console-title {
+            color: var(--data-highlight-2);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .console-output {
+            background: #0a0e27;
+            padding: 20px;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #334155;
+        }
+
+        .console-line {
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+
+        .console-line.api-call {
+            color: var(--api-calls);
+            font-weight: bold;
+            border-left: 3px solid var(--api-calls);
+            padding-left: 10px;
+            margin: 5px 0;
+        }
+
+        .console-line.success {
+            color: var(--success);
+            border-left: 3px solid var(--success);
+            padding-left: 10px;
+        }
+
+        .console-line.data {
+            color: var(--data-highlight-2);
+            padding-left: 30px;
+            font-family: monospace;
+            background: rgba(0, 149, 255, 0.1);
+            border-radius: 3px;
+            margin: 2px 0;
+            padding: 4px 8px 4px 30px;
+        }
+
+        .console-line.request {
+            color: var(--tertiary);
+            font-weight: 600;
+            border-left: 3px solid var(--tertiary);
+            padding-left: 10px;
+            background: rgba(0, 112, 192, 0.05);
+            border-radius: 3px;
+            margin: 3px 0;
+        }
+
+        .console-line.response {
+            color: var(--success);
+            border-left: 3px solid var(--success);
+            padding-left: 10px;
+            background: rgba(76, 184, 103, 0.05);
+            border-radius: 3px;
+            margin: 3px 0;
+        }
+
+        .console-line.info {
+            color: var(--info);
+            opacity: 0.9;
+        }
+
+        .console-line.step-header {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.05em;
+            border-bottom: 1px solid var(--secondary);
+            padding-bottom: 3px;
+            margin: 10px 0 5px 0;
+        }
+
+        .api-block {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 8px 0;
+            font-family: monospace;
+        }
+
+        .json-data {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+            border-left: 3px solid var(--data-highlight-2);
+            margin: 4px 0;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .process-phases {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .flow-diagram {
+                min-height: 500px;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .process-phases {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .phase-container:nth-child(2) .process-steps,
+            .phase-container:nth-child(4) .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .participants {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .participant {
+                min-width: 80px;
+                max-width: 100px;
+                padding: 8px 6px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 10px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .participants {
+                padding: 15px;
+            }
+            
+            .participant {
+                min-width: 60px;
+                max-width: 80px;
+                padding: 6px 4px;
+            }
+            
+            .participant-name {
+                font-size: 0.65rem;
+            }
+            
+            .flow-diagram {
+                min-height: 400px;
+            }
+            
+            .data-section-title {
+                font-size: 1rem;
+            }
+            
+            .console-output {
+                max-height: 200px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .process-step {
+                min-height: 100px;
+                padding: 10px 6px;
+            }
+            
+            .step-icon {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .step-title {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Accessibility */
+        .process-step:focus,
+        .console-output:focus {
+            outline: 3px solid var(--tertiary);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <img src="../graphics/logos/logo_obp_hoch_gross.png" alt="Open Banking Project Logo" class="logo" onerror="handleImageError(this, '../graphics/logos/logo_obp_hoch_gross.png')">
+        <div class="header-content">
+            <h1>Open API Kundenbeziehung Demo Alpha Version 1.0</h1>
+            <p>Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Main Column (85%) -->
+        <div class="main-column">
+            <!-- Reference Process Section -->
+            <section class="reference-process">
+                <h2 class="section-title">10-Stufen Referenzprozess</h2>
+                <div class="process-phases">
+                    <!-- Phase 1: Setup und Produktauswahl -->
+                    <div class="phase-container">
+                        <div class="phase-title">Phase 1: Setup und Produktauswahl</div>
+                        <div class="process-steps" id="processStepsPhase1">
+                            <!-- Steps 1-2 will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2: Datenerfassung -->
+                    <div class="phase-container">
+                        <div class="phase-title">Phase 2: Datenerfassung</div>
+                        <div class="process-steps" id="processStepsPhase2">
+                            <!-- Steps 3-5 will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 3: Verifikation und Compliance -->
+                    <div class="phase-container">
+                        <div class="phase-title">Phase 3: Verifikation und Compliance</div>
+                        <div class="process-steps" id="processStepsPhase3">
+                            <!-- Steps 6-7 will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 4: Vertragsabschluss -->
+                    <div class="phase-container">
+                        <div class="phase-title">Phase 4: Vertragsabschluss</div>
+                        <div class="process-steps" id="processStepsPhase4">
+                            <!-- Steps 8-10 will be generated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Consent Flow Section -->
+            <section class="consent-flow">
+                <h2 class="section-title">Generischer Consent Flow</h2>
+                <div class="flow-diagram">
+                    <div class="participants" id="participants">
+                        <!-- Participants will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="lifelines" id="lifelines">
+                        <!-- Lifelines will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="messages" id="messages">
+                        <!-- Sequence messages will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="phase-indicators" id="phaseIndicators">
+                        <!-- Phase indicators will be generated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Data Column (15%) -->
+        <aside class="data-column">
+            <h3 class="data-section-title">Data Onboarding Process</h3>
+            <div id="dataCategories">
+                <!-- Data categories will be generated by JavaScript -->
+            </div>
+        </aside>
+
+        <!-- Console Output -->
+        <section class="console-section">
+            <h3 class="console-title">API Console Output</h3>
+            <div class="console-output" id="consoleOutput" tabindex="0" role="log" aria-label="API Console Output">
+                <div class="console-line">Ready - Open API Kundenbeziehung Demo Alpha Version 1.0</div>
+                <div class="console-line">Waiting for user interaction...</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Data Definitions
+        const referenceProcessSteps = [
+            {
+                id: 1,
+                title: 'Initialisierung',
+                description: 'Information des Kunden und Service Discovery',
+                icon: '../graphics/pictograms/Initialisierung.png'
+            },
+            {
+                id: 2,
+                title: 'Produktauswahl',
+                description: 'Bedürfnisbefriedigung und Produktkonfiguration',
+                icon: '../graphics/pictograms/Produktauswahl.png'
+            },
+            {
+                id: 3,
+                title: 'Selbstdeklaration',
+                description: 'FATCA/MIFID Information und Compliance',
+                icon: '../graphics/pictograms/Selbstdeklaration.png'
+            },
+            {
+                id: 4,
+                title: 'Basisdaten',
+                description: 'Erfassung von Kontaktangaben und Personalien',
+                icon: '../graphics/pictograms/Basisdaten.png'
+            },
+            {
+                id: 5,
+                title: 'Erweiterte Daten',
+                description: 'Risiko-/Potenzialermittlung und Profiling',
+                icon: '../graphics/pictograms/erweiterte%20Daten.png'
+            },
+            {
+                id: 6,
+                title: 'Identifikation',
+                description: 'Identifikation der Vertragspartei',
+                icon: '../graphics/pictograms/Identifikation.png'
+            },
+            {
+                id: 7,
+                title: 'Background Checks',
+                description: 'Know-Your-Customer (KYC) und Compliance Checks',
+                icon: '../graphics/pictograms/Checks.png'
+            },
+            {
+                id: 8,
+                title: 'Vertragsabschluss',
+                description: 'Akzeptanz Geschäftsbedingungen und AGB',
+                icon: '../graphics/pictograms/Abschluss.png'
+            },
+            {
+                id: 9,
+                title: 'Signatur',
+                description: 'Vertragsunterzeichnung und digitale Signatur',
+                icon: '../graphics/pictograms/Signatur.png'
+            },
+            {
+                id: 10,
+                title: 'Metadaten/Verteilung',
+                description: 'Erfassung, Verarbeitung und Systemintegration',
+                icon: '../graphics/pictograms/Verteilung.png'
+            }
+        ];
+
+        const consentParticipants = [
+            {
+                id: 'customer',
+                name: 'Customer',
+                icon: '../graphics/pictograms/Kunde.png'
+            },
+            {
+                id: 'bank',
+                name: 'Bank/Service Provider',
+                icon: '../graphics/pictograms/Bank.png'
+            },
+            {
+                id: 'consent',
+                name: 'Consent Management',
+                icon: '../graphics/pictograms/Consent%20Manager.png'
+            },
+            {
+                id: 'data',
+                name: 'Data Provider',
+                icon: '../graphics/pictograms/Data%20Provider.png'
+            },
+            {
+                id: 'audit',
+                name: 'Audit & Compliance',
+                icon: '../graphics/pictograms/Audit%20and%20Compliance.png'
+            }
+        ];
+
+        const sequenceMessages = [
+            {
+                id: 1,
+                from: 0, // Customer
+                to: 1,   // Bank
+                text: 'Initiate service request',
+                phase: 1,
+                top: 20
+            },
+            {
+                id: 2,
+                from: 1, // Bank
+                to: 2,   // Consent
+                text: 'Check existing consents',
+                phase: 1,
+                top: 50
+            },
+            {
+                id: 3,
+                from: 2, // Consent
+                to: 1,   // Bank
+                text: 'No valid consent found',
+                phase: 1,
+                top: 80,
+                return: true
+            },
+            {
+                id: 4,
+                from: 1, // Bank
+                to: 2,   // Consent
+                text: 'Create consent request',
+                phase: 2,
+                top: 120
+            },
+            {
+                id: 5,
+                from: 2, // Consent
+                to: 0,   // Customer
+                text: 'Present consent form',
+                phase: 2,
+                top: 150
+            },
+            {
+                id: 6,
+                from: 0, // Customer
+                to: 2,   // Consent
+                text: 'Grant specific consents',
+                phase: 2,
+                top: 180
+            },
+            {
+                id: 7,
+                from: 2, // Consent
+                to: 4,   // Audit
+                text: 'Log consent decision',
+                phase: 3,
+                top: 220
+            },
+            {
+                id: 8,
+                from: 2, // Consent
+                to: 1,   // Bank
+                text: 'Consent granted with scope',
+                phase: 3,
+                top: 250,
+                return: true
+            },
+            {
+                id: 9,
+                from: 1, // Bank
+                to: 3,   // Data
+                text: 'Request data with token',
+                phase: 3,
+                top: 280
+            },
+            {
+                id: 10,
+                from: 3, // Data
+                to: 2,   // Consent
+                text: 'Verify consent validity',
+                phase: 3,
+                top: 310
+            },
+            {
+                id: 11,
+                from: 3, // Data
+                to: 1,   // Bank
+                text: 'Provide requested data',
+                phase: 4,
+                top: 340,
+                return: true
+            },
+            {
+                id: 12,
+                from: 1, // Bank
+                to: 0,   // Customer
+                text: 'Service delivered',
+                phase: 4,
+                top: 370,
+                return: true
+            }
+        ];
+
+        const consentFlowPhases = [
+            {
+                id: 1,
+                title: 'Phase 1: Consent Request Initiation',
+                description: 'Service-Anfrage und Consent-Status-Prüfung'
+            },
+            {
+                id: 2,
+                title: 'Phase 2: Consent Granting & Validation',
+                description: 'Einverständniserklärung und Scope-Definition'
+            },
+            {
+                id: 3,
+                title: 'Phase 3: Data Access & Usage',
+                description: 'Datenbereitstellung und Service-Auslieferung'
+            },
+            {
+                id: 4,
+                title: 'Phase 4: Ongoing Consent Management',
+                description: 'Kontinuierliche Consent-Überwachung und Updates'
+            }
+        ];
+
+        const dataCategories = [
+            {
+                id: 1,
+                title: 'Consent & Metadata (Schritte 1-2)',
+                steps: [1, 2],
+                fields: [
+                    'cookieConsent (Boolean)',
+                    'initialConsent (Boolean)',
+                    'serviceSelection (Array)',
+                    'consentValidUntil (Date)'
+                ]
+            },
+            {
+                id: 2,
+                title: 'Basic Identity Data (Schritte 3-4)',
+                steps: [3, 4],
+                fields: [
+                    'customerId (String)',
+                    'firstName (String)',
+                    'lastName (String)',
+                    'dateOfBirth (Date)',
+                    'emailAddress (String)',
+                    'phoneNumber (String)',
+                    'streetAddress (String)',
+                    'postalCode (String)',
+                    'city (String)',
+                    'country (String)'
+                ]
+            },
+            {
+                id: 3,
+                title: 'Self-Declaration & Extended Data (Schritt 5)',
+                steps: [5],
+                fields: [
+                    'fatcaStatus (Object)',
+                    'mifidClassification (String)',
+                    'riskTolerance (String)',
+                    'investmentExperience (Object)',
+                    'estimatedIncome (Number)',
+                    'employmentStatus (String)',
+                    'employer (String)'
+                ]
+            },
+            {
+                id: 4,
+                title: 'Identification & Verification (Schritte 6-7)',
+                steps: [6, 7],
+                fields: [
+                    'identificationDate (Date)',
+                    'identificationMethod (String)',
+                    'verificationLevel (String)',
+                    'kycStatus (Object)',
+                    'pepStatus (Boolean)',
+                    'sanctionsCheck (Boolean)'
+                ]
+            },
+            {
+                id: 5,
+                title: 'Contract & Signature (Schritte 8-9)',
+                steps: [8, 9],
+                fields: [
+                    'contractAcceptance (Boolean)',
+                    'termsVersion (String)',
+                    'signatureMethod (String)',
+                    'signatureTimestamp (Date)',
+                    'qualifiedSignature (Boolean)'
+                ]
+            },
+            {
+                id: 6,
+                title: 'Process Metadata (Schritt 10)',
+                steps: [10],
+                fields: [
+                    'processId (String)',
+                    'completionStatus (String)',
+                    'documentReferences (Array)',
+                    'auditTrail (Array)',
+                    'systemIntegrationStatus (Object)'
+                ]
+            }
+        ];
+
+        // Application State
+        let currentStep = 1;
+        let completedSteps = [];
+
+        // DOM Elements
+        const flowPhasesContainer = document.getElementById('flowPhases');
+        const dataCategoriesContainer = document.getElementById('dataCategories');
+        const consoleOutput = document.getElementById('consoleOutput');
+
+        // Initialize Application
+        function initialize() {
+            renderProcessSteps();
+            renderConsentFlowComponents();
+            renderDataCategories();
+            activateStep(1);
+            addConsoleMessage('System initialized. Ready for user interaction.', 'success');
+        }
+
+        // Render Reference Process Steps
+        function renderProcessSteps() {
+            // Define phase containers and their steps
+            const phaseSteps = {
+                1: [1, 2],      // Phase 1: Steps 1-2
+                2: [3, 4, 5],   // Phase 2: Steps 3-5
+                3: [6, 7],      // Phase 3: Steps 6-7
+                4: [8, 9, 10]   // Phase 4: Steps 8-10
+            };
+            
+            // Render steps for each phase
+            for (let phase = 1; phase <= 4; phase++) {
+                const container = document.getElementById(`processStepsPhase${phase}`);
+                if (container) {
+                    container.innerHTML = phaseSteps[phase].map(stepId => {
+                        const step = referenceProcessSteps.find(s => s.id === stepId);
+                        return `
+                            <div class="process-step tooltip" 
+                                 id="step-${step.id}"
+                                 data-tooltip="${step.description}"
+                                 onclick="activateStep(${step.id})"
+                                 onkeydown="handleStepKeydown(event, ${step.id})"
+                                 tabindex="0"
+                                 role="button"
+                                 aria-label="Schritt ${step.id}: ${step.title}">
+                                <span class="step-number">${step.id}.</span>
+                                <img src="${step.icon}" alt="${step.title}" class="step-icon" onerror="handleImageError(this, '${step.icon}')"
+                                <div class="step-title">${step.title}</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        }
+
+        // Render Consent Flow Components
+        function renderConsentFlowComponents() {
+            renderParticipants();
+            renderLifelines();
+            renderSequenceMessages();
+            renderPhaseIndicators();
+        }
+        
+        function renderParticipants() {
+            const participantsContainer = document.getElementById('participants');
+            if (participantsContainer) {
+                participantsContainer.innerHTML = consentParticipants.map(participant => `
+                    <div class="participant" id="participant-${participant.id}">
+                        <img src="${participant.icon}" alt="${participant.name}" class="participant-icon" onerror="handleImageError(this, '${participant.icon}')">
+                        <div class="participant-name">${participant.name}</div>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function renderLifelines() {
+            const lifelinesContainer = document.getElementById('lifelines');
+            if (lifelinesContainer) {
+                lifelinesContainer.innerHTML = consentParticipants.map(participant => `
+                    <div class="lifeline" id="lifeline-${participant.id}"></div>
+                `).join('');
+            }
+        }
+        
+        function renderSequenceMessages() {
+            const messagesContainer = document.getElementById('messages');
+            if (messagesContainer) {
+                messagesContainer.innerHTML = sequenceMessages.map(message => {
+                    const fromPos = (message.from / (consentParticipants.length - 1)) * 100;
+                    const toPos = (message.to / (consentParticipants.length - 1)) * 100;
+                    const left = Math.min(fromPos, toPos);
+                    const width = Math.abs(toPos - fromPos);
+                    
+                    return `
+                        <div class="sequence-message" id="message-${message.id}" 
+                             style="top: ${message.top}px; left: ${left}%; width: ${width}%;">
+                            <div class="message-arrow ${message.return ? 'return' : ''}"></div>
+                            <div class="message-text">${message.text}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        
+        function renderPhaseIndicators() {
+            const indicatorsContainer = document.getElementById('phaseIndicators');
+            if (indicatorsContainer) {
+                indicatorsContainer.innerHTML = consentFlowPhases.map(phase => `
+                    <div class="phase-indicator" id="phase-indicator-${phase.id}">
+                        <div class="phase-indicator-title">${phase.title}</div>
+                        <div class="phase-indicator-desc">${phase.description}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Render Data Categories
+        function renderDataCategories() {
+            dataCategoriesContainer.innerHTML = dataCategories.map(category => `
+                <div class="data-category" id="data-category-${category.id}">
+                    <div class="category-title">${category.title}</div>
+                    <div class="data-fields">
+                        ${category.fields.map(field => `<div class="data-field">${field}</div>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Activate Process Step
+        function activateStep(stepId) {
+            // Update current step
+            currentStep = stepId;
+            
+            // Update step visual states
+            updateStepStates();
+            
+            // Activate corresponding consent flow phases
+            activateConsentPhases(stepId);
+            
+            // Show relevant data categories
+            showDataCategories(stepId);
+            
+            // Enhanced API simulation
+            const step = referenceProcessSteps.find(s => s.id === stepId);
+            simulateAPICall({ id: stepId, title: step.title, description: step.description });
+            
+            // Show data collection progress
+            const dataCategory = dataCategories.find(cat => cat.steps.includes(stepId));
+            if (dataCategory) {
+                setTimeout(() => {
+                    addConsoleMessage(`Data collection for: ${dataCategory.title}`, 'info');
+                    dataCategory.fields.forEach((field, index) => {
+                        setTimeout(() => {
+                            addConsoleMessage(`✓ ${field}: [COLLECTED]`, 'data');
+                        }, index * 150);
+                    });
+                }, 800);
+            }
+        }
+
+        // Update Step Visual States
+        function updateStepStates() {
+            referenceProcessSteps.forEach(step => {
+                const stepElement = document.getElementById(`step-${step.id}`);
+                stepElement.classList.remove('active', 'completed');
+                
+                if (step.id === currentStep) {
+                    stepElement.classList.add('active');
+                } else if (step.id < currentStep) {
+                    stepElement.classList.add('completed');
+                }
+            });
+        }
+
+        // Activate Consent Flow Phases
+        function activateConsentPhases(stepId) {
+            const phaseMapping = {
+                1: [1], 2: [1],
+                3: [2], 4: [2], 5: [2],
+                6: [2, 3], 7: [3],
+                8: [3, 4], 9: [4], 10: [4]
+            };
+            
+            const activePhases = phaseMapping[stepId] || [];
+            const maxPhase = Math.max(...activePhases);
+            
+            // Reset all participants and messages
+            document.querySelectorAll('.participant').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.lifeline').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.sequence-message').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.phase-indicator').forEach(p => p.classList.remove('active'));
+            
+            // Activate phase indicators
+            activePhases.forEach(phaseId => {
+                const phaseElement = document.getElementById(`phase-indicator-${phaseId}`);
+                if (phaseElement) {
+                    setTimeout(() => {
+                        phaseElement.classList.add('active');
+                    }, 200 * (phaseId - 1));
+                }
+            });
+            
+            // Activate sequence messages up to the current phase
+            const relevantMessages = sequenceMessages.filter(msg => msg.phase <= maxPhase);
+            relevantMessages.forEach((message, index) => {
+                setTimeout(() => {
+                    const messageElement = document.getElementById(`message-${message.id}`);
+                    if (messageElement) {
+                        messageElement.classList.add('active');
+                    }
+                    
+                    // Activate participants involved in this message
+                    const fromParticipant = document.getElementById(`participant-${consentParticipants[message.from].id}`);
+                    const toParticipant = document.getElementById(`participant-${consentParticipants[message.to].id}`);
+                    const fromLifeline = document.getElementById(`lifeline-${consentParticipants[message.from].id}`);
+                    const toLifeline = document.getElementById(`lifeline-${consentParticipants[message.to].id}`);
+                    
+                    if (fromParticipant) fromParticipant.classList.add('active');
+                    if (toParticipant) toParticipant.classList.add('active');
+                    if (fromLifeline) fromLifeline.classList.add('active');
+                    if (toLifeline) toLifeline.classList.add('active');
+                }, 400 + (index * 200));
+            });
+        }
+
+        // Show Data Categories
+        function showDataCategories(stepId) {
+            dataCategories.forEach((category, categoryIndex) => {
+                const categoryElement = document.getElementById(`data-category-${category.id}`);
+                const shouldShow = category.steps.some(step => step <= stepId);
+                const isNewCategory = category.steps.includes(stepId);
+                
+                if (shouldShow) {
+                    // Stagger category appearance
+                    setTimeout(() => {
+                        categoryElement.classList.add('active');
+                        
+                        // Add entering animation for new categories
+                        if (isNewCategory) {
+                            categoryElement.classList.add('entering');
+                            
+                            setTimeout(() => {
+                                categoryElement.classList.remove('entering');
+                            }, 600);
+                        }
+                        
+                        // Enhanced field animations
+                        const fields = categoryElement.querySelectorAll('.data-field');
+                        fields.forEach((field, index) => {
+                            // Remove existing animation classes
+                            field.classList.remove('new', 'highlight');
+                            
+                            setTimeout(() => {
+                                if (isNewCategory) {
+                                    // New category fields get the 'new' animation
+                                    field.classList.add('new');
+                                } else {
+                                    // Existing category fields get the 'highlight' animation
+                                    field.classList.add('highlight');
+                                }
+                                
+                                // Remove animation classes after animation completes
+                                setTimeout(() => {
+                                    field.classList.remove('new', 'highlight');
+                                }, isNewCategory ? 800 : 1200);
+                            }, index * (isNewCategory ? 150 : 80));
+                        });
+                    }, categoryIndex * 200 + 300);
+                } else {
+                    categoryElement.classList.remove('active', 'entering');
+                    
+                    // Clear field animations
+                    const fields = categoryElement.querySelectorAll('.data-field');
+                    fields.forEach(field => {
+                        field.classList.remove('new', 'highlight');
+                    });
+                }
+            });
+        }
+
+        // Add Console Message (Enhanced)
+        function addConsoleMessage(message, type = '', isHTML = false) {
+            const messageElement = document.createElement('div');
+            messageElement.className = `console-line ${type}`;
+            
+            if (isHTML) {
+                messageElement.innerHTML = message;
+            } else {
+                const timestamp = new Date().toLocaleTimeString();
+                messageElement.textContent = `[${timestamp}] ${message}`;
+            }
+            
+            consoleOutput.appendChild(messageElement);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            
+            // Keep console output manageable
+            const maxLines = 80;
+            while (consoleOutput.children.length > maxLines) {
+                consoleOutput.removeChild(consoleOutput.firstChild);
+            }
+            
+            // Add animation for new messages
+            messageElement.style.opacity = '0';
+            messageElement.style.transform = 'translateX(-10px)';
+            setTimeout(() => {
+                messageElement.style.transition = 'all 0.3s ease';
+                messageElement.style.opacity = '1';
+                messageElement.style.transform = 'translateX(0)';
+            }, 50);
+        }
+        
+        // Enhanced API Simulation
+        function simulateAPICall(step) {
+            const timestamp = new Date().toLocaleTimeString();
+            const stepData = referenceProcessSteps.find(s => s.id === step.id);
+            
+            // Step header
+            addConsoleMessage(`=== SCHRITT ${step.id}: ${stepData.title.toUpperCase()} ===`, 'step-header');
+            
+            // API endpoint simulation based on step
+            let endpoint, method, requestData, responseData;
+            
+            switch(step.id) {
+                case 1:
+                    endpoint = '/api/v2/obp/process/initialize';
+                    method = 'POST';
+                    requestData = { processType: 'account_opening', clientId: 'demo_client_123' };
+                    responseData = { processId: 'proc_' + Date.now(), status: 'initialized', availableServices: ['banking', 'identity', 'consent'] };
+                    break;
+                case 2:
+                    endpoint = '/api/v2/obp/products/configure';
+                    method = 'POST';
+                    requestData = { productType: 'current_account', features: ['online_banking', 'mobile_app'], currency: 'CHF' };
+                    responseData = { configId: 'cfg_' + Date.now(), eligibilityStatus: 'approved', estimatedProcessingTime: '5-7 minutes' };
+                    break;
+                case 3:
+                    endpoint = '/api/v2/obp/compliance/self-declaration';
+                    method = 'POST';
+                    requestData = { fatcaStatus: 'non_us_person', taxDomicile: 'CH', mifidCategory: 'retail_client' };
+                    responseData = { complianceId: 'comp_' + Date.now(), riskLevel: 'low', requiresAdditionalDocs: false };
+                    break;
+                case 4:
+                    endpoint = '/api/v2/obp/customer/basic-data';
+                    method = 'PUT';
+                    requestData = { personalData: { firstName: 'Anna', lastName: 'Mueller' }, contactInfo: { email: 'anna.mueller@example.ch', phone: '+41791234567' } };
+                    responseData = { customerId: 'cust_' + Date.now(), dataQuality: 96, validationStatus: 'passed' };
+                    break;
+                case 5:
+                    endpoint = '/api/v2/obp/customer/extended-data';
+                    method = 'PUT';
+                    requestData = { financialData: { occupation: 'Software Engineer', annualIncome: 120000 }, riskProfile: { tolerance: 'moderate' } };
+                    responseData = { profileId: 'prof_' + Date.now(), riskScore: 25, investmentSuitability: 'suitable_for_complex_products' };
+                    break;
+                case 6:
+                    endpoint = '/api/v2/obp/identity/verify';
+                    method = 'POST';
+                    requestData = { method: 'video_ident', documentType: 'swiss_id', biometricCapture: true };
+                    responseData = { verificationId: 'ver_' + Date.now(), confidenceLevel: 98.7, qeaaLevel: 'substantial', processingTime: '3 minutes' };
+                    break;
+                case 7:
+                    endpoint = '/api/v2/obp/kyc/background-checks';
+                    method = 'POST';
+                    requestData = { pepScreening: true, sanctionsCheck: true, creditCheck: true };
+                    responseData = { kycId: 'kyc_' + Date.now(), pepStatus: 'clear', sanctionsStatus: 'clear', creditScore: 750, overallRisk: 'low' };
+                    break;
+                case 8:
+                    endpoint = '/api/v2/obp/contract/terms';
+                    method = 'POST';
+                    requestData = { contractType: 'account_opening', termsVersion: 'v2.1', acceptanceMethod: 'digital' };
+                    responseData = { contractId: 'cont_' + Date.now(), termsAccepted: true, legallyBinding: true, nextStep: 'digital_signature' };
+                    break;
+                case 9:
+                    endpoint = '/api/v2/obp/signature/execute';
+                    method = 'POST';
+                    requestData = { signatureType: 'qualified_electronic', certificateProvider: 'SwissSign', documentHash: 'sha256_' + Math.random().toString(36) };
+                    responseData = { signatureId: 'sig_' + Date.now(), timestamp: new Date().toISOString(), legalValidity: 'equivalent_to_handwritten', auditTrail: 'recorded' };
+                    break;
+                case 10:
+                    endpoint = '/api/v2/obp/process/finalize';
+                    method = 'POST';
+                    requestData = { processId: 'proc_' + Date.now(), generateAccountNumber: true, activateServices: ['online_banking', 'mobile_app'] };
+                    responseData = { accountNumber: 'CH93 0076 2011 6238 5295 7', accountStatus: 'ACTIVE', welcomePackage: 'sent', estimatedDelivery: '2-3 business days' };
+                    break;
+                default:
+                    endpoint = '/api/v2/obp/generic';
+                    method = 'GET';
+                    requestData = { step: step.id };
+                    responseData = { status: 'completed' };
+            }
+            
+            // Simulate API request
+            addConsoleMessage(`${method} ${endpoint}`, 'request');
+            addConsoleMessage(`Request Body: ${JSON.stringify(requestData, null, 2)}`, 'data', true);
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                addConsoleMessage(`200 OK - Response received`, 'response');
+                addConsoleMessage(`Response Body: ${JSON.stringify(responseData, null, 2)}`, 'data', true);
+                addConsoleMessage(`Processing completed successfully`, 'success');
+                addConsoleMessage('', 'info'); // Empty line for separation
+            }, 300 + Math.random() * 200);
+        }
+
+        // Keyboard Navigation
+        function handleStepKeydown(event, stepId) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                activateStep(stepId);
+            }
+        }
+
+        // Auto-progress demo (optional)
+        function startAutoDemo() {
+            let step = 1;
+            const interval = setInterval(() => {
+                if (step <= 10) {
+                    activateStep(step);
+                    step++;
+                } else {
+                    clearInterval(interval);
+                    addConsoleMessage('Demo completed. Returning to interactive mode.', 'success');
+                }
+            }, 3000);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initialize);
+        
+        // Add auto-demo button functionality (can be triggered via console)
+        window.startAutoDemo = startAutoDemo;
+        window.activateStep = activateStep;
+        
+        // Image error handling with fallback paths and diagnostic logging
+        function handleImageError(img, originalPath) {
+            console.group(`🖼️ Image Loading Debug: ${originalPath}`);
+            console.warn('❌ Image failed to load:', originalPath);
+            console.log('📍 Current page location:', window.location.href);
+            console.log('📂 Document base URI:', document.baseURI);
+            
+            // Create URL-encoded and non-encoded variants
+            const createPathVariants = (basePath) => {
+                const variants = [basePath];
+                
+                // Try URL-encoded spaces
+                if (basePath.includes(' ')) {
+                    const encoded = basePath.replace(/ /g, '%20');
+                    variants.push(encoded);
+                    console.log('🔗 Adding URL-encoded variant:', encoded);
+                }
+                
+                // Try URL-decoded spaces (in case it was already encoded)
+                if (basePath.includes('%20')) {
+                    const decoded = basePath.replace(/%20/g, ' ');
+                    variants.push(decoded);
+                    console.log('🔗 Adding URL-decoded variant:', decoded);
+                }
+                
+                return variants;
+            };
+            
+            // Try different path formats with encoding variants
+            const baseFormats = [
+                originalPath, // Original path
+                originalPath.replace('../', './'), // Relative from current directory
+                originalPath.replace('../', '/api/demo/'), // Absolute from root
+                originalPath.replace('../graphics/', 'graphics/'), // Direct graphics path
+                originalPath.replace('../', ''), // No relative prefix
+                `./graphics/pictograms/${originalPath.split('/').pop()}` // Direct local path
+            ];
+            
+            console.log('🔍 Testing path formats:', baseFormats);
+            
+            // Create all path variants with encoding
+            const fallbackPaths = [];
+            baseFormats.forEach(format => {
+                fallbackPaths.push(...createPathVariants(format));
+            });
+            
+            // Remove duplicates
+            const uniquePaths = [...new Set(fallbackPaths)];
+            console.log('Trying fallback paths:', uniquePaths);
+            
+            // Try each fallback path
+            let fallbackIndex = img.dataset.fallbackIndex ? parseInt(img.dataset.fallbackIndex) : 0;
+            
+            if (fallbackIndex < uniquePaths.length) {
+                img.dataset.fallbackIndex = (fallbackIndex + 1).toString();
+                const nextPath = uniquePaths[fallbackIndex];
+                img.src = nextPath;
+                console.log(`🔄 Trying fallback path ${fallbackIndex + 1}/${uniquePaths.length}:`, nextPath);
+                
+                // Test the path with a fetch to provide more diagnostic info
+                fetch(nextPath, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(`✅ Fallback path exists (HTTP ${response.status}):`, nextPath);
+                        } else {
+                            console.warn(`⚠️ Fallback path returns HTTP ${response.status}:`, nextPath);
+                        }
+                    })
+                    .catch(error => {
+                        console.warn(`❌ Fallback path fetch failed:`, nextPath, error.message);
+                    });
+                    
+            } else {
+                // All fallbacks failed, show placeholder or hide
+                console.error('💥 All image fallback paths failed for:', originalPath);
+                console.log('📊 Failed paths tested:', uniquePaths.length);
+                console.groupEnd();
+                img.style.display = 'none';
+                
+                // Add a text placeholder for critical images
+                if (img.classList.contains('step-icon')) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'icon-placeholder';
+                    placeholder.style.cssText = `
+                        width: 32px;
+                        height: 32px;
+                        background: var(--primary);
+                        color: white;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 12px;
+                        border-radius: 4px;
+                        margin-bottom: 8px;
+                    `;
+                    
+                    // Extract step number from image alt text
+                    const stepMatch = originalPath.match(/\/([^/]+)\.png$/);
+                    const stepName = stepMatch ? stepMatch[1].charAt(0).toUpperCase() : '?';
+                    placeholder.textContent = stepName;
+                    
+                    img.parentNode.insertBefore(placeholder, img);
+                }
+            }
+            
+            // Always end the console group
+            if (fallbackIndex >= uniquePaths.length) {
+                console.groupEnd();
+            }
+        }
+        
+        // Test image loading on initialization
+        function testImagePaths() {
+            console.log('Testing image paths...');
+            console.log('Current location:', window.location.href);
+            console.log('Base directory:', window.location.pathname.split('/').slice(0, -1).join('/'));
+            
+            // Test a sample image path
+            const testImg = new Image();
+            testImg.onload = () => console.log('✓ Image path test successful');
+            testImg.onerror = () => {
+                console.error('✗ Image path test failed');
+                addConsoleMessage('Warning: Images may not display correctly. Check server configuration.', 'info');
+            };
+            testImg.src = '../graphics/pictograms/Initialisierung.png';
+        }
+        
+        // Add welcome message after a short delay
+        setTimeout(() => {
+            addConsoleMessage('Interactive demo ready. Click on process steps to explore the Open API Kundenbeziehung.', 'info');
+            addConsoleMessage('Type "startAutoDemo()" in browser console for automatic demonstration.', 'info');
+            testImagePaths();
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# MIME type configuration for proper image serving
+AddType image/png .png
+AddType image/jpeg .jpg .jpeg
+AddType image/svg+xml .svg
+AddType text/html .html
+AddType text/css .css
+AddType application/javascript .js
+
+# Enable CORS for local development
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+Header set Access-Control-Allow-Headers "Content-Type"
+
+# Cache settings for images
+<FilesMatch "\.(png|jpg|jpeg|gif|svg|ico)$">
+    ExpiresActive on
+    ExpiresDefault "access plus 1 month"
+    Header set Cache-Control "public, immutable, max-age=2592000"
+</FilesMatch>
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
