@@ -17,13 +17,13 @@
 ## Tasks
 **Context Demo**: Fix the following issues in the context demo:
 [] General Improvements:
-  - directly open the demo in the browser without first showing the directory listing (update instructions in README.md)
-  - graphics are not displayed at all (e.g. icons, background images, etc.) is there a way to fix this?
-  - in the top banner use a color color gradient from primary to secondary color instead
+  - python script serve_demo.py is buggy - browser freezes and sometimes does not load the demo at all
+  - ensure that cleanup of the demo is done properly after each run
 [] Referenzprozess:
   - Icons (pictograms) are not displayed at all
-  - Numbering of the steps: Just use 1. 2. 3. etc. instead of circle in top right corner
-  - behind the main 10 blocks add the 4 sections of the Referenzprozess (just boxes encapsulating the corresponding steps like a background graphic with the name of the section centered at the top)
+  - Numbering of the 10 main steps: Add the numbering to the Step names (like "1. Initialisierung") instead of the current numbering in the boxes
+  - 4 Phases: 
+
 [] Consent Flow:
     - Icons (pictograms) are not displayed at all
   - actually implement the flow as visualized in the mermaid diagram ('api/demo/work-in-progress/consent_security/demo-3-consent-security-flow.html' has the right approach for the visualization, but the content is not correct - it will help you to understand my vision of how I want to visualize flows like this in general)
