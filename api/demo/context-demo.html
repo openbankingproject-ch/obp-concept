@@ -169,10 +169,10 @@
         .container {
             max-width: 1800px;
             margin: 0 auto;
-            padding: 30px 5px;
+            padding: 15px 5px;
             display: grid;
             grid-template-columns: 85% 15%;
-            gap: 30px;
+            gap: 15px;
             min-height: 80vh;
         }
 
@@ -180,7 +180,7 @@
         .main-column {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 15px;
         }
 
         /* Reference Process Section */
@@ -188,7 +188,7 @@
             background: var(--surface);
             border-radius: 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 30px;
+            padding: 15px;
             border: 1px solid var(--border);
         }
 
@@ -197,14 +197,14 @@
             color: var(--primary);
             font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             text-align: center;
             position: relative;
         }
 
         .phase-display {
             position: absolute;
-            left: -250px;
+            left: 10px;
             top: 50%;
             transform: translateY(-50%);
             background: #E5CAFF;
@@ -243,7 +243,7 @@
 
         .phase-container {
             position: relative;
-            padding: 30px 15px 15px 15px;
+            padding: 25px 5px 10px 5px;
         }
 
         .phase-bracket {
@@ -309,9 +309,7 @@
         .process-step.active {
             background: #FA9F8A;
             color: var(--text);
-            border: 3px solid #F85F3D;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(248, 95, 61, 0.25);
+            border: 2px solid #F85F3D;
         }
 
         .process-step.completed {
@@ -361,37 +359,38 @@
             background: var(--surface);
             border-radius: 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 30px;
+            padding: 15px;
             border: 1px solid var(--border);
         }
 
         .flow-diagram {
             position: relative;
-            min-height: 800px;
+            min-height: 600px;
             background: linear-gradient(45deg, #f8fafc 0%, #f1f5f9 100%);
             border: 2px solid var(--border);
-            border-radius: 12px;
             overflow: hidden;
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         .participants {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 20px;
+            padding: 15px 20px;
             color: var(--text);
             position: relative;
             z-index: 3;
         }
 
         .participant {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             background: white;
             border: 2px solid var(--tertiary);
-            padding: 12px 8px;
-            min-width: 100px;
-            max-width: 120px;
+            padding: 8px 10px;
+            width: 150px;
+            height: 45px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
@@ -404,25 +403,26 @@
         }
 
         .participant-icon {
-            width: 32px;
-            height: 32px;
-            margin: 0 auto 8px;
+            width: 24px;
+            height: 24px;
             opacity: 0.8;
+            flex-shrink: 0;
         }
 
         .participant-name {
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             line-height: 1.2;
+            text-align: left;
         }
 
         .lifelines {
             position: absolute;
-            top: 120px;
-            left: 20px;
-            right: 20px;
-            height: 650px;
+            top: 75px;
+            left: 95px;
+            right: 95px;
+            height: 500px;
             display: flex;
             justify-content: space-between;
             z-index: 1;
@@ -442,10 +442,10 @@
 
         .messages {
             position: absolute;
-            top: 140px;
-            left: 20px;
-            right: 20px;
-            height: 780px;
+            top: 95px;
+            left: 95px;
+            right: 95px;
+            height: 500px;
             z-index: 2;
         }
 
@@ -453,6 +453,7 @@
             position: absolute;
             display: flex;
             align-items: center;
+            justify-content: center;
             height: 35px;
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -555,9 +556,10 @@
             white-space: nowrap;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: absolute;
-            top: -15px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
+            z-index: 5;
         }
 
         .sequence-message.in-progress .message-text {
@@ -575,7 +577,7 @@
 
         .granular-consent-info {
             position: absolute;
-            top: 150px;
+            top: 240px;
             left: 20px;
             width: 200px;
             background: rgba(255, 255, 255, 0.95);
@@ -617,9 +619,9 @@
         .data-section-title {
             font-family: 'Verdana', sans-serif;
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
             border-bottom: 2px solid var(--border);
             padding-bottom: 10px;
@@ -1224,7 +1226,7 @@
         ];
 
         const sequenceMessages = [
-            // Phase 1 messages (before phase box at top: 100px)
+            // Phase 1 messages
             {
                 id: 1,
                 from: 0, // Customer
@@ -1237,45 +1239,43 @@
                 from: 1, // Bank
                 to: 2,   // ConsentMgmt
                 text: 'Check existing consents',
-                top: 60
+                top: 45
             },
             {
                 id: 3,
                 from: 2, // ConsentMgmt
                 to: 1,   // Bank
                 text: 'No valid consent found',
-                top: 100,
+                top: 70,
                 return: true
             },
-            // PHASE 1 BREAK at 140px
             {
                 id: 4,
                 from: 1, // Bank
                 to: 2,   // ConsentMgmt
                 text: 'Create consent request',
-                top: 180
+                top: 95
             },
             {
                 id: 5,
                 from: 2, // ConsentMgmt
                 to: 0,   // Customer
                 text: 'Present consent form',
-                top: 220
+                top: 120
             },
-            // PHASE 2 BREAK at 260px
             {
                 id: 6,
                 from: 0, // Customer
                 to: 2,   // ConsentMgmt
                 text: 'Grant specific consents',
-                top: 300
+                top: 145
             },
             {
                 id: 7,
                 from: 2, // ConsentMgmt
                 to: 2,   // ConsentMgmt (self)
                 text: 'Validate consent completeness',
-                top: 340,
+                top: 170,
                 selfMessage: true
             },
             {
@@ -1283,14 +1283,14 @@
                 from: 2, // ConsentMgmt
                 to: 4,   // AuditLog
                 text: 'Log consent decision',
-                top: 380
+                top: 195
             },
             {
                 id: 9,
                 from: 2, // ConsentMgmt
                 to: 1,   // Bank
                 text: 'Consent granted with scope',
-                top: 420,
+                top: 220,
                 return: true
             },
             {
@@ -1298,22 +1298,21 @@
                 from: 1, // Bank
                 to: 3,   // DataProvider
                 text: 'Request data with consent token',
-                top: 460
+                top: 245
             },
-            // PHASE 3 BREAK at 500px
             {
                 id: 11,
                 from: 3, // DataProvider
                 to: 2,   // ConsentMgmt
                 text: 'Verify consent validity',
-                top: 540
+                top: 270
             },
             {
                 id: 12,
                 from: 2, // ConsentMgmt
                 to: 3,   // DataProvider
                 text: 'Consent valid for scope',
-                top: 580,
+                top: 295,
                 return: true
             },
             {
@@ -1321,7 +1320,7 @@
                 from: 3, // DataProvider
                 to: 1,   // Bank
                 text: 'Provide requested data',
-                top: 620,
+                top: 320,
                 return: true
             },
             {
@@ -1329,37 +1328,36 @@
                 from: 3, // DataProvider
                 to: 4,   // AuditLog
                 text: 'Log data access',
-                top: 660
+                top: 345
             },
             {
                 id: 15,
                 from: 1, // Bank
                 to: 0,   // Customer
                 text: 'Service delivered',
-                top: 700,
+                top: 370,
                 return: true
             },
-            // PHASE 4 BREAK at 740px
             {
                 id: 16,
                 from: 2, // ConsentMgmt
                 to: 0,   // Customer
                 text: 'Consent expiry notification (if applicable)',
-                top: 780
+                top: 395
             },
             {
                 id: 17,
                 from: 0, // Customer
                 to: 2,   // ConsentMgmt
                 text: 'Renew/modify/revoke consent',
-                top: 820
+                top: 420
             },
             {
                 id: 18,
                 from: 2, // ConsentMgmt
                 to: 4,   // AuditLog
                 text: 'Log consent updates',
-                top: 860
+                top: 445
             }
         ];
 
