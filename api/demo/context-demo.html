@@ -77,11 +77,34 @@
             z-index: 0;
         }
 
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(211, 211, 211, 0.5);
+            z-index: 1;
+        }
+
         .header-content {
             position: relative;
-            z-index: 1;
-            max-width: 1200px;
+            z-index: 2;
+            max-width: 1400px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .header-left {
+            text-align: left;
+        }
+
+        .header-right {
+            text-align: center;
         }
 
         .demo-controls {
@@ -140,24 +163,19 @@
             font-weight: 700;
             margin-bottom: 15px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            text-align: left;
-            display: inline-block;
-            margin-right: 20px;
+            margin: 0;
         }
 
         .header p {
             font-family: 'Courier New', monospace;
             font-size: 1rem;
             opacity: 0.9;
-            max-width: 800px;
             margin: 0;
-            display: inline-block;
-            vertical-align: top;
         }
 
         /* Main Container */
         .container {
-            max-width: 1600px;
+            max-width: 1800px;
             margin: 0 auto;
             padding: 30px 5px;
             display: grid;
@@ -183,9 +201,9 @@
         }
 
         .section-title {
-            font-family: 'Courier New', monospace;
+            font-family: 'Verdana', sans-serif;
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
             margin-bottom: 25px;
             text-align: center;
@@ -242,26 +260,15 @@
             left: 0;
             right: 0;
             height: 20px;
-            border-top: 2px solid var(--primary);
-            border-left: 2px solid var(--primary);
-            border-right: 2px solid var(--primary);
-            border-radius: 8px 8px 0 0;
-        }
-
-        .phase-title {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--background);
-            color: var(--primary);
-            padding: 2px 12px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 0.8rem;
             font-weight: 600;
-            white-space: nowrap;
-            border: 1px solid var(--primary);
-            border-radius: 4px;
         }
+
 
         .process-steps {
             display: grid;
@@ -288,12 +295,12 @@
             background: var(--surface);
             border: 2px solid var(--border);
             padding: 12px 6px;
+            margin-bottom: 8px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
             position: relative;
-            min-height: 100px;
-            max-height: 100px;
+            height: 110px;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -316,14 +323,14 @@
         }
 
         .process-step.completed {
-            background: #73c3fcff;
+            background: white;
             color: var(--text);
-            border: 2px solid #0070C0;
+            border: 2px solid #4cb867ff;
         }
 
         .step-icon {
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             margin-bottom: 8px;
             opacity: 0.7;
             transition: opacity 0.3s ease;
@@ -381,8 +388,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 30px 20px;
-            background: var(--primary);
-            color: white;
+            color: var(--text);
             position: relative;
             z-index: 3;
         }
@@ -391,7 +397,6 @@
             text-align: center;
             background: white;
             border: 2px solid var(--tertiary);
-            border-radius: 8px;
             padding: 12px 8px;
             min-width: 100px;
             max-width: 120px;
@@ -583,7 +588,6 @@
             width: 200px;
             background: rgba(255, 255, 255, 0.95);
             border: 2px solid var(--tertiary);
-            border-radius: 8px;
             padding: 15px;
             font-size: 0.8rem;
             z-index: 5;
@@ -619,7 +623,7 @@
         }
 
         .data-section-title {
-            font-family: 'Courier New', monospace;
+            font-family: 'Verdana', sans-serif;
             color: var(--primary);
             font-size: 1.2rem;
             font-weight: 700;
@@ -992,7 +996,7 @@
             }
             
             .process-step {
-                min-height: 100px;
+                height: 110px;
                 padding: 10px 6px;
             }
             
@@ -1032,8 +1036,12 @@
             <button class="control-button" id="resetDemoBtn" onclick="resetDemo()">Reset</button>
         </div>
         <div class="header-content">
-            <h1>Open API Kundenbeziehung Demo Alpha Version 1.0</h1>
-            <p>Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow</p>
+            <div class="header-left">
+                <h1>Open API Kundenbeziehung Demo Alpha Version 1.0</h1>
+            </div>
+            <div class="header-right">
+                <p>Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow</p>
+            </div>
         </div>
     </header>
 
@@ -1047,8 +1055,7 @@
                 <div class="process-phases">
                     <!-- Phase 1: Setup und Produktauswahl -->
                     <div class="phase-container">
-                        <div class="phase-bracket"></div>
-                        <div class="phase-title">Phase 1: Setup und Produktauswahl</div>
+                        <div class="phase-bracket">Phase 1: Setup und Produktauswahl</div>
                         <div class="process-steps" id="processStepsPhase1">
                             <!-- Steps 1-2 will be generated by JavaScript -->
                         </div>
@@ -1056,8 +1063,7 @@
                     
                     <!-- Phase 2: Datenerfassung -->
                     <div class="phase-container">
-                        <div class="phase-bracket"></div>
-                        <div class="phase-title">Phase 2: Datenerfassung</div>
+                        <div class="phase-bracket">Phase 2: Datenerfassung</div>
                         <div class="process-steps" id="processStepsPhase2">
                             <!-- Steps 3-5 will be generated by JavaScript -->
                         </div>
@@ -1065,8 +1071,7 @@
                     
                     <!-- Phase 3: Verifikation und Compliance -->
                     <div class="phase-container">
-                        <div class="phase-bracket"></div>
-                        <div class="phase-title">Phase 3: Verifikation und Compliance</div>
+                        <div class="phase-bracket">Phase 3: Verifikation und Compliance</div>
                         <div class="process-steps" id="processStepsPhase3">
                             <!-- Steps 6-7 will be generated by JavaScript -->
                         </div>
@@ -1074,8 +1079,7 @@
                     
                     <!-- Phase 4: Vertragsabschluss -->
                     <div class="phase-container">
-                        <div class="phase-bracket"></div>
-                        <div class="phase-title">Phase 4: Vertragsabschluss</div>
+                        <div class="phase-bracket">Phase 4: Vertragsabschluss</div>
                         <div class="process-steps" id="processStepsPhase4">
                             <!-- Steps 8-10 will be generated by JavaScript -->
                         </div>
@@ -1139,49 +1143,49 @@
         const referenceProcessSteps = [
             {
                 id: 1,
-                title: '1. Initialisierung',
+                title: '1. Initiali-<br>sierung',
                 description: 'Information des Kunden und Service Discovery',
                 icon: '../graphics/pictograms/Initialisierung.png'
             },
             {
                 id: 2,
-                title: '2. Produktauswahl',
+                title: '2. Produkt-<br>auswahl',
                 description: 'Bedürfnisbefriedigung und Produktkonfiguration',
                 icon: '../graphics/pictograms/Produktauswahl.png'
             },
             {
                 id: 3,
-                title: '3. Selbst- deklaration',
+                title: '3. Selbst-<br>deklaration',
                 description: 'FATCA/MIFID Information und Compliance',
                 icon: '../graphics/pictograms/Selbstdeklaration.png'
             },
             {
                 id: 4,
-                title: '4. Basisdaten',
+                title: '4. Basis-<br>daten',
                 description: 'Erfassung von Kontaktangaben und Personalien',
                 icon: '../graphics/pictograms/Basisdaten.png'
             },
             {
                 id: 5,
-                title: '5. Erweiterte Daten',
+                title: '5. Erweiterte<br>Daten',
                 description: 'Risiko-/Potenzialermittlung und Profiling',
                 icon: '../graphics/pictograms/erweiterte%20Daten.png'
             },
             {
                 id: 6,
-                title: '6. Identifikation',
+                title: '6. Identifi-<br>kation',
                 description: 'Identifikation der Vertragspartei',
                 icon: '../graphics/pictograms/Identifikation.png'
             },
             {
                 id: 7,
-                title: '7. Background Checks',
+                title: '7. Background<br>Checks',
                 description: 'Know-Your-Customer (KYC) und Compliance Checks',
                 icon: '../graphics/pictograms/Checks.png'
             },
             {
                 id: 8,
-                title: '8. Vertragsabschluss',
+                title: '8. Vertrags-<br>abschluss',
                 description: 'Akzeptanz Geschäftsbedingungen und AGB',
                 icon: '../graphics/pictograms/Abschluss.png'
             },
@@ -1193,7 +1197,7 @@
             },
             {
                 id: 10,
-                title: '10. Metadaten/Verteilung',
+                title: '10. Metadaten/<br>Verteilung',
                 description: 'Erfassung, Verarbeitung und Systemintegration',
                 icon: '../graphics/pictograms/Verteilung.png'
             }
@@ -1241,45 +1245,45 @@
                 from: 1, // Bank
                 to: 2,   // ConsentMgmt
                 text: 'Check existing consents',
-                top: 50
+                top: 60
             },
             {
                 id: 3,
                 from: 2, // ConsentMgmt
                 to: 1,   // Bank
                 text: 'No valid consent found',
-                top: 80,
+                top: 100,
                 return: true
             },
-            // PHASE 1 BREAK at 100px
+            // PHASE 1 BREAK at 140px
             {
                 id: 4,
                 from: 1, // Bank
                 to: 2,   // ConsentMgmt
                 text: 'Create consent request',
-                top: 140
+                top: 180
             },
             {
                 id: 5,
                 from: 2, // ConsentMgmt
                 to: 0,   // Customer
                 text: 'Present consent form',
-                top: 170
+                top: 220
             },
-            // PHASE 2 BREAK at 210px
+            // PHASE 2 BREAK at 260px
             {
                 id: 6,
                 from: 0, // Customer
                 to: 2,   // ConsentMgmt
                 text: 'Grant specific consents',
-                top: 250
+                top: 300
             },
             {
                 id: 7,
                 from: 2, // ConsentMgmt
                 to: 2,   // ConsentMgmt (self)
                 text: 'Validate consent completeness',
-                top: 280,
+                top: 340,
                 selfMessage: true
             },
             {
@@ -1287,14 +1291,14 @@
                 from: 2, // ConsentMgmt
                 to: 4,   // AuditLog
                 text: 'Log consent decision',
-                top: 310
+                top: 380
             },
             {
                 id: 9,
                 from: 2, // ConsentMgmt
                 to: 1,   // Bank
                 text: 'Consent granted with scope',
-                top: 340,
+                top: 420,
                 return: true
             },
             {
@@ -1302,22 +1306,22 @@
                 from: 1, // Bank
                 to: 3,   // DataProvider
                 text: 'Request data with consent token',
-                top: 370
+                top: 460
             },
-            // PHASE 3 BREAK at 410px
+            // PHASE 3 BREAK at 500px
             {
                 id: 11,
                 from: 3, // DataProvider
                 to: 2,   // ConsentMgmt
                 text: 'Verify consent validity',
-                top: 450
+                top: 540
             },
             {
                 id: 12,
                 from: 2, // ConsentMgmt
                 to: 3,   // DataProvider
                 text: 'Consent valid for scope',
-                top: 480,
+                top: 580,
                 return: true
             },
             {
@@ -1325,7 +1329,7 @@
                 from: 3, // DataProvider
                 to: 1,   // Bank
                 text: 'Provide requested data',
-                top: 510,
+                top: 620,
                 return: true
             },
             {
@@ -1333,37 +1337,37 @@
                 from: 3, // DataProvider
                 to: 4,   // AuditLog
                 text: 'Log data access',
-                top: 540
+                top: 660
             },
             {
                 id: 15,
                 from: 1, // Bank
                 to: 0,   // Customer
                 text: 'Service delivered',
-                top: 570,
+                top: 700,
                 return: true
             },
-            // PHASE 4 BREAK at 590px
+            // PHASE 4 BREAK at 740px
             {
                 id: 16,
                 from: 2, // ConsentMgmt
                 to: 0,   // Customer
                 text: 'Consent expiry notification (if applicable)',
-                top: 630
+                top: 780
             },
             {
                 id: 17,
                 from: 0, // Customer
                 to: 2,   // ConsentMgmt
                 text: 'Renew/modify/revoke consent',
-                top: 660
+                top: 820
             },
             {
                 id: 18,
                 from: 2, // ConsentMgmt
                 to: 4,   // AuditLog
                 text: 'Log consent updates',
-                top: 690
+                top: 860
             }
         ];
 
@@ -1710,18 +1714,18 @@
 
         // Activate Consent Flow Phases - clean approach with title-adjacent phase display
         function activateConsentPhases(stepId) {
-            // Map each step to specific consent flow messages - EXACT sequence from mermaid
+            // Map each step to specific consent flow messages - progressive flow
             const stepToMessagesMapping = {
-                1: [1, 2, 3, 4], // Initialisierung: service request + check consents + not found + create request
-                2: [5], // Produktauswahl: present consent form
-                3: [6, 7, 8], // Selbstdeklaration: grant consents + validate + log decision
-                4: [9, 10], // Basisdaten: consent granted + request data with token
-                5: [11, 12], // Erweiterte Daten: verify validity + consent valid for scope
-                6: [13, 14], // Identifikation: provide data + log access
-                7: [15], // Background Checks: service delivered
-                8: [], // Vertragsabschluss: (no new messages)
-                9: [16], // Signatur: consent expiry notification
-                10: [17, 18] // Metadaten/Verteilung: renew/modify + log updates
+                1: [1, 2], // Initialisierung: service request + check existing consents
+                2: [3, 4], // Produktauswahl: no consent found + create consent request  
+                3: [5, 6], // Selbstdeklaration: present consent form + grant specific consents
+                4: [7, 8], // Basisdaten: validate completeness + log decision
+                5: [9, 10], // Erweiterte Daten: consent granted + request data with token
+                6: [11, 12], // Identifikation: verify validity + consent valid for scope
+                7: [13, 14], // Background Checks: provide data + log data access
+                8: [15], // Vertragsabschluss: service delivered
+                9: [16, 17], // Signatur: expiry notification + renew/modify consent
+                10: [18] // Metadaten/Verteilung: log consent updates
             };
 
             const phaseNames = [
@@ -1739,11 +1743,12 @@
                 }
             }
             
-            // Reset all participants and messages
+            // Only reset active states, keep completed messages intact
             document.querySelectorAll('.participant').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.lifeline').forEach(l => l.classList.remove('active'));
             document.querySelectorAll('.sequence-message').forEach(m => {
-                m.classList.remove('active', 'completed', 'in-progress');
+                m.classList.remove('active', 'in-progress');
+                // Don't remove 'completed' class to maintain progressive building
             });
             
             // Determine current phase based on active messages
@@ -1786,10 +1791,13 @@
                     setTimeout(() => {
                         const messageElement = document.getElementById(`message-${message.id}`);
                         if (messageElement) {
-                            if (currentStepMessages.includes(messageId)) {
-                                messageElement.classList.add('active', 'in-progress');
-                            } else {
-                                messageElement.classList.add('active', 'completed');
+                            // Only update if message isn't already completed
+                            if (!messageElement.classList.contains('completed')) {
+                                if (currentStepMessages.includes(messageId)) {
+                                    messageElement.classList.add('active', 'in-progress');
+                                } else {
+                                    messageElement.classList.add('active', 'completed');
+                                }
                             }
                         }
                         
