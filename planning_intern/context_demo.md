@@ -324,20 +324,20 @@ STEP 1: Initialisierung
 - Process Step: Step 1 → active
 - Data Category: Service Discovery & Initialisierung → active
 - Phase Display: "Phase 1: Consent Request Initiation"
-- Consent Messages: 1-2 → active
+- Consent Messages: 1-2 → active (seperately, one after the other)
 - Message 1: Customer → Bank: "Initiate service request"
 - Message 2: Bank → ConsentMgmt: "Check existing consents"
-- Consent Messages: 1-2 → completed
+- Consent Message: 1-2 → completed (seperately, one after the other)
 - Data Category: Service Discovery & Initialisierung → completed
 
 STEP 2: Produktauswahl
 
 - Process Step: Step 1 → completed, Step 2 → active
 - Data Category: Service Discovery → completed, Produktkonfiguration → active
-- Consent Messages: 3-4 → active
+- Consent Messages: 3-4 → active (seperately, one after the other)
 - Message 3: ConsentMgmt → Bank: "No valid consent found"
 - Message 4: Bank → ConsentMgmt: "Create consent request"
-- Consent Messages: 3-4 → completed
+- Consent Messages: 3-4 → completed (seperately, one after the other)
 - Data Category: Produktkonfiguration → completed
 
 STEP 3: Selbstdeklaration
@@ -345,15 +345,15 @@ STEP 3: Selbstdeklaration
 - Process Step: Step 2 → completed, Step 3 → active
 - Phase Display: "Phase 2: Consent Granting & Validation"
 - Data Category: Compliance & Selbstdeklaration → active
-- Consent Messages: 5-6 → active
+- Consent Messages: 5-6 → active (seperately, one after the other)
 - Message 5: ConsentMgmt → Customer: "Present consent form"
 - Message 6: Customer → ConsentMgmt: "Grant specific consents"
-- Consent Messages: 5-6 → completed
-- Consent Messages: 7-8 → active
+- Consent Messages: 5-6 → completed (seperately, one after the other)
+- Consent Messages: 7-9 → active (seperately, one after the other)
 - Message 7: ConsentMgmt → ConsentMgmt: "Validate consent completeness"
 - Message 8: ConsentMgmt → AuditLog: "Log consent decision"
 - Message 9: ConsentMgmt → Bank: "Consent granted with scope"
-- Consent Messages: 7-9 → completed
+- Consent Messages: 7-9 → completed (seperately, one after the other)
 - Data Category: Compliance & Selbstdeklaration → completed
 
 STEP 4: Basisdaten
@@ -374,7 +374,7 @@ STEP 6: Identifikation
 
 - Process Step: Step 5 → completed, Step 6 → active
 - Data Category: Identifikation → active
-- Consent Messages: 11-12 → active
+- Consent Messages: 11-12 → active (seperately, one after the other)
 - Message 11: DataProvider → ConsentMgmt: "Verify consent validity"
 
 
@@ -383,15 +383,15 @@ STEP 7: Background Checks
 - Process Step: Step 6 → completed, Step 7 → active
 - Data Category: KYC & Background Checks → active
 - Message 12: ConsentMgmt → DataProvider: "Consent valid for scope"
-- Consent Messages: 10-12 → completed
+- Consent Messages: 10-12 → completed (seperately, one after the other)
 - Data Category: Identifikation → completed
 - Data Category: KYC & Background Checks → completed
-- Consent Messages: 13-14 → active
+- Consent Messages: 13-14 → active (seperately, one after the other)
 - Message 13: DataProvider → Bank: "Provide requested data"
 - Data Category: Basisdaten → completed
 - Data Category: Erweiterte Profildaten → completed
 - Message 14: DataProvider → AuditLog: "Log data access"
-- Consent Messages: 13-14 → completed
+- Consent Messages: 13-14 → completed (seperately, one after the other)
 
 STEP 8: Vertragsabschluss
 
@@ -414,10 +414,10 @@ STEP 10: Metadaten/Verteilung
 - Process Step: Step 9 → completed, Step 10 → active
 - Phase Display: "Phase 4: Ongoing Consent Management"
 - Data Category: Systemintegration → active
-- Consent Messages: 15 → completed, 16-17 → active
+- Consent Messages: 16-17 → active (seperately, one after the other)
 - Message 16: ConsentMgmt → Customer: "Consent expiry notification"
 - Message 17: Customer → ConsentMgmt: "Renew/modify/revoke consent"
-- Consent Messages: 16-17 → completed
+- Consent Messages: 16-17 → completed (seperately, one after the other)
 - Consent Messages: 18 → active
 - Message 18: ConsentMgmt → AuditLog: "Log consent updates"
 - Consent Messages: 18 → completed

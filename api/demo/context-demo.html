@@ -104,8 +104,64 @@
             top: 20px;
             right: 20px;
             display: flex;
+            flex-direction: column;
             gap: 10px;
             z-index: 3;
+        }
+        
+        .auto-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .step-navigation {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .step-indicator {
+            background: rgba(255, 255, 255, 0.9);
+            color: #253165;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            min-width: 100px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(37, 49, 101, 0.2);
+            position: relative;
+            cursor: help;
+        }
+        
+        .step-indicator::after {
+            content: "Keyboard: ←→ Navigate, Space Play/Pause, Esc Reset";
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #253165;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        .step-indicator:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .nav-button {
+            min-width: 90px;
         }
 
         .control-button {
@@ -129,6 +185,20 @@
 
         .control-button:active {
             transform: translateY(0);
+        }
+
+        .control-button:disabled,
+        .control-button.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .control-button:disabled:hover,
+        .control-button.disabled:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: none;
         }
 
         .control-button.playing {
@@ -1045,9 +1115,16 @@
     <header class="header">
         <img src="../graphics/logos/logo_obp_hoch_gross.png" alt="Open Banking Project Logo" class="logo" onerror="handleImageError(this, '../graphics/logos/logo_obp_hoch_gross.png')">
         <div class="demo-controls">
-            <button class="control-button" id="runDemoBtn" onclick="runEntireDemo()">Run Demo</button>
-            <button class="control-button" id="pauseDemoBtn" onclick="pauseDemo()">Pause</button>
-            <button class="control-button" id="resetDemoBtn" onclick="resetDemo()">Reset</button>
+            <div class="auto-controls">
+                <button class="control-button" id="runDemoBtn" onclick="runEntireDemo()">Run Demo</button>
+                <button class="control-button" id="pauseDemoBtn" onclick="pauseDemo()">Pause</button>
+                <button class="control-button" id="resetDemoBtn" onclick="resetDemo()">Reset</button>
+            </div>
+            <div class="step-navigation">
+                <button class="control-button nav-button" id="prevStepBtn" onclick="previousStep()">◀ Previous</button>
+                <span class="step-indicator">Step <span id="currentStepNumber">1</span> of 10</span>
+                <button class="control-button nav-button" id="nextStepBtn" onclick="nextStep()">Next ▶</button>
+            </div>
         </div>
         <div class="header-content">
             <div class="header-left">
@@ -1410,10 +1487,10 @@
                 title: 'Consent & Metadaten',
                 steps: [1, 2],
                 fields: [
-                    'cookieConsent (Boolean)',
-                    'initialConsent (Boolean)',
-                    'serviceSelection (Array)',
-                    'consentValidUntil (Date)'
+                    'Cookie preferences and tracking consent',
+                    'Initial service discovery consent',
+                    'Product and service selections',
+                    'Consent validity and expiration periods'
                 ]
             },
             {
@@ -1421,16 +1498,11 @@
                 title: 'Basis Identitaetsdaten',
                 steps: [3, 4],
                 fields: [
-                    'customerId (String)',
-                    'firstName (String)',
-                    'lastName (String)',
-                    'dateOfBirth (Date)',
-                    'emailAddress (String)',
-                    'phoneNumber (String)',
-                    'streetAddress (String)',
-                    'postalCode (String)',
-                    'city (String)',
-                    'country (String)'
+                    'Personal information (name, birth date)',
+                    'Address details (residential, correspondence)',
+                    'Contact information (phone, email)',
+                    'Basic nationality and civil status',
+                    'Customer identification numbers'
                 ]
             },
             {
@@ -1438,13 +1510,11 @@
                 title: 'Selbstdeklaration & Erweiterte Daten',
                 steps: [5],
                 fields: [
-                    'fatcaStatus (Object)',
-                    'mifidClassification (String)',
-                    'riskTolerance (String)',
-                    'investmentExperience (Object)',
-                    'estimatedIncome (Number)',
-                    'employmentStatus (String)',
-                    'employer (String)'
+                    'Tax status and FATCA declarations',
+                    'Risk tolerance and investment experience',
+                    'Employment and income information',
+                    'Regulatory compliance declarations',
+                    'Source of wealth documentation'
                 ]
             },
             {
@@ -1452,12 +1522,11 @@
                 title: 'Identifikation & Verifikation',
                 steps: [6, 7],
                 fields: [
-                    'identificationDate (Date)',
-                    'identificationMethod (String)',
-                    'verificationLevel (String)',
-                    'kycStatus (Object)',
-                    'pepStatus (Boolean)',
-                    'sanctionsCheck (Boolean)'
+                    'Identity verification results',
+                    'Document validation data',
+                    'KYC and compliance check status',
+                    'Background screening results',
+                    'PEP and sanctions list results'
                 ]
             },
             {
@@ -1465,11 +1534,11 @@
                 title: 'Vertrag & Signatur',
                 steps: [8, 9],
                 fields: [
-                    'contractAcceptance (Boolean)',
-                    'termsVersion (String)',
-                    'signatureMethod (String)',
-                    'signatureTimestamp (Date)',
-                    'qualifiedSignature (Boolean)'
+                    'Contract terms acceptance',
+                    'Digital signature information',
+                    'Legal agreement confirmations',
+                    'Signature method and timestamps',
+                    'Qualified signature certificates'
                 ]
             },
             {
@@ -1477,14 +1546,24 @@
                 title: 'Prozess Metadaten',
                 steps: [10],
                 fields: [
-                    'processId (String)',
-                    'completionStatus (String)',
-                    'documentReferences (Array)',
-                    'auditTrail (Array)',
-                    'systemIntegrationStatus (Object)'
+                    'Process completion status',
+                    'System integration results',
+                    'Audit trail information',
+                    'Document references and metadata',
+                    'Quality metrics and performance data'
                 ]
             }
         ];
+
+        // Timing Constants for Consistent Flow
+        const TIMING = {
+            DEMO_STEP_INTERVAL: 4000,      // Main step progression
+            MESSAGE_STAGGER: 300,           // Between consent messages
+            FIELD_STAGGER: 200,             // Between data fields
+            CATEGORY_DELAY: 400,            // Category activation delay
+            PHASE_TRANSITION: 100,          // Phase change delay
+            STATE_TRANSITION: 0             // Immediate visual feedback
+        };
 
         // Application State
         let currentStep = 1;
@@ -1492,6 +1571,7 @@
         let demoInterval = null;
         let isDemoRunning = false;
         let isDemoPaused = false;
+        let isManualMode = false;
 
         // DOM Elements
         const flowPhasesContainer = document.getElementById('flowPhases');
@@ -1503,6 +1583,10 @@
             renderProcessSteps();
             renderConsentFlowComponents();
             renderDataCategories();
+            // Initialize navigation
+            setManualMode(false);
+            updateNavigationButtons();
+            updateStepIndicator();
             // Stay in neutral state until user clicks "Run Demo" or clicks a step
             addConsoleMessage('System initialized. Ready for user interaction.', 'success');
         }
@@ -1660,9 +1744,9 @@
                     dataCategory.fields.forEach((field, index) => {
                         setTimeout(() => {
                             addConsoleMessage(`✓ ${field}: [COLLECTED]`, 'data');
-                        }, index * 150);
+                        }, index * TIMING.FIELD_STAGGER);
                     });
-                }, 800);
+                }, TIMING.CATEGORY_DELAY * 2);
             }
         }
         
@@ -1927,9 +2011,9 @@
                                     }
                                     // No highlight animation for already confirmed fields
                                 }
-                            }, index * (isNewCategory ? 200 : 0)); // No delay for existing categories
+                            }, index * (isNewCategory ? TIMING.FIELD_STAGGER : 0)); // No delay for existing categories
                         });
-                    }, categoryIndex * 300 + 400);
+                    }, categoryIndex * TIMING.MESSAGE_STAGGER + TIMING.CATEGORY_DELAY);
                 } else {
                     categoryElement.classList.remove('active', 'entering');
                     
@@ -2089,11 +2173,14 @@
             resetDemo();
             isDemoRunning = true;
             isDemoPaused = false;
+            setManualMode(false);
             updateControlButtons();
             
             addConsoleMessage('Starting automated demo sequence...', 'info');
             
             let step = 1;
+            currentStep = step;
+            updateStepIndicator();
             activateStep(step);
             step++;
             demoInterval = setInterval(() => {
@@ -2102,15 +2189,18 @@
                 }
                 
                 if (step <= 10) {
+                    currentStep = step;
+                    updateStepIndicator();
                     activateStep(step);
                     step++;
                 } else {
                     clearInterval(demoInterval);
                     isDemoRunning = false;
+                    setManualMode(false);
                     updateControlButtons();
                     addConsoleMessage('Demo completed. Returning to interactive mode.', 'success');
                 }
-            }, 4000);
+            }, TIMING.DEMO_STEP_INTERVAL);
         }
         
         function pauseDemo() {
@@ -2133,7 +2223,9 @@
             isDemoPaused = false;
             currentStep = 1;
             completedSteps = [];
+            setManualMode(false);
             updateControlButtons();
+            updateStepIndicator();
             
             // Reset all visual states
             document.querySelectorAll('.process-step').forEach(step => {
@@ -2181,10 +2273,131 @@
                 runBtn.textContent = 'Run Demo';
                 pauseBtn.style.display = 'block';
             }
+            
+            updateNavigationButtons();
+        }
+
+        // Navigation Functions
+        function nextStep() {
+            if (currentStep < 10) {
+                setManualMode(true);
+                goToStep(currentStep + 1);
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                setManualMode(true);
+                goToStep(currentStep - 1);
+            }
+        }
+
+        function goToStep(stepNumber) {
+            if (stepNumber < 1 || stepNumber > 10) return;
+            
+            // Stop any running demo
+            if (isDemoRunning) {
+                pauseDemo();
+            }
+            
+            currentStep = stepNumber;
+            activateStep(stepNumber);
+            updateNavigationButtons();
+            updateStepIndicator();
+        }
+
+        function setManualMode(manual) {
+            isManualMode = manual;
+            const autoControls = document.querySelector('.auto-controls');
+            const stepNavigation = document.querySelector('.step-navigation');
+            
+            if (manual) {
+                autoControls.style.opacity = '0.6';
+                stepNavigation.style.opacity = '1';
+            } else {
+                autoControls.style.opacity = '1';
+                stepNavigation.style.opacity = '0.8';
+            }
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevStepBtn');
+            const nextBtn = document.getElementById('nextStepBtn');
+            
+            prevBtn.disabled = (currentStep <= 1) || (isDemoRunning && !isDemoPaused);
+            nextBtn.disabled = (currentStep >= 10) || (isDemoRunning && !isDemoPaused);
+            
+            // Update button appearance
+            if (prevBtn.disabled) {
+                prevBtn.classList.add('disabled');
+            } else {
+                prevBtn.classList.remove('disabled');
+            }
+            
+            if (nextBtn.disabled) {
+                nextBtn.classList.add('disabled');
+            } else {
+                nextBtn.classList.remove('disabled');
+            }
+        }
+
+        function updateStepIndicator() {
+            const stepNumber = document.getElementById('currentStepNumber');
+            if (stepNumber) {
+                stepNumber.textContent = currentStep;
+            }
+        }
+
+        // Keyboard Navigation Support
+        function handleKeydown(event) {
+            // Only handle keyboard when not in an input field
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') return;
+            
+            switch(event.key) {
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    if (!isDemoRunning || isDemoPaused) {
+                        previousStep();
+                    }
+                    break;
+                case 'ArrowRight':
+                    event.preventDefault();
+                    if (!isDemoRunning || isDemoPaused) {
+                        nextStep();
+                    }
+                    break;
+                case 'Home':
+                    event.preventDefault();
+                    if (!isDemoRunning || isDemoPaused) {
+                        goToStep(1);
+                    }
+                    break;
+                case 'End':
+                    event.preventDefault();
+                    if (!isDemoRunning || isDemoPaused) {
+                        goToStep(10);
+                    }
+                    break;
+                case ' ': // Spacebar
+                    event.preventDefault();
+                    if (isDemoRunning) {
+                        pauseDemo();
+                    } else if (isDemoPaused) {
+                        runEntireDemo(); // Resume
+                    } else {
+                        runEntireDemo(); // Start
+                    }
+                    break;
+                case 'Escape':
+                    event.preventDefault();
+                    resetDemo();
+                    break;
+            }
         }
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', initialize);
+        document.addEventListener('keydown', handleKeydown);
         
         // Add auto-demo button functionality (can be triggered via console)
         window.startAutoDemo = startAutoDemo;
@@ -2321,6 +2534,7 @@
         // Add welcome message after a short delay
         setTimeout(() => {
             addConsoleMessage('Interactive demo ready. Click on process steps to explore the Open API Kundenbeziehung.', 'info');
+            addConsoleMessage('Navigation: Use arrow buttons or keyboard (← → for steps, Space for play/pause, Esc to reset).', 'info');
             addConsoleMessage('Type "startAutoDemo()" in browser console for automatic demonstration.', 'info');
             testImagePaths();
         }, 1000);
