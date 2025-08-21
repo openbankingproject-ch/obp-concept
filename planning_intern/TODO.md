@@ -13,3 +13,10 @@
 - ABSOLUTELY NO EMOJIS OR SLANG, use professional language only
 - for german content: use "Ecosystem" instead of "Ökosystem" and "ss" instead of "ß" (we are swiss not german!!)
 - differentiate between the documentation from a professional and theoretical perspective (especially Fachliche Conclusions) and the practical implementation and documentation from a practical and developer perspective
+
+## Tasks
+- [ ] **Context Demo**: Implement the context demo as specified in `planning_intern/context_demo.md`
+  - Ensure to follow the layout structure and design guidelines
+  - Use the provided graphics and icons from `api/demo/graphics`
+  - Implement the interactive elements as described
+  - Ensure the demo is responsive and visually appealing
