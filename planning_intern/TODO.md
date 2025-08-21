@@ -21,12 +21,20 @@
   - ensure that cleanup of the demo is done properly after each run
   - decrease margins on the left and right side of the demo to give more space to the content
   - add a button to run the entire demo (go through all steps at a reasonable speed), a pause button and a reset button to reset the demo to the initial state. 
-  - decrease font size of titles and subtitles:
+  - changes in font sizes for the following titles/subtitles:
     - 'Open API Kundenbeziehung Demo Alpha Version 1.0' a lot smaller and aligned to the left
     - 'Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow' a bit smaller and next to the title 'Open API Kundenbeziehung Demo Alpha Version 1.0' 
     - '10-Stufen Referenzprozess' a lot smaller, but bold
     - 'Generischer Consent Flow' a lot smaller, but bold
     - 'Daten Onboarding Prozess' keep same font size, but bold
+  - change font of demo:
+    - for everything, unless specified otherwise, use 'Verdana'
+    - for titles and subtitles listed below use 'Courier New'
+      - 'Open API Kundenbeziehung Demo Alpha Version 1.0'
+      - 'Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow'
+      - '10-Stufen Referenzprozess'
+      - 'Generischer Consent Flow'
+      - 'Daten Onboarding Prozess'
   
 [] Referenzprozess:
   - Numbering of the 10 main steps: Add the numbering to the Step names (like "1. Initialisierung") instead of the current numbering in the boxes
