@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant C as Customer
+    participant I as Integrator (Bank B)
+    participant P as Producer (Bank A)
+    participant API as Open API
+
+    Note over C,API: Phase 1: Customer Check
+    C->>I: Initiiert Kontoeröffnung
+    I->>API: POST /customer/check {sharedCustomerHash, firstName, lastName, dateOfBirth}
+    API->>P: Validate & Check
+    P->>API: {match: true, identificationDate: "2025-01-15", verificationLevel: "QEAA"}
+    API->>I: Customer exists & valid
+    
+    Note over C,API: Phase 2: Consent Management  
+    I->>C: Request consent for data sharing
+    C->>I: Grant consent
+    
+    Note over C,API: Phase 3: Data Retrieval
+    I->>API: POST /customer/fullRequest {sharedCustomerHash, purpose: "accountOpening", requestedDataCategories: ["identity", "address", "contact", "identification", "kyc"]}
+    API->>P: Request modular data blocks
+    P->>API: Complete customer profile (modulare Datenbausteine)
+    API->>I: Full customer data with data blocks
+    
+    Note over C,API: Phase 4: Account Creation
+    I->>I: Create account with existing data
+    I->>C: Account ready for use

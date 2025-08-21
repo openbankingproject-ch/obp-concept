@@ -45,17 +45,7 @@ professional documentation (conclusions) written from the perspective of an econ
 08 Testing und Verifikation:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
 
-**TODO**:
-[] ROADMAP.md: analyze the commentary added by an expert and make changes accordingly 
-[] for each conclusion: 
-    - evaluate content, focus on coherency, no redundancy and check grammar and general language, make sure it is professional and coherent
-    - update faulty paths to new file structure for the images 
-    - add images that are not yet in the conclusion files, but are in the folder 'Dokumentation Fachliche Perspektive/Fachliche Conclusions Open API Kundenbeziehung/Resources/graphics'
-    - add mermaid diagrams from the conclusion files to the folder 'Dokumentation Fachliche Perspektive/Fachliche Conclusions Open API Kundenbeziehung/Resources/graphics' and update paths in the conclusion files accordingly (create a seperate file for each mermaid diagram and if possible link that instead of inline mermaid diagrams)
-[] verify that the file "Konklusion Open API Kundenbeziehung.md" matches the conclusions and the structure of the documentation
-[] verify sources and references in the file "Quellen und Referenzen", delete unneccessary or unprofessional sources and if missing add link
-[] color scheme to match Open Banking (see slides) make titles and stuff coloured or use to highlight according to the color scheme: 'api/demo/colors.txt'
-[] complete README.md file including graphics for our vision and some sort of navigation overview for the repo
+
 
 
 

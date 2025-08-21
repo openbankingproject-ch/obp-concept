@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant Customer
+    participant E-ID Provider
+    participant Open API Gateway
+    participant Service Provider
+    participant Consent Manager
+    
+    Customer->>E-ID Provider: E-ID Authentication Request
+    E-ID Provider->>E-ID Provider: Validate Digital Identity
+    E-ID Provider->>Open API Gateway: Identity Claims + Attestation
+    
+    Open API Gateway->>Consent Manager: Check Service Permissions
+    Consent Manager->>Customer: Request Service-specific Consent
+    Customer->>Consent Manager: Grant/Deny Consent
+    
+    Consent Manager->>Open API Gateway: Consent Token
+    Open API Gateway->>Service Provider: Authorized API Call + Context
+    Service Provider->>Customer: Provide Requested Service
+    
+    Note over Customer,Service Provider: Unified Identity & Consent Experience

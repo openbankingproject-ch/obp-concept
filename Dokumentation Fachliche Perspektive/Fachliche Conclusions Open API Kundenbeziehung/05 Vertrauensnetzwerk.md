@@ -28,7 +28,7 @@ Das Vertrauensnetzwerk für die Open API Kundenbeziehung definiert eine föderie
 
 **Scope unseres Projektes:** Föderierte Systemarchitektur für standardisierten, sicheren Datenaustausch zwischen verschiedenen Finanzdienstleistern und verwandten Branchen.
 
-![High-level Open API Kundenbeziehung](Resources/images/Vertrauensnetzwerk%20Grafiken/High-level%20Open%20API%20Kundenbeziehung.png)
+![High-level Open API Kundenbeziehung](./Resources/graphics/05-vertrauensnetzwerk/High-level%20Open%20API%20Kundenbeziehung.png)
 
 ### Abgrenzung verschiedener Systemansätze
 
@@ -41,7 +41,7 @@ Das Vertrauensnetzwerk für die Open API Kundenbeziehung definiert eine föderie
 | **Risiken** | Verteiltes Risiko durch Dezentralität | Erhöhte Abhängigkeitsrisiken | Exponentieller Integrationsaufwand |
 | **Skalierung** | Skaleneffekte durch Netzwerkeffekte | Zentrale Skalierung mit Single Point of Failure | Quadratisches Wachstum der Integrationen |
 
-![API Governance Interaction](Resources/images/Vertrauensnetzwerk%20Grafiken/API%20Governance%20Interaction.png)
+![API Governance Interaction](./Resources/graphics/05-vertrauensnetzwerk/API%20Governance%20Interaction.png)
 
 ### Swiss Context Anpassungen
 
@@ -61,13 +61,13 @@ Das Vertrauensnetzwerk für die Open API Kundenbeziehung definiert eine föderie
 
 ## Architektur-Modelle Übersicht
 
-![Dezentralisiertes, Hybrides und Zentralisiertes Modell](Resources/images/Vertrauensnetzwerk%20Grafiken/Dezentralisiertes%20Hybrides%20und%20Zentralisiertes%20Modell.png)
+![Dezentralisiertes, Hybrides und Zentralisiertes Modell](./Resources/graphics/05-vertrauensnetzwerk/Dezentralisiertes%20Hybrides%20und%20Zentralisiertes%20Modell.png)
 
 ### Modell 1: Dezentrale Architektur (Peer-to-Peer)
 
 **Konzeptionelle Architektur-Darstellung:**
 
-![Dezentralisiertes Vertrauensnetzwerk](Resources/images/Vertrauensnetzwerk%20Grafiken/Dezentralisiertes%20Vertrauensnetzwerk.png)
+![Dezentralisiertes Vertrauensnetzwerk](./Resources/graphics/05-vertrauensnetzwerk/Dezentralisiertes%20Vertrauensnetzwerk.png)
 
 Die dezentrale P2P-Architektur organisiert sich als vollständig vernetztes System ohne zentrale Koordinationsinstanz. Alle Teilnehmer sind gleichberechtigt und kommunizieren direkt miteinander:
 
@@ -88,7 +88,7 @@ Die dezentrale P2P-Architektur organisiert sich als vollständig vernetztes Syst
 
 ### Modell 2: Hybrid-Architektur (Präferierte Lösung)
 
-![Hybrides Vertrauensnetzwerk](Resources/images/Vertrauensnetzwerk%20Grafiken/Hybrider%20Vertrauensnetzwerk.png)
+![Hybrides Vertrauensnetzwerk](./Resources/graphics/05-vertrauensnetzwerk/Hybrider%20Vertrauensnetzwerk.png)
 
 **Konzeptionelle Architektur-Darstellung:**
 
@@ -116,7 +116,7 @@ Die gleichen Akteure wie im P2P-Modell (Banken, FinTech, InsurTech, Mobility, Re
 
 ### Modell 3: Zentrale Hub-Architektur
 
-![Zentralisiertes Vertrauensnetzwerk](Resources/images/Vertrauensnetzwerk%20Grafiken/Zentralisiertes%20Vertrauensnetzwerk.png)
+![Zentralisiertes Vertrauensnetzwerk](./Resources/graphics/05-vertrauensnetzwerk/Zentralisiertes%20Vertrauensnetzwerk.png)
 
 **Konzeptionelle Architektur-Darstellung:**
 
@@ -149,7 +149,11 @@ Alle Akteure (Banken A-B, FinTech C, InsurTech D, Mobility E, Retail F) sind aus
 
 ## Technische Rollen Definition und Matrix
 
-![Prozess der Open-API Kundenbeziehung (erste Version)](Resources/images/Vertrauensnetzwerk%20Grafiken/Prozess%20der%20Open-API%20Kundenbeziehung%20erste%20Version.png)
+![Prozess der Open-API Kundenbeziehung (erste Version)](./Resources/graphics/05-vertrauensnetzwerk/Prozess%20der%20Open-API%20Kundenbeziehung%20erste%20Version.png)
+
+![Prozess der Open-API Kundenbeziehung ausführlich](./Resources/graphics/05-vertrauensnetzwerk/Prozess%20der%20Open-API%20Kundenbeziehung%20ausführlich.png)
+
+![Simplified Bank User API Interaction](./Resources/graphics/05-vertrauensnetzwerk/Simplified%20Bank%20User%20API%20Interaction.png)
 
 ### Kern-Rollen im Vertrauensnetzwerk
 
@@ -320,7 +324,7 @@ sequenceDiagram
 
 ## Governance-Infrastruktur
 
-![API Governance Interaction](Resources/images/Vertrauensnetzwerk%20Grafiken/API%20Governance%20Interaction.png)
+![API Governance Interaction](./Resources/graphics/05-vertrauensnetzwerk/API%20Governance%20Interaction.png)
 
 ### Zentrale Governance-Komponenten
 

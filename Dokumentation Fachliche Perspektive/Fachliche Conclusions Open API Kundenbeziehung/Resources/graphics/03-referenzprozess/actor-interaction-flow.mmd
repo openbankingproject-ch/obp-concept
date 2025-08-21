@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant K as Kunde
+    participant B as Bank/Anbieter
+    participant API as Open API System
+    participant KYC as KYC Services
+    participant ID as Identity Provider
+
+    Note over K,ID: Phase 1: Initialisierung & Produktauswahl
+    K->>B: 1. Initialisierung - Service Discovery
+    B->>K: Verfügbare Services anzeigen
+    K->>B: 2. Produktauswahl - Gewünschte Services
+    B->>K: Produktkonfiguration bestätigt
+    
+    Note over K,ID: Phase 2: Datenerfassung
+    K->>B: 3. Selbstdeklaration - FATCA/MIFID
+    K->>B: 4. Basisdaten - Kontaktinformationen
+    K->>B: 5. Erweiterte Daten - Risikoprofil
+    
+    Note over K,ID: Phase 3: Verifikation & Compliance
+    B->>API: 6. Identifikation über Open API
+    API->>ID: Identity Verification Request
+    ID->>API: Identity Verified
+    API->>B: Verified Identity Data
+    
+    B->>KYC: 7. Background Checks - KYC Prozess
+    KYC->>B: KYC Assessment Complete
+    
+    Note over K,ID: Phase 4: Vertragsabschluss
+    B->>K: 8. Vertragsabschluss - AGB präsentieren  
+    K->>B: AGB akzeptiert
+    B->>K: 9. Signatur - Vertrag signieren
+    K->>B: Digitale Signatur erteilt
+    B->>B: 10. Metadaten/Verteilung - Verarbeitung
+    B->>K: ✅ Onboarding abgeschlossen

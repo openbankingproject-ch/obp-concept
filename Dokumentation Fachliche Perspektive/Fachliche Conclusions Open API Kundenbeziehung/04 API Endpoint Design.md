@@ -13,7 +13,7 @@
 
 ## Executive Summary
 
-Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 Standards und etabliert eine klare, RESTful Architektur für den sicheren Austausch von Kundendaten. Die API-Spezifikation konzentriert sich auf konzeptionelle Strukturen, während detaillierte technische Implementierungen in der separaten [API Codebase Dokumentation](/documentation/Umsetzung%20und%20Implementierung/) behandelt werden.
+Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 Standards und etabliert eine klare, RESTful Architektur für den sicheren Austausch von Kundendaten. Die API-Spezifikation konzentriert sich auf konzeptionelle Strukturen, während detaillierte technische Implementierungen in der separaten [API Codebase Dokumentation](../Umsetzung%20und%20Implementierung/) behandelt werden.
 
 **Zentrale Designprinzipien:**
 - OpenAPI 3.0 konforme Spezifikation für automatische Code-Generierung
@@ -544,99 +544,15 @@ sharedCustomerHash = SHA256(hash_input)
 
 ### Customer Onboarding Flow
 
-```mermaid
-sequenceDiagram
-    participant C as Customer
-    participant I as Integrator (Bank B)
-    participant P as Producer (Bank A)
-    participant API as Open API
-
-    Note over C,API: Phase 1: Customer Check
-    C->>I: Initiiert Kontoeröffnung
-    I->>API: POST /customer/check {sharedCustomerHash, firstName, lastName, dateOfBirth}
-    API->>P: Validate & Check
-    P->>API: {match: true, identificationDate: "2025-01-15", verificationLevel: "QEAA"}
-    API->>I: Customer exists & valid
-    
-    Note over C,API: Phase 2: Consent Management  
-    I->>C: Request consent for data sharing
-    C->>I: Grant consent
-    
-    Note over C,API: Phase 3: Data Retrieval
-    I->>API: POST /customer/fullRequest {sharedCustomerHash, purpose: "accountOpening", requestedDataCategories: ["identity", "address", "contact", "identification", "kyc"]}
-    API->>P: Request modular data blocks
-    P->>API: Complete customer profile (modulare Datenbausteine)
-    API->>I: Full customer data with data blocks
-    
-    Note over C,API: Phase 4: Account Creation
-    I->>I: Create account with existing data
-    I->>C: Account ready for use
-```
+[Customer Onboarding Flow Diagram](./Resources/graphics/04-api-endpoint-design/customer-onboarding-flow.mmd)
 
 ### Granular Data Access Flow
 
-```mermaid
-sequenceDiagram
-    participant Client as Client Application
-    participant Gateway as API Gateway  
-    participant Auth as JWT Auth Service
-    participant Data as Customer Data Service
-
-    Client->>Gateway: POST /customer/basic
-    Note over Client,Data: Authentication & Authorization
-    Gateway->>Auth: Validate JWT Token
-    Auth->>Gateway: Token valid + scopes
-    
-    Note over Client,Data: Data Access Control
-    Gateway->>Data: Request basic customer data
-    Data->>Data: Apply data minimization
-    Data->>Gateway: {name, vorname, geburtsdatum, nationalitaet}
-    Gateway->>Client: Response with minimal data
-    
-    Note over Client,Data: Audit & Logging
-    Gateway->>Gateway: Log API access
-```
+[Granular Data Access Flow Diagram](./Resources/graphics/04-api-endpoint-design/granular-data-access-flow.mmd)
 
 ### Trust Network Integration Flow
 
-```mermaid
-graph TB
-    subgraph "Integrator Institution (Bank B)"
-        B_UI[Customer UI]
-        B_API[API Client]
-        B_Core[Core Banking]
-    end
-    
-    subgraph "Open API Kundenbeziehung"
-        API_GW[API Gateway]
-        API_Auth[Authentication]
-        API_Consent[Consent Management]
-        API_Data[Data Router]
-    end
-    
-    subgraph "Producer Institution (Bank A)"
-        A_Core[Core Banking]
-        A_Data[Customer Data]
-        A_KYC[KYC System]
-    end
-    
-    B_UI --> B_API
-    B_API --> API_GW
-    API_GW --> API_Auth
-    API_Auth --> API_Consent  
-    API_Consent --> API_Data
-    API_Data --> A_Core
-    A_Core --> A_Data
-    A_Core --> A_KYC
-    
-    classDef integrator fill:#e1f5fe
-    classDef api fill:#f3e5f5  
-    classDef producer fill:#e8f5e8
-    
-    class B_UI,B_API,B_Core integrator
-    class API_GW,API_Auth,API_Consent,API_Data api
-    class A_Core,A_Data,A_KYC producer
-```
+[Trust Network Integration Diagram](./Resources/graphics/04-api-endpoint-design/trust-network-integration.mmd)
 
 ---
 

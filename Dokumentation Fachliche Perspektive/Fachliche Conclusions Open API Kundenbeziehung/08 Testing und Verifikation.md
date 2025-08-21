@@ -32,6 +32,8 @@ Das Testing und Verifikations-Framework für die Open API Kundenbeziehung etabli
 
 ## Testing und Verifikations-Diagramme
 
+![API Endpoint Übersicht](./Resources/graphics/08-testing-verification/API%20Endpoint%20Übersicht.png)
+
 ### Multi-Layer Testing Strategy
 
 **Konzeptionelles Testing-Framework:**
@@ -66,44 +68,7 @@ Das Testing-Framework organisiert sich in vier aufeinander aufbauenden Schichten
 
 ### Automated Testing Pipeline
 
-```mermaid
-flowchart LR
-    Developer[Developer<br/>Code Commit] --> SCM[Source Control<br/>Git Repository]
-    
-    SCM --> CI[CI/CD Pipeline<br/>Triggered]
-    
-    CI --> Build[Build & Package<br/>API Services]
-    Build --> UnitTest[Unit Tests<br/>Hohe Coverage angestrebt]
-    
-    UnitTest -->|Pass| IntTest[Integration Tests<br/>Contract & Service Tests]
-    UnitTest -->|Fail| Notify1[Notify Developer<br/>Fix Required]
-    
-    IntTest -->|Pass| Security[Security Tests<br/>FAPI 2.0 Compliance]
-    IntTest -->|Fail| Notify2[Integration Issues<br/>Fix Required]
-    
-    Security -->|Pass| Deploy[Deploy to<br/>Test Environment]
-    Security -->|Fail| Notify3[Security Issues<br/>Fix Required]
-    
-    Deploy --> E2E[End-to-End Tests<br/>Use Case Validation]
-    
-    E2E -->|Pass| Staging[Deploy to<br/>Staging Environment]
-    E2E -->|Fail| Notify4[E2E Issues<br/>Fix Required]
-    
-    Staging --> Manual[Manual Testing<br/>& Stakeholder Review]
-    
-    Manual -->|Approved| Production[Production<br/>Deployment]
-    Manual -->|Issues| Notify5[Manual Issues<br/>Fix Required]
-    
-    classDef process fill:#e3f2fd
-    classDef test fill:#e8f5e8
-    classDef deploy fill:#f3e5f5
-    classDef notify fill:#ffebee
-    
-    class Developer,SCM,CI,Build process
-    class UnitTest,IntTest,Security,E2E,Manual test
-    class Deploy,Staging,Production deploy
-    class Notify1,Notify2,Notify3,Notify4,Notify5 notify
-```
+[Automated Testing Pipeline Diagram](./Resources/graphics/08-testing-verification/automated-testing-pipeline.mmd)
 
 ### Use Case Verification Process
 
@@ -296,6 +261,8 @@ sequenceDiagram
 
 ## Vorgehen und Ziele zu Testing und Verifikation
 
+![Granulare Daten-Endpunkte](./Resources/graphics/08-testing-verification/Granulare%20Daten-Endpunkte.png)
+
 ### Testing Framework Konzept
 
 **Duale Testing-Philosophie:**
@@ -427,6 +394,8 @@ Genaue Metriken zur Messung der Code Quality, Performance und Security Complianc
 ---
 
 ## Use Case basierte Verifikation
+
+![Tabellarische Prozessübersicht](./Resources/graphics/08-testing-verification/Tabellarische%20Prozessübersicht.png)
 
 ### Verifikation der 4 priorisierten Use Cases
 
@@ -564,6 +533,8 @@ Genaue Metriken zur Messung der Code Quality, Performance und Security Complianc
 
 ## Community-basierte Verifikation und externe Validierung
 
+![API Feldübersicht](./Resources/graphics/08-testing-verification/API%20Feldübersicht.png)
+
 ### Partner-basierte Validation
 
 #### Banking Partner Program
@@ -609,6 +580,8 @@ Genaue Metriken zur Messung der Code Quality, Performance und Security Complianc
 - **FIDO Alliance:** Authentication standard participation
 
 ### External Validation Processes
+
+![Validierung Referenzprozess Phase Pflege](./Resources/graphics/08-testing-verification/Validierung%20Referenzprozess%20Phase%20Pflege.png)
 
 #### Third-Party Audits
 **Independent Quality Assurance:**
@@ -667,7 +640,7 @@ Das Testing und Verifikations-Framework positioniert die Open API Kundenbeziehun
 
 Testing und Verifikation läuft parallel zu allen Implementierungsphasen mit spezifischem Fokus auf Community-basierte Validation und Multi-Layer Testing Strategy.
 
-**Vollständige Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
+**Vollständige Timeline:** → [Siehe Master ROADMAP.md](../../ROADMAP.md)
 
 #### **Testing-spezifische Meilensteine:**
 **Phase 1 (Monate 1-6):** Automated Testing Pipeline, FAPI 2.0 Conformance, Partner Testing Program Launch

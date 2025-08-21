@@ -1,0 +1,28 @@
+flowchart TD
+    A[Customer] --> B[E-ID Authentication]
+    B --> C[Open API Authorization]
+    C --> D[Service Access]
+    
+    E[E-ID Identity Claims] --> F[Customer Data Mapping]
+    F --> G[Service-specific Processing]
+    
+    H[E-ID Consent Framework] <--> I[Open API Consent Tokens]
+    I --> J[Service Permissions]
+    
+    subgraph "Authentication Layer"
+        B
+        C
+        D
+    end
+    
+    subgraph "Data Flow Layer"
+        E
+        F
+        G
+    end
+    
+    subgraph "Consent Management Layer"
+        H
+        I
+        J
+    end

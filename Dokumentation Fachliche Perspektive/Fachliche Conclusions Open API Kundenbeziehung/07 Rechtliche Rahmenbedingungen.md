@@ -128,7 +128,7 @@ Damit erscheint es auch nicht als relevant, ob der bei der Identifikation beim D
 
 Die rechtliche Umsetzung erfolgt parallel zur technischen Implementation mit spezifischem Fokus auf Compliance-by-Design und proaktives FINMA-Engagement über alle Projektphasen.
 
-**Vollständige Implementierungs-Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
+**Vollständige Implementierungs-Timeline:** → [Siehe Master ROADMAP.md](../../ROADMAP.md)
 
 #### **Rechtsspezifische Phasen-Übersicht:**
 **Phase 1 (Monate 1-6):** Qualifizierte Rechtsberatung, FINMA-Strategie, Legal Framework Design, Compliance-by-Design

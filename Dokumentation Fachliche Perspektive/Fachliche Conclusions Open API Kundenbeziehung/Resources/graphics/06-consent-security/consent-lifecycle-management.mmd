@@ -1,0 +1,33 @@
+stateDiagram-v2
+    [*] --> ConsentRequested: Customer service request
+    
+    ConsentRequested --> ConsentPresented: Show consent form
+    ConsentPresented --> ConsentGranted: Customer accepts
+    ConsentPresented --> ConsentRejected: Customer rejects
+    
+    ConsentGranted --> ConsentActive: Consent validated & active
+    ConsentRejected --> [*]: Process terminated
+    
+    ConsentActive --> DataAccess: Provider uses consent
+    DataAccess --> ConsentActive: Ongoing data access
+    
+    ConsentActive --> ConsentModified: Customer modifies scope
+    ConsentModified --> ConsentActive: Updated consent active
+    
+    ConsentActive --> ConsentExpiring: Approaching expiry
+    ConsentExpiring --> ConsentRenewed: Customer renews
+    ConsentExpiring --> ConsentExpired: Automatic expiry
+    ConsentRenewed --> ConsentActive: Renewed consent active
+    
+    ConsentActive --> ConsentRevoked: Customer revokes
+    ConsentExpired --> ConsentArchived: Archive expired consent
+    ConsentRevoked --> ConsentArchived: Archive revoked consent
+    
+    ConsentArchived --> [*]: End of lifecycle
+    
+    DataAccess --> AuditLog: Log every access
+    ConsentModified --> AuditLog: Log modifications
+    ConsentRevoked --> AuditLog: Log revocation
+    ConsentExpired --> AuditLog: Log expiry
+    
+    AuditLog --> ComplianceReport: Generate reports
