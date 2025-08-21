@@ -102,7 +102,7 @@ Erstelle eine interaktive HTML-Demo für die **Open API Kundenbeziehung Alpha Ve
   - **Message-Text**: Perfekt zentriert auf Pfeilen (horizontal und vertikal)
   - **Step-spezifische Farben**: 10 verschiedene Farben aus colors.txt für abgeschlossene Nachrichten
   - **Lifelines**: Präzise auf Participant-Zentren ausgerichtet
-- **Phase-Anzeige**: Links positioniert mit 10px Abstand vom Container-Rand
+- **Phase-Anzeige**: Links positioniert mit 10px Abstand vom Container-Rand *TODO: only change when moving to different phase*
 - **Granular Consent Info**: 
   - Erscheint automatisch bei Step 6 ("Grant specific consents")
   - Links positioniert, synchron mit Sequence-Flow
@@ -307,3 +307,125 @@ sequenceDiagram
 - **Präzise Fachterminologie** aus der Finanzbranche
 
 Die vollständig funktionsfähige Demo ist implementiert und verfügbar als standalone HTML-Datei unter `/api/demo/context-demo.html`.
+
+**!!!!! NEW LINEAR DEMO STEP ORDER!!!!!**
+
+**Complete Linear Demo Flow Order**
+
+NEUTRAL STATE (Initial)
+
+- All process steps: inactive/neutral
+- All consent messages: hidden
+- All data categories: hidden
+- Console: "Ready - waiting for user interaction"
+
+STEP 1: Initialisierung
+
+- Process Step: Step 1 → active
+- Data Category: Service Discovery & Initialisierung → active
+- Phase Display: "Phase 1: Consent Request Initiation"
+- Consent Messages: 1-2 → active
+- Message 1: Customer → Bank: "Initiate service request"
+- Message 2: Bank → ConsentMgmt: "Check existing consents"
+- Consent Messages: 1-2 → completed
+- Data Category: Service Discovery & Initialisierung → completed
+
+STEP 2: Produktauswahl
+
+- Process Step: Step 1 → completed, Step 2 → active
+- Data Category: Service Discovery → completed, Produktkonfiguration → active
+- Consent Messages: 3-4 → active
+- Message 3: ConsentMgmt → Bank: "No valid consent found"
+- Message 4: Bank → ConsentMgmt: "Create consent request"
+- Consent Messages: 3-4 → completed
+- Data Category: Produktkonfiguration → completed
+
+STEP 3: Selbstdeklaration
+
+- Process Step: Step 2 → completed, Step 3 → active
+- Phase Display: "Phase 2: Consent Granting & Validation"
+- Data Category: Compliance & Selbstdeklaration → active
+- Consent Messages: 5-6 → active
+- Message 5: ConsentMgmt → Customer: "Present consent form"
+- Message 6: Customer → ConsentMgmt: "Grant specific consents"
+- Consent Messages: 5-6 → completed
+- Consent Messages: 7-8 → active
+- Message 7: ConsentMgmt → ConsentMgmt: "Validate consent completeness"
+- Message 8: ConsentMgmt → AuditLog: "Log consent decision"
+- Message 9: ConsentMgmt → Bank: "Consent granted with scope"
+- Consent Messages: 7-9 → completed
+- Data Category: Compliance & Selbstdeklaration → completed
+
+STEP 4: Basisdaten
+
+- Process Step: Step 3 → completed, Step 4 → active
+- Phase Display: "Phase 3: Data Access & Usage"
+- Consent Messages: 10 → active
+- Message 10: Bank → DataProvider: "Request data with consent token"
+- Data Category: Basisdaten → active
+
+
+STEP 5: Erweiterte Daten
+
+- Process Step: Step 4 → completed, Step 5 → active
+- Data Category: Erweiterte Profildaten → active
+
+STEP 6: Identifikation
+
+- Process Step: Step 5 → completed, Step 6 → active
+- Data Category: Identifikation → active
+- Consent Messages: 11-12 → active
+- Message 11: DataProvider → ConsentMgmt: "Verify consent validity"
+
+
+STEP 7: Background Checks
+
+- Process Step: Step 6 → completed, Step 7 → active
+- Data Category: KYC & Background Checks → active
+- Message 12: ConsentMgmt → DataProvider: "Consent valid for scope"
+- Consent Messages: 10-12 → completed
+- Data Category: Identifikation → completed
+- Data Category: KYC & Background Checks → completed
+- Consent Messages: 13-14 → active
+- Message 13: DataProvider → Bank: "Provide requested data"
+- Data Category: Basisdaten → completed
+- Data Category: Erweiterte Profildaten → completed
+- Message 14: DataProvider → AuditLog: "Log data access"
+- Consent Messages: 13-14 → completed
+
+STEP 8: Vertragsabschluss
+
+- Process Step: Step 7 → completed, Step 8 → active
+- Data Category: Vertragsgestaltung → active
+- Data Category: Vertragsgestaltung → completed
+
+STEP 9: Signatur
+
+- Process Step: Step 8 → completed, Step 9 → active
+- Data Category: Digitale Signatur → active
+- Consent Messages: 15 → active
+- Message 15: Bank → Customer: "Service delivered"
+- Consent Messages: 15 → completed
+- Data Category: Digitale Signatur → completed
+
+
+STEP 10: Metadaten/Verteilung
+
+- Process Step: Step 9 → completed, Step 10 → active
+- Phase Display: "Phase 4: Ongoing Consent Management"
+- Data Category: Systemintegration → active
+- Consent Messages: 15 → completed, 16-17 → active
+- Message 16: ConsentMgmt → Customer: "Consent expiry notification"
+- Message 17: Customer → ConsentMgmt: "Renew/modify/revoke consent"
+- Consent Messages: 16-17 → completed
+- Consent Messages: 18 → active
+- Message 18: ConsentMgmt → AuditLog: "Log consent updates"
+- Consent Messages: 18 → completed
+- Data Category: Systemintegration → completed
+
+COMPLETION STATE
+
+Process Step: All steps → completed
+Consent Messages: All messages → completed
+Data Category: All categories → completed
+Phase Display: "Process Complete"

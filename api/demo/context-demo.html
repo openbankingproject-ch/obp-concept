@@ -1395,42 +1395,19 @@
         const dataCategories = [
             {
                 id: 1,
-                title: 'Service Discovery & Initialisierung',
-                steps: [1],
+                title: 'Consent & Metadaten',
+                steps: [1, 2],
                 fields: [
-                    'serviceType (String)',
-                    'clientIdentifier (String)',
-                    'sessionId (String)',
-                    'requestTimestamp (Date)'
+                    'cookieConsent (Boolean)',
+                    'initialConsent (Boolean)',
+                    'serviceSelection (Array)',
+                    'consentValidUntil (Date)'
                 ]
             },
             {
                 id: 2,
-                title: 'Produktkonfiguration & Auswahl',
-                steps: [2],
-                fields: [
-                    'productType (String)',
-                    'productFeatures (Array)',
-                    'currency (String)',
-                    'serviceLevel (String)'
-                ]
-            },
-            {
-                id: 3,
-                title: 'Compliance & Selbstdeklaration',
-                steps: [3],
-                fields: [
-                    'fatcaStatus (Object)',
-                    'mifidClassification (String)',
-                    'taxDomicile (String)',
-                    'riskTolerance (String)',
-                    'investmentExperience (Object)'
-                ]
-            },
-            {
-                id: 4,
-                title: 'Basisdaten & Kontaktinformationen',
-                steps: [4],
+                title: 'Basis Identitaetsdaten',
+                steps: [3, 4],
                 fields: [
                     'customerId (String)',
                     'firstName (String)',
@@ -1445,80 +1422,54 @@
                 ]
             },
             {
-                id: 5,
-                title: 'Erweiterte Profildaten',
+                id: 3,
+                title: 'Selbstdeklaration & Erweiterte Daten',
                 steps: [5],
                 fields: [
-                    'occupation (String)',
-                    'annualIncome (Number)',
+                    'fatcaStatus (Object)',
+                    'mifidClassification (String)',
+                    'riskTolerance (String)',
+                    'investmentExperience (Object)',
+                    'estimatedIncome (Number)',
                     'employmentStatus (String)',
-                    'employer (String)',
-                    'assetValue (Number)',
-                    'financialGoals (Array)'
+                    'employer (String)'
+                ]
+            },
+            {
+                id: 4,
+                title: 'Identifikation & Verifikation',
+                steps: [6, 7],
+                fields: [
+                    'identificationDate (Date)',
+                    'identificationMethod (String)',
+                    'verificationLevel (String)',
+                    'kycStatus (Object)',
+                    'pepStatus (Boolean)',
+                    'sanctionsCheck (Boolean)'
+                ]
+            },
+            {
+                id: 5,
+                title: 'Vertrag & Signatur',
+                steps: [8, 9],
+                fields: [
+                    'contractAcceptance (Boolean)',
+                    'termsVersion (String)',
+                    'signatureMethod (String)',
+                    'signatureTimestamp (Date)',
+                    'qualifiedSignature (Boolean)'
                 ]
             },
             {
                 id: 6,
-                title: 'Identifikation & Verifikation',
-                steps: [6],
-                fields: [
-                    'identificationMethod (String)',
-                    'documentType (String)',
-                    'biometricCapture (Boolean)',
-                    'verificationLevel (String)',
-                    'qeaaLevel (String)',
-                    'verificationTimestamp (Date)'
-                ]
-            },
-            {
-                id: 7,
-                title: 'KYC & Background Checks',
-                steps: [7],
-                fields: [
-                    'kycStatus (Object)',
-                    'pepStatus (Boolean)',
-                    'sanctionsCheck (Boolean)',
-                    'creditScore (Number)',
-                    'riskAssessment (String)',
-                    'complianceFlags (Array)'
-                ]
-            },
-            {
-                id: 8,
-                title: 'Vertragsgestaltung & AGB',
-                steps: [8],
-                fields: [
-                    'contractType (String)',
-                    'termsVersion (String)',
-                    'contractAcceptance (Boolean)',
-                    'legallyBinding (Boolean)',
-                    'acceptanceMethod (String)'
-                ]
-            },
-            {
-                id: 9,
-                title: 'Digitale Signatur',
-                steps: [9],
-                fields: [
-                    'signatureType (String)',
-                    'certificateProvider (String)',
-                    'signatureTimestamp (Date)',
-                    'documentHash (String)',
-                    'legalValidity (String)',
-                    'auditTrail (Object)'
-                ]
-            },
-            {
-                id: 10,
-                title: 'Systemintegration & Abschluss',
+                title: 'Prozess Metadaten',
                 steps: [10],
                 fields: [
                     'processId (String)',
-                    'accountNumber (String)',
-                    'accountStatus (String)',
-                    'systemIntegrationStatus (Object)',
-                    'welcomePackage (String)',
-                    'completionTimestamp (Date)'
+                    'completionStatus (String)',
+                    'documentReferences (Array)',
+                    'auditTrail (Array)',
+                    'systemIntegrationStatus (Object)'
                 ]
             }
         ];
@@ -1710,20 +1661,20 @@
             });
         }
 
-        // Activate Consent Flow Phases - clean approach with title-adjacent phase display
+        // Activate Consent Flow Phases - matches verified specification from context_demo.md
         function activateConsentPhases(stepId) {
-            // Map each step to specific consent flow messages - progressive flow
+            // Map each step to specific consent flow messages - exact specification mapping
             const stepToMessagesMapping = {
-                1: [1, 2], // Initialisierung: service request + check existing consents
-                2: [3, 4], // Produktauswahl: no consent found + create consent request  
-                3: [5, 6], // Selbstdeklaration: present consent form + grant specific consents
-                4: [7, 8], // Basisdaten: validate completeness + log decision
-                5: [9, 10], // Erweiterte Daten: consent granted + request data with token
-                6: [11, 12], // Identifikation: verify validity + consent valid for scope
-                7: [13, 14], // Background Checks: provide data + log data access
-                8: [15], // Vertragsabschluss: service delivered
-                9: [16, 17], // Signatur: expiry notification + renew/modify consent
-                10: [18] // Metadaten/Verteilung: log consent updates
+                1: [1, 2], // STEP 1: Initialisierung - Messages 1-2
+                2: [3, 4], // STEP 2: Produktauswahl - Messages 3-4  
+                3: [5, 6, 7, 8, 9], // STEP 3: Selbstdeklaration - Messages 5-9
+                4: [10], // STEP 4: Basisdaten - Message 10
+                5: [], // STEP 5: Erweiterte Daten - No new messages (data collection only)
+                6: [11, 12], // STEP 6: Identifikation - Messages 11-12
+                7: [13, 14], // STEP 7: Background Checks - Messages 13-14
+                8: [], // STEP 8: Vertragsabschluss - No new messages (terms acceptance)
+                9: [15], // STEP 9: Signatur - Message 15
+                10: [16, 17, 18] // STEP 10: Metadaten/Verteilung - Messages 16-18
             };
 
             const phaseNames = [
@@ -1755,12 +1706,12 @@
                 granularInfo.classList.remove('visible');
             }
             
-            // Determine current phase based on active messages
+            // Determine current phase based on step ID (matches specification)
             let currentPhase = 1;
-            const lastMessage = Math.max(...activeMessages);
-            if (lastMessage > 15) currentPhase = 4;
-            else if (lastMessage > 10) currentPhase = 3;
-            else if (lastMessage > 3) currentPhase = 2;
+            if (stepId >= 10) currentPhase = 4;      // Phase 4: Step 10
+            else if (stepId >= 6) currentPhase = 3;  // Phase 3: Steps 6-9
+            else if (stepId >= 3) currentPhase = 2;  // Phase 2: Steps 3-5
+            else currentPhase = 1;                   // Phase 1: Steps 1-2
             
             // Get current step messages for in-progress state
             const currentStepMessages = stepToMessagesMapping[stepId] || [];
@@ -1772,12 +1723,7 @@
                 phaseDisplay.classList.remove('active', 'completed');
                 
                 // Determine if current phase has active messages from current step
-                const hasCurrentMessages = currentStepMessages.some(msgId => {
-                    if (currentPhase === 1) return msgId <= 3;
-                    if (currentPhase === 2) return msgId > 3 && msgId <= 10;
-                    if (currentPhase === 3) return msgId > 10 && msgId <= 15;
-                    return msgId > 15;
-                });
+                const hasCurrentMessages = currentStepMessages.length > 0;
                 
                 setTimeout(() => {
                     if (hasCurrentMessages) {
@@ -1838,7 +1784,7 @@
                         if (toLifeline) toLifeline.classList.add('active');
                         
                         // Show granular consent info when message 6 "Grant specific consents" appears
-                        if (messageId === 6) {
+                        if (messageId === 6 && stepId >= 3) {
                             const granularInfo = document.querySelector('.granular-consent-info');
                             if (granularInfo) {
                                 granularInfo.classList.add('visible');
