@@ -45,7 +45,9 @@
         body {
             font-family: 'Verdana', sans-serif;
             background-color: var(--background);
-            background-image: url('../graphics/background/background-graphic-standard.jpg');
+            background-image: 
+                linear-gradient(rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0.5)),
+                url('../graphics/background/background-graphic-standard.jpg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -77,16 +79,6 @@
             z-index: 0;
         }
 
-        .header::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(211, 211, 211, 0.5);
-            z-index: 1;
-        }
 
         .header-content {
             position: relative;
@@ -453,7 +445,7 @@
             top: 140px;
             left: 20px;
             right: 20px;
-            height: 600px;
+            height: 780px;
             z-index: 2;
         }
 
@@ -475,15 +467,15 @@
         }
 
         .sequence-message.completed .message-arrow {
-            background: #73c3fcff;
+            background: var(--message-color, #0070C0);
         }
 
         .sequence-message.completed .message-arrow::after {
-            border-left-color: #73c3fcff;
+            border-left-color: var(--message-color, #0070C0);
         }
 
         .sequence-message.completed .message-arrow.return::after {
-            border-left-color: #73c3fcff;
+            border-left-color: var(--message-color, #0070C0);
         }
 
         .sequence-message.in-progress .message-arrow {
@@ -575,16 +567,16 @@
         }
 
         .sequence-message.completed .message-text {
-            border: 2px solid #0070C0;
-            background: #73c3fcff;
-            color: #0070C0;
+            border: 2px solid var(--message-color, #0070C0);
+            background: white;
+            color: #1e293b;
         }
 
 
         .granular-consent-info {
             position: absolute;
             top: 150px;
-            right: 20px;
+            left: 20px;
             width: 200px;
             background: rgba(255, 255, 255, 0.95);
             border: 2px solid var(--tertiary);
@@ -1797,6 +1789,27 @@
                                     messageElement.classList.add('active', 'in-progress');
                                 } else {
                                     messageElement.classList.add('active', 'completed');
+                                    // Assign step-specific color for completed messages
+                                    const stepColors = {
+                                        1: '#0070C0',    // Blue
+                                        2: '#0095ffff',  // Blue bright
+                                        3: '#4cb867ff',  // Green
+                                        4: '#7fb88dff',  // Green muted
+                                        5: '#B469FF',    // Purple
+                                        6: '#cca2f7ff',  // Purple light
+                                        7: '#FFC000',    // Yellow
+                                        8: '#ecd07cff',  // Yellow light
+                                        9: '#ff3370ff',  // Pink
+                                        10: '#e28fb9ff'  // Pink light
+                                    };
+                                    // Find which step this message belongs to
+                                    for (let step = 1; step <= stepId; step++) {
+                                        if (stepToMessagesMapping[step] && stepToMessagesMapping[step].includes(messageId)) {
+                                            const color = stepColors[step] || '#0070C0';
+                                            messageElement.style.setProperty('--message-color', color);
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1840,28 +1853,34 @@
                         // Enhanced field animations with status colors
                         const fields = categoryElement.querySelectorAll('.data-field');
                         fields.forEach((field, index) => {
-                            // Remove existing classes
-                            field.classList.remove('new', 'highlight', 'receiving', 'received-unconfirmed', 'confirmed');
+                            // Only remove animation classes, preserve data state for progressive building
+                            field.classList.remove('new', 'highlight');
                             
                             setTimeout(() => {
                                 if (isNewCategory) {
                                     // New category fields: receiving state
-                                    field.classList.add('new', 'receiving');
+                                    if (!field.classList.contains('confirmed')) {
+                                        field.classList.add('new', 'receiving');
                                     
-                                    // After animation, move to received-unconfirmed
-                                    setTimeout(() => {
-                                        field.classList.remove('new', 'receiving');
-                                        field.classList.add('received-unconfirmed');
-                                        
-                                        // After delay, move to confirmed
+                                        // After animation, move to received-unconfirmed
                                         setTimeout(() => {
-                                            field.classList.remove('received-unconfirmed');
-                                            field.classList.add('confirmed');
-                                        }, 500);
-                                    }, 800);
+                                            field.classList.remove('new', 'receiving');
+                                            field.classList.add('received-unconfirmed');
+                                            
+                                            // After delay, move to confirmed
+                                            setTimeout(() => {
+                                                field.classList.remove('received-unconfirmed');
+                                                field.classList.add('confirmed');
+                                            }, 500);
+                                        }, 800);
+                                    }
                                 } else {
-                                    // Existing category fields: just highlight as confirmed
-                                    field.classList.add('highlight', 'confirmed');
+                                    // Existing category fields: just highlight as confirmed if not already
+                                    if (!field.classList.contains('confirmed')) {
+                                        field.classList.add('highlight', 'confirmed');
+                                    } else {
+                                        field.classList.add('highlight');
+                                    }
                                     
                                     setTimeout(() => {
                                         field.classList.remove('highlight');
@@ -1873,10 +1892,11 @@
                 } else {
                     categoryElement.classList.remove('active', 'entering');
                     
-                    // Clear field animations and states
+                    // Only clear animation classes, preserve confirmed state for progressive building
                     const fields = categoryElement.querySelectorAll('.data-field');
                     fields.forEach(field => {
-                        field.classList.remove('new', 'highlight', 'receiving', 'received-unconfirmed', 'confirmed');
+                        field.classList.remove('new', 'highlight', 'receiving', 'received-unconfirmed');
+                        // Keep 'confirmed' class for progressive building
                     });
                 }
             });
