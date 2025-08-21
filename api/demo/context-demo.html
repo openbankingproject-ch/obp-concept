@@ -60,7 +60,7 @@
             width: 100%;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 30px 20px;
+            padding: 5px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -87,8 +87,8 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: center;
+            gap: 10px;
+            align-items: left;
         }
 
         .header-left {
@@ -169,7 +169,7 @@
         .container {
             max-width: 1800px;
             margin: 0 auto;
-            padding: 15px 5px;
+            padding: 5px 5px;
             display: grid;
             grid-template-columns: 85% 15%;
             gap: 15px;
@@ -180,7 +180,7 @@
         .main-column {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         /* Reference Process Section */
@@ -188,7 +188,7 @@
             background: var(--surface);
             border-radius: 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 15px;
+            padding: 10px;
             border: 1px solid var(--border);
         }
 
@@ -197,7 +197,7 @@
             color: var(--primary);
             font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-align: center;
             position: relative;
         }
@@ -217,7 +217,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             border: 2px solid #d1c4e9;
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
         }
 
         .phase-display.active {
@@ -238,12 +238,12 @@
             display: grid;
             grid-template-columns: 2fr 3fr 2fr 3fr;
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: -10px;
         }
 
         .phase-container {
             position: relative;
-            padding: 25px 5px 10px 5px;
+            padding: 35px 5px 10px 5px;
         }
 
         .phase-bracket {
@@ -251,7 +251,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 20px;
+            height: 25px;
             background: var(--primary);
             color: white;
             display: flex;
@@ -264,7 +264,7 @@
 
         .process-steps {
             display: grid;
-            gap: 12px;
+            gap: 8px;
         }
 
         .phase-container:nth-child(1) .process-steps {
@@ -369,14 +369,14 @@
             background: linear-gradient(45deg, #f8fafc 0%, #f1f5f9 100%);
             border: 2px solid var(--border);
             overflow: hidden;
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
         .participants {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 10px;
             color: var(--text);
             position: relative;
             z-index: 3;
@@ -419,7 +419,7 @@
 
         .lifelines {
             position: absolute;
-            top: 75px;
+            top: 60px;
             left: 95px;
             right: 95px;
             height: 500px;
@@ -442,7 +442,7 @@
 
         .messages {
             position: absolute;
-            top: 95px;
+            top: 60px;
             left: 95px;
             right: 95px;
             height: 500px;
@@ -577,7 +577,7 @@
 
         .granular-consent-info {
             position: absolute;
-            top: 240px;
+            top: 200px;
             left: 20px;
             width: 200px;
             background: rgba(255, 255, 255, 0.95);
@@ -611,7 +611,7 @@
             background: var(--surface);
             border-radius: 0;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 25px 15px;
+            padding: 10px;
             border: 1px solid var(--border);
             height: fit-content;
         }
@@ -890,7 +890,7 @@
         @media (max-width: 1200px) {
             .process-phases {
                 grid-template-columns: 1fr 1fr;
-                gap: 15px;
+                gap: 10px;
             }
             
             .flow-diagram {
