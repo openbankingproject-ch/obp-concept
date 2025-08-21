@@ -1802,38 +1802,53 @@
             });
         }
 
-        // Activate Consent Flow Phases - matches verified specification from context_demo.md
+        // Activate Consent Flow Phases - 1:1 match to official generic-consent-flow.mmd
         function activateConsentPhases(stepId) {
-            // Map each step to specific consent flow messages - exact specification mapping
-            const stepToMessagesMapping = {
-                1: [1, 2], // STEP 1: Initialisierung - Messages 1-2
-                2: [3, 4], // STEP 2: Produktauswahl - Messages 3-4  
-                3: [5, 6, 7, 8, 9], // STEP 3: Selbstdeklaration - Messages 5-9
-                4: [10], // STEP 4: Basisdaten - Message 10
-                5: [], // STEP 5: Erweiterte Daten - No new messages (data collection only)
-                6: [11, 12], // STEP 6: Identifikation - Messages 11-12
-                7: [13, 14], // STEP 7: Background Checks - Messages 13-14
-                8: [], // STEP 8: Vertragsabschluss - No new messages (terms acceptance)
-                9: [15], // STEP 9: Signatur - Message 15
-                10: [16, 17, 18] // STEP 10: Metadaten/Verteilung - Messages 16-18
+            // Pure consent flow phases based on official diagram
+            const consentFlowPhases = {
+                1: { messageRange: [1, 5], name: 'Phase 1: Consent Request Initiation' },
+                2: { messageRange: [6, 10], name: 'Phase 2: Consent Granting & Validation' },
+                3: { messageRange: [11, 15], name: 'Phase 3: Data Access & Usage' },
+                4: { messageRange: [16, 18], name: 'Phase 4: Ongoing Consent Management' }
+            };
+            
+            // Map process steps to consent flow progression (loose coupling)
+            const stepToConsentProgress = {
+                1: { maxMessage: 2, phase: 1 },   // Show first 2 messages
+                2: { maxMessage: 5, phase: 1 },   // Complete Phase 1
+                3: { maxMessage: 10, phase: 2 },  // Complete Phase 2
+                4: { maxMessage: 12, phase: 3 },  // Start Phase 3
+                5: { maxMessage: 13, phase: 3 },  // Continue Phase 3
+                6: { maxMessage: 14, phase: 3 },  // Continue Phase 3
+                7: { maxMessage: 15, phase: 3 },  // Complete Phase 3
+                8: { maxMessage: 15, phase: 3 },  // Stay at Phase 3
+                9: { maxMessage: 15, phase: 3 },  // Stay at Phase 3
+                10: { maxMessage: 18, phase: 4 } // Complete Phase 4
             };
 
-            const phaseNames = [
-                'Phase 1: Consent Request Initiation',
-                'Phase 2: Consent Granting & Validation', 
-                'Phase 3: Data Access & Usage',
-                'Phase 4: Ongoing Consent Management'
-            ];
+            // Get consent progress for current step
+            const currentProgress = stepToConsentProgress[stepId];
+            if (!currentProgress) return;
             
-            // Get all messages that should be active up to current step
-            let activeMessages = [];
-            for (let step = 1; step <= stepId; step++) {
-                if (stepToMessagesMapping[step]) {
-                    activeMessages = activeMessages.concat(stepToMessagesMapping[step]);
-                }
+            const maxMessage = currentProgress.maxMessage;
+            const consentPhase = currentProgress.phase;
+            const currentPhaseInfo = consentFlowPhases[consentPhase];
+            
+            // Determine which messages should be visible (1 to maxMessage)
+            const visibleMessages = [];
+            for (let msgId = 1; msgId <= maxMessage; msgId++) {
+                visibleMessages.push(msgId);
             }
             
-            // Only reset active states, keep completed messages intact
+            // Determine which messages are in the current phase and active
+            const currentPhaseStart = currentPhaseInfo.messageRange[0];
+            const currentPhaseEnd = currentPhaseInfo.messageRange[1];
+            const currentPhaseMessages = [];
+            for (let msgId = currentPhaseStart; msgId <= Math.min(currentPhaseEnd, maxMessage); msgId++) {
+                currentPhaseMessages.push(msgId);
+            }
+            
+            // Reset active states while preserving completed states
             document.querySelectorAll('.participant').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.lifeline').forEach(l => l.classList.remove('active'));
             document.querySelectorAll('.sequence-message').forEach(m => {
@@ -1841,38 +1856,24 @@
                 // Don't remove 'completed' class to maintain progressive building
             });
             
-            // Reset granular consent info visibility
-            const granularInfo = document.querySelector('.granular-consent-info');
-            if (granularInfo) {
-                granularInfo.classList.remove('visible');
-            }
+            // Reset granular consent info visibility - handled below
             
-            // Determine current phase based on step ID (matches specification)
-            let currentPhase = 1;
-            if (stepId >= 10) currentPhase = 4;      // Phase 4: Step 10
-            else if (stepId >= 6) currentPhase = 3;  // Phase 3: Steps 6-9
-            else if (stepId >= 3) currentPhase = 2;  // Phase 2: Steps 3-5
-            else currentPhase = 1;                   // Phase 1: Steps 1-2
-            
-            // Get current step messages for in-progress state
-            const currentStepMessages = stepToMessagesMapping[stepId] || [];
-            
-            // Update phase display next to title
+            // Update phase display based on consent flow phase
             const phaseDisplay = document.getElementById('currentPhaseDisplay');
             if (phaseDisplay) {
-                phaseDisplay.textContent = phaseNames[currentPhase - 1];
+                phaseDisplay.textContent = currentPhaseInfo.name;
                 phaseDisplay.classList.remove('active', 'completed');
                 
-                // Determine if current phase has active messages from current step
-                const hasCurrentMessages = currentStepMessages.length > 0;
+                // Show as active if we're showing messages in current phase
+                const hasActiveMessages = currentPhaseMessages.length > 0;
                 
                 setTimeout(() => {
-                    if (hasCurrentMessages) {
+                    if (hasActiveMessages) {
                         phaseDisplay.classList.add('active');
                     } else {
                         phaseDisplay.classList.add('completed');
                     }
-                }, 200);
+                }, TIMING.PHASE_TRANSITION);
             }
             
             // Step colors for completed messages
@@ -1890,9 +1891,9 @@
             };
             
             // Phase 1: Make new messages visible (with fade-in animation)
-            const newMessages = activeMessages.filter(msgId => {
+            const newMessages = visibleMessages.filter(msgId => {
                 const messageElement = document.getElementById(`message-${msgId}`);
-                return messageElement && !messageElement.classList.contains('active');
+                return messageElement && !messageElement.classList.contains('active') && !messageElement.classList.contains('completed');
             });
             
             newMessages.forEach((messageId, index) => {
@@ -1900,7 +1901,7 @@
                 if (message) {
                     setTimeout(() => {
                         const messageElement = document.getElementById(`message-${message.id}`);
-                        if (messageElement && !messageElement.classList.contains('active')) {
+                        if (messageElement && !messageElement.classList.contains('active') && !messageElement.classList.contains('completed')) {
                             // Just make visible - fade-in with CSS transition
                             messageElement.classList.add('active');
                             
@@ -1915,48 +1916,119 @@
                             if (fromLifeline) fromLifeline.classList.add('active');
                             if (toLifeline) toLifeline.classList.add('active');
                         }
-                    }, 400 + (index * 300)); // Keep fade-in timing for new messages only
+                    }, TIMING.CATEGORY_DELAY + (index * TIMING.MESSAGE_STAGGER)); // Keep fade-in timing for new messages only
                 }
             });
             
-            // Phase 2: IMMEDIATELY update all visible message states (no delays)
-            activeMessages.forEach((messageId) => {
+            // Update message states based on consent flow progression
+            visibleMessages.forEach((messageId) => {
                 const messageElement = document.getElementById(`message-${messageId}`);
                 if (messageElement) {
                     // Instant state change with no-transition class
                     messageElement.classList.add('no-transition');
                     
-                    if (currentStepMessages.includes(messageId)) {
-                        // Current step messages - orange/in-progress
+                    if (currentPhaseMessages.includes(messageId)) {
+                        // Current phase messages - orange/in-progress
                         messageElement.classList.add('in-progress');
                         messageElement.classList.remove('completed');
                     } else {
-                        // Previous step messages - completed with step-specific color
+                        // Previous phase messages - completed with phase-specific color
                         messageElement.classList.add('completed');
                         messageElement.classList.remove('in-progress');
                         
-                        // Find which step this message belongs to and apply color
-                        for (let step = 1; step <= stepId; step++) {
-                            if (stepToMessagesMapping[step] && stepToMessagesMapping[step].includes(messageId)) {
-                                const color = stepColors[step] || '#0070C0';
-                                messageElement.style.setProperty('--message-color', color);
-                                break;
-                            }
-                        }
+                        // Determine which phase this message belongs to for coloring
+                        let messagePhase = 1;
+                        if (messageId >= 16) messagePhase = 4;
+                        else if (messageId >= 11) messagePhase = 3;
+                        else if (messageId >= 6) messagePhase = 2;
+                        
+                        const phaseColors = {
+                            1: '#0070C0',    // Blue - Phase 1
+                            2: '#00b02c',    // Green - Phase 2
+                            3: '#F85F3D',    // Orange - Phase 3
+                            4: '#B469FF'     // Purple - Phase 4
+                        };
+                        const color = phaseColors[messagePhase] || '#0070C0';
+                        messageElement.style.setProperty('--message-color', color);
                     }
                     
                     // Remove no-transition after immediate state change
-                    setTimeout(() => messageElement.classList.remove('no-transition'), 0);
+                    setTimeout(() => messageElement.classList.remove('no-transition'), TIMING.STATE_TRANSITION);
                 }
             });
             
-            // Show granular consent info when message 6 appears and we're at step 3+
-            if (activeMessages.includes(6) && stepId >= 3) {
-                const granularInfo = document.querySelector('.granular-consent-info');
-                if (granularInfo) {
+            // Show granular consent info when message 6 is visible (Phase 2 start)
+            const granularInfo = document.querySelector('.granular-consent-info');
+            if (granularInfo) {
+                if (visibleMessages.includes(6)) {
                     granularInfo.classList.add('visible');
+                } else {
+                    granularInfo.classList.remove('visible');
                 }
             }
+        }
+
+        // Independent Consent Flow Control - runs separately from process steps
+        function runConsentFlow(maxMessage = 18) {
+            // Pure consent flow phases based on official diagram
+            const consentFlowPhases = {
+                1: { messageRange: [1, 5], name: 'Phase 1: Consent Request Initiation' },
+                2: { messageRange: [6, 10], name: 'Phase 2: Consent Granting & Validation' },
+                3: { messageRange: [11, 15], name: 'Phase 3: Data Access & Usage' },
+                4: { messageRange: [16, 18], name: 'Phase 4: Ongoing Consent Management' }
+            };
+
+            // Determine current phase based on maxMessage
+            let currentPhase = 1;
+            if (maxMessage >= 16) currentPhase = 4;
+            else if (maxMessage >= 11) currentPhase = 3;
+            else if (maxMessage >= 6) currentPhase = 2;
+
+            const currentPhaseInfo = consentFlowPhases[currentPhase];
+
+            // Show messages sequentially with proper timing
+            for (let msgId = 1; msgId <= maxMessage; msgId++) {
+                setTimeout(() => {
+                    const messageElement = document.getElementById(`message-${msgId}`);
+                    if (messageElement && !messageElement.classList.contains('active')) {
+                        messageElement.classList.add('active');
+                        
+                        // Activate participants
+                        const message = sequenceMessages.find(msg => msg.id === msgId);
+                        if (message) {
+                            const fromParticipant = document.getElementById(`participant-${consentParticipants[message.from].id}`);
+                            const toParticipant = document.getElementById(`participant-${consentParticipants[message.to].id}`);
+                            const fromLifeline = document.getElementById(`lifeline-${consentParticipants[message.from].id}`);
+                            const toLifeline = document.getElementById(`lifeline-${consentParticipants[message.to].id}`);
+                            
+                            if (fromParticipant) fromParticipant.classList.add('active');
+                            if (toParticipant) toParticipant.classList.add('active');
+                            if (fromLifeline) fromLifeline.classList.add('active');
+                            if (toLifeline) toLifeline.classList.add('active');
+                        }
+                    }
+                }, (msgId - 1) * TIMING.MESSAGE_STAGGER);
+            }
+
+            // Update phase display
+            const phaseDisplay = document.getElementById('currentPhaseDisplay');
+            if (phaseDisplay) {
+                phaseDisplay.textContent = currentPhaseInfo.name;
+                phaseDisplay.classList.remove('active', 'completed');
+                phaseDisplay.classList.add('active');
+            }
+
+            // Update granular consent info visibility
+            const granularInfo = document.querySelector('.granular-consent-info');
+            if (granularInfo) {
+                if (maxMessage >= 6) {
+                    granularInfo.classList.add('visible');
+                } else {
+                    granularInfo.classList.remove('visible');
+                }
+            }
+
+            addConsoleMessage(`Consent Flow: ${currentPhaseInfo.name} - Messages 1-${maxMessage}`, 'info');
         }
 
         // Show Data Categories
@@ -2402,6 +2474,8 @@
         // Add auto-demo button functionality (can be triggered via console)
         window.startAutoDemo = startAutoDemo;
         window.activateStep = activateStep;
+        // Export pure consent flow function for testing
+        window.runConsentFlow = runConsentFlow;
         
         // Image error handling with fallback paths and diagnostic logging
         function handleImageError(img, originalPath) {
@@ -2535,7 +2609,7 @@
         setTimeout(() => {
             addConsoleMessage('Interactive demo ready. Click on process steps to explore the Open API Kundenbeziehung.', 'info');
             addConsoleMessage('Navigation: Use arrow buttons or keyboard (← → for steps, Space for play/pause, Esc to reset).', 'info');
-            addConsoleMessage('Type "startAutoDemo()" in browser console for automatic demonstration.', 'info');
+            addConsoleMessage('Console Commands: startAutoDemo(), runConsentFlow(18) for pure consent flow.', 'info');
             testImagePaths();
         }, 1000);
     </script>
