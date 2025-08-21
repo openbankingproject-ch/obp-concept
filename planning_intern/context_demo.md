@@ -43,46 +43,82 @@ Erstelle eine interaktive HTML-Demo für die **Open API Kundenbeziehung Alpha Ve
 #### Layout-Struktur (Responsive Design)
 
 ##### UI Elemente
-- **Boxen** Eckig (nicht abgerundet)
-- **Farben**: Verwende die in `api/demo/colors.txt` definierten Farben
-- **Icons**: Verwende die Piktogramme in `api/demo/graphics/pictograms`
-- **Hintergrund**: Verwende die Grafiken in `api/demo/graphics/background`
-- **KEINE EMOJIS VERWENDEN!**
+- **Boxen**: Alle Container verwenden scharfe Ecken (border-radius: 0), Padding auf 10px reduziert
+- **Farben**: Vollständige Implementierung mit CSS-Variablen basierend auf `api/demo/colors.txt`
+- **Icons**: 60px große Piktogramme für alle Referenzprozess-Schritte
+- **Hintergrund**: Hintergrundgrafik mit 50% grauer Überlagerung (`linear-gradient(rgba(128, 128, 128, 0.5))`)
+- **Schriftart**: Verdana für alle Titel und Überschriften
 
 ##### Hintergrund
-- **Hintergrundfarbe:** wie in `api/demo/colors.txt` definiert
-- **Hintergrundbild:** Verwende die zu Verfügung stehenden Grafiken in 'api/demo/graphics/background'
+- **Hintergrundfarbe**: CSS-Variablen aus `api/demo/colors.txt` (--background, --surface, etc.)
+- **Hintergrundbild**: `background-graphic-standard.jpg` mit `background-size: cover` und `background-attachment: fixed`
+- **Überlagerung**: 50% graue Überlagerung für bessere Lesbarkeit
 
-##### Full-Width Header
-- **Titel:** "Open API Kundenbeziehung Demo Alpha Version 1.0"
-- **Untertitel:** "Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow"
-- **Logo:** Open Banking Project Logo (links oben) ('api/demo/graphics/logos')
+##### Header
+- **Kompaktes Design**: Header-Padding von 30px auf 5px reduziert für platzsparenderes Layout
+- **Zweispaltiges Grid-Layout**: 
+  - **Linke Spalte**: "Open API Kundenbeziehung Demo Alpha Version 1.0" (text-align: left)
+  - **Rechte Spalte**: "Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow" (text-align: center)
+- **Logo**: 60px Höhe, absolute Positionierung (top: 20px, left: 20px)
+- **Demo-Controls**: Play/Pause/Reset-Buttons mit State-Management (rechts oben positioniert)
 
 ##### Erste Spalte (85% Bildschirmbreite)
 
 ###### Oberer Bereich: 10-Stufen Referenzprozess
-- **Darstellung:** Eine horizontale Reihe von 10 Blöcken (Boxen)
-- **Inhalt pro Block:** 
-  - Schritt-Name
-  - Entsprechendes Piktogramm/Icon ('api/demo/graphics/pictograms')
-  - Hover-Funktion für detaillierte Beschreibung
-- **Interaktion:** Click-through Navigation durch alle Schritte
-- **Visueller Status:** Hervorhebung des aktuellen Schritts
+- **Layout**: 4 Phasen-Container mit CSS-Grid (2fr 3fr 2fr 3fr Spalten-Verteilung)
+- **Phase-Boxen**: Rechteckige Phase-Bezeichnungen mit Primary-Color-Hintergrund (#253165), 25px Höhe
+- **Schritt-Boxen**: 
+  - Einheitliche Größe: 110px Höhe, 100% Breite, 8px Margin-Bottom
+  - 60px große Piktogramme mit 2-zeiliger Beschriftung (Bindestrich-getrennt)
+  - Tooltip-Funktion für detaillierte Beschreibungen
+- **Visueller Status**: 
+  - **Nicht gestartet**: Standard-Styling (weiß mit Border)
+  - **Aktiv**: #FA9F8A Hintergrund, #F85F3D Border (2px)
+  - **Abgeschlossen**: Weißer Hintergrund, #4cb867ff Border
+- **Interaktion**: Click-Navigation durch alle Schritte mit Progressive Building
 
-**Die 10 Referenzprozess-Schritte:**
-1. **Initialisierung** - Information des Kunden
-2. **Produktauswahl** - Bedürfnisbefriedigung  
-3. **Selbstdeklaration** - FATCA/MIFID Information
-4. **Basisdaten** - Kontaktangaben erfassen
+**Die 10 Referenzprozess-Schritte (mit 2-zeiliger Darstellung):**
+1. **Initiali-sierung** - Information des Kunden
+2. **Produkt-auswahl** - Bedürfnisbefriedigung  
+3. **Selbst-deklaration** - FATCA/MIFID Information
+4. **Basis-daten** - Kontaktangaben erfassen
 5. **Erweiterte Daten** - Risiko-/Potenzialermittlung
-6. **Identifikation** - Vertragspartei-Identifikation
+6. **Identifi-kation** - Vertragspartei-Identifikation
 7. **Background Checks** - KYC-Prozesse
-8. **Vertragsabschluss** - Geschäftsbedingungen
+8. **Vertrags-abschluss** - Geschäftsbedingungen
 9. **Signatur** - Vertragsunterzeichnung
 10. **Metadaten/Verteilung** - Systemintegration
 
 ###### Unterer Bereich: Generischer Consent Flow
-- **Basis:** Folgender Mermaid-Diagramm als Visualisierung: 
+- **Layout**: Kompaktes Design mit 600px Höhe, 10px Container-Padding
+- **Participants**: 
+  - Einheitliche Boxen: 150px Breite, 45px Höhe
+  - Horizontales Layout: 24px Icon links, Text rechtsbündig
+  - Ohne dunkelblauen Header-Hintergrund, scharfe Ecken
+  - 10px Padding, zentriert zwischen den Spalten
+- **Sequence Diagram**:
+  - **Progressive Building**: Nachrichten akkumulieren ohne Reset zwischen Schritten
+  - **18 Messages**: Gleichmäßig auf 25px Abstände verteilt (kompakte Darstellung)
+  - **Message-Text**: Perfekt zentriert auf Pfeilen (horizontal und vertikal)
+  - **Step-spezifische Farben**: 10 verschiedene Farben aus colors.txt für abgeschlossene Nachrichten
+  - **Lifelines**: Präzise auf Participant-Zentren ausgerichtet
+- **Phase-Anzeige**: Links positioniert mit 10px Abstand vom Container-Rand
+- **Granular Consent Info**: 
+  - Erscheint automatisch bei Step 6 ("Grant specific consents")
+  - Links positioniert, synchron mit Sequence-Flow
+- **Step-Mapping**: 18 Consent-Flow-Messages auf 10 Referenzprozess-Schritte verteilt:
+  - Step 1: Messages 1-2 (Initialisierung)
+  - Step 2: Messages 3-4 (Produktauswahl)
+  - Step 3: Messages 5-6 (Selbstdeklaration)
+  - Step 4: Messages 7-8 (Basisdaten)
+  - Step 5: Messages 9-10 (Erweiterte Daten)
+  - Step 6: Messages 11-12 (Identifikation)
+  - Step 7: Messages 13-14 (Background Checks)
+  - Step 8: Message 15 (Vertragsabschluss)
+  - Step 9: Messages 16-17 (Signatur)
+  - Step 10: Message 18 (Metadaten/Verteilung)
+
+- **Basis:** Mermaid-Diagramm als Visualisierung: 
 
 ```mermaid
 sequenceDiagram
@@ -132,7 +168,12 @@ sequenceDiagram
 
 ##### Zweite Spalte (15% Bildschirmbreite): Data Onboarding Process
 
-###### Datenfeld-Kategorien (erscheinen progressiv):
+- **Layout**: Sidebar-Container mit 10px Padding, flex-direction: column
+- **Titel**: "Data Onboarding Process" mit reduzierter Schriftgrösse für Konsistenz
+- **Zwei-Spalten-Layout**: Datenfelder werden in 2 Spalten angezeigt (CSS Grid: grid-template-columns: 1fr 1fr)
+- **Progressive Erscheinung**: Datenfeld-Kategorien erscheinen entsprechend der Referenzprozess-Navigation
+
+###### Datenfeld-Kategorien (progressive Anzeige):
 
 **Consent & Metadata (Schritte 1-2):**
 - `cookieConsent` (Boolean)
@@ -184,27 +225,36 @@ sequenceDiagram
 - `systemIntegrationStatus` (Object)
 
 ##### Full-Width Console Output unter den 2 Spalten
-- **Zweck:** Zeigt die durchgeführten API-Calls und deren Ergebnisse
-- **Inhalt:**
+- **Layout**: Full-width Container unterhalb der Hauptspalten
+- **Styling**: Console-ähnliches Design mit dunklem Hintergrund (#1e293b), heller Text (#f9fafb)
+- **Zweck**: Zeigt die durchgeführten API-Calls und deren Ergebnisse
+- **Progressive Updates**: Console-Ausgabe wird bei jedem Referenzprozess-Schritt erweitert
+- **Inhalt**:
     - API-Call-Details (z.B. `GET /customers`, `POST /consents`)
     - Request- und Response-Daten
     - Status-Codes und Fehlermeldungen
+    - Farbkodierung für verschiedene API-Call-Typen
 
 #### Design-Spezifikationen
 
 ##### Farbschema (Open Banking Project)
-- see `api/demo/colors.txt` for the color scheme
+- **Implementierung**: CSS Custom Properties basierend auf `api/demo/colors.txt`
+- **Primärfarben**: #253165 (Primary), #F85F3D (Secondary), #0070C0 (Tertiary)
+- **Hintergrund**: #f9fafb mit Hintergrundgrafik und 50% grauer Überlagerung
+- **Step-spezifische Farben**: 10 verschiedene Farben für abgeschlossene Consent-Flow-Schritte
 
 ##### Responsive Design
-- **Desktop:** Vollständige 2-Spalten-Darstellung
-- **Tablet:** Gestapelte Darstellung, Referenzprozess scrollbar
-- **Mobile:** Vertikale Darstellung, kompakte Icons
+- **Desktop**: 2-Spalten-Layout (85% Hauptbereich, 15% Data Onboarding Sidebar)
+- **Tablet**: CSS Grid angepasst für kleinere Bildschirme
+- **Mobile**: Vertikale Stapelung mit kompakteren Elementen
+- **Breakpoints**: Standard responsive Breakpoints für optimale Darstellung
 
 ##### Animationen
-- **Smooth CSS Transitions** (300ms ease-in-out)
-- **Progressive Content Reveal** beim Click-through
-- **Hover-Effekte** für Interaktivität
-- **Loading Animations** für Datenfeld-Erscheinen
+- **CSS Transitions**: 300ms ease-in-out für alle Übergänge
+- **Progressive Building**: Echtes akkumulatives Aufbauen ohne Resets
+- **Granular Consent Visibility**: Smooth fade-in/fade-out bei Step 6
+- **Hover-Effekte**: Tooltips und interaktive Feedback-Animationen
+- **Data Field Animation**: 500ms fade-in mit slide-up für neue Datenfelder
 
 ##### Accessibility
 - **Keyboard Navigation** für alle interaktiven Elemente
@@ -224,23 +274,23 @@ sequenceDiagram
 #### Interaktions-Spezifikation
 
 ##### Referenzprozess Navigation
-1. **Initialer Zustand:** Schritt 1 aktiv, alle anderen grau
-2. **Click Behavior:** Nächster Schritt wird aktiv, vorherige bleiben sichtbar
-3. **Hover Details:** Tooltip mit Schritt-Beschreibung
-4. **Progress Tracking:** Visueller Indikator für Completion
+1. **Initialer Zustand**: Schritt 1 aktiv, alle anderen inaktiv
+2. **Click Behavior**: Sequenzielle Navigation durch alle Schritte
+3. **Visueller Status**: Aktiv (#FA9F8A), Abgeschlossen (#4cb867ff), Standard (weiss)
+4. **Progressive Building**: Vorherige Schritte bleiben permanent sichtbar
+5. **Hover Details**: Tooltips mit detaillierter Schritt-Beschreibung
 
 ##### Consent Flow Synchronisation
-- **Schritte 1-2:** Customer → Bank Interaction
-- **Schritte 3-4:** Bank → ConsentMgmt Flow
-- **Schritte 5-6:** ConsentMgmt → Customer Interaction
-- **Schritte 7-8:** ConsentMgmt → DataProvider Flow
-- **Schritte 9-10:** DataProvider → AuditLog & Completion
+- **True Progressive Building**: Nachrichten akkumulieren ohne Reset zwischen Schritten
+- **18-Message-Mapping**: Gleichmäßige Verteilung auf 10 Referenzprozess-Schritte
+- **Step-spezifische Farben**: 10 verschiedene Farben für abgeschlossene Nachrichten
+- **Granular Consent Control**: Erscheint bei Step 6, verschwindet wenn Step 6 nicht aktiv
 
 ##### Data Field Animation
-- **Timing:** 500ms nach Referenzprozess-Schritt-Activation
-- **Effect:** Fade-in mit slight slide-up
-- **Grouping:** Kategorien erscheinen als Block
-- **Highlighting:** Neue Felder kurz hervorgehoben
+- **Timing**: Sofortige Anzeige nach Referenzprozess-Schritt-Activation
+- **Effect**: Fade-in mit slide-up Animation (500ms)
+- **Gruppierung**: Kategorien erscheinen als zusammenhängende Blöcke
+- **Zwei-Spalten-Layout**: CSS Grid für kompakte Darstellung
 
 #### Zielgruppe-Anpassung
 
@@ -256,4 +306,4 @@ sequenceDiagram
 - **Keine Emojis** im professionellen Kontext
 - **Präzise Fachterminologie** aus der Finanzbranche
 
-**TODO**: Erstelle eine vollständig funktionsfähige Demo, die diese Spezifikation umsetzt und als standalone HTML-Datei ausgeführt werden kann.
+Die vollständig funktionsfähige Demo ist implementiert und verfügbar als standalone HTML-Datei unter `/api/demo/context-demo.html`.

@@ -586,6 +586,14 @@
             font-size: 0.8rem;
             z-index: 5;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .granular-consent-info.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         .granular-consent-info h4 {
@@ -1741,6 +1749,12 @@
                 // Don't remove 'completed' class to maintain progressive building
             });
             
+            // Reset granular consent info visibility
+            const granularInfo = document.querySelector('.granular-consent-info');
+            if (granularInfo) {
+                granularInfo.classList.remove('visible');
+            }
+            
             // Determine current phase based on active messages
             let currentPhase = 1;
             const lastMessage = Math.max(...activeMessages);
@@ -1822,6 +1836,14 @@
                         if (toParticipant) toParticipant.classList.add('active');
                         if (fromLifeline) fromLifeline.classList.add('active');
                         if (toLifeline) toLifeline.classList.add('active');
+                        
+                        // Show granular consent info when message 6 "Grant specific consents" appears
+                        if (messageId === 6) {
+                            const granularInfo = document.querySelector('.granular-consent-info');
+                            if (granularInfo) {
+                                granularInfo.classList.add('visible');
+                            }
+                        }
                     }, 300 + (index * 200));
                 }
             });
