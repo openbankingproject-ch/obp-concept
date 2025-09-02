@@ -429,3 +429,39 @@ Process Step: All steps → completed
 Consent Messages: All messages → completed
 Data Category: All categories → completed
 Phase Display: "Process Complete"
+
+# Demo fixes:
+
+Consistent Flow Timing Implementation                                       
+     │                                                                             │
+     │ - Ensure each step transition uses exactly the same duration                │
+     │ - Standardize message appearance timing (300ms between messages)            │
+     │ - Synchronize data category activation with consistent delays               │
+     │ - Make phase changes immediate for crisp visual feedback                    │
+     │                                                                             │
+     │ Phase 3: Fix Message Sequence Flow (20 min)                                 │
+     │                                                                             │
+     │ - Implement "separately, one after the other" with consistent 300ms stagger │
+     │ - Ensure completion states happen at predictable intervals                  │
+     │ - Fix cross-step timing issues for smooth progression                       │
+     │                                                                             │
+     │ Phase 4: Optimize Auto-Demo Flow (15 min)                                   │
+     │                                                                             │
+     │ - Verify 4-second step intervals feel natural with new sub-timing           │
+     │ - Test complete 10-step flow for consistent rhythm                          │
+     │ - Ensure manual clicking maintains same timing patterns                     │
+     │                                                                             │
+     │ Phase 5: Test & Validate (10 min)                                           │
+     │                                                                             │
+     │ - Test complete auto-demo for smooth continuous flow                        │
+     │ - Verify manual step clicking maintains consistent timing                   │
+     │ - Check that all animations complete before next step begins                │
+     │                                                                             │
+     │ Total Time: 80 minutes                                                      │
+     │                                                                             │
+     │ Key Timing Standards:                                                       │
+     │ - Step interval: 4000ms (unchanged)                                         │
+     │ - Message stagger: 300ms between each                                       │
+     │ - Data field stagger: 200ms between each                                    │
+     │ - Category activation: 400ms after step                                     │
+     │ - Immediate state changes: 0ms for visual feedback   

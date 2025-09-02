@@ -1848,11 +1848,15 @@
                 currentPhaseMessages.push(msgId);
             }
             
-            // Reset active states while preserving completed states
+            // Reset active states while preserving completed states and current visible messages
             document.querySelectorAll('.participant').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.lifeline').forEach(l => l.classList.remove('active'));
             document.querySelectorAll('.sequence-message').forEach(m => {
-                m.classList.remove('active', 'in-progress');
+                const messageId = parseInt(m.id.replace('message-', ''));
+                // Only reset messages that are NOT in the current visible range
+                if (!visibleMessages.includes(messageId)) {
+                    m.classList.remove('active', 'in-progress');
+                }
                 // Don't remove 'completed' class to maintain progressive building
             });
             
@@ -1928,28 +1932,32 @@
                     messageElement.classList.add('no-transition');
                     
                     if (currentPhaseMessages.includes(messageId)) {
-                        // Current phase messages - orange/in-progress
-                        messageElement.classList.add('in-progress');
-                        messageElement.classList.remove('completed');
+                        // Current phase messages - orange/in-progress (only if not already)
+                        if (!messageElement.classList.contains('in-progress')) {
+                            messageElement.classList.add('in-progress');
+                            messageElement.classList.remove('completed');
+                        }
                     } else {
-                        // Previous phase messages - completed with phase-specific color
-                        messageElement.classList.add('completed');
-                        messageElement.classList.remove('in-progress');
-                        
-                        // Determine which phase this message belongs to for coloring
-                        let messagePhase = 1;
-                        if (messageId >= 16) messagePhase = 4;
-                        else if (messageId >= 11) messagePhase = 3;
-                        else if (messageId >= 6) messagePhase = 2;
-                        
-                        const phaseColors = {
-                            1: '#0070C0',    // Blue - Phase 1
-                            2: '#00b02c',    // Green - Phase 2
-                            3: '#F85F3D',    // Orange - Phase 3
-                            4: '#B469FF'     // Purple - Phase 4
-                        };
-                        const color = phaseColors[messagePhase] || '#0070C0';
-                        messageElement.style.setProperty('--message-color', color);
+                        // Previous phase messages - completed with phase-specific color (only if not already)
+                        if (!messageElement.classList.contains('completed')) {
+                            messageElement.classList.add('completed');
+                            messageElement.classList.remove('in-progress');
+                            
+                            // Determine which phase this message belongs to for coloring
+                            let messagePhase = 1;
+                            if (messageId >= 16) messagePhase = 4;
+                            else if (messageId >= 11) messagePhase = 3;
+                            else if (messageId >= 6) messagePhase = 2;
+                            
+                            const phaseColors = {
+                                1: '#0070C0',    // Blue - Phase 1
+                                2: '#00b02c',    // Green - Phase 2
+                                3: '#F85F3D',    // Orange - Phase 3
+                                4: '#B469FF'     // Purple - Phase 4
+                            };
+                            const color = phaseColors[messagePhase] || '#0070C0';
+                            messageElement.style.setProperty('--message-color', color);
+                        }
                     }
                     
                     // Remove no-transition after immediate state change
@@ -1990,7 +1998,7 @@
             for (let msgId = 1; msgId <= maxMessage; msgId++) {
                 setTimeout(() => {
                     const messageElement = document.getElementById(`message-${msgId}`);
-                    if (messageElement && !messageElement.classList.contains('active')) {
+                    if (messageElement && !messageElement.classList.contains('active') && !messageElement.classList.contains('completed')) {
                         messageElement.classList.add('active');
                         
                         // Activate participants
