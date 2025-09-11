@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open API Kundenbeziehung Demo Alpha Version 1.0</title>
+    <style>
+        :root {
+            /* OBP Color Scheme */
+            --primary: #253165;
+            --primary-accent-1: #3b4b96ff;
+            --primary-accent-2: #5168ccff;
+            --primary-accent-3: #8197faff;
+            --secondary: #F85F3D;
+            --secondary-accent-1: #f3765aff;
+            --secondary-accent-2: #FA9F8A;
+            --secondary-accent-3: #f3c9c1ff;
+            --tertiary: #0070C0;
+            --tertiary-accent-1: #379ee7ff;
+            --tertiary-accent-2: #73c3fcff;
+            --tertiary-accent-3: #608baaff;
+            
+            --background: #f9fafb;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --muted-text: #3a4b68ff;
+            --remarks: #6b7280;
+            --highlighted-text: #3e5f97ff;
+            --border: #E5CAFF;
+            
+            --success: #4cb867ff;
+            --warning: #FFC000;
+            --info: #B469FF;
+            --api-calls: #F85F3D;
+            --data-highlight: #FA9F8A;
+            --data-highlight-2: #0095ffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: var(--background);
+            background-image: 
+                linear-gradient(rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0.5)),
+                url('../graphics/background/background-graphic-standard.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        /* Header Section */
+        .header {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 5px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../graphics/background/obp-farbverlauf.jpg');
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            align-items: left;
+        }
+
+        .header-left {
+            text-align: left;
+        }
+
+        .header-right {
+            text-align: center;
+        }
+
+        .demo-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 3;
+        }
+        
+        .auto-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .step-navigation {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .step-indicator {
+            background: rgba(255, 255, 255, 0.9);
+            color: #253165;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            min-width: 100px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(37, 49, 101, 0.2);
+            position: relative;
+            cursor: help;
+        }
+        
+        .step-indicator::after {
+            content: "Keyboard: ←→ Navigate, Space Play/Pause, Esc Reset";
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #253165;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        .step-indicator:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .nav-button {
+            min-width: 90px;
+        }
+
+        .control-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .control-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .control-button:active {
+            transform: translateY(0);
+        }
+
+        .control-button:disabled,
+        .control-button.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .control-button:disabled:hover,
+        .control-button.disabled:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: none;
+        }
+
+        .control-button.playing {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .control-button.paused {
+            background: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .header .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 60px;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin: 0;
+        }
+
+        .header p {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 5px 5px;
+            display: grid;
+            grid-template-columns: 85% 15%;
+            gap: 15px;
+            min-height: 80vh;
+        }
+
+        /* Main Column (85%) */
+        .main-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Reference Process Section */
+        .reference-process {
+            background: var(--surface);
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-family: 'Verdana', sans-serif;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .phase-display {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #E5CAFF;
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #d1c4e9;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .phase-display.active {
+            opacity: 1;
+            background: #f3765aff;
+            color: white;
+            border-color: #f3765aff;
+        }
+
+        .phase-display.completed {
+            opacity: 1;
+            background: #73c3fcff;
+            color: var(--text);
+            border-color: #0070C0;
+        }
+
+        .process-phases {
+            display: grid;
+            grid-template-columns: 2fr 3fr 2fr 3fr;
+            gap: 20px;
+            margin-bottom: -10px;
+        }
+
+        .phase-container {
+            position: relative;
+            padding: 35px 5px 10px 5px;
+        }
+
+        .phase-bracket {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 25px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+
+        .process-steps {
+            display: grid;
+            gap: 8px;
+        }
+
+        .phase-container:nth-child(1) .process-steps {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .phase-container:nth-child(2) .process-steps {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .phase-container:nth-child(3) .process-steps {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .phase-container:nth-child(4) .process-steps {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .process-step {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            padding: 12px 6px;
+            margin-bottom: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            height: 110px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .process-step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 49, 101, 0.15);
+            border-color: var(--primary-accent-2);
+        }
+
+        .process-step.active {
+            background: #FA9F8A;
+            color: var(--text);
+            border: 2px solid #F85F3D;
+        }
+
+        .process-step.completed {
+            background: white;
+            color: var(--text);
+            border: 2px solid #4cb867ff;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 8px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .process-step.active .step-icon {
+            opacity: 1;
+        }
+
+        .process-step.completed .step-icon {
+            opacity: 0.9;
+        }
+
+        .step-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        .step-number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: var(--tertiary);
+            color: white;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        /* Consent Flow Section */
+        .consent-flow {
+            background: var(--surface);
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .flow-diagram {
+            position: relative;
+            min-height: 600px;
+            background: linear-gradient(45deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid var(--border);
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .participants {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            color: var(--text);
+            position: relative;
+            z-index: 3;
+        }
+
+        .participant {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 2px solid var(--tertiary);
+            padding: 8px 10px;
+            width: 150px;
+            height: 45px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .participant.active {
+            background: var(--secondary-accent-3);
+            border-color: var(--secondary);
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(248, 95, 61, 0.3);
+        }
+
+        .participant-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.8;
+            flex-shrink: 0;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.7rem;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        .lifelines {
+            position: absolute;
+            top: 60px;
+            left: 95px;
+            right: 95px;
+            height: 500px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1;
+        }
+
+        .lifeline {
+            width: 2px;
+            height: 100%;
+            background: #d1d5db;
+            position: relative;
+        }
+
+        .lifeline.active {
+            background: var(--secondary);
+            box-shadow: 0 0 10px rgba(248, 95, 61, 0.5);
+        }
+
+        .messages {
+            position: absolute;
+            top: 60px;
+            left: 95px;
+            right: 95px;
+            height: 500px;
+            z-index: 2;
+        }
+
+        .sequence-message {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 35px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .sequence-message.active {
+            opacity: 1;
+        }
+
+        .sequence-message.completed {
+            opacity: 1;
+        }
+
+        .sequence-message.completed .message-arrow {
+            background: var(--message-color, #0070C0);
+        }
+
+        .sequence-message.completed .message-arrow::after {
+            border-left-color: var(--message-color, #0070C0);
+        }
+
+        .sequence-message.completed .message-arrow.return::after {
+            border-left-color: var(--message-color, #0070C0);
+        }
+
+        .sequence-message.in-progress .message-arrow {
+            background: #F85F3D;
+        }
+
+        .sequence-message.in-progress .message-arrow::after {
+            border-left-color: #F85F3D;
+        }
+
+        .message-arrow {
+            height: 2px;
+            background: #F85F3D;
+            position: relative;
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+
+        .message-arrow::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid #F85F3D;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+        }
+
+        .message-arrow.return {
+            background: var(--tertiary);
+        }
+
+        .message-arrow.return::after {
+            border-left-color: var(--tertiary);
+            right: auto;
+            left: -8px;
+            transform: rotate(180deg);
+        }
+
+        .sequence-message.self-message {
+            width: 60px !important;
+        }
+
+        .message-arrow.self {
+            background: none;
+            width: 40px;
+            height: 30px;
+            border-right: 2px solid #F85F3D;
+            border-bottom: 2px solid #F85F3D;
+            border-radius: 0 0 15px 0;
+            position: relative;
+            margin: 0;
+        }
+
+        .message-arrow.self::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            right: -6px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid #F85F3D;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+
+        .message-text {
+            background: white;
+            padding: 4px 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text);
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        .sequence-message.in-progress .message-text {
+            border: 2px solid #F85F3D;
+            background: #f3c9c1ff;
+            color: #F85F3D;
+        }
+
+        .sequence-message.completed .message-text {
+            border: 2px solid var(--message-color, #0070C0);
+            background: white;
+            color: #1e293b;
+        }
+
+
+        .granular-consent-info {
+            position: absolute;
+            top: 200px;
+            left: 20px;
+            width: 200px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid var(--tertiary);
+            padding: 15px;
+            font-size: 0.8rem;
+            z-index: 5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .granular-consent-info.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .granular-consent-info h4 {
+            color: var(--tertiary);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+        }
+
+        .granular-consent-info ul {
+            margin: 0;
+            padding-left: 15px;
+            color: var(--text);
+        }
+
+        .granular-consent-info li {
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        /* Data Onboarding Column (15%) */
+        .data-column {
+            background: var(--surface);
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 10px;
+            border: 1px solid var(--border);
+            height: fit-content;
+        }
+
+        .data-section-title {
+            font-family: 'Verdana', sans-serif;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .data-category {
+            margin-bottom: 20px;
+            opacity: 0.3;
+            transform: translateY(10px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .data-category.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .category-title {
+            background: #253165;
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            border-radius: 3px;
+        }
+
+        .data-fields {
+            padding-left: 10px;
+        }
+
+        .data-field {
+            font-size: 0.7rem;
+            padding: 4px 6px;
+            margin-bottom: 3px;
+            border-left: 3px solid #E5CAFF;
+            background: white;
+            color: #E5CAFF;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .data-field.receiving {
+            border-left-color: #F85F3D;
+            background: #FA9F8A;
+            color: #F85F3D;
+        }
+
+        .data-field.received-unconfirmed {
+            border-left-color: #F85F3D;
+            background: white;
+            color: #F85F3D;
+        }
+
+        .data-field.confirmed {
+            border-left-color: #4cb867ff;
+            background: white;
+            color: #1e293b;
+        }
+
+        .data-field.new {
+            animation: fieldAppear 0.8s ease-out;
+        }
+
+        .data-field.highlight {
+            animation: fieldHighlight 1.2s ease-in-out;
+        }
+
+        .data-category.entering {
+            animation: categorySlideIn 0.6s ease-out;
+        }
+
+        @keyframes fieldAppear {
+            0% { 
+                opacity: 0;
+                transform: translateY(10px) scale(0.95);
+                background-color: var(--data-highlight-2);
+            }
+            50% {
+                background-color: var(--data-highlight);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                background-color: transparent;
+            }
+        }
+
+        @keyframes fieldHighlight {
+            0%, 100% { 
+                background-color: transparent;
+                transform: translateX(0);
+                box-shadow: none;
+            }
+            25% { 
+                background-color: var(--data-highlight);
+                transform: translateX(3px);
+                box-shadow: 0 2px 8px rgba(250, 159, 138, 0.3);
+            }
+            75% {
+                background-color: var(--data-highlight-2);
+                transform: translateX(-2px);
+            }
+        }
+
+        @keyframes categorySlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(-2px) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Console Output */
+        .console-section {
+            width: 100%;
+            grid-column: 1 / -1;
+            background: var(--text);
+            color: var(--surface);
+            border-radius: 0;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .console-title {
+            color: var(--data-highlight-2);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .console-output {
+            background: #0a0e27;
+            padding: 20px;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #334155;
+        }
+
+        .console-line {
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+
+        .console-line.api-call {
+            color: var(--api-calls);
+            font-weight: bold;
+            border-left: 3px solid var(--api-calls);
+            padding-left: 10px;
+            margin: 5px 0;
+        }
+
+        .console-line.success {
+            color: var(--success);
+            border-left: 3px solid var(--success);
+            padding-left: 10px;
+        }
+
+        .console-line.data {
+            color: var(--data-highlight-2);
+            padding-left: 30px;
+            font-family: monospace;
+            background: rgba(0, 149, 255, 0.1);
+            border-radius: 3px;
+            margin: 2px 0;
+            padding: 4px 8px 4px 30px;
+        }
+
+        .console-line.request {
+            color: var(--tertiary);
+            font-weight: 600;
+            border-left: 3px solid var(--tertiary);
+            padding-left: 10px;
+            background: rgba(0, 112, 192, 0.05);
+            border-radius: 3px;
+            margin: 3px 0;
+        }
+
+        .console-line.response {
+            color: var(--success);
+            border-left: 3px solid var(--success);
+            padding-left: 10px;
+            background: rgba(76, 184, 103, 0.05);
+            border-radius: 3px;
+            margin: 3px 0;
+        }
+
+        .console-line.info {
+            color: var(--info);
+            opacity: 0.9;
+        }
+
+        .console-line.step-header {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.05em;
+            border-bottom: 1px solid var(--secondary);
+            padding-bottom: 3px;
+            margin: 10px 0 5px 0;
+        }
+
+        .api-block {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 8px 0;
+            font-family: monospace;
+        }
+
+        .json-data {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+            border-left: 3px solid var(--data-highlight-2);
+            margin: 4px 0;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .process-phases {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            
+            .flow-diagram {
+                min-height: 500px;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .process-phases {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .phase-container:nth-child(2) .process-steps,
+            .phase-container:nth-child(4) .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .participants {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .participant {
+                min-width: 80px;
+                max-width: 100px;
+                padding: 8px 6px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 10px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .participants {
+                padding: 15px;
+            }
+            
+            .participant {
+                min-width: 60px;
+                max-width: 80px;
+                padding: 6px 4px;
+            }
+            
+            .participant-name {
+                font-size: 0.65rem;
+            }
+            
+            .flow-diagram {
+                min-height: 400px;
+            }
+            
+            .data-section-title {
+                font-size: 1rem;
+            }
+            
+            .console-output {
+                max-height: 200px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .process-step {
+                height: 110px;
+                padding: 10px 6px;
+            }
+            
+            .step-icon {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .step-title {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Accessibility */
+        .process-step:focus,
+        .console-output:focus {
+            outline: 3px solid var(--tertiary);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Disable transitions for immediate state changes */
+        .no-transition {
+            transition: none !important;
+        }
+        
+        /* Disable transitions for consent message state changes while keeping opacity transition */
+        .sequence-message.no-transition .message-arrow,
+        .sequence-message.no-transition .message-arrow::after,
+        .sequence-message.no-transition .message-text {
+            transition: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <img src="../graphics/logos/logo_obp_hoch_gross.png" alt="Open Banking Project Logo" class="logo" onerror="handleImageError(this, '../graphics/logos/logo_obp_hoch_gross.png')">
+        <div class="demo-controls">
+            <div class="auto-controls">
+                <button class="control-button" id="runDemoBtn" onclick="runEntireDemo()">Run Demo</button>
+                <button class="control-button" id="pauseDemoBtn" onclick="pauseDemo()">Pause</button>
+                <button class="control-button" id="resetDemoBtn" onclick="resetDemo()">Reset</button>
+            </div>
+            <div class="step-navigation">
+                <button class="control-button nav-button" id="prevStepBtn" onclick="previousStep()">◀ Previous</button>
+                <span class="step-indicator">Step <span id="currentStepNumber">1</span> of 10</span>
+                <button class="control-button nav-button" id="nextStepBtn" onclick="nextStep()">Next ▶</button>
+            </div>
+        </div>
+        <div class="header-content">
+            <div class="header-left">
+                <h1>Open API Kundenbeziehung Demo Alpha Version 1.0</h1>
+            </div>
+            <div class="header-right">
+                <p>Interaktive Visualisierung der Basisimplementation: Referenzprozess, Daten Onboarding und Consent Flow</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Main Column (85%) -->
+        <div class="main-column">
+            <!-- Reference Process Section -->
+            <section class="reference-process">
+                <h2 class="section-title">10-Stufen Referenzprozess</h2>
+                <div class="process-phases">
+                    <!-- Phase 1: Setup und Produktauswahl -->
+                    <div class="phase-container">
+                        <div class="phase-bracket">Phase 1: Setup und Produktauswahl</div>
+                        <div class="process-steps" id="processStepsPhase1">
+                            <!-- Steps 1-2 will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2: Datenerfassung -->
+                    <div class="phase-container">
+                        <div class="phase-bracket">Phase 2: Datenerfassung</div>
+                        <div class="process-steps" id="processStepsPhase2">
+                            <!-- Steps 3-5 will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 3: Verifikation und Compliance -->
+                    <div class="phase-container">
+                        <div class="phase-bracket">Phase 3: Verifikation und Compliance</div>
+                        <div class="process-steps" id="processStepsPhase3">
+                            <!-- Steps 6-7 will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 4: Vertragsabschluss -->
+                    <div class="phase-container">
+                        <div class="phase-bracket">Phase 4: Vertragsabschluss</div>
+                        <div class="process-steps" id="processStepsPhase4">
+                            <!-- Steps 8-10 will be generated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Consent Flow Section -->
+            <section class="consent-flow">
+                <h2 class="section-title">
+                    <div class="phase-display" id="currentPhaseDisplay">Phase 1: Consent Request Initiation</div>
+                    Generischer Consent Flow
+                </h2>
+                <div class="flow-diagram">
+                    <div class="participants" id="participants">
+                        <!-- Participants will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="lifelines" id="lifelines">
+                        <!-- Lifelines will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="messages" id="messages">
+                        <!-- Sequence messages will be generated by JavaScript -->
+                    </div>
+                    
+                    
+                    <div class="granular-consent-info">
+                        <h4>Granular consent options:</h4>
+                        <ul>
+                            <li>Basic data access</li>
+                            <li>Extended KYC data</li>
+                            <li>Purpose limitation</li>
+                            <li>Time restrictions</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Data Column (15%) -->
+        <aside class="data-column">
+            <h3 class="data-section-title">Data Onboarding Process</h3>
+            <div id="dataCategories">
+                <!-- Data categories will be generated by JavaScript -->
+            </div>
+        </aside>
+
+        <!-- Console Output -->
+        <section class="console-section">
+            <h3 class="console-title">API Console Output</h3>
+            <div class="console-output" id="consoleOutput" tabindex="0" role="log" aria-label="API Console Output">
+                <div class="console-line">Ready - Open API Kundenbeziehung Demo Alpha Version 1.0</div>
+                <div class="console-line">Waiting for user interaction...</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Data Definitions
+        const referenceProcessSteps = [
+            {
+                id: 1,
+                title: '1. Initiali-<br>sierung',
+                description: 'Information des Kunden und Service Discovery',
+                icon: '../graphics/pictograms/Initialisierung.png'
+            },
+            {
+                id: 2,
+                title: '2. Produkt-<br>auswahl',
+                description: 'Bedürfnisbefriedigung und Produktkonfiguration',
+                icon: '../graphics/pictograms/Produktauswahl.png'
+            },
+            {
+                id: 3,
+                title: '3. Selbst-<br>deklaration',
+                description: 'FATCA/MIFID Information und Compliance',
+                icon: '../graphics/pictograms/Selbstdeklaration.png'
+            },
+            {
+                id: 4,
+                title: '4. Basis-<br>daten',
+                description: 'Erfassung von Kontaktangaben und Personalien',
+                icon: '../graphics/pictograms/Basisdaten.png'
+            },
+            {
+                id: 5,
+                title: '5. Erweiterte<br>Daten',
+                description: 'Risiko-/Potenzialermittlung und Profiling',
+                icon: '../graphics/pictograms/erweiterte%20Daten.png'
+            },
+            {
+                id: 6,
+                title: '6. Identifi-<br>kation',
+                description: 'Identifikation der Vertragspartei',
+                icon: '../graphics/pictograms/Identifikation.png'
+            },
+            {
+                id: 7,
+                title: '7. Background<br>Checks',
+                description: 'Know-Your-Customer (KYC) und Compliance Checks',
+                icon: '../graphics/pictograms/Checks.png'
+            },
+            {
+                id: 8,
+                title: '8. Vertrags-<br>abschluss',
+                description: 'Akzeptanz Geschäftsbedingungen und AGB',
+                icon: '../graphics/pictograms/Abschluss.png'
+            },
+            {
+                id: 9,
+                title: '9. Signatur',
+                description: 'Vertragsunterzeichnung und digitale Signatur',
+                icon: '../graphics/pictograms/Signatur.png'
+            },
+            {
+                id: 10,
+                title: '10. Metadaten/<br>Verteilung',
+                description: 'Erfassung, Verarbeitung und Systemintegration',
+                icon: '../graphics/pictograms/Verteilung.png'
+            }
+        ];
+
+        const consentParticipants = [
+            {
+                id: 'customer',
+                name: 'Customer',
+                icon: '../graphics/pictograms/Kunde.png'
+            },
+            {
+                id: 'bank',
+                name: 'Bank/Service Provider',
+                icon: '../graphics/pictograms/Bank.png'
+            },
+            {
+                id: 'consent',
+                name: 'Consent Management',
+                icon: '../graphics/pictograms/Consent%20Manager.png'
+            },
+            {
+                id: 'data',
+                name: 'Data Provider',
+                icon: '../graphics/pictograms/Data%20Provider.png'
+            },
+            {
+                id: 'audit',
+                name: 'Audit & Compliance',
+                icon: '../graphics/pictograms/Audit%20and%20Compliance.png'
+            }
+        ];
+
+        const sequenceMessages = [
+            // Phase 1 messages
+            {
+                id: 1,
+                from: 0, // Customer
+                to: 1,   // Bank
+                text: 'Initiate service request',
+                top: 20
+            },
+            {
+                id: 2,
+                from: 1, // Bank
+                to: 2,   // ConsentMgmt
+                text: 'Check existing consents',
+                top: 45
+            },
+            {
+                id: 3,
+                from: 2, // ConsentMgmt
+                to: 1,   // Bank
+                text: 'No valid consent found',
+                top: 70,
+                return: true
+            },
+            {
+                id: 4,
+                from: 1, // Bank
+                to: 2,   // ConsentMgmt
+                text: 'Create consent request',
+                top: 95
+            },
+            {
+                id: 5,
+                from: 2, // ConsentMgmt
+                to: 0,   // Customer
+                text: 'Present consent form',
+                top: 120
+            },
+            {
+                id: 6,
+                from: 0, // Customer
+                to: 2,   // ConsentMgmt
+                text: 'Grant specific consents',
+                top: 145
+            },
+            {
+                id: 7,
+                from: 2, // ConsentMgmt
+                to: 2,   // ConsentMgmt (self)
+                text: 'Validate consent completeness',
+                top: 170,
+                selfMessage: true
+            },
+            {
+                id: 8,
+                from: 2, // ConsentMgmt
+                to: 4,   // AuditLog
+                text: 'Log consent decision',
+                top: 195
+            },
+            {
+                id: 9,
+                from: 2, // ConsentMgmt
+                to: 1,   // Bank
+                text: 'Consent granted with scope',
+                top: 220,
+                return: true
+            },
+            {
+                id: 10,
+                from: 1, // Bank
+                to: 3,   // DataProvider
+                text: 'Request data with consent token',
+                top: 245
+            },
+            {
+                id: 11,
+                from: 3, // DataProvider
+                to: 2,   // ConsentMgmt
+                text: 'Verify consent validity',
+                top: 270
+            },
+            {
+                id: 12,
+                from: 2, // ConsentMgmt
+                to: 3,   // DataProvider
+                text: 'Consent valid for scope',
+                top: 295,
+                return: true
+            },
+            {
+                id: 13,
+                from: 3, // DataProvider
+                to: 1,   // Bank
+                text: 'Provide requested data',
+                top: 320,
+                return: true
+            },
+            {
+                id: 14,
+                from: 3, // DataProvider
+                to: 4,   // AuditLog
+                text: 'Log data access',
+                top: 345
+            },
+            {
+                id: 15,
+                from: 1, // Bank
+                to: 0,   // Customer
+                text: 'Service delivered',
+                top: 370,
+                return: true
+            },
+            {
+                id: 16,
+                from: 2, // ConsentMgmt
+                to: 0,   // Customer
+                text: 'Consent expiry notification (if applicable)',
+                top: 395
+            },
+            {
+                id: 17,
+                from: 0, // Customer
+                to: 2,   // ConsentMgmt
+                text: 'Renew/modify/revoke consent',
+                top: 420
+            },
+            {
+                id: 18,
+                from: 2, // ConsentMgmt
+                to: 4,   // AuditLog
+                text: 'Log consent updates',
+                top: 445
+            }
+        ];
+
+        const consentFlowPhases = [
+            {
+                id: 1,
+                title: 'Phase 1: Consent Request Initiation',
+                description: 'Service-Anfrage und Consent-Status-Prüfung'
+            },
+            {
+                id: 2,
+                title: 'Phase 2: Consent Granting & Validation',
+                description: 'Einverständniserklärung und Scope-Definition'
+            },
+            {
+                id: 3,
+                title: 'Phase 3: Data Access & Usage',
+                description: 'Datenbereitstellung und Service-Auslieferung'
+            },
+            {
+                id: 4,
+                title: 'Phase 4: Ongoing Consent Management',
+                description: 'Kontinuierliche Consent-Überwachung und Updates'
+            }
+        ];
+
+        const dataCategories = [
+            {
+                id: 1,
+                title: 'Consent & Metadaten',
+                steps: [1, 2],
+                fields: [
+                    'Cookie preferences and tracking consent',
+                    'Initial service discovery consent',
+                    'Product and service selections',
+                    'Consent validity and expiration periods'
+                ]
+            },
+            {
+                id: 2,
+                title: 'Basis Identitaetsdaten',
+                steps: [3, 4],
+                fields: [
+                    'Personal information (name, birth date)',
+                    'Address details (residential, correspondence)',
+                    'Contact information (phone, email)',
+                    'Basic nationality and civil status',
+                    'Customer identification numbers'
+                ]
+            },
+            {
+                id: 3,
+                title: 'Selbstdeklaration & Erweiterte Daten',
+                steps: [5],
+                fields: [
+                    'Tax status and FATCA declarations',
+                    'Risk tolerance and investment experience',
+                    'Employment and income information',
+                    'Regulatory compliance declarations',
+                    'Source of wealth documentation'
+                ]
+            },
+            {
+                id: 4,
+                title: 'Identifikation & Verifikation',
+                steps: [6, 7],
+                fields: [
+                    'Identity verification results',
+                    'Document validation data',
+                    'KYC and compliance check status',
+                    'Background screening results',
+                    'PEP and sanctions list results'
+                ]
+            },
+            {
+                id: 5,
+                title: 'Vertrag & Signatur',
+                steps: [8, 9],
+                fields: [
+                    'Contract terms acceptance',
+                    'Digital signature information',
+                    'Legal agreement confirmations',
+                    'Signature method and timestamps',
+                    'Qualified signature certificates'
+                ]
+            },
+            {
+                id: 6,
+                title: 'Prozess Metadaten',
+                steps: [10],
+                fields: [
+                    'Process completion status',
+                    'System integration results',
+                    'Audit trail information',
+                    'Document references and metadata',
+                    'Quality metrics and performance data'
+                ]
+            }
+        ];
+
+        // Timing Constants for Consistent Flow
+        const TIMING = {
+            DEMO_STEP_INTERVAL: 4000,      // Main step progression
+            MESSAGE_STAGGER: 300,           // Between consent messages
+            FIELD_STAGGER: 200,             // Between data fields
+            CATEGORY_DELAY: 400,            // Category activation delay
+            PHASE_TRANSITION: 100,          // Phase change delay
+            STATE_TRANSITION: 0             // Immediate visual feedback
+        };
+
+        // Application State
+        let currentStep = 1;
+        let completedSteps = [];
+        let demoInterval = null;
+        let isDemoRunning = false;
+        let isDemoPaused = false;
+        let isManualMode = false;
+
+        // DOM Elements
+        const flowPhasesContainer = document.getElementById('flowPhases');
+        const dataCategoriesContainer = document.getElementById('dataCategories');
+        const consoleOutput = document.getElementById('consoleOutput');
+
+        // Initialize Application
+        function initialize() {
+            renderProcessSteps();
+            renderConsentFlowComponents();
+            renderDataCategories();
+            // Initialize navigation
+            setManualMode(false);
+            updateNavigationButtons();
+            updateStepIndicator();
+            // Stay in neutral state until user clicks "Run Demo" or clicks a step
+            addConsoleMessage('System initialized. Ready for user interaction.', 'success');
+        }
+
+        // Render Reference Process Steps
+        function renderProcessSteps() {
+            // Define phase containers and their steps
+            const phaseSteps = {
+                1: [1, 2],      // Phase 1: Steps 1-2
+                2: [3, 4, 5],   // Phase 2: Steps 3-5
+                3: [6, 7],      // Phase 3: Steps 6-7
+                4: [8, 9, 10]   // Phase 4: Steps 8-10
+            };
+            
+            // Render steps for each phase
+            for (let phase = 1; phase <= 4; phase++) {
+                const container = document.getElementById(`processStepsPhase${phase}`);
+                if (container) {
+                    container.innerHTML = phaseSteps[phase].map(stepId => {
+                        const step = referenceProcessSteps.find(s => s.id === stepId);
+                        return `
+                            <div class="process-step tooltip" 
+                                 id="step-${step.id}"
+                                 data-tooltip="${step.description}"
+                                 onclick="activateStep(${step.id})"
+                                 onkeydown="handleStepKeydown(event, ${step.id})"
+                                 tabindex="0"
+                                 role="button"
+                                 aria-label="Schritt ${step.id}: ${step.title}">
+                                <img src="${step.icon}" alt="${step.title}" class="step-icon" onerror="handleImageError(this, '${step.icon}')">
+                                <div class="step-title">${step.title}</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        }
+
+        // Render Consent Flow Components
+        function renderConsentFlowComponents() {
+            renderParticipants();
+            renderLifelines();
+            renderSequenceMessages();
+            renderPhaseIndicators();
+        }
+        
+        function renderParticipants() {
+            const participantsContainer = document.getElementById('participants');
+            if (participantsContainer) {
+                participantsContainer.innerHTML = consentParticipants.map(participant => `
+                    <div class="participant" id="participant-${participant.id}">
+                        <img src="${participant.icon}" alt="${participant.name}" class="participant-icon" onerror="handleImageError(this, '${participant.icon}')">
+                        <div class="participant-name">${participant.name}</div>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function renderLifelines() {
+            const lifelinesContainer = document.getElementById('lifelines');
+            if (lifelinesContainer) {
+                lifelinesContainer.innerHTML = consentParticipants.map(participant => `
+                    <div class="lifeline" id="lifeline-${participant.id}"></div>
+                `).join('');
+            }
+        }
+        
+        function renderSequenceMessages() {
+            const messagesContainer = document.getElementById('messages');
+            
+            if (messagesContainer) {
+                // Render only the messages - clean sequence diagram
+                messagesContainer.innerHTML = sequenceMessages.map(message => {
+                    if (message.selfMessage) {
+                        // Handle self-messages (loops)
+                        const fromPos = (message.from / (consentParticipants.length - 1)) * 100;
+                        return `
+                            <div class="sequence-message self-message" id="message-${message.id}" 
+                                 style="top: ${message.top}px; left: ${fromPos}%; width: 60px;">
+                                <div class="message-arrow self"></div>
+                                <div class="message-text">${message.text}</div>
+                            </div>
+                        `;
+                    } else {
+                        const fromPos = (message.from / (consentParticipants.length - 1)) * 100;
+                        const toPos = (message.to / (consentParticipants.length - 1)) * 100;
+                        const left = Math.min(fromPos, toPos);
+                        const width = Math.abs(toPos - fromPos);
+                        
+                        return `
+                            <div class="sequence-message" id="message-${message.id}" 
+                                 style="top: ${message.top}px; left: ${left}%; width: ${width}%;">
+                                <div class="message-arrow ${message.return ? 'return' : ''}"></div>
+                                <div class="message-text">${message.text}</div>
+                            </div>
+                        `;
+                    }
+                }).join('');
+            }
+        }
+        
+        function renderPhaseIndicators() {
+            const indicatorsContainer = document.getElementById('phaseIndicators');
+            if (indicatorsContainer) {
+                indicatorsContainer.innerHTML = consentFlowPhases.map(phase => `
+                    <div class="phase-indicator phase-indicator-${phase.id}" id="phase-indicator-${phase.id}">
+                        <div class="phase-indicator-title">${phase.title}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Render Data Categories
+        function renderDataCategories() {
+            dataCategoriesContainer.innerHTML = dataCategories.map(category => `
+                <div class="data-category" id="data-category-${category.id}">
+                    <div class="category-title">${category.title}</div>
+                    <div class="data-fields">
+                        ${category.fields.map((field, index) => `<div class="data-field" id="field-${category.id}-${index}">${field}</div>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Activate Process Step
+        function activateStep(stepId) {
+            // Update current step
+            currentStep = stepId;
+            
+            // Update step visual states
+            updateStepStates();
+            
+            // Activate corresponding consent flow phases
+            activateConsentPhases(stepId);
+            
+            // Show relevant data categories
+            showDataCategories(stepId);
+            
+            // If this is Step 10, mark everything as completed
+            if (stepId === 10) {
+                setTimeout(() => {
+                    completeEverything();
+                }, 2000); // Allow animations to complete first
+            }
+            
+            // Enhanced API simulation
+            const step = referenceProcessSteps.find(s => s.id === stepId);
+            simulateAPICall({ id: stepId, title: step.title, description: step.description });
+            
+            // Show data collection progress
+            const dataCategory = dataCategories.find(cat => cat.steps.includes(stepId));
+            if (dataCategory) {
+                setTimeout(() => {
+                    addConsoleMessage(`Data collection for: ${dataCategory.title}`, 'info');
+                    dataCategory.fields.forEach((field, index) => {
+                        setTimeout(() => {
+                            addConsoleMessage(`✓ ${field}: [COLLECTED]`, 'data');
+                        }, index * TIMING.FIELD_STAGGER);
+                    });
+                }, TIMING.CATEGORY_DELAY * 2);
+            }
+        }
+        
+        // Complete Everything - called at Step 10
+        function completeEverything() {
+            // Mark ALL steps as completed
+            document.querySelectorAll('.process-step').forEach(step => {
+                step.classList.add('no-transition');
+                step.classList.remove('active');
+                step.classList.add('completed');
+                setTimeout(() => step.classList.remove('no-transition'), 0);
+            });
+            
+            // Mark ALL messages as completed
+            document.querySelectorAll('.sequence-message').forEach(msg => {
+                msg.classList.add('no-transition');
+                msg.classList.remove('active', 'in-progress');
+                msg.classList.add('completed');
+                setTimeout(() => msg.classList.remove('no-transition'), 0);
+            });
+            
+            // Mark ALL data fields as confirmed
+            document.querySelectorAll('.data-field').forEach(field => {
+                field.classList.add('no-transition');
+                field.classList.remove('new', 'highlight', 'receiving', 'received-unconfirmed');
+                field.classList.add('confirmed');
+                setTimeout(() => field.classList.remove('no-transition'), 0);
+            });
+            
+            // Set phase display to completed
+            const phaseDisplay = document.getElementById('currentPhaseDisplay');
+            if (phaseDisplay) {
+                phaseDisplay.classList.add('no-transition');
+                phaseDisplay.classList.remove('active');
+                phaseDisplay.classList.add('completed');
+                setTimeout(() => phaseDisplay.classList.remove('no-transition'), 0);
+            }
+            
+            addConsoleMessage('Process completed. All steps, consent messages, and data points verified.', 'success');
+        }
+
+        // Update Step Visual States
+        function updateStepStates() {
+            referenceProcessSteps.forEach(step => {
+                const stepElement = document.getElementById(`step-${step.id}`);
+                stepElement.classList.remove('active', 'completed');
+                
+                if (step.id === currentStep) {
+                    stepElement.classList.add('active');
+                } else if (step.id < currentStep) {
+                    stepElement.classList.add('completed');
+                }
+            });
+        }
+
+        // Activate Consent Flow Phases - 1:1 match to official generic-consent-flow.mmd
+        function activateConsentPhases(stepId) {
+            // Pure consent flow phases based on official diagram
+            const consentFlowPhases = {
+                1: { messageRange: [1, 5], name: 'Phase 1: Consent Request Initiation' },
+                2: { messageRange: [6, 10], name: 'Phase 2: Consent Granting & Validation' },
+                3: { messageRange: [11, 15], name: 'Phase 3: Data Access & Usage' },
+                4: { messageRange: [16, 18], name: 'Phase 4: Ongoing Consent Management' }
+            };
+            
+            // Map process steps to consent flow progression (loose coupling)
+            const stepToConsentProgress = {
+                1: { maxMessage: 2, phase: 1 },   // Show first 2 messages
+                2: { maxMessage: 5, phase: 1 },   // Complete Phase 1
+                3: { maxMessage: 10, phase: 2 },  // Complete Phase 2
+                4: { maxMessage: 12, phase: 3 },  // Start Phase 3
+                5: { maxMessage: 13, phase: 3 },  // Continue Phase 3
+                6: { maxMessage: 14, phase: 3 },  // Continue Phase 3
+                7: { maxMessage: 15, phase: 3 },  // Complete Phase 3
+                8: { maxMessage: 15, phase: 3 },  // Stay at Phase 3
+                9: { maxMessage: 15, phase: 3 },  // Stay at Phase 3
+                10: { maxMessage: 18, phase: 4 } // Complete Phase 4
+            };
+
+            // Get consent progress for current step
+            const currentProgress = stepToConsentProgress[stepId];
+            if (!currentProgress) return;
+            
+            const maxMessage = currentProgress.maxMessage;
+            const consentPhase = currentProgress.phase;
+            const currentPhaseInfo = consentFlowPhases[consentPhase];
+            
+            // Determine which messages should be visible (1 to maxMessage)
+            const visibleMessages = [];
+            for (let msgId = 1; msgId <= maxMessage; msgId++) {
+                visibleMessages.push(msgId);
+            }
+            
+            // Determine which messages are in the current phase and active
+            const currentPhaseStart = currentPhaseInfo.messageRange[0];
+            const currentPhaseEnd = currentPhaseInfo.messageRange[1];
+            const currentPhaseMessages = [];
+            for (let msgId = currentPhaseStart; msgId <= Math.min(currentPhaseEnd, maxMessage); msgId++) {
+                currentPhaseMessages.push(msgId);
+            }
+            
+            // Reset active states while preserving completed states and current visible messages
+            document.querySelectorAll('.participant').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.lifeline').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.sequence-message').forEach(m => {
+                const messageId = parseInt(m.id.replace('message-', ''));
+                // Only reset messages that are NOT in the current visible range
+                if (!visibleMessages.includes(messageId)) {
+                    m.classList.remove('active', 'in-progress');
+                }
+                // Don't remove 'completed' class to maintain progressive building
+            });
+            
+            // Reset granular consent info visibility - handled below
+            
+            // Update phase display based on consent flow phase
+            const phaseDisplay = document.getElementById('currentPhaseDisplay');
+            if (phaseDisplay) {
+                phaseDisplay.textContent = currentPhaseInfo.name;
+                phaseDisplay.classList.remove('active', 'completed');
+                
+                // Show as active if we're showing messages in current phase
+                const hasActiveMessages = currentPhaseMessages.length > 0;
+                
+                setTimeout(() => {
+                    if (hasActiveMessages) {
+                        phaseDisplay.classList.add('active');
+                    } else {
+                        phaseDisplay.classList.add('completed');
+                    }
+                }, TIMING.PHASE_TRANSITION);
+            }
+            
+            // Step colors for completed messages
+            const stepColors = {
+                1: '#0070C0',    // Blue
+                2: '#0095ffff',  // Blue bright
+                3: '#4cb867ff',  // Green
+                4: '#7fb88dff',  // Green muted
+                5: '#B469FF',    // Purple
+                6: '#cca2f7ff',  // Purple light
+                7: '#FFC000',    // Yellow
+                8: '#ecd07cff',  // Yellow light
+                9: '#ff3370ff',  // Pink
+                10: '#e28fb9ff'  // Pink light
+            };
+            
+            // Phase 1: Make new messages visible (with fade-in animation)
+            const newMessages = visibleMessages.filter(msgId => {
+                const messageElement = document.getElementById(`message-${msgId}`);
+                return messageElement && !messageElement.classList.contains('active') && !messageElement.classList.contains('completed');
+            });
+            
+            newMessages.forEach((messageId, index) => {
+                const message = sequenceMessages.find(msg => msg.id === messageId);
+                if (message) {
+                    setTimeout(() => {
+                        const messageElement = document.getElementById(`message-${message.id}`);
+                        if (messageElement && !messageElement.classList.contains('active') && !messageElement.classList.contains('completed')) {
+                            // Just make visible - fade-in with CSS transition
+                            messageElement.classList.add('active');
+                            
+                            // Activate participants for this message
+                            const fromParticipant = document.getElementById(`participant-${consentParticipants[message.from].id}`);
+                            const toParticipant = document.getElementById(`participant-${consentParticipants[message.to].id}`);
+                            const fromLifeline = document.getElementById(`lifeline-${consentParticipants[message.from].id}`);
+                            const toLifeline = document.getElementById(`lifeline-${consentParticipants[message.to].id}`);
+                            
+                            if (fromParticipant) fromParticipant.classList.add('active');
+                            if (toParticipant) toParticipant.classList.add('active');
+                            if (fromLifeline) fromLifeline.classList.add('active');
+                            if (toLifeline) toLifeline.classList.add('active');
+                        }
+                    }, TIMING.CATEGORY_DELAY + (index * TIMING.MESSAGE_STAGGER)); // Keep fade-in timing for new messages only
+                }
+            });
+            
+            // Update message states based on consent flow progression
+            visibleMessages.forEach((messageId) => {
+                const messageElement = document.getElementById(`message-${messageId}`);
+                if (messageElement) {
+                    // Instant state change with no-transition class
+                    messageElement.classList.add('no-transition');
+                    
+                    if (currentPhaseMessages.includes(messageId)) {
+                        // Current phase messages - orange/in-progress (only if not already)
+                        if (!messageElement.classList.contains('in-progress')) {
+                            messageElement.classList.add('in-progress');
+                            messageElement.classList.remove('completed');
+                        }
+                    } else {
+                        // Previous phase messages - completed with phase-specific color (only if not already)
+                        if (!messageElement.classList.contains('completed')) {
+                            messageElement.classList.add('completed');
+                            messageElement.classList.remove('in-progress');
+                            
+                            // Determine which phase this message belongs to for coloring
+                            let messagePhase = 1;
+                            if (messageId >= 16) messagePhase = 4;
+                            else if (messageId >= 11) messagePhase = 3;
+                            else if (messageId >= 6) messagePhase = 2;
+                            
+                            const phaseColors = {
+                                1: '#0070C0',    // Blue - Phase 1
+                                2: '#00b02c',    // Green - Phase 2
+                                3: '#F85F3D',    // Orange - Phase 3
+                                4: '#B469FF'     // Purple - Phase 4
+                            };
+                            const color = phaseColors[messagePhase] || '#0070C0';
+                            messageElement.style.setProperty('--message-color', color);
+                        }
+                    }
+                    
+                    // Remove no-transition after immediate state change
+                    setTimeout(() => messageElement.classList.remove('no-transition'), TIMING.STATE_TRANSITION);
+                }
+            });
+            
+            // Show granular consent info when message 6 is visible (Phase 2 start)
+            const granularInfo = document.querySelector('.granular-consent-info');
+            if (granularInfo) {
+                if (visibleMessages.includes(6)) {
+                    granularInfo.classList.add('visible');
+                } else {
+                    granularInfo.classList.remove('visible');
+                }
+            }
+        }
+
+        // Independent Consent Flow Control - runs separately from process steps
+        function runConsentFlow(maxMessage = 18) {
+            // Pure consent flow phases based on official diagram
+            const consentFlowPhases = {
+                1: { messageRange: [1, 5], name: 'Phase 1: Consent Request Initiation' },
+                2: { messageRange: [6, 10], name: 'Phase 2: Consent Granting & Validation' },
+                3: { messageRange: [11, 15], name: 'Phase 3: Data Access & Usage' },
+                4: { messageRange: [16, 18], name: 'Phase 4: Ongoing Consent Management' }
+            };
+
+            // Determine current phase based on maxMessage
+            let currentPhase = 1;
+            if (maxMessage >= 16) currentPhase = 4;
+            else if (maxMessage >= 11) currentPhase = 3;
+            else if (maxMessage >= 6) currentPhase = 2;
+
+            const currentPhaseInfo = consentFlowPhases[currentPhase];
+
+            // Show messages sequentially with proper timing
+            for (let msgId = 1; msgId <= maxMessage; msgId++) {
+                setTimeout(() => {
+                    const messageElement = document.getElementById(`message-${msgId}`);
+                    if (messageElement && !messageElement.classList.contains('active') && !messageElement.classList.contains('completed')) {
+                        messageElement.classList.add('active');
+                        
+                        // Activate participants
+                        const message = sequenceMessages.find(msg => msg.id === msgId);
+                        if (message) {
+                            const fromParticipant = document.getElementById(`participant-${consentParticipants[message.from].id}`);
+                            const toParticipant = document.getElementById(`participant-${consentParticipants[message.to].id}`);
+                            const fromLifeline = document.getElementById(`lifeline-${consentParticipants[message.from].id}`);
+                            const toLifeline = document.getElementById(`lifeline-${consentParticipants[message.to].id}`);
+                            
+                            if (fromParticipant) fromParticipant.classList.add('active');
+                            if (toParticipant) toParticipant.classList.add('active');
+                            if (fromLifeline) fromLifeline.classList.add('active');
+                            if (toLifeline) toLifeline.classList.add('active');
+                        }
+                    }
+                }, (msgId - 1) * TIMING.MESSAGE_STAGGER);
+            }
+
+            // Update phase display
+            const phaseDisplay = document.getElementById('currentPhaseDisplay');
+            if (phaseDisplay) {
+                phaseDisplay.textContent = currentPhaseInfo.name;
+                phaseDisplay.classList.remove('active', 'completed');
+                phaseDisplay.classList.add('active');
+            }
+
+            // Update granular consent info visibility
+            const granularInfo = document.querySelector('.granular-consent-info');
+            if (granularInfo) {
+                if (maxMessage >= 6) {
+                    granularInfo.classList.add('visible');
+                } else {
+                    granularInfo.classList.remove('visible');
+                }
+            }
+
+            addConsoleMessage(`Consent Flow: ${currentPhaseInfo.name} - Messages 1-${maxMessage}`, 'info');
+        }
+
+        // Show Data Categories
+        function showDataCategories(stepId) {
+            dataCategories.forEach((category, categoryIndex) => {
+                const categoryElement = document.getElementById(`data-category-${category.id}`);
+                const shouldShow = category.steps.some(step => step <= stepId);
+                const isNewCategory = category.steps.includes(stepId);
+                
+                if (shouldShow) {
+                    // Stagger category appearance
+                    setTimeout(() => {
+                        categoryElement.classList.add('active');
+                        
+                        // Add entering animation for new categories
+                        if (isNewCategory) {
+                            categoryElement.classList.add('entering');
+                            
+                            setTimeout(() => {
+                                categoryElement.classList.remove('entering');
+                            }, 600);
+                        }
+                        
+                        // Enhanced field animations with status colors - only for relevant categories
+                        const fields = categoryElement.querySelectorAll('.data-field');
+                        fields.forEach((field, index) => {
+                            // Only remove animation classes, preserve data state for progressive building
+                            field.classList.remove('new', 'highlight');
+                            
+                            setTimeout(() => {
+                                if (isNewCategory) {
+                                    // New category fields: use proper state progression with blue animation ONCE
+                                    if (!field.classList.contains('confirmed')) {
+                                        field.classList.add('new', 'receiving');
+                                    
+                                        // After blue animation, move to received-unconfirmed
+                                        setTimeout(() => {
+                                            field.classList.remove('new', 'receiving');
+                                            field.classList.add('received-unconfirmed');
+                                            
+                                            // After delay, move to confirmed
+                                            setTimeout(() => {
+                                                field.classList.remove('received-unconfirmed');
+                                                field.classList.add('confirmed');
+                                            }, 500);
+                                        }, 800);
+                                    }
+                                } else {
+                                    // Existing category fields: DON'T animate - just ensure confirmed state
+                                    if (!field.classList.contains('confirmed')) {
+                                        field.classList.add('confirmed'); // Direct state without animation
+                                    }
+                                    // No highlight animation for already confirmed fields
+                                }
+                            }, index * (isNewCategory ? TIMING.FIELD_STAGGER : 0)); // No delay for existing categories
+                        });
+                    }, categoryIndex * TIMING.MESSAGE_STAGGER + TIMING.CATEGORY_DELAY);
+                } else {
+                    categoryElement.classList.remove('active', 'entering');
+                    
+                    // Only clear animation classes, preserve confirmed state for progressive building
+                    const fields = categoryElement.querySelectorAll('.data-field');
+                    fields.forEach(field => {
+                        field.classList.remove('new', 'highlight', 'receiving', 'received-unconfirmed');
+                        // Keep 'confirmed' class for progressive building
+                    });
+                }
+            });
+        }
+
+        // Add Console Message (Enhanced)
+        function addConsoleMessage(message, type = '', isHTML = false) {
+            const messageElement = document.createElement('div');
+            messageElement.className = `console-line ${type}`;
+            
+            if (isHTML) {
+                messageElement.innerHTML = message;
+            } else {
+                const timestamp = new Date().toLocaleTimeString();
+                messageElement.textContent = `[${timestamp}] ${message}`;
+            }
+            
+            consoleOutput.appendChild(messageElement);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            
+            // Keep console output manageable
+            const maxLines = 80;
+            while (consoleOutput.children.length > maxLines) {
+                consoleOutput.removeChild(consoleOutput.firstChild);
+            }
+            
+            // Add animation for new messages
+            messageElement.style.opacity = '0';
+            messageElement.style.transform = 'translateX(-10px)';
+            setTimeout(() => {
+                messageElement.style.transition = 'all 0.3s ease';
+                messageElement.style.opacity = '1';
+                messageElement.style.transform = 'translateX(0)';
+            }, 50);
+        }
+        
+        // Enhanced API Simulation
+        function simulateAPICall(step) {
+            const timestamp = new Date().toLocaleTimeString();
+            const stepData = referenceProcessSteps.find(s => s.id === step.id);
+            
+            // Step header
+            addConsoleMessage(`=== SCHRITT ${step.id}: ${stepData.title.toUpperCase()} ===`, 'step-header');
+            
+            // API endpoint simulation based on step
+            let endpoint, method, requestData, responseData;
+            
+            switch(step.id) {
+                case 1:
+                    endpoint = '/api/v2/obp/process/initialize';
+                    method = 'POST';
+                    requestData = { processType: 'account_opening', clientId: 'demo_client_123' };
+                    responseData = { processId: 'proc_' + Date.now(), status: 'initialized', availableServices: ['banking', 'identity', 'consent'] };
+                    break;
+                case 2:
+                    endpoint = '/api/v2/obp/products/configure';
+                    method = 'POST';
+                    requestData = { productType: 'current_account', features: ['online_banking', 'mobile_app'], currency: 'CHF' };
+                    responseData = { configId: 'cfg_' + Date.now(), eligibilityStatus: 'approved', estimatedProcessingTime: '5-7 minutes' };
+                    break;
+                case 3:
+                    endpoint = '/api/v2/obp/compliance/self-declaration';
+                    method = 'POST';
+                    requestData = { fatcaStatus: 'non_us_person', taxDomicile: 'CH', mifidCategory: 'retail_client' };
+                    responseData = { complianceId: 'comp_' + Date.now(), riskLevel: 'low', requiresAdditionalDocs: false };
+                    break;
+                case 4:
+                    endpoint = '/api/v2/obp/customer/basic-data';
+                    method = 'PUT';
+                    requestData = { personalData: { firstName: 'Anna', lastName: 'Mueller' }, contactInfo: { email: 'anna.mueller@example.ch', phone: '+41791234567' } };
+                    responseData = { customerId: 'cust_' + Date.now(), dataQuality: 96, validationStatus: 'passed' };
+                    break;
+                case 5:
+                    endpoint = '/api/v2/obp/customer/extended-data';
+                    method = 'PUT';
+                    requestData = { financialData: { occupation: 'Software Engineer', annualIncome: 120000 }, riskProfile: { tolerance: 'moderate' } };
+                    responseData = { profileId: 'prof_' + Date.now(), riskScore: 25, investmentSuitability: 'suitable_for_complex_products' };
+                    break;
+                case 6:
+                    endpoint = '/api/v2/obp/identity/verify';
+                    method = 'POST';
+                    requestData = { method: 'video_ident', documentType: 'swiss_id', biometricCapture: true };
+                    responseData = { verificationId: 'ver_' + Date.now(), confidenceLevel: 98.7, qeaaLevel: 'substantial', processingTime: '3 minutes' };
+                    break;
+                case 7:
+                    endpoint = '/api/v2/obp/kyc/background-checks';
+                    method = 'POST';
+                    requestData = { pepScreening: true, sanctionsCheck: true, creditCheck: true };
+                    responseData = { kycId: 'kyc_' + Date.now(), pepStatus: 'clear', sanctionsStatus: 'clear', creditScore: 750, overallRisk: 'low' };
+                    break;
+                case 8:
+                    endpoint = '/api/v2/obp/contract/terms';
+                    method = 'POST';
+                    requestData = { contractType: 'account_opening', termsVersion: 'v2.1', acceptanceMethod: 'digital' };
+                    responseData = { contractId: 'cont_' + Date.now(), termsAccepted: true, legallyBinding: true, nextStep: 'digital_signature' };
+                    break;
+                case 9:
+                    endpoint = '/api/v2/obp/signature/execute';
+                    method = 'POST';
+                    requestData = { signatureType: 'qualified_electronic', certificateProvider: 'SwissSign', documentHash: 'sha256_' + Math.random().toString(36) };
+                    responseData = { signatureId: 'sig_' + Date.now(), timestamp: new Date().toISOString(), legalValidity: 'equivalent_to_handwritten', auditTrail: 'recorded' };
+                    break;
+                case 10:
+                    endpoint = '/api/v2/obp/process/finalize';
+                    method = 'POST';
+                    requestData = { processId: 'proc_' + Date.now(), generateAccountNumber: true, activateServices: ['online_banking', 'mobile_app'] };
+                    responseData = { accountNumber: 'CH93 0076 2011 6238 5295 7', accountStatus: 'ACTIVE', welcomePackage: 'sent', estimatedDelivery: '2-3 business days' };
+                    break;
+                default:
+                    endpoint = '/api/v2/obp/generic';
+                    method = 'GET';
+                    requestData = { step: step.id };
+                    responseData = { status: 'completed' };
+            }
+            
+            // Simulate API request
+            addConsoleMessage(`${method} ${endpoint}`, 'request');
+            addConsoleMessage(`Request Body: ${JSON.stringify(requestData, null, 2)}`, 'data', true);
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                addConsoleMessage(`200 OK - Response received`, 'response');
+                addConsoleMessage(`Response Body: ${JSON.stringify(responseData, null, 2)}`, 'data', true);
+                addConsoleMessage(`Processing completed successfully`, 'success');
+                addConsoleMessage('', 'info'); // Empty line for separation
+            }, 300 + Math.random() * 200);
+        }
+
+        // Keyboard Navigation
+        function handleStepKeydown(event, stepId) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                activateStep(stepId);
+            }
+        }
+
+        // Demo Control Functions
+        function runEntireDemo() {
+            if (isDemoRunning && !isDemoPaused) {
+                pauseDemo();
+                return;
+            }
+            
+            if (isDemoPaused) {
+                resumeDemo();
+                return;
+            }
+            
+            resetDemo();
+            isDemoRunning = true;
+            isDemoPaused = false;
+            setManualMode(false);
+            updateControlButtons();
+            
+            addConsoleMessage('Starting automated demo sequence...', 'info');
+            
+            let step = 1;
+            currentStep = step;
+            updateStepIndicator();
+            activateStep(step);
+            step++;
+            demoInterval = setInterval(() => {
+                if (!isDemoRunning || isDemoPaused) {
+                    return;
+                }
+                
+                if (step <= 10) {
+                    currentStep = step;
+                    updateStepIndicator();
+                    activateStep(step);
+                    step++;
+                } else {
+                    clearInterval(demoInterval);
+                    isDemoRunning = false;
+                    setManualMode(false);
+                    updateControlButtons();
+                    addConsoleMessage('Demo completed. Returning to interactive mode.', 'success');
+                }
+            }, TIMING.DEMO_STEP_INTERVAL);
+        }
+        
+        function pauseDemo() {
+            isDemoPaused = true;
+            updateControlButtons();
+            addConsoleMessage('Demo paused. Click Run Demo to resume.', 'info');
+        }
+        
+        function resumeDemo() {
+            isDemoPaused = false;
+            updateControlButtons();
+            addConsoleMessage('Demo resumed.', 'info');
+        }
+        
+        function resetDemo() {
+            if (demoInterval) {
+                clearInterval(demoInterval);
+            }
+            isDemoRunning = false;
+            isDemoPaused = false;
+            currentStep = 1;
+            completedSteps = [];
+            setManualMode(false);
+            updateControlButtons();
+            updateStepIndicator();
+            
+            // Reset all visual states
+            document.querySelectorAll('.process-step').forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            document.querySelectorAll('.participant').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.lifeline').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.sequence-message').forEach(m => m.classList.remove('active', 'completed', 'in-progress'));
+            document.querySelectorAll('.data-category').forEach(c => {
+                c.classList.remove('active', 'entering');
+                c.querySelectorAll('.data-field').forEach(f => f.classList.remove('new', 'highlight', 'receiving', 'received-unconfirmed', 'confirmed'));
+            });
+            
+            // Reset phase display
+            const phaseDisplay = document.getElementById('currentPhaseDisplay');
+            if (phaseDisplay) {
+                phaseDisplay.textContent = 'Phase 1: Consent Request Initiation';
+                phaseDisplay.classList.remove('active', 'completed');
+            }
+            
+            // Clear console
+            const consoleOutput = document.getElementById('consoleOutput');
+            consoleOutput.innerHTML = '<div class="console-line">Demo reset. Ready for user interaction.</div>';
+            
+            addConsoleMessage('System reinitialized. Ready for interaction.', 'success');
+        }
+        
+        function updateControlButtons() {
+            const runBtn = document.getElementById('runDemoBtn');
+            const pauseBtn = document.getElementById('pauseDemoBtn');
+            const resetBtn = document.getElementById('resetDemoBtn');
+            
+            runBtn.classList.remove('playing', 'paused');
+            pauseBtn.classList.remove('playing', 'paused');
+            
+            if (isDemoRunning && !isDemoPaused) {
+                runBtn.textContent = 'Pause';
+                runBtn.classList.add('playing');
+                pauseBtn.style.display = 'none';
+            } else if (isDemoPaused) {
+                runBtn.textContent = 'Resume';
+                runBtn.classList.add('paused');
+                pauseBtn.style.display = 'none';
+            } else {
+                runBtn.textContent = 'Run Demo';
+                pauseBtn.style.display = 'block';
+            }
+            
+            updateNavigationButtons();
+        }
+
+        // Navigation Functions
+        function nextStep() {
+            if (currentStep < 10) {
+                setManualMode(true);
+                goToStep(currentStep + 1);
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                setManualMode(true);
+                goToStep(currentStep - 1);
+            }
+        }
+
+        function goToStep(stepNumber) {
+            if (stepNumber < 1 || stepNumber > 10) return;
+            
+            // Stop any running demo
+            if (isDemoRunning) {
+                pauseDemo();
+            }
+            
+            currentStep = stepNumber;
+            activateStep(stepNumber);
+            updateNavigationButtons();
+            updateStepIndicator();
+        }
+
+        function setManualMode(manual) {
+            isManualMode = manual;
+            const autoControls = document.querySelector('.auto-controls');
+            const stepNavigation = document.querySelector('.step-navigation');
+            
+            if (manual) {
+                autoControls.style.opacity = '0.6';
+                stepNavigation.style.opacity = '1';
+            } else {
+                autoControls.style.opacity = '1';
+                stepNavigation.style.opacity = '0.8';
+            }
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevStepBtn');
+            const nextBtn = document.getElementById('nextStepBtn');
+            
+            prevBtn.disabled = (currentStep <= 1) || (isDemoRunning && !isDemoPaused);
+            nextBtn.disabled = (currentStep >= 10) || (isDemoRunning && !isDemoPaused);
+            
+            // Update button appearance
+            if (prevBtn.disabled) {
+                prevBtn.classList.add('disabled');
+            } else {
+                prevBtn.classList.remove('disabled');
+            }
+            
+            if (nextBtn.disabled) {
+                nextBtn.classList.add('disabled');
+            } else {
+                nextBtn.classList.remove('disabled');
+            }
+        }
+
+        function updateStepIndicator() {
+            const stepNumber = document.getElementById('currentStepNumber');
+            if (stepNumber) {
+                stepNumber.textContent = currentStep;
+            }
+        }
+
+        // Keyboard Navigation Support
+        function handleKeydown(event) {
+            // Only handle keyboard when not in an input field
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') return;
+            
+            switch(event.key) {
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    if (!isDemoRunning || isDemoPaused) {
+                        previousStep();
+                    }
+                    break;
+                case 'ArrowRight':
+                    event.preventDefault();
+                    if (!isDemoRunning || isDemoPaused) {
+                        nextStep();
+                    }
+                    break;
+                case 'Home':
+                    event.preventDefault();
+                    if (!isDemoRunning || isDemoPaused) {
+                        goToStep(1);
+                    }
+                    break;
+                case 'End':
+                    event.preventDefault();
+                    if (!isDemoRunning || isDemoPaused) {
+                        goToStep(10);
+                    }
+                    break;
+                case ' ': // Spacebar
+                    event.preventDefault();
+                    if (isDemoRunning) {
+                        pauseDemo();
+                    } else if (isDemoPaused) {
+                        runEntireDemo(); // Resume
+                    } else {
+                        runEntireDemo(); // Start
+                    }
+                    break;
+                case 'Escape':
+                    event.preventDefault();
+                    resetDemo();
+                    break;
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initialize);
+        document.addEventListener('keydown', handleKeydown);
+        
+        // Add auto-demo button functionality (can be triggered via console)
+        window.startAutoDemo = startAutoDemo;
+        window.activateStep = activateStep;
+        // Export pure consent flow function for testing
+        window.runConsentFlow = runConsentFlow;
+        
+        // Image error handling with fallback paths and diagnostic logging
+        function handleImageError(img, originalPath) {
+            console.group(`🖼️ Image Loading Debug: ${originalPath}`);
+            console.warn('❌ Image failed to load:', originalPath);
+            console.log('📍 Current page location:', window.location.href);
+            console.log('📂 Document base URI:', document.baseURI);
+            
+            // Create URL-encoded and non-encoded variants
+            const createPathVariants = (basePath) => {
+                const variants = [basePath];
+                
+                // Try URL-encoded spaces
+                if (basePath.includes(' ')) {
+                    const encoded = basePath.replace(/ /g, '%20');
+                    variants.push(encoded);
+                    console.log('🔗 Adding URL-encoded variant:', encoded);
+                }
+                
+                // Try URL-decoded spaces (in case it was already encoded)
+                if (basePath.includes('%20')) {
+                    const decoded = basePath.replace(/%20/g, ' ');
+                    variants.push(decoded);
+                    console.log('🔗 Adding URL-decoded variant:', decoded);
+                }
+                
+                return variants;
+            };
+            
+            // Try different path formats with encoding variants
+            const baseFormats = [
+                originalPath, // Original path
+                originalPath.replace('../', './'), // Relative from current directory
+                originalPath.replace('../', '/api/demo/'), // Absolute from root
+                originalPath.replace('../graphics/', 'graphics/'), // Direct graphics path
+                originalPath.replace('../', ''), // No relative prefix
+                `./graphics/pictograms/${originalPath.split('/').pop()}` // Direct local path
+            ];
+            
+            console.log('🔍 Testing path formats:', baseFormats);
+            
+            // Create all path variants with encoding
+            const fallbackPaths = [];
+            baseFormats.forEach(format => {
+                fallbackPaths.push(...createPathVariants(format));
+            });
+            
+            // Remove duplicates
+            const uniquePaths = [...new Set(fallbackPaths)];
+            console.log('Trying fallback paths:', uniquePaths);
+            
+            // Try each fallback path
+            let fallbackIndex = img.dataset.fallbackIndex ? parseInt(img.dataset.fallbackIndex) : 0;
+            
+            if (fallbackIndex < uniquePaths.length) {
+                img.dataset.fallbackIndex = (fallbackIndex + 1).toString();
+                const nextPath = uniquePaths[fallbackIndex];
+                img.src = nextPath;
+                console.log(`🔄 Trying fallback path ${fallbackIndex + 1}/${uniquePaths.length}:`, nextPath);
+                
+                // Test the path with a fetch to provide more diagnostic info
+                fetch(nextPath, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(`✅ Fallback path exists (HTTP ${response.status}):`, nextPath);
+                        } else {
+                            console.warn(`⚠️ Fallback path returns HTTP ${response.status}:`, nextPath);
+                        }
+                    })
+                    .catch(error => {
+                        console.warn(`❌ Fallback path fetch failed:`, nextPath, error.message);
+                    });
+                    
+            } else {
+                // All fallbacks failed, show placeholder or hide
+                console.error('💥 All image fallback paths failed for:', originalPath);
+                console.log('📊 Failed paths tested:', uniquePaths.length);
+                console.groupEnd();
+                img.style.display = 'none';
+                
+                // Add a text placeholder for critical images
+                if (img.classList.contains('step-icon')) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'icon-placeholder';
+                    placeholder.style.cssText = `
+                        width: 32px;
+                        height: 32px;
+                        background: var(--primary);
+                        color: white;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 12px;
+                        border-radius: 4px;
+                        margin-bottom: 8px;
+                    `;
+                    
+                    // Extract step number from image alt text
+                    const stepMatch = originalPath.match(/\/([^/]+)\.png$/);
+                    const stepName = stepMatch ? stepMatch[1].charAt(0).toUpperCase() : '?';
+                    placeholder.textContent = stepName;
+                    
+                    img.parentNode.insertBefore(placeholder, img);
+                }
+            }
+            
+            // Always end the console group
+            if (fallbackIndex >= uniquePaths.length) {
+                console.groupEnd();
+            }
+        }
+        
+        // Test image loading on initialization
+        function testImagePaths() {
+            console.log('Testing image paths...');
+            console.log('Current location:', window.location.href);
+            console.log('Base directory:', window.location.pathname.split('/').slice(0, -1).join('/'));
+            
+            // Test a sample image path
+            const testImg = new Image();
+            testImg.onload = () => console.log('✓ Image path test successful');
+            testImg.onerror = () => {
+                console.error('✗ Image path test failed');
+                addConsoleMessage('Warning: Images may not display correctly. Check server configuration.', 'info');
+            };
+            testImg.src = '../graphics/pictograms/Initialisierung.png';
+        }
+        
+        // Add welcome message after a short delay
+        setTimeout(() => {
+            addConsoleMessage('Interactive demo ready. Click on process steps to explore the Open API Kundenbeziehung.', 'info');
+            addConsoleMessage('Navigation: Use arrow buttons or keyboard (← → for steps, Space for play/pause, Esc to reset).', 'info');
+            addConsoleMessage('Console Commands: startAutoDemo(), runConsentFlow(18) for pure consent flow.', 'info');
+            testImagePaths();
+        }, 1000);
+    </script>
+</body>
+</html>
