@@ -151,7 +151,7 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Zentrale Plattform als Service-Hub ermöglicht einheitliche Customer Experience
 - Netzwerkeffekte durch Ecosystem-Approach schaffen exponentiellen Mehrwert
 - Hohe technische Komplexität durch umfassende Integration aller Services
-- Potenzial für disruptive Geschäftsmodelle durch Plattform-Ökonomie
+- Potenzial für disruptive Geschäftsmodelle durch Plattform-Wirtschaft
 
 **Struktur:** Hub-basierte Architektur
 
@@ -184,7 +184,7 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - **Zielbild 2 (Indirekt):** Hohe Machbarkeit, hohe Innovation, moderate Komplexität
 - **Zielbild 3 (Intermediär):** Mittlere Machbarkeit, höchste Innovation, mittlere Komplexität
 - **Zielbild 4 (Plattform):** Niedrige Machbarkeit, höchste Innovation, höchste Komplexität
-- **Zielbild 5 (Dezentral):** Außer Scope - Blockchain-basierte Lösungen sind für den Schweizer Finanzmarkt nicht relevant
+- **Zielbild 5 (Dezentral):** Ausser Scope - Blockchain-basierte Lösungen sind für den Schweizer Finanzmarkt nicht relevant
 
 **Implementation Timeline:**
 - **Phase 1 (0-6 Monate):** Fokus auf Zielbilder 1 & 2 für schnelle Markteinführung
@@ -209,7 +209,7 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - Zielbild 1: Moderate Innovation durch Prozessoptimierung
 - Zielbild 2: Hohe Innovation durch Service-Integration
 - Zielbild 3: Höchste Innovation durch Multi-Player-Konstellationen
-- Zielbild 4: Höchste Innovation durch Plattform-Ökonomie
+- Zielbild 4: Höchste Innovation durch Plattform-Wirtschaft
 
 **Marktrelevanz (Gegenwärtige Nachfrage):**
 - Zielbild 1: Hohe Relevanz für bestehende Geschäftsmodelle
@@ -625,7 +625,7 @@ Das Minimum Viable Product der Open API Kundenbeziehung fokussiert auf die grund
 **MVP Ausschlüsse:**
 - Erweiterte Daten: Vermögen, Einkommen, Beruf
 - Payment Initiation: Zahlungsauslösung
-- Cross-Industry: Andere Ecosystems außer Finance
+- Cross-Industry: Andere Ecosystems ausser Finance
 - Advanced Analytics: KI-basierte Datenanalyse
 
 #### **MVP-Datenmodell**
@@ -660,12 +660,12 @@ Granulare Einwilligungsverwaltung mit zweckgebundener Datenverwendung, zeitliche
 - **Audit Trail:** Vollständige Nachverfolgbarkeit aller Consent-Änderungen
 
 **3. Verifikations- und Assurance-Level:**
-Strukturierte Dokumentation von Verifikationsmethoden und -zeitpunkten mit entsprechenden Assurance-Leveln gemäß regulatorischen Standards. Dies ermöglicht vertrauensvolle Datenübertragung zwischen verschiedenen Providern.
+Strukturierte Dokumentation von Verifikationsmethoden und -zeitpunkten mit entsprechenden Assurance-Leveln gemäss regulatorischen Standards. Dies ermöglicht vertrauensvolle Datenübertragung zwischen verschiedenen Providern.
 
 - **Verification Identity:** Eindeutige VerificationId mit Kunden-Zuordnung
 - **Data Field Specification:** Spezifikation des verifizierten Datenfeldes (z.B. Identität, Adresse)
 - **Method Documentation:** Verifikationsmethode (VideoIdent, E-ID, Dokument-Upload)
-- **Assurance Level:** Verifikationslevel gemäß regulatorischen Standards (QEAA, EAA, self-declared)
+- **Assurance Level:** Verifikationslevel gemäss regulatorischen Standards (QEAA, EAA, self-declared)
 - **Temporal Tracking:** Verifikationszeitpunkt, durchführende Instanz, Gültigkeitsdauer
 - **Document References:** Sichere Referenzen zu Verifikationsdokumenten ohne direkte Speicherung
 
@@ -772,8 +772,8 @@ Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen
 **Fokus: Baustein "Identifikation"**
 - **Rational:** Wiederverwendbarkeit über alle Use Cases hinweg
 - **Technical Scope:** Basic Identity Verification APIs
-- **Business Value:** Immediate ROI durch Prozessverbesserung
-- **Risk Level:** Low (established Technologies und Processes)
+- **Business Value:** Sofortige Rendite durch Prozessverbesserung
+- **Risk Level:** Low (etablierte Technologien und Prozesse)
 
 **Konkrete Deliverables:**
 - Identity Verification API (Level 1-2)
@@ -799,13 +799,13 @@ Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen
 
 Für die erfolgreiche Umsetzung und Implementierung der Open API Kundenbeziehung sind folgende Ziele und Faktoren essenziell.
 
-1. **Technical Excellence:** Robust, secure, scalable Platform
+1. **Technical Excellence:** Robuste, sichere, skalierbare Plattform
 2. **Strong Partnerships:** Committed, high-quality Partners
 3. **Regulatory Compliance:** Proactive Regulatory Engagement
-4. **Customer Value:** Clear, demonstrable Customer Benefits
+4. **Customer Value:** Klare, nachweisbare Kundenvorteile
 5. **Financial Sustainability:** Viable Business Model from Day 1
-6. **Market Timing:** Launch vor Competitive Threats
-7. **Team Expertise:** Experienced Team mit Domain-Expertise
+6. **Market Timing:** Markteinführung vor konkurrierenden Bedrohungen
+7. **Team Expertise:** Erfahrenes Team mit Fachkompetenz
 8. **Stakeholder Alignment:** Unified Vision across all Stakeholders
 
 Die Anforderungsanalyse zeigt einen klaren Weg für die erfolgreiche Implementierung der Open API Kundenbeziehung mit fokussiertem Approach auf kurzfristig umsetzbare Lösungen und strategischer Perspektive für langfristige Marktführerschaft.

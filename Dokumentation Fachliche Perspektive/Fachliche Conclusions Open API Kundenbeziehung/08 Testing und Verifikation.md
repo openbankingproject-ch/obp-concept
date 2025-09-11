@@ -159,7 +159,7 @@ sequenceDiagram
 ### Übergeordnete Ziele
 
 #### Qualitätssicherung
-- **Functional Correctness:** Alle API-Funktionalitäten arbeiten gemäß Spezifikation
+- **Functional Correctness:** Alle API-Funktionalitäten arbeiten gemäss Spezifikation
 - **Non-Functional Requirements:** Performance, Sicherheit, Skalierbarkeit erfüllt
 - **Regulatory Compliance:** FAPI 2.0, GDPR/DSG, FINMA-Anforderungen eingehalten
 - **User Experience:** Intuitive und frictionless Customer Journeys
@@ -176,7 +176,7 @@ sequenceDiagram
 **Iterative Validation Cycles:**
 - **Sprint-basierte Testing:** Testing in 2-Wochen-Zyklen mit Stakeholder Feedback
 - **Milestone-basierte Validation:** Major Use Case Testing bei Projektmeilensteinen
-- **Community Reviews:** Regelmäßige Partner und Expert Reviews
+- **Community Reviews:** Regelmässige Partner und Expert Reviews
 - **Public Demos:** Quarterly Public Demonstrations für Feedback
 
 #### Multi-Stakeholder Approach
@@ -223,14 +223,14 @@ sequenceDiagram
 ### Community Engagement Framework
 
 #### Open Source Contributions
-**Community Development:**
+**Community-Entwicklung:**
 - **GitHub Repository:** Open source reference implementation
 - **Developer Documentation:** Comprehensive API documentation
-- **Code Examples:** Real-world integration examples
-- **Community Forums:** Developer support und discussion
+- **Code Examples:** Realitätsnahe Integrationsbeispiele
+- **Community Forums:** Entwicklerbetreuung und Diskussion
 
 #### Industry Standardization
-**Standards Body Engagement:**
+**Standards-Gremien Engagement:**
 - **Swiss FinTech Association:** Industry standard development
 - **European Standards Bodies:** International alignment
 - **OpenID Foundation:** Identity standard contributions
@@ -265,7 +265,7 @@ sequenceDiagram
 5. **Validation:** Follow-up validation of implemented changes
 
 #### Community-Driven Roadmap
-**Collaborative Development:**
+**Kollaborative Entwicklung:**
 - **Public Roadmap:** Transparent development planning
 - **Community Voting:** Feature prioritization durch community input
 - **Open Issues Tracking:** Public issue tracking und resolution
@@ -277,7 +277,7 @@ sequenceDiagram
 
 ### Strategische Bedeutung für Open API Kundenbeziehung
 
-**Testing als Vertrauensbildende Maßnahme:**
+**Testing als Vertrauensbildende Massnahme:**
 - Community Confidence durch transparente Quality Demonstration
 - Regulatory Acceptance durch comprehensive Compliance Testing
 - Market Readiness durch extensive Partner Validation

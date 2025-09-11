@@ -422,8 +422,8 @@ Die detaillierte Analyse existierender Standards ist in der umfassenden internat
 
 **Strategische Vorteile für Schweizer Kontext:**
 1. **Kompatibilität mit Schweizer Bankentradition:** Dezentrale Datenhoheit respektiert etablierte Geschäftsmodelle
-2. **Skalierbarkeit:** Standards ermöglichen efficient onboarding neuer Teilnehmer
-3. **Innovation-Förderung:** Offene Standards schaffen level playing field für FinTechs
+2. **Skalierbarkeit:** Standards ermöglichen effizientes Onboarding neuer Teilnehmer
+3. **Innovation-Förderung:** Offene Standards schaffen gleiche Wettbewerbsbedingungen für FinTechs
 4. **Regulatory Alignment:** Multi-Stakeholder Governance entspricht FINMA-Präferenzen
 5. **International Compatibility:** Hybrid-Modelle sind international bewährt (siehe UK, EU)
 

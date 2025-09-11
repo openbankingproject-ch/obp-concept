@@ -23,7 +23,7 @@ Das API Endpoint Design für die Open API Kundenbeziehung folgt den OpenAPI 3.0 
 
 ---
 
-## API-Architektur übersicht
+## API-Architektur Übersicht
 
 ### Technische Grundlagen
 
@@ -574,7 +574,7 @@ Accept: application/json
   },
   "metadata": {
     "version": "1.0",
-    "processingTime": "sehr kurz",
+    "processingTime": "125ms",
     "dataSource": "primary_db"
   }
 }

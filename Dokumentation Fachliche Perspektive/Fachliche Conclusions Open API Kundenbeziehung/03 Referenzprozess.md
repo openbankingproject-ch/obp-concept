@@ -19,7 +19,7 @@ Der Open API Kundenbeziehung Referenzprozess definiert einen standardisierten, b
 **Referenzprozess-Schritte:**
 1. **Initialisierung** - Information des Kunden
 2. **Produktauswahl** - Bedürfnisbefriedigung  
-3. **Selbstdeklaration** - Information bzgl. FATCA, MIFID
+3. **Selbstdeklaration** - Information bezüglich FATCA, MIFID
 4. **Basisdaten** - Erfassung von Kontaktangaben
 5. **Erweiterte Daten** - Risiko-/Potenzialermittlung
 6. **Identifikation** - Identifikation der Vertragspartei
@@ -30,7 +30,7 @@ Der Open API Kundenbeziehung Referenzprozess definiert einen standardisierten, b
 
 Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compliance-by-Design Prinzipien. Der Fokus liegt auf einer selbstbestimmten digitalen Kundenbeziehung mit messbaren Effizienzsteigerungen.
 
-![Branchenunabhängige Serviceerschließung Ecosystem](./Resources/graphics/03-referenzprozess/Branchenunabhängige%20Serviceerschließung%20Ecosystem.png)
+![Branchenunabhängige Serviceerschliessung Ecosystem](./Resources/graphics/03-referenzprozess/Branchenunabhängige%20Serviceerschliessung%20Ecosystem.png)
 
 **Zentrale Erkenntnisse:**
 - Modulare Prozessbausteine ermöglichen branchenübergreifende Wiederverwendung
@@ -201,7 +201,7 @@ Webseite oder App der Bank/des Anbieters; Abgabe des initialen Consent für den 
 **Status:** Out of Scope für MVP
 
 **Event:**
-Auswählen der gewünschten Produkte z.B. Konto, Karte, Versicherung, Services.
+Auswählen der gewünschten Produkte beispielsweise Konto, Karte, Versicherung, Services.
 
 **Relevante Datenpunkte:**
 - Kontotyp [Privat, Sparen, Jugend, Business]
@@ -223,7 +223,7 @@ Auswählen der gewünschten Produkte z.B. Konto, Karte, Versicherung, Services.
 - Integration von Pre-filled Data aus vorhandenen Quellen
 
 **Owner:** Kunde  
-**Zweck:** Information bzgl. FATCA, MIFID, Compliance  
+**Zweck:** Information bezüglich FATCA, MIFID, Compliance  
 **Level of Assurance:** Self-declared  
 
 **Event:**
@@ -263,7 +263,7 @@ Erfassung von Personalien, Wohnadresse und Kontaktdaten als Grundlage für die K
 - **Identität:** Nationalität, Zivilstand
 - **Kontakt:** Telefonnummer, Mobiltelefonnummer, E-Mailadresse
 - **Alternativen:** Abweichende Korrespondenzadresse
-- **Digital Identity:** ID (z.B. Google, Apple, Samsung, Swiss ID)
+- **Digital Identity:** ID (beispielsweise Google, Apple, Samsung, Swiss ID)
 - Grundlegende KYC-Daten wie Beruf, Arbeitgeber, Grundeinkommen
 
 **Bank Policy:** Vollständige Kontaktdaten erforderlich für Kommunikation
@@ -297,7 +297,7 @@ Produktspezifische erweiterte Daten für Risikobewertung und Beratung.
 
 #### Stufe 6: Identifikation
 **Beschreibung:** QEAA/EAA Level of Assurance Verification
-- z.B. Video-Identifikation oder E-ID Integration
+- beispielsweise Video-Identifikation oder E-ID Integration
 
 **Owner:** Provider (Identity Service Provider)  
 **Zweck:** Identifikation der Vertragspartei  
@@ -394,7 +394,7 @@ Rechtsgültige Unterzeichnung des Vertrags mittels verschiedener Signaturverfahr
 - **Device Information:** Signatur-Device Details
 - **Certificate Chain:** Digitale Zertifikatskette
 
-**Anmerkungen:** Abhängig von Produktauswahl (z.B. Kreditkarte, Hypothek erfordern QES)  
+**Anmerkungen:** Abhängig von Produktauswahl (beispielsweise Kreditkarte, Hypothek erfordern QES)  
 **Rechtliche Anforderungen:** ZertES (Zertifikate-Services-Gesetz), eIDAS-Kompatibilität
 
 #### Stufe 10: Metadaten und Verteilung
@@ -498,7 +498,7 @@ Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endp
 
 #### Consent Management
 **Konzeptionelle Einwilligungsverwaltung:**
-- **Purpose Definition:** Klare Zweckbindung (z.B. Kontoeröffnung, Kreditprüfung)
+- **Purpose Definition:** Klare Zweckbindung (beispielsweise Kontoeröffnung, Kreditprüfung)
 - **Data Categories:** Granulare Kategorisierung (Identität, Kontakt, KYC-Basisdaten)
 - **Granularity Control:** Field-Level Kontrolle für maximale Kundensouveränität
 - **Retention Policy:** Lebenszyklus-gebundene Datenaufbewahrung
@@ -688,7 +688,7 @@ POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
 - lastName (String): Nachname des Kunden
 - dateOfBirth (Date): Geburtsdatum im Format YYYY-MM-DD
 - identificationDate (Date): Datum der durchgeführten Identifikation
-- identificationMethod (String): Methode der Identifikation (z.B. VideoIdent)
+- identificationMethod (String): Methode der Identifikation (beispielsweise VideoIdent)
 - vsbStatus (Object): VSB-Status (Version, erfüllt/ausstehend)
 - customerConsent (Boolean): Zustimmung zur Weitergabe
 - consentValidUntil (Date): Gültigkeit der Zustimmung

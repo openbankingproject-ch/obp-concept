@@ -99,20 +99,20 @@ Die Security-Komponenten sind in einer hierarchischen Schicht-Architektur organi
 **FAPI 1.0 Baseline:**
 - **Adoption:** UK Open Banking, Singapore SGFINEX (teilweise)
 - **Security Level:** Medium - suitable für Low-Risk Account Information
-- **Pros:** Etabliert, broad Tool Support, einfachere Implementation  
-- **Cons:** Begrenzte Security für High-Value Transactions
+- **Vorteile:** Etabliert, breite Tool-Unterstützung, einfachere Implementierung  
+- **Nachteile:** Begrenzte Sicherheit für High-Value Transaktionen
 
 **FAPI 1.0 Advanced:**
 - **Adoption:** Brasil Open Finance, Australia CDR (mandatory)
 - **Security Level:** High - suitable für Payment Initiation und Sensitive Data
-- **Pros:** Bewährt in Production, comprehensive Security Controls
-- **Cons:** Complex Implementation, höhere Development Costs
+- **Vorteile:** Bewährt in der Produktion, umfassende Sicherheitskontrollen
+- **Nachteile:** Komplexe Implementierung, höhere Entwicklungskosten
 
 **FAPI 2.0 (Current Recommendation):**
 - **Adoption:** Emerging Standard, Expert-recommended für neue Implementations
 - **Security Level:** Very High - Next Generation Financial API Security
-- **Pros:** Modernste Security, vereinfachte Developer Experience, Future-proof
-- **Cons:** Newer Standard, begrenzte Tool-Unterstätzung currently
+- **Vorteile:** Modernste Sicherheit, vereinfachte Entwicklererfahrung, zukunftssicher
+- **Nachteile:** Neuerer Standard, derzeit begrenzte Tool-Unterstützung
 
 #### OAuth 2.0/2.1 und OpenID Connect Evaluation
 
@@ -135,7 +135,7 @@ Die Security-Komponenten sind in einer hierarchischen Schicht-Architektur organi
 | **FAPI 1.0 Advanced** | Very High | High | Moderate | Good |
 | **FAPI 2.0** | Maximum | Medium-High | Limited | Excellent |
 
-**Recommendation:** FAPI 2.0 für neue Implementation mit Fallback zu FAPI 1.0 Advanced für Legacy Integration
+**Empfehlung:** FAPI 2.0 für neue Implementierung mit Fallback zu FAPI 1.0 Advanced für Legacy Integration
 
 ---
 
@@ -276,8 +276,8 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 }
 ```
 
-**Pros:** Maximum Customer Control, Privacy-by-Design
-**Cons:** Complex UX, Potentially overwhelming für Customers
+**Vorteile:** Maximale Kundenkontrolle, Privacy-by-Design
+**Nachteile:** Komplexe UX, potenziell überwältigend für Kunden
 
 #### Category-Based Consent  
 **Definition:** Consent auf Datenkategorie-Ebene (Identity, Contact, Financial)
@@ -291,8 +291,8 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 }
 ```
 
-**Pros:** Balanced UX und Privacy, Manageable Complexity
-**Cons:** Weniger granular als Field-Level Control
+**Vorteile:** Ausgewogene UX und Datenschutz, handhabbare Komplexität
+**Nachteile:** Weniger granular als Field-Level Control
 
 #### Purpose-Based Consent
 **Definition:** Consent basierend auf Nutzungszweck
@@ -306,8 +306,8 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 }
 ```
 
-**Pros:** Customer-verständlicher Ansatz, Legal Compliance
-**Cons:** Weniger Flexibilität bei Data Access Patterns
+**Vorteile:** Kundenverständlicher Ansatz, rechtliche Compliance
+**Nachteile:** Weniger Flexibilität bei Data Access Patterns
 
 ### Recommended Hybrid Consent Approach
 

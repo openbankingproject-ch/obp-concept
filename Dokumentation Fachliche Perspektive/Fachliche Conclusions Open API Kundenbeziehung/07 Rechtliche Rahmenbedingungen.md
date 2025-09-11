@@ -142,11 +142,11 @@ Die rechtliche Umsetzung erfolgt parallel zur technischen Implementation mit spe
 
 ### Kritische Erfolgsfaktoren
 
-**1. Early Legal Engagement:** Rechtsexperten von Projektbeginn an einbinden
-**2. FINMA Relationship:** Proaktive und transparente Kommunikation mit der FINMA
-**3. Industry Collaboration:** Gemeinsame rechtliche Positions mit anderen Market Participants
-**4. Regulatory Monitoring:** Kontinuierliche Überwachung von regulatory Developments
-**5. Adaptive Compliance:** Flexible Legal Architecture für schnelle Regulatory Adaptations
+**1. Frühzeitige rechtliche Einbindung:** Rechtsexperten von Projektbeginn an einbinden
+**2. FINMA-Beziehung:** Proaktive und transparente Kommunikation mit der FINMA
+**3. Branchenzusammenarbeit:** Gemeinsame rechtliche Positionen mit anderen Marktteilnehmern
+**4. Regulatorisches Monitoring:** Kontinuierliche Überwachung regulatorischer Entwicklungen
+**5. Adaptive Compliance:** Flexible rechtliche Architektur für schnelle regulatorische Anpassungen
 
 ### Schlussbemerkung
 

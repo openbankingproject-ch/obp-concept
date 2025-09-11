@@ -1,4 +1,4 @@
-# Open API Kundenbeziehung - Conclusions Overview
+# <span style="color: #253165">Open API Kundenbeziehung - Conclusions Overview</span>
 
 ## Dokument-Index und Navigation
 
@@ -8,7 +8,7 @@ Diese Übersicht bietet eine strukturierte Navigation durch alle Fachlichen Conc
 
 ---
 
-## Teil 1: Marktanalyse und Anforderungen
+## <span style="color: #F85F3D">Teil 1: Marktanalyse und Anforderungen</span>
 
 ### [01 Marktanalyse](./01%20Marktanalyse.md)
 **Status:** Vollständig  
@@ -56,7 +56,7 @@ Diese Übersicht bietet eine strukturierte Navigation durch alle Fachlichen Conc
 
 ---
 
-## Teil 2: Technische und Architektur-Foundations
+## <span style="color: #0070C0">Teil 2: Technische und Architektur-Foundations</span>
 
 ### [03 Referenzprozess](./03%20Referenzprozess.md)
 **Status:** Vollständig  
@@ -102,7 +102,7 @@ Diese Übersicht bietet eine strukturierte Navigation durch alle Fachlichen Conc
 
 ---
 
-## Teil 3: Network und Security Architecture
+## <span style="color: #4cb867ff">Teil 3: Network und Security Architecture</span>
 
 ### [05 Vertrauensnetzwerk (Föderiertes System)](./05%20Vertrauensnetzwerk.md)
 **Status:** Vollständig  
@@ -149,7 +149,7 @@ Diese Übersicht bietet eine strukturierte Navigation durch alle Fachlichen Conc
 
 ---
 
-## Teil 4: Legal und Quality Assurance
+## <span style="color: #B469FF">Teil 4: Legal und Quality Assurance</span>
 
 ### [07 Rechtliche Rahmenbedingungen](./07%20Rechtliche%20Rahmenbedingungen.md)
 **Status:** Vollständig (mit Disclaimer)  
