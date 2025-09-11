@@ -540,22 +540,6 @@ sharedCustomerHash = SHA256(hash_input)
 
 ---
 
-## API Flow Diagramme
-
-### Customer Onboarding Flow
-
-[Customer Onboarding Flow Diagram](./Resources/graphics/04-api-endpoint-design/customer-onboarding-flow.mmd)
-
-### Granular Data Access Flow
-
-[Granular Data Access Flow Diagram](./Resources/graphics/04-api-endpoint-design/granular-data-access-flow.mmd)
-
-### Trust Network Integration Flow
-
-[Trust Network Integration Diagram](./Resources/graphics/04-api-endpoint-design/trust-network-integration.mmd)
-
----
-
 ## Use Case Implementation
 
 **Detailed implementation examples and technical integration patterns:** → [Complete use case implementations in Umsetzung und Implementierung](../Umsetzung%20und%20Implementierung/Use%20Case%20Implementation%20Examples.md)
@@ -717,9 +701,6 @@ paths:
 - Security Testing mit OWASP API Security Guidelines → [Siehe Conclusion Testing und Verifikation](./08%20Testing%20und%20Verifikation.md)
 
 Diese konzeptionelle API-Spezifikation bietet die Grundlage für die technische Implementation und wird kontinuierlich mit der separaten technischen Dokumentation synchronisiert, um eine konsistente und wartbare API-Architektur zu gewährleisten.
-
-
----
 
 ---
 

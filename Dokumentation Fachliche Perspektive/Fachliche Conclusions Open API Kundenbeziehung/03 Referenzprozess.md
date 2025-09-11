@@ -527,9 +527,6 @@ Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endp
 - **KYC Services:** Führt regulatorische Compliance-Checks durch
 - **Identity Provider:** Verifiziert Kundenidentität professionell
 
-
-[Actor Interaction Flow Diagram](./Resources/graphics/03-referenzprozess/actor-interaction-flow.mmd)
-
 **Interaktionsablauf:**
 
 **Phase 1:** Kunde entdeckt Services beim Anbieter, wählt gewünschte Produkte und erhält Produktkonfiguration
@@ -541,74 +538,6 @@ Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endp
 **Phase 4:** Kunde akzeptiert finale Geschäftsbedingungen, signiert den Vertrag digital und das System verarbeitet alle Metadaten für die Kontoeröffnung
 
 Der Prozess ist so konzipiert, dass jeder Akteur seine spezialisierten Kompetenzen optimal einbringen kann.
-
-### Prozess-State-Machine
-
-**Konzeptionelle Zustandsübergänge:**
-
-Der Referenzprozess implementiert ein state-basiertes System mit definierten Übergangsbedingungen zwischen den einzelnen Stufen:
-
-**Lineare Progression:**
-- Jede Stufe wird erst nach erfolgreicher Vollendung der vorhergehenden freigeschaltet
-- Automatische Validierung vor Übergang zur nächsten Stufe
-- Persistierung des aktuellen Status für Unterbrechung und Wiederaufnahme
-
-**Parallele Verarbeitungszustände:**
-Bei komplexen Stufen (z.B. Identifikation, Background Checks) können mehrere Verfahren parallel ablaufen:
-- **Identifikation:** VideoIdent, E-ID Integration oder biometrische Verifikation alternativ
-- **Background Checks:** PEP-Screening, Sanktionslisten-Check und AML-Assessment parallel
-- **Signatur:** Verschiedene Signaturverfahren (QES, 2FA, biometrisch) je nach Produktanforderung
-
-**Fehlerbehandlung und Rollback:**
-- Definierte Fehlerzustände für jede Stufe mit spezifischen Recovery-Optionen
-- Möglichkeit zur Korrektur und Wiederholung bei Validierungsfehlern
-- Eskalationspfade für manuelle Intervention bei komplexen Fällen
-
-**Finale Zustandsübergänge:**
-- Erfolgreicher Abschluss führt zum "AccountActivated"-Status
-- Metadatenerfassung und Systemverteilung als finale automatisierte Schritte
-- Audit-Trail für alle Zustandsübergänge und Entscheidungspunkte
-
-Technische Details der State-Machine-Implementation sind in *TODO: create file* dokumentiert.
-
-
-[Process State Machine Diagram](./Resources/graphics/03-referenzprozess/process-state-machine.mmd)
-
-
-### Entscheidungspunkte und Rollbacks
-
-**Konzeptionelle Qualitätskontroll-Mechanismen:**
-
-Der Referenzprozess integriert systematische Entscheidungspunkte und Korrekturmöglichkeiten für robuste Prozessführung:
-
-**Automatisierte Qualitätschecks:**
-- **Eligibility Check:** Automatische Prüfung der Grundqualifikation vor Dateneingabe
-- **Data Validation:** Real-time Plausibilitätsprüfung bei Basisdaten-Erfassung
-- **Risk Assessment:** Algorithmic scoring bei erweiterten Daten
-- **Identity Verification:** Technische Validierung der Identifikationsverfahren
-- **KYC Clearance:** Automatisierte Compliance-Checks gegen regulatorische Anforderungen
-
-**Rollback und Korrektur-Mechanismen:**
-- **Data Correction:** Rückkehr zu vorheriger Stufe bei Validierungsfehlern mit Korrekturmöglichkeit
-- **Alternative Methods:** Ausweichverfahren bei technischen Problemen (z.B. alternative Identifikationsmethoden)
-- **Process Pause:** Möglichkeit zur Unterbrechung und späteren Wiederaufnahme bei allen Stufen
-
-**Manuelle Intervention und Eskalation:**
-- **Manual Review:** Human-in-the-Loop für Grenzfälle bei Risk Assessment
-- **Compliance Review:** Spezialisierte Prüfung bei KYC-Auffälligkeiten
-- **Conditional Approval:** Möglichkeit der bedingten Genehmigung mit zusätzlichen Auflagen
-
-**Definierte Ausstiegspunkte:**
-- **Ineligibility:** Frühzeitige Beendigung bei grundsätzlicher Nichteignung
-- **High Risk:** Beendigung bei nicht akzeptablem Risikoprofil
-- **Compliance Issues:** Abbruch bei regulatorischen Hindernissen
-
-**Erfolgreiche Abschluss-Kriterien:**
-Alle automatisierten und manuellen Checks müssen erfolgreich bestanden werden, bevor der finale "Account Activated"-Status erreicht wird.
-
-
-[Decision Points and Rollback Flow Diagram](./Resources/graphics/03-referenzprozess/decision-rollback-flow.mmd)
-
 
 ## Use Case Implementierung: Bankkonten-Onboarding
 
@@ -776,30 +705,9 @@ POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
 - **Event Sourcing:** Auditierbare Datenänderungen
 - **CQRS:** Read/Write Operation Separation für Performance
 
-### Service Orchestration
-
-#### Workflow Engine
-**Business Process Automation:**
-- BPMN 2.0 basierte Prozess-Definition
-- Automatic Task Routing basierend auf Customer Data
-- Exception Handling und Human Intervention Workflows
-
-**Process State Management:**
-
-**Konzeptionelle Prozesszustandsverwaltung:**
-- **Process Identification:** Eindeutige Prozess-IDs für Tracking und Wiederaufnahme
-- **Customer Linkage:** Verknüpfung mit Kunden-Identifikatoren für personalisierte Erfahrung
-- **Stage Tracking:** Kontinuierliche Überwachung des aktuellen Prozessstatus
-- **Progress History:** Vollständige Dokumentation aller abgeschlossenen Stufen
-- **Forward Planning:** Transparente Anzeige der verbleibenden Prozessschritte
-- **Data Persistence:** Sichere Speicherung von Zwischenergebnissen für Session-übergreifende Bearbeitung
-- **Audit Trail:** Lückenlose Nachverfolgung aller Prozessschritte und Entscheidungen
-
 ---
 
 ## Fazit und Best Practices für Referenzprozess-Umsetzung
-
-*TODO: verifizieren!*
 
 ### Strategische Erfolgsfaktoren
 
@@ -812,20 +720,6 @@ POST /customer/check       # Existenz + Ident-Gültigkeit prüfen
 - **Phase 1:** Kern-Bausteine (Identität, Kontakt, KYC-Basis) - 10-Stufen-Prozess MVP
 - **Phase 2:** Ecosystem-spezifische Erweiterungen - Use Case Expansion  
 - **Phase 3:** Cross-Industry Integration - Referenzprozess für andere Branchen
-
-#### 2. Standards-basierte Architektur
-**Best Practice:** Verwendung etablierter Standards für maximale Interoperabilität
-- Security: FAPI 2.0, OAuth 2.0, OpenID Connect
-- Data Exchange: JSON, OpenAPI 3.0, ISO 20022
-- Process Management: BPMN 2.0, Event-driven Architecture
-
-#### 3. Compliance-by-Design
-**Best Practice:** Regulatorische Anforderungen von Anfang an eingebaut
-- Automatisierte GDPR/DSG Compliance
-- KYC/AML/CTF Requirements embedded
-- Audit Trails für vollständige Nachverfolgbarkeit
-
-
 
 Der Referenzprozess stellt das Herzstück der Open API Kundenbeziehung dar und bietet ein bewährtes Framework für die Digitalisierung der Kundenbeziehung mit messbaren Effizienzgewinnen und verbesserter Customer Experience.
 

@@ -493,35 +493,6 @@ Integration Technologies → [Siehe Conclusion API Endpoint Design](./04%20API%2
 - **Phasenweise Implementation** beginnend mit Low-Risk Use Cases (Account Information) vor Payment Initiation → [Siehe Conclusion Referenzprozess](./03%20Referenzprozess.md)
 - **Comprehensive Testing und Sandbox-Umgebungen** als kritische Erfolgsfaktoren → [Siehe Conclusion Testing und Verifikation](./08%20Testing%20und%20Verifikation.md)
 
-### Zu vermeidende Implementierungsfehler
-
-#### Scope-Management Herausforderungen
-**Australien Consumer Data Right Lessons:** Der Versuch, sofortig sektorübergreifend (Banking, Energy, Telecommunications) zu starten, führte zu erheblichen Verzögerungen und Implementierungsproblemen. Finanzen und Versicherungen werden oft als gängiges „Einstiegs-Ecosystem" verwendet - ein bewährter Ansatz.
-
-**Empfehlung:** Start mit Banking-Sektor, schrittweise Expansion zu Insurance und weiteren Sektoren.
-
-#### Governance-Struktur Herausforderungen
-- **Vermeidung von Pure Regulation:** Brasil's rein mandatorisches Modell schränkt Innovation ein
-- **Vermeidung von Pure Industry-Leadership:** Ohne regulatorische Unterstützung entstehen Fragmentierung und langsame Adoption
-- **Balance finden:** Hybrid-Modelle mit regulatorischer Rahmensetzung und Industry-getriebener Detail-Ausarbeitung zeigen beste Resultate → [Siehe Conclusion Vertrauensnetzwerk](./05%20Vertrauensnetzwerk.md)
-
-#### Technische Implementation Fallstricke
-- **Legacy-System-Integration unterschätzen:** Ausreichend Zeit und Ressourcen für Core-Banking-System-Integration einplanen
-- **Performance-Anforderungen frühzeitig definieren:** 95th percentile unter 1000ms für Account Information, unter 2000ms für Payment Initiation
-- **Security-by-Design vernachlässigen:** FAPI-Compliance von Beginn an, nicht als nachträgliches Add-on
-
-### Strategische Roadmap für Schweizer Implementation
-
-Die strategische Markteinführung erfolgt in drei Phasen über 36 Monate, von der Fundament-Phase mit ersten Pilot-Partnern bis hin zur internationalen Skalierung. Die Schweiz soll dabei als führender Markt für Open Banking Customer Management etabliert werden.
-
-**Detaillierte Implementierungs-Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
-
-#### Strategische Phasen-Übersicht:
-- **Phase 1 (Monate 1-6):** Foundation mit 3-5 Pilot Banks, MVP mit Identifikationsdaten, FINMA-Engagement
-- **Phase 2 (Monate 6-18):** Expansion auf 10-15 Partner, erweiterte Use Cases, E-ID-Integration
-- **Phase 3 (Monate 18-36):** Full Open Finance mit Insurance/Investment, internationale Interoperabilität
-
-
 ---
 
 **Version:** 1.0  

@@ -242,8 +242,6 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 
 **Sammlung:** 16+ Use Cases identifiziert (jedes Ecosystem aus dem Ecosystem Wheel vertreten)
 
-![Use Cases mit Punkte Ranking](./Resources/graphics/02-anforderungen/Use%20Cases%20mit%20Punkte%20Ranking.png)
-
 **Bewertungsmethodik:**
 - Workshop-basiertes Punkteranking-Verfahren
 - Multi-Stakeholder-Bewertung (Bank, Fintech, Regulator, Consumer)
@@ -436,7 +434,6 @@ Die Use Cases wurden durch einen strukturierten Workshop-Prozess mit Multi-Stake
 - Audit Trail and Transparency Requirements
 
 ### Datenbausteine-Anforderungen
-*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
 #### **Basisdaten (Basiskit)**
 
@@ -571,7 +568,6 @@ Die Use Cases wurden durch einen strukturierten Workshop-Prozess mit Multi-Stake
 - Multi-Region Deployment für Disaster Recovery
 
 ### Föderative Systemanforderungen
-*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
 #### **Interoperabilität**
 
@@ -714,47 +710,8 @@ Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung 
 - Investment Experience
 - Compliance Status (PEP, Sanctions)
 
-## Business Case und Monetarisierung
 
-### Herausforderungen bei Open Finance Initiativen
-
-**Typische Probleme:**
-- Schwierige Formulierung tragfähiger Business Cases
-- Motivation kommt primär aus regulatorischem Druck
-- Kundenwünschbarkeit vs. wirtschaftliche Tragfähigkeit
-- Network Effects erst bei kritischer Masse erreicht
-
-### Monetarisierungsmodelle
-
-#### **Direkte Monetarisierung**
-
-**Transaction-based Fees:**
-- Per-API-Call Pricing (Tiered Structure)
-- Success-based Fees für completed Customer Onboardings
-- Premium Features für erweiterte Datensets
-- SLA-based Pricing für guaranteed Performance
-
-**Subscription Models:**
-- Basic/Premium/Enterprise Tiers
-- Volume-based Pricing Tiers
-- White-label Solutions für kleinere Provider
-- Platform-as-a-Service Offerings
-
-#### **Indirekte Monetarisierung**
-
-**Datenmonetarisierung:**
-- Anonymisierte Market Insights
-- Benchmarking Services für Industry
-- Aggregated Analytics Products
-- Compliance Reporting Services
-
-**Ecosystem-Vorteile:**
-- Erhöhte Customer Acquisition durch bessere UX
-- Reduzierte Customer Acquisition Costs
-- Improved Customer Lifetime Value
-- Cross-selling Opportunities
 ## E-ID Integration und Abgrenzung
-*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
 ### Konzeptionelle Unterschiede
 
@@ -778,22 +735,6 @@ Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung 
 - Shared Trust Framework für Cross-domain Services
 - Unified User Experience über beide Paradigmen
 
-#### **Technische Integration Points**
-
-**Integration-Architektur:**
-
-[E-ID Integration Architecture Diagram](./Resources/graphics/02-anforderungen/e-id-integration-architecture.mmd)
-
-**Authentication Layer:** E-ID Authentication führt zu Open API Authorization und ermöglicht anschließend Service Access. Dies schafft eine durchgängige Authentifizierungskette mit höchsten Sicherheitsstandards.
-
-**Data Flow:** E-ID Identity Claims werden auf Customer Data Mapping abgebildet und in Service-specific Processing überführt. Dies ermöglicht nahtlose Integration staatlicher Identitätsnachweise in kommerzielle Services.
-
-**Consent Management:** Bidirektionale Integration zwischen E-ID Consent Framework und Open API Consent Tokens mit Service Permissions. Dies gewährleistet konsistente Einwilligungsverwaltung über beide Paradigmen hinweg.
-
-**Detaillierter Integration Flow:**
-
-[E-ID Integration Flow Diagram](./Resources/graphics/02-anforderungen/e-id-integration-flow.mmd)
-
 ### Abgrenzung und Scope Definition
 
 #### **E-ID Scope (ausserhalb Open API Kundenbeziehung)**
@@ -814,16 +755,6 @@ Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung 
 - Privacy-preserving Technologies
 - Cross-sector Interoperability
 
-### E-ID Readiness Assessment
-
-#### **Current Status (2025)**
-- E-ID Legal Framework etabliert
-- Technical Standards in Development
-- Pilot Programs mit ausgewählten Partners
-- Public Acceptance Building Phase
-
-#### **Strategische Überlegungen zur E-ID Integration**
-
 **Zusammenspiel zwischen E-ID und Open API**
 Die Integration der Schweizer E-ID mit der Open API Kundenbeziehung stellt einen strategischen Vorteil dar. Während die Daten bei den Banken liegen, liegt die Datenhoheit beim Kunden, insbesondere beim Consent-Prozess.
 
@@ -832,36 +763,11 @@ Die Integration der Schweizer E-ID mit der Open API Kundenbeziehung stellt einen
 - Parallele Lösung während E-ID-Einführungsphase
 - Vermeidung "unnötiger Verifizierungen" durch modulare Identifikationsdaten-Wiederverwendung
 
-#### **Herausforderungen und Lösungsansätze**
-**Einführungshürden der E-ID:**
-- Biometrische Ausweis-Voraussetzung könnte Adoption erschweren
-- Bedarf an "Killer Use Cases" (z.B. digitales Wahlrecht)
-- Regulatorische Unklarheiten bezüglich FINMA-Anforderungen
-- Haftungs- und Sicherheitsfaktoren noch nicht definiert
-
-**Strategische Antwort:** 
-Eine Open API Kundenbeziehung als wirtschaftlich sinnvolle Zwischenlösung, die später nahtlos in die E-ID-Infrastruktur integriert werden kann.
-
-#### **Mögliche Integration Timeline**
-- **2025:** Open API Standard Development (unabhängig von E-ID)
-- **2026:** E-ID Launch → Integration Planning
-- **2027:** Productive E-ID Integration → Enhanced Services
-- **2028+:** Mature Ecosystem mit beiden Paradigmen
-
-#### **Technical Preparedness**
-- APIs designed für E-ID Integration ohne Disruption
-- Flexible Authentication Layer supports multiple Identity Providers
-- Data Models compatible mit E-ID Attribute Schemas
-- Consent Frameworks interoperable mit E-ID Frameworks
-
 ## Strategische Herangehensweise: "Vom Kleinen ins Grosse"
-*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
 
 Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen Aufbaus, beginnend mit schnell realisierbaren Erfolgen und systematischer Expansion zu komplexeren Anwendungsfällen.
 
-### Quick Wins Identifikation
-
-#### **Phase 1: Identifikation und Basisdaten (Monate 1-6)**
+### Phase 1: Identifikation und Basisdaten
 
 **Fokus: Baustein "Identifikation"**
 - **Rational:** Wiederverwendbarkeit über alle Use Cases hinweg
@@ -887,182 +793,11 @@ Die strategische Herangehensweise folgt dem bewährten Prinzip des schrittweisen
 - **Begründung:** Hohe Varianz der Datenanforderungen je Bank
 - **Komplexität:** Fehlende Standardisierung der Fragenkataloge
 - **Integration:** Komplexe Integration in bestehende Bankprozesse
-- **Timeline:** Phase 2-3 Implementierung (Monate 6-18)
 
-### Ausbaustufen-Planung
-
-#### **Phase 1: Foundation (Monate 1-6)**
-**Motto: "Prove the Concept"**
-
-**Technical Deliverables:**
-- Core Identity APIs (GET /identity, POST /verification)
-- Basic Consent Management APIs
-- Reference Implementation mit Sandbox
-- Initial Security Framework (OAuth 2.0 + FAPI Baseline)
-
-**Business Deliverables:**
-- 3-5 Pilot Partners (Banks + Fintechs)
-- Use Case 1 (Kundenbeziehungseröffnung) - Limited Scope
-- Basic Business Model Validation
-- Governance Framework Establishment
-
-**Success Criteria:**
-- Technical POC demonstrated
-- Partner Commitment für Phase 2
-- Regulatory Approval secured
-- Funding für Phase 2 confirmed
-
-#### **Phase 2: Expansion (Monate 6-18)**
-**Motto: "Scale the Solution"**
-
-**Technical Deliverables:**
-- Complete Customer Data APIs (Level 1-3)
-- Advanced Consent Management
-- Enhanced Security (FAPI Advanced)
-- Multi-provider Federation Support
-
-**Business Deliverables:**
-- Production Partners
-- All 4 prioritized Use Cases implemented
-- Revenue Generation (Break-even approach)
-- Cross-border Pilots (EU Integration)
-
-**Success Criteria:**
-- 10,000+ Transactions/Month
-- Positive Unit Economics
-- Customer Net Promoter Score > 50
-- Regulatory Compliance demonstrated
-
-#### **Phase 3: Innovation (Monate 18-36)**
-**Motto: "Lead the Market"**
-
-**Technical Deliverables:**
-- AI-enhanced Risk Assessment APIs
-- Blockchain Integration für Trust Network
-- IoT Integration für Digital Services
-- Advanced Analytics und Machine Learning
-
-**Business Deliverables:**
-- Akquirierung weiterer Ecosystem Partner 
-- Cross-industry Expansion (Insurance, Mobility, Government)
-- Platform-as-a-Service Offerings
-- International Market Entry
-
-**Success Criteria:**
-- Market Leadership Position etabliert
-- Jährliche Umsatzsteigerung 
-- Network Effects durch Ecosystem
-- International Recognition und Adoption
-
-### Risk Mitigation Strategies
-
-#### **Technical Risks**
-
-**Legacy System Integration:**
-- **Risk:** Complex Integration mit bestehenden Core Banking Systems
-- **Mitigation:** API Facade Pattern, Incremental Migration, Extensive Testing
-- **Contingency:** Alternative Integration Paths, External Service Providers
-
-**Security Vulnerabilities:**
-- **Risk:** Data Breaches, API Abuse, Authentication Failures
-- **Mitigation:** Security-by-Design, Continuous Testing, Bug Bounty Programs
-- **Contingency:** Incident Response Plans, Insurance Coverage, Legal Frameworks
-
-**Performance Scalability:**
-- **Risk:** System Overload bei rapid Adoption
-- **Mitigation:** Cloud-native Architecture, Auto-scaling, Performance Testing
-- **Contingency:** Load Balancing, Traffic Throttling, Partner Communication
-
-#### **Business Risks**
-
-**Market Adoption:**
-- **Risk:** Slow Partner Onboarding, Customer Resistance
-- **Mitigation:** Strong Value Proposition, Incentive Programs, Change Management
-- **Contingency:** Pivot Strategy, Alternative Market Segments, Value Proposition Adjustment
-
-**Regulatory Changes:**
-- **Risk:** New Regulations impact Technical Requirements
-- **Mitigation:** Regulatory Monitoring, Flexible Architecture, Stakeholder Engagement
-- **Contingency:** Rapid Adaptation Capabilities, Legal Expertise, Compliance Reserve
-
-**Competitive Pressure:**
-- **Risk:** Alternative Solutions, Big Tech Entry, International Competition
-- **Mitigation:** Continuous Innovation, Strong Partnerships, Customer Lock-in
-- **Contingency:** Differentiation Strategy, Acquisition Opportunities, Market Consolidation
-
-### Success Measurement Framework
-*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
-
-Ein umfassendes Messystem für den Erfolg der Open API Kundenbeziehung umfasst sowohl technische als auch geschäftliche Kennzahlen, die kontinuierlich überwacht und optimiert werden.
-
-
-#### **Technical KPIs**
-Genaue Ziele und Metriken zur Überwachung der technischen Performance und Systemstabilität werden zu Beginn der Implementierung festgelegt und kontinuierlich angepasst.
-
-**Performance Metrics:**
-- API Response Time 
-- System Uptime 
-- Error Rate 
-- Security Incidents 
-
-**Adoption Metrics:**
-- API Calls per Month 
-- Active Partners 
-- Customer Transactions 
-- Developer Satisfaction 
-
-#### **Business KPIs**
-
-**Financial Metrics:**
-- Revenue per Transaction 
-- Customer Acquisition Cost 
-- Partner Lifetime Value 
-- Monthly Recurring Revenue 
-
-**Market Metrics:**
-- Market Share im Schweizer Markt 
-- Customer Net Promoter Score 
-- Partner Retention Rate 
-- International Inquiries
-
-## Fazit und Roadmap
-*TODO: Dieses Kapitel bitte verifizieren und ggf. anpassen!*
-
-Die umfassende Anforderungsanalyse zeigt eine klare Strategie für die erfolgreiche Implementierung der Open API Kundenbeziehung mit fokussiertem Ansatz auf schnell umsetzbare Lösungen und strategischer Perspektive für langfristige Marktführerschaft.
-
-
-### Strategische Empfehlungen
-
-#### **Kurzfristige Prioritäten (6-12 Monate)**
-1. **MVP Development:** Focus auf Use Case 1 "Kundenbeziehungseröffnung" mit Baustein "Identifikation"
-2. **Partnership Building:** Onboarding von 3-5 Pilot Partners
-3. **Regulatory Alignment:** Compliance Framework etablieren
-4. **Technology Foundation:** Secure, scalable API Platform entwickeln
-
-#### **Mittelfristige Ziele (12-24 Monate)**
-1. **Market Expansion:** Vollständige Use Case Implementation
-2. **Business Model Validation:** Sustainable Revenue Generation
-3. **Ecosystem Development:** 15+ aktive Partner
-4. **International Preparation:** EU Market Entry Vorbereitung
-
-#### **Langfristige Vision (24+ Monate)**
-1. **Market Leadership:** Führende Position im Swiss Market
-2. **Innovation Platform:** API-basierte Innovation Hub
-3. **Cross-industry Expansion:** Beyond Financial Services
-4. **International Expansion:** European und Global Markets
-
-### Implementation Roadmap
-
-Die detaillierte Implementierung folgt der konsolidierten Master-Timeline mit speziellem Fokus auf Business Requirements und Partner-Onboarding.
-
-**Vollständige Implementierungs-Details:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
-
-#### **Business-spezifische Meilensteine:**
-- **Immediate Phase (Monate 1-3):** Business Requirements Finalisierung, Partner Agreement Templates
-- **Foundation Phase (Monate 1-6):** MVP für priorisierten Use Case 1 (Bankwechsel), initiales Partner-Onboarding
-- **Scaling Phase (Monate 6-18):** Vollständige Use Case Implementation, Business Model Validation
 
 ### Critical Success Factors
+
+Für die erfolgreiche Umsetzung und Implementierung der Open API Kundenbeziehung sind folgende Ziele und Faktoren essenziell.
 
 1. **Technical Excellence:** Robust, secure, scalable Platform
 2. **Strong Partnerships:** Committed, high-quality Partners

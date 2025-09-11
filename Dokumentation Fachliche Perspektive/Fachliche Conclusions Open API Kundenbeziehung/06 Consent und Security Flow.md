@@ -774,35 +774,6 @@ sequenceDiagram
     CentralAuth->>CentralAuth: Log all transactions for audit
 ```
 
-#### Zentrales Hub Security Model
-
-```mermaid
-sequenceDiagram
-    participant Customer as Customer
-    participant BankB as Bank B (Integrator)
-    participant CentralHub as Central Security Hub
-    participant BankA as Bank A (Producer)
-    participant Audit as Audit & Compliance
-
-    Note over Customer,Audit: Centralized Hub with Full Control
-    Customer->>BankB: Request service
-    BankB->>CentralHub: Submit data request
-    CentralHub->>Customer: Present unified consent interface
-    Customer->>CentralHub: Provide consent with granular permissions
-    
-    CentralHub->>BankA: Authenticated data request
-    BankA->>CentralHub: Provide data to hub
-    CentralHub->>CentralHub: Apply policy & compliance checks
-    CentralHub->>Audit: Log data processing activity
-    
-    CentralHub->>BankB: Deliver processed data
-    BankB->>Customer: Service completed
-    
-    Note over Customer,Audit: Centralized Oversight
-    CentralHub->>Customer: Consent management dashboard
-    CentralHub->>Audit: Comprehensive audit trail
-```
-
 ### Consent Lifecycle Management
 
 [Consent Lifecycle Management Diagram](./Resources/graphics/06-consent-security/consent-lifecycle-management.mmd)
@@ -810,63 +781,6 @@ sequenceDiagram
 ### Cross-Industry Consent Flow
 
 [Cross-Industry Consent Flow Diagram](./Resources/graphics/06-consent-security/cross-industry-consent-flow.mmd)
-
-### Multi-Provider Integration Pattern
-
-**Hub-and-Spoke Integration:**
-```mermaid
-graph TB
-    subgraph "Integrator Hub"
-        IntegratorApp[Integrator Application<br/>FinTech/New Bank]
-        APIGateway[API Gateway<br/>Security & Routing]
-        TokenMgmt[Token Management<br/>OAuth 2.0/FAPI 2.0]
-        ConsentEngine[Consent Engine<br/>Permission Management]
-    end
-    
-    subgraph "Data Producers"
-        BankA[Bank A<br/>Primary Banking Data]
-        BankB[Bank B<br/>Investment Data]
-        InsurTech[InsurTech Provider<br/>Risk Assessment Data]
-        IdentityProvider[Identity Provider<br/>KYC/Verification Data]
-    end
-    
-    subgraph "Customer Interface"
-        Customer[Customer<br/>Mobile/Web App]
-        ConsentUI[Consent Management UI<br/>Granular Permissions]
-    end
-    
-    Customer -->|1. Service Request| IntegratorApp
-    IntegratorApp -->|2. Authentication| TokenMgmt
-    TokenMgmt -->|3. Consent Collection| ConsentEngine
-    ConsentEngine -->|4. Consent UI| ConsentUI
-    ConsentUI -->|5. Grant Permissions| ConsentEngine
-    
-    APIGateway -->|FAPI 2.0 + mTLS| BankA
-    APIGateway -->|FAPI 2.0 + mTLS| BankB
-    APIGateway -->|FAPI 2.0 + mTLS| InsurTech
-    APIGateway -->|FAPI 2.0 + mTLS| IdentityProvider
-    
-    IntegratorApp -->|6. Data Requests| APIGateway
-    ConsentEngine -->|Permission Validation| APIGateway
-    
-    BankA -->|Customer Banking Data| APIGateway
-    BankB -->|Investment Portfolio| APIGateway
-    InsurTech -->|Risk Profile| APIGateway
-    IdentityProvider -->|KYC Status| APIGateway
-    
-    APIGateway -->|7. Aggregated Data| IntegratorApp
-    IntegratorApp -->|8. Service Delivery| Customer
-    
-    classDef hub fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef producer fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
-    classDef customer fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    classDef security fill:#ffebee,stroke:#d32f2f,stroke-width:2px
-    
-    class IntegratorApp,APIGateway hub
-    class TokenMgmt,ConsentEngine security
-    class BankA,BankB,InsurTech,IdentityProvider producer
-    class Customer,ConsentUI customer
-```
 
 **Integration-Architektur:** Das Hub-and-Spoke Modell zentralisiert Security, Consent Management und API-Routing im Integrator Hub. Alle Data Producers werden über standardisierte FAPI 2.0 APIs mit mTLS angebunden, wodurch einheitliche Sicherheits- und Datenstandards gewährleistet werden.
 
@@ -977,7 +891,6 @@ graph TB
 ---
 
 ## Fazit und Roadmap
-*TODO: verifizieren!*
 
 ### Strategic Security Architecture Benefits
 
@@ -991,35 +904,7 @@ graph TB
 
 Die Security- und Consent-Implementation ist integraler Bestandteil aller Projektphasen mit spezifischem Fokus auf FAPI 2.0 Compliance und granulares Consent Management.
 
-**Vollständige Timeline:** → [Siehe Master ROADMAP.md](../ROADMAP.md)
-
-#### **Security-spezifische Meilensteine:**
-**Phase 1 (Monate 1-6):** FAPI 2.0 Authorization Server, PKI Infrastructure, Consent Management Engine
-**Phase 2 (Monate 6-18):** Producer/Consumer Integration, Consent UX Optimization, Multi-Provider Testing
-**Phase 3 (Monate 18-36):** 24/7 Security Monitoring, Self-Service Consent, International Expansion
-
-### Risk Mitigation Strategies
-
-#### Security Risks
-**Attack Vector Mitigation:**
-- **API Abuse:** Rate Limiting und Anomaly Detection
-- **Token Theft:** Short-lived Tokens mit DPoP binding
-- **Man-in-the-Middle:** Certificate Pinning und HSTS
-- **Social Engineering:** Customer Education und Multi-Factor Authentication
-
-#### Compliance Risks
-**Regulatory Changes:**
-- **Flexible Architecture:** Configuration-driven Compliance Controls
-- **Standards Evolution:** FAPI 2.0 future-proof Design
-- **Cross-Jurisdiction:** Modular Compliance Framework
-- **Audit Readiness:** Comprehensive Logging und Reporting
-
-#### Technical Risks
-**Performance und Scalability:**
-- **High Availability:** Multi-Region Deployment Strategy
-- **Scalability:** Cloud-native Architecture mit Auto-scaling
-- **Integration Complexity:** Standardized Integration Patterns
-- **Legacy Compatibility:** Gradual Migration Support
+**Vollständige Timeline:** → [Siehe ROADMAP.md](../ROADMAP.md)
 
 Das Consent und Security Flow Framework positioniert die Open API Kundenbeziehung mit modernsten Security Standards und etabliert Vertrauen bei Kunden, Partnern und Regulatoren durch transparente, sichere und konforme Datenverarbeitung.
 

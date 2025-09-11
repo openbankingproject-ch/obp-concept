@@ -16,40 +16,11 @@
 
 
 **TODO**: (Fachliche Dokumentation, see context in "planning_intern/context_fachliche_dokumentation.md")
-[] ROADMAP.md: analyze the commentary added by an expert and make changes accordingly 
+[] ROADMAP.md: Remove intern commentary and fix formatting, but keep the current meaning of the files content
 [] for each conclusion: 
     - evaluate content, focus on coherency, no redundancy and check grammar and general language, make sure it is professional and coherent
-    - update faulty paths to new file structure for the images 
-    - add images that are not yet in the conclusion files, but are in the folder 'Dokumentation Fachliche Perspektive/Fachliche Conclusions Open API Kundenbeziehung/Resources/graphics'
-    - add mermaid diagrams from the conclusion files to the folder 'Dokumentation Fachliche Perspektive/Fachliche Conclusions Open API Kundenbeziehung/Resources/graphics' and update paths in the conclusion files accordingly (create a seperate file for each mermaid diagram and if possible link that instead of inline mermaid diagrams)
+    - see details in the file "planning_intern/context_fachliche_dokumentation.md" for grammar/language requirements!!!
 [] verify that the file "Konklusion Open API Kundenbeziehung.md" matches the conclusions and the structure of the documentation
 [] verify sources and references in the file "Quellen und Referenzen", delete unneccessary or unprofessional sources and if missing add link
 [] color scheme to match Open Banking (see slides) make titles and stuff coloured or use to highlight according to the color scheme: 'api/demo/colors.txt'
 [] complete README.md file including graphics for our vision and some sort of navigation overview for the repo
-
-## Tasks
-**Context Demo**: Fix the following issues in the context demo:
-[] General Improvements:
-  - less spacing between the demo components, so that the entire demo fits on one screen
-  - less spacing overall - the white boxes for each component can be way closer together
-  
-[] Referenzprozess:
-  - remove animation of current step where the box of the current step moves up and down, also remove additional blue border around the current step
-  - make everything more compact and less spaced out, the phase boxes don't need to be wider than the step boxes they contain
-
-
-[] Consent Flow:
-  - less spacing in the white box surrounding the Consent Flow, less padding aroung title
-  - phase box needs to be aligned to the left side of the white box surrounding the Consent Flow with padding of 10px to the left side
-  - participant boxes need to be uniform in size. also decrease the height to make them more compact. place pictogram on the left side of the participant name.
-  - box containing the sequence diagram: remove rounded corners and less padding on top and bottom. 
-  - sequence diagram:
-    - align the vertical lines to the middle of the corresponding participant boxes
-    - align arrows and text boxes in a way that they are also centered vertically to each other (text box on top of the arrow, right in the middle of the arrow)
-    - minimal spacing between each step that it is still readable and keep spacing consistent between all steps
-    - align the box "granular consent options" vertically centered to the same height as step 6
-
-  
-[] Data Onboarding Process:
-  - reduce font size of the title "Data Onboarding Process" to match the other titles
-  - display the data sections in two columns instead of one column
