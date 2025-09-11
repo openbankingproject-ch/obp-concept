@@ -37,9 +37,11 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 
 ### Die 5 Zielbilder der digitalen Kundennähe
 
-![Zielbilder Übersicht](Resources/images/Anforderungen%20Grafiken/Zielbilder%20%C3%9Cbersicht%20Grafik.png)
+![Zielbilder Übersicht](./Resources/graphics/02-anforderungen/Zielbilder%20Übersicht%20Grafik.png)
 
 #### **Zielbild 1: Direkt (Klassisch)**
+
+![Detail Zielbild Direkt](./Resources/graphics/02-anforderungen/Detail%20Zielbild%20Direkt.png)
 
 **Konzeptionelle Struktur:** Direkte Kundenbeziehung zwischen Kunde und Finanzdienstleister ohne Intermediäre.
 
@@ -68,6 +70,8 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - **Marktrelevanz:** Hoch (bestehende Prozesse optimieren)
 
 #### **Zielbild 2: Indirekt**
+
+![Detail Zielbild Indirekt](./Resources/graphics/02-anforderungen/Detail%20Zielbild%20Indirekt.png)
 
 **Konzeptionelle Struktur:** Vermittelte Kundenbeziehung über Service-Aggregatoren, die als Integratoren zwischen Kunden und Service-Produzenten fungieren.
 
@@ -100,6 +104,8 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 
 #### **Zielbild 3: Intermediär**
 
+![Detail Zielbild Intermediär](./Resources/graphics/02-anforderungen/Detail%20Zielbild%20Intermediär.png)
+
 **Konzeptionelle Struktur:** Erweiterte Multi-Player-Konstellation mit spezialisierten Intermediären, die zwischen Integratoren und Produzenten vermitteln.
 
 **Multi-API-Architektur:** Vier-schichtige API-Struktur mit Integration API, Production API, Specialist API und Cross-Service API für umfassende Service-Orchestrierung.
@@ -130,6 +136,8 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 - **Marktrelevanz:** Hoch (zukünftige Marktentwicklung)
 
 #### **Zielbild 4: Plattform**
+
+![Detail Zielbild Plattform](./Resources/graphics/02-anforderungen/Detail%20Zielbild%20Plattform.png)
 
 **Konzeptionelle Struktur:** Hub-basierte Plattformarchitektur mit zentraler Plattform als Service-Hub für alle angeschlossenen Anbieter.
 
@@ -233,6 +241,8 @@ Die Entwicklung der Zielbilder erfolgte durch einen strukturierten Workshop-basi
 ### Use Case Sammlung und Bewertungsmethodologie
 
 **Sammlung:** 16+ Use Cases identifiziert (jedes Ecosystem aus dem Ecosystem Wheel vertreten)
+
+![Use Cases mit Punkte Ranking](./Resources/graphics/02-anforderungen/Use%20Cases%20mit%20Punkte%20Ranking.png)
 
 **Bewertungsmethodik:**
 - Workshop-basiertes Punkteranking-Verfahren
@@ -625,6 +635,8 @@ Das Minimum Viable Product der Open API Kundenbeziehung fokussiert auf die grund
 #### **MVP-Datenmodell**
 Das MVP-Datenmodell konzentriert sich auf die wesentlichen Datenstrukturen für die Implementierung des Bausteins "Identifikation". Die Strukturen sind vollständig kompatibel mit der finalen API-Spezifikation Version 2.0 aus der Workshop-Phase und definieren die Kernkomponenten für die Open API Kundenbeziehung.
 
+![System Open API Kundenbeziehung](./Resources/graphics/02-anforderungen/System%20Open%20API%20Kundenbeziehung.png)
+
 **Konzeptionelle Datenstruktur**
 
 Das MVP basiert auf drei Kernkomponenten für die Open API Kundenbeziehung:
@@ -770,36 +782,7 @@ Konzeptionell wird der sharedCustomerHash durch Normalisierung und Verknüpfung 
 
 **Integration-Architektur:**
 
-```mermaid
-flowchart TD
-    A[Customer] --> B[E-ID Authentication]
-    B --> C[Open API Authorization]
-    C --> D[Service Access]
-    
-    E[E-ID Identity Claims] --> F[Customer Data Mapping]
-    F --> G[Service-specific Processing]
-    
-    H[E-ID Consent Framework] <--> I[Open API Consent Tokens]
-    I --> J[Service Permissions]
-    
-    subgraph "Authentication Layer"
-        B
-        C
-        D
-    end
-    
-    subgraph "Data Flow Layer"
-        E
-        F
-        G
-    end
-    
-    subgraph "Consent Management Layer"
-        H
-        I
-        J
-    end
-```
+[E-ID Integration Architecture Diagram](./Resources/graphics/02-anforderungen/e-id-integration-architecture.mmd)
 
 **Authentication Layer:** E-ID Authentication führt zu Open API Authorization und ermöglicht anschließend Service Access. Dies schafft eine durchgängige Authentifizierungskette mit höchsten Sicherheitsstandards.
 
@@ -809,28 +792,7 @@ flowchart TD
 
 **Detaillierter Integration Flow:**
 
-```mermaid
-sequenceDiagram
-    participant Customer
-    participant E-ID Provider
-    participant Open API Gateway
-    participant Service Provider
-    participant Consent Manager
-    
-    Customer->>E-ID Provider: E-ID Authentication Request
-    E-ID Provider->>E-ID Provider: Validate Digital Identity
-    E-ID Provider->>Open API Gateway: Identity Claims + Attestation
-    
-    Open API Gateway->>Consent Manager: Check Service Permissions
-    Consent Manager->>Customer: Request Service-specific Consent
-    Customer->>Consent Manager: Grant/Deny Consent
-    
-    Consent Manager->>Open API Gateway: Consent Token
-    Open API Gateway->>Service Provider: Authorized API Call + Context
-    Service Provider->>Customer: Provide Requested Service
-    
-    Note over Customer,Service Provider: Unified Identity & Consent Experience
-```
+[E-ID Integration Flow Diagram](./Resources/graphics/02-anforderungen/e-id-integration-flow.mmd)
 
 ### Abgrenzung und Scope Definition
 

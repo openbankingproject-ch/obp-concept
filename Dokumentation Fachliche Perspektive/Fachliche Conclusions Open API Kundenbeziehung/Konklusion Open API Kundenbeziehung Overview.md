@@ -201,21 +201,7 @@ Diese Übersicht bietet eine strukturierte Navigation durch alle Fachlichen Conc
 
 ### Dokumenten-Abhängigkeiten
 
-```mermaid
-graph TD
-    A[01 Marktanalyse] --> B[02 Anforderungen]
-    A --> C[06 Consent & Security]
-    B --> D[03 Referenzprozess]
-    B --> E[04 API Design]
-    C --> E
-    D --> F[05 Vertrauensnetzwerk]
-    E --> F
-    B --> G[07 Rechtliche Rahmenbedingungen]
-    F --> G
-    D --> H[08 Testing & Verifikation]
-    E --> H
-    C --> H
-```
+[Document Dependencies Diagram](./Resources/graphics/overview/document-dependencies.mmd)
 
 ### Thematische Cross-References
 

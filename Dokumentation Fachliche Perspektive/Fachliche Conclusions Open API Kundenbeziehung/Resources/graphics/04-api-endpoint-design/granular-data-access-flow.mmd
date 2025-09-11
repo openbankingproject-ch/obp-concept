@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant Client as Client Application
+    participant Gateway as API Gateway  
+    participant Auth as JWT Auth Service
+    participant Data as Customer Data Service
+
+    Client->>Gateway: POST /customer/basic
+    Note over Client,Data: Authentication & Authorization
+    Gateway->>Auth: Validate JWT Token
+    Auth->>Gateway: Token valid + scopes
+    
+    Note over Client,Data: Data Access Control
+    Gateway->>Data: Request basic customer data
+    Data->>Data: Apply data minimization
+    Data->>Gateway: {name, vorname, geburtsdatum, nationalitaet}
+    Gateway->>Client: Response with minimal data
+    
+    Note over Client,Data: Audit & Logging
+    Gateway->>Gateway: Log API access

@@ -45,28 +45,7 @@ professional documentation (conclusions) written from the perspective of an econ
 08 Testing und Verifikation:
     - final conclusion file: "documentation/Fachliche Conclusions Open API Kundenbeziehung/08 Testing und Verifikation.md"
 
-**TODOs V**:
-[] add missing graphics as outlined in the file
-[] for each conclusion seperately: 
-    - evaluate structure and content, focus on coherency and no redundancy and check grammar and general language, make sure it is professional and coherent
-    - look at the mermaid graphs (online in github), make sure they are displayed correctly and readable (if not please add a TODO here so that I can fix it)
-[] verify that the file "Konklusion Open API Kundenbeziehung.md" matches the conclusions and the structure of the documentation
 
-Only if you have time to spare:
-[] verify sources and references in the file "Quellen und Referenzen", delete unneccessary or unprofessional sources and if missing add link
-[] color scheme to match Open Banking (see slides) make titles and stuff coloured or use to highlight idk
-I added the hex codes for the most important colours here:
-    - accent 1: #F85F3D
-    - accent 2: #FA9F8A 
-    - accent 3: #253165
-    - accent 4: #2C495E
-    - accent 5: #6695B7
-
-**TODOs J**:
-[] complete README.md file including graphics for our vision and some sort of navigation overview for the repo
-[] create missing mermaid diagrams
-[] Presentation for Summit: Übersicht Ergebnisse schön Darstellen
-[] Get demos to run and make them look nice
 
 
 

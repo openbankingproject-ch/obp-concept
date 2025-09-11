@@ -44,7 +44,7 @@ Das Consent und Security Flow Framework etabliert eine FAPI 2.0-konforme Securit
 
 ### Bezug auf Vertrauensnetzwerk-Rollen
 
-**Integration mit Vertrauensnetzwerk-Rollen aus [05 Vertrauensnetzwerk](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/05%20Vertrauensnetzwerk.md):**
+**Integration mit Vertrauensnetzwerk-Rollen aus [05 Vertrauensnetzwerk](./05%20Vertrauensnetzwerk.md):**
 
 #### Data Producer Security Role
 - **Authentifizierung:** Customer-facing Authentication Services
@@ -92,7 +92,7 @@ Die Security-Komponenten sind in einer hierarchischen Schicht-Architektur organi
 
 ### Standards aus Marktanalyse Review
 
-**Basierend auf [01 Marktanalyse](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/01%20Marktanalyse.md) identifizierte Standards:**
+**Basierend auf [01 Marktanalyse](./01%20Marktanalyse.md) identifizierte Standards:**
 
 #### FAPI (Financial-grade API) Evaluation
 
@@ -260,6 +260,8 @@ Der Decoupled Flow ermöglicht Multi-Device Authentication für höchste Sicherh
 **Use Cases:** High-Security Scenarios, Multi-Device Customer Environments
 
 ### Consent Granularity Models
+
+![Basiskit für Daten Weitergabe](./Resources/graphics/06-consent-security/Basiskit%20für%20Daten%20Weitergabe.png)
 
 #### Field-Level Granular Consent
 **Definition:** Customer kann spezifische Datenfelder individual freigeben
@@ -803,77 +805,11 @@ sequenceDiagram
 
 ### Consent Lifecycle Management
 
-```mermaid
-stateDiagram-v2
-    [*] --> ConsentRequested: Customer service request
-    
-    ConsentRequested --> ConsentPresented: Show consent form
-    ConsentPresented --> ConsentGranted: Customer accepts
-    ConsentPresented --> ConsentRejected: Customer rejects
-    
-    ConsentGranted --> ConsentActive: Consent validated & active
-    ConsentRejected --> [*]: Process terminated
-    
-    ConsentActive --> DataAccess: Provider uses consent
-    DataAccess --> ConsentActive: Ongoing data access
-    
-    ConsentActive --> ConsentModified: Customer modifies scope
-    ConsentModified --> ConsentActive: Updated consent active
-    
-    ConsentActive --> ConsentExpiring: Approaching expiry
-    ConsentExpiring --> ConsentRenewed: Customer renews
-    ConsentExpiring --> ConsentExpired: Automatic expiry
-    ConsentRenewed --> ConsentActive: Renewed consent active
-    
-    ConsentActive --> ConsentRevoked: Customer revokes
-    ConsentExpired --> ConsentArchived: Archive expired consent
-    ConsentRevoked --> ConsentArchived: Archive revoked consent
-    
-    ConsentArchived --> [*]: End of lifecycle
-    
-    DataAccess --> AuditLog: Log every access
-    ConsentModified --> AuditLog: Log modifications
-    ConsentRevoked --> AuditLog: Log revocation
-    ConsentExpired --> AuditLog: Log expiry
-    
-    AuditLog --> ComplianceReport: Generate reports
-```
+[Consent Lifecycle Management Diagram](./Resources/graphics/06-consent-security/consent-lifecycle-management.mmd)
 
 ### Cross-Industry Consent Flow
 
-```mermaid
-sequenceDiagram
-    participant Customer as Customer
-    participant MobilityApp as Mobility Service
-    participant InsuranceCo as Insurance Provider
-    participant Bank as Bank
-    participant ConsentHub as Consent Management Hub
-    
-    Note over Customer,ConsentHub: Cross-Industry Data Sharing
-    Customer->>MobilityApp: Request car lease + insurance package
-    MobilityApp->>ConsentHub: Request multi-provider consent
-    
-    ConsentHub->>Customer: Present unified consent form
-    Note over Customer: Granular permissions:<br/>- Bank: Income verification<br/>- Insurance: Risk assessment<br/>- Mobility: Credit check
-    
-    Customer->>ConsentHub: Grant specific permissions
-    ConsentHub->>ConsentHub: Distribute consent tokens
-    
-    par Bank Data Access
-        ConsentHub->>Bank: Request income data with token
-        Bank->>ConsentHub: Provide verified income data
-    and Insurance Data Access  
-        ConsentHub->>InsuranceCo: Request risk profile with token
-        InsuranceCo->>ConsentHub: Provide risk assessment
-    end
-    
-    ConsentHub->>MobilityApp: Deliver aggregated data
-    MobilityApp->>Customer: Personalized lease + insurance offer
-    
-    Note over Customer,ConsentHub: Ongoing Management
-    ConsentHub->>Customer: Monthly consent status report
-    Customer->>ConsentHub: Modify/revoke specific permissions
-```
+[Cross-Industry Consent Flow Diagram](./Resources/graphics/06-consent-security/cross-industry-consent-flow.mmd)
 
 ### Multi-Provider Integration Pattern
 
@@ -980,6 +916,8 @@ graph TB
 - Certificate Pinning für API Calls
 
 ---
+
+![Offene Fragestellungen](./Resources/graphics/06-consent-security/Offene%20Fragestellungen.png)
 
 ## Compliance und Regulatory Alignment
 

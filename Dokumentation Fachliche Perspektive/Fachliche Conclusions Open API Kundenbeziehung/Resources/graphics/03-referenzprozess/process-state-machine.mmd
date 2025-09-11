@@ -1,0 +1,55 @@
+stateDiagram-v2
+    [*] --> Initialized: Customer starts process
+    
+    Initialized --> ProductSelected: Select products/services
+    ProductSelected --> SelfDeclared: Complete regulatory forms
+    
+    SelfDeclared --> BasicDataCollected: Provide contact information
+    BasicDataCollected --> ExtendedDataCollected: Risk assessment data
+    
+    ExtendedDataCollected --> PendingIdentification: Start identity verification
+    
+    state PendingIdentification {
+        [*] --> VideoIdent
+        [*] --> EID_Integration  
+        [*] --> BiometricVerification
+        VideoIdent --> IdentityVerified
+        EID_Integration --> IdentityVerified
+        BiometricVerification --> IdentityVerified
+    }
+    
+    IdentityVerified --> KYC_Processing: Background checks
+    
+    state KYC_Processing {
+        [*] --> PEP_Check
+        [*] --> Sanctions_Check
+        [*] --> AML_Assessment
+        PEP_Check --> KYC_Complete
+        Sanctions_Check --> KYC_Complete
+        AML_Assessment --> KYC_Complete
+    }
+    
+    KYC_Complete --> ContractAccepted: Customer accepts terms
+    ContractAccepted --> PendingSignature: Prepare signature
+    
+    state PendingSignature {
+        [*] --> QES_Signature
+        [*] --> TwoFA_Signature
+        [*] --> Biometric_Signature
+        QES_Signature --> DocumentSigned
+        TwoFA_Signature --> DocumentSigned
+        Biometric_Signature --> DocumentSigned
+    }
+    
+    DocumentSigned --> AccountActivated: Process metadata & distribution
+    AccountActivated --> [*]: Customer onboarded
+    
+    %% Error states
+    ProductSelected --> Failed: Eligibility check failed
+    BasicDataCollected --> Failed: Data validation error
+    ExtendedDataCollected --> Failed: Risk assessment failed
+    PendingIdentification --> Failed: Identity verification failed
+    KYC_Processing --> Failed: KYC checks failed
+    PendingSignature --> Failed: Signature process failed
+    
+    Failed --> [*]: Process terminated

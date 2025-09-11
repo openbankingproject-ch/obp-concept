@@ -1,0 +1,36 @@
+graph TB
+    subgraph "Integrator Institution (Bank B)"
+        B_UI[Customer UI]
+        B_API[API Client]
+        B_Core[Core Banking]
+    end
+    
+    subgraph "Open API Kundenbeziehung"
+        API_GW[API Gateway]
+        API_Auth[Authentication]
+        API_Consent[Consent Management]
+        API_Data[Data Router]
+    end
+    
+    subgraph "Producer Institution (Bank A)"
+        A_Core[Core Banking]
+        A_Data[Customer Data]
+        A_KYC[KYC System]
+    end
+    
+    B_UI --> B_API
+    B_API --> API_GW
+    API_GW --> API_Auth
+    API_Auth --> API_Consent  
+    API_Consent --> API_Data
+    API_Data --> A_Core
+    A_Core --> A_Data
+    A_Core --> A_KYC
+    
+    classDef integrator fill:#e1f5fe
+    classDef api fill:#f3e5f5  
+    classDef producer fill:#e8f5e8
+    
+    class B_UI,B_API,B_Core integrator
+    class API_GW,API_Auth,API_Consent,API_Data api
+    class A_Core,A_Data,A_KYC producer

@@ -30,7 +30,7 @@ Der Open API Kundenbeziehung Referenzprozess definiert einen standardisierten, b
 
 Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compliance-by-Design Prinzipien. Der Fokus liegt auf einer selbstbestimmten digitalen Kundenbeziehung mit messbaren Effizienzsteigerungen.
 
-![Branchenunabhängige Serviceerschließung Ecosystem](Resources/images/Referenzprozess%20Grafiken/Branchenunabh%C3%A4ngige%20Serviceerschlie%C3%9Fung%20Ecosystem.png)
+![Branchenunabhängige Serviceerschließung Ecosystem](./Resources/graphics/03-referenzprozess/Branchenunabhängige%20Serviceerschließung%20Ecosystem.png)
 
 **Zentrale Erkenntnisse:**
 - Modulare Prozessbausteine ermöglichen branchenübergreifende Wiederverwendung
@@ -43,6 +43,8 @@ Der modulare "Blöckli"-Ansatz ermöglicht flexible Use Case-Abdeckung mit Compl
 ## Referenzprozess Definition
 
 ### Überblick: 10-Stufen-Referenzprozess
+
+![Referenzprozess Generisch](./Resources/graphics/03-referenzprozess/Referenzprozess%20Generisch.png)
 
 **Konzeptioneller Prozessablauf:**
 
@@ -92,7 +94,7 @@ Die modulare Architektur organisiert den Referenzprozess in vier thematische Bl�
 - Signatur-Baustein: Digitale Signatur, Qualified Signature
 - Metadaten-und-Verteilungs-Baustein: Dokumentenarchivierung, Prozessabschluss, Systemintegration
 
-![Wiederverwendung von Datenbausteinen](Resources/images/Referenzprozess%20Grafiken/Wiederverwendung%20Datenbausteine.png)
+![Wiederverwendung von Datenbausteinen](./Resources/graphics/03-referenzprozess/Wiederverwendung%20Datenbausteine.png)
 
 **Sequenzielle Verkettung:** Jeder Baustein baut auf den Ergebnissen des vorhergehenden auf, wodurch eine logische Progression von der Initialisierung bis zur finalen Kontoeröffnung gewährleistet wird.
 
@@ -241,6 +243,9 @@ Angaben zu wirtschaftlicher Berechtigung, Steuerdomizil, US Person Status und an
 **Bank Policy:** FATCA/CRS Compliance, AML/KYC Requirements
 
 #### Stufe 4: Erhebung Basisdaten
+
+![Daten Onboarding](./Resources/graphics/03-referenzprozess/Daten%20Onboarding.png)
+
 **Beschreibung:** Stammdaten-Erfassung (Core Identity)
 - Name, Adresse, Kontaktdaten
 
@@ -489,7 +494,7 @@ Das Metadaten-Framework bildet das Rückgrat für Governance, Qualitätssicherun
 
 Das Framework ermöglicht eine vollständige Datenlineage vom Erfassungspunkt bis zur finalen Verwendung und unterstützt sowohl automatisierte als auch manuelle Compliance-Prozesse.
 
-Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endpoint Design](/documentation/Umsetzung%20und%20Implementierung/04%20API%20Endpoint%20Design.md) spezifiziert.
+Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endpoint Design](./04%20API%20Endpoint%20Design.md) spezifiziert.
 
 #### Consent Management
 **Konzeptionelle Einwilligungsverwaltung:**
@@ -523,42 +528,7 @@ Technische Implementierungsdetails des Metadaten-Frameworks sind in [04 API Endp
 - **Identity Provider:** Verifiziert Kundenidentität professionell
 
 
-```mermaid
-sequenceDiagram
-    participant K as Kunde
-    participant B as Bank/Anbieter
-    participant API as Open API System
-    participant KYC as KYC Services
-    participant ID as Identity Provider
-
-    Note over K,ID: Phase 1: Initialisierung & Produktauswahl
-    K->>B: 1. Initialisierung - Service Discovery
-    B->>K: Verfügbare Services anzeigen
-    K->>B: 2. Produktauswahl - Gewünschte Services
-    B->>K: Produktkonfiguration bestätigt
-    
-    Note over K,ID: Phase 2: Datenerfassung
-    K->>B: 3. Selbstdeklaration - FATCA/MIFID
-    K->>B: 4. Basisdaten - Kontaktinformationen
-    K->>B: 5. Erweiterte Daten - Risikoprofil
-    
-    Note over K,ID: Phase 3: Verifikation & Compliance
-    B->>API: 6. Identifikation über Open API
-    API->>ID: Identity Verification Request
-    ID->>API: Identity Verified
-    API->>B: Verified Identity Data
-    
-    B->>KYC: 7. Background Checks - KYC Prozess
-    KYC->>B: KYC Assessment Complete
-    
-    Note over K,ID: Phase 4: Vertragsabschluss
-    B->>K: 8. Vertragsabschluss - AGB präsentieren  
-    K->>B: AGB akzeptiert
-    B->>K: 9. Signatur - Vertrag signieren
-    K->>B: Digitale Signatur erteilt
-    B->>B: 10. Metadaten/Verteilung - Verarbeitung
-    B->>K: ✅ Onboarding abgeschlossen
-```
+[Actor Interaction Flow Diagram](./Resources/graphics/03-referenzprozess/actor-interaction-flow.mmd)
 
 **Interaktionsablauf:**
 
@@ -602,63 +572,7 @@ Bei komplexen Stufen (z.B. Identifikation, Background Checks) können mehrere Ve
 Technische Details der State-Machine-Implementation sind in *TODO: create file* dokumentiert.
 
 
-```mermaid
-stateDiagram-v2
-    [*] --> Initialized: Customer starts process
-    
-    Initialized --> ProductSelected: Select products/services
-    ProductSelected --> SelfDeclared: Complete regulatory forms
-    
-    SelfDeclared --> BasicDataCollected: Provide contact information
-    BasicDataCollected --> ExtendedDataCollected: Risk assessment data
-    
-    ExtendedDataCollected --> PendingIdentification: Start identity verification
-    
-    state PendingIdentification {
-        [*] --> VideoIdent
-        [*] --> EID_Integration  
-        [*] --> BiometricVerification
-        VideoIdent --> IdentityVerified
-        EID_Integration --> IdentityVerified
-        BiometricVerification --> IdentityVerified
-    }
-    
-    IdentityVerified --> KYC_Processing: Background checks
-    
-    state KYC_Processing {
-        [*] --> PEP_Check
-        [*] --> Sanctions_Check
-        [*] --> AML_Assessment
-        PEP_Check --> KYC_Complete
-        Sanctions_Check --> KYC_Complete
-        AML_Assessment --> KYC_Complete
-    }
-    
-    KYC_Complete --> ContractAccepted: Customer accepts terms
-    ContractAccepted --> PendingSignature: Prepare signature
-    
-    state PendingSignature {
-        [*] --> QES_Signature
-        [*] --> TwoFA_Signature
-        [*] --> Biometric_Signature
-        QES_Signature --> DocumentSigned
-        TwoFA_Signature --> DocumentSigned
-        Biometric_Signature --> DocumentSigned
-    }
-    
-    DocumentSigned --> AccountActivated: Process metadata & distribution
-    AccountActivated --> [*]: Customer onboarded
-    
-    %% Error states
-    ProductSelected --> Failed: Eligibility check failed
-    BasicDataCollected --> Failed: Data validation error
-    ExtendedDataCollected --> Failed: Risk assessment failed
-    PendingIdentification --> Failed: Identity verification failed
-    KYC_Processing --> Failed: KYC checks failed
-    PendingSignature --> Failed: Signature process failed
-    
-    Failed --> [*]: Process terminated
-```
+[Process State Machine Diagram](./Resources/graphics/03-referenzprozess/process-state-machine.mmd)
 
 
 ### Entscheidungspunkte und Rollbacks
@@ -693,48 +607,7 @@ Der Referenzprozess integriert systematische Entscheidungspunkte und Korrekturm�
 Alle automatisierten und manuellen Checks müssen erfolgreich bestanden werden, bevor der finale "Account Activated"-Status erreicht wird.
 
 
-```mermaid
-flowchart TD
-    Start([Process Start]) --> Check1{Eligibility Check}
-    Check1 -->|Pass| Step3[Collect Basic Data]
-    Check1 -->|Fail| End1([Process End - Ineligible])
-    
-    Step3 --> Check2{Data Validation}
-    Check2 -->|Pass| Step5[Extended Data Collection]
-    Check2 -->|Fail| Rollback1[Request Data Correction]
-    Rollback1 --> Step3
-    
-    Step5 --> Check3{Risk Assessment}
-    Check3 -->|Pass| Step6[Identity Verification]
-    Check3 -->|Fail| Manual1[Manual Review Required]
-    Manual1 -->|Approved| Step6
-    Manual1 -->|Rejected| End2([Process End - High Risk])
-    
-    Step6 --> Check4{Identity Verified?}
-    Check4 -->|Pass| Step7[KYC Processing]
-    Check4 -->|Fail| Rollback2[Alternative ID Method]
-    Rollback2 --> Step6
-    
-    Step7 --> Check5{KYC Clear?}
-    Check5 -->|Pass| Step8[Contract & Signature]
-    Check5 -->|Fail| Manual2[Compliance Review]
-    Manual2 -->|Approved with Conditions| Step8
-    Manual2 -->|Rejected| End3([Process End - Compliance])
-    
-    Step8 --> Success([Account Activated])
-    
-    classDef process fill:#e3f2fd
-    classDef decision fill:#fff3e0
-    classDef rollback fill:#ffebee
-    classDef manual fill:#f3e5f5
-    classDef endpoint fill:#e8f5e8
-    
-    class Step3,Step5,Step6,Step7,Step8 process
-    class Check1,Check2,Check3,Check4,Check5 decision
-    class Rollback1,Rollback2 rollback
-    class Manual1,Manual2 manual
-    class End1,End2,End3,Success endpoint
-```
+[Decision Points and Rollback Flow Diagram](./Resources/graphics/03-referenzprozess/decision-rollback-flow.mmd)
 
 
 ## Use Case Implementierung: Bankkonten-Onboarding

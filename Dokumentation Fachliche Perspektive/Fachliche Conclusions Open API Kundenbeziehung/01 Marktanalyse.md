@@ -15,7 +15,7 @@
 
 ## Executive Summary
 
-Die internationale Analyse von acht Open-Banking-Standards – darunter Vorreiter wie Brasilien, das Vereinigte Königreich und Singapur – zeigt klare Muster: JSON und RESTful APIs haben sich global als technologische Basis etabliert, während bei Einwilligungs- und Sicherheitsmodellen noch unterschiedliche Ansätze bestehen. Erfolgreiche Initiativen kombinieren einen klaren regulatorischen Rahmen mit praktikablen Standards und spürbarem Kundennutzen. Länder mit starkem zentralem Setup, wie Brasilien oder UK, konnten rasch hohe Nutzerzahlen erzielen. Gleichzeitig belegt Singapur, dass auch hybride Modelle erfolgreich sein können, sofern die Rahmenbedingungen stimmig sind. Die gewonnenen Erkenntnisse bilden die Grundlage für die Entwicklung der Open-API-Kundenbeziehung in der Schweiz, die internationale Best Practices integriert und zugleich die spezifischen Anforderungen des heimischen Marktes berücksichtigt.
+Die internationale Analyse von acht Open-Banking-Standards – darunter Vorreiter wie Brasilien, das Vereinigte Königreich und Singapur – zeigt klare Muster: JSON und RESTful APIs haben sich global als technologische Basis etabliert, während bei Einwilligungs- und Sicherheitsmodellen noch unterschiedliche Ansätze bestehen. Erfolgreiche Initiativen kombinieren einen klaren regulatorischen Rahmen mit praktikablen Standards und spürbarem Kundennutzen. Länder mit starkem zentralem Setup, wie Brasilien oder UK, konnten rasch hohe Nutzerzahlen erzielen. Gleichzeitig belegt Singapur, dass auch hybride Modelle erfolgreich sein können, sofern die Rahmenbedingungen stimmen. Die gewonnenen Erkenntnisse bilden die Grundlage für die Entwicklung der Open-API-Kundenbeziehung in der Schweiz, die internationale Best Practices integriert und zugleich die spezifischen Anforderungen des heimischen Marktes berücksichtigt.
 
 **Zentrale Erkenntnisse:**
 - Technologische Standardisierung bei API-Design und Datenformaten
@@ -52,7 +52,7 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 - **SFTI Mortgage API** (Swiss Fintech Innovation)
 - **Singapore Financial Data Exchange** (MAS/SNDGG)
 
-![Globale Open Banking Initiativen – Übersicht](./Resources/images/Marktanalyse%20Grafiken/World%20Map%20Visual.png)
+![Globale Open Banking Initiativen – Übersicht](./Resources/graphics/01-marktanalyse/World%20Map%20Visual.png)
 
 ---
 
@@ -72,7 +72,7 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 
 ## Detailanalyse globaler Open Banking Standards
 
-[Gesamtauswertung der Analyse als Excel](/documentation/Fachliche%20Conclusions%20Open%20API%20Kundenbeziehung/Resources/20250324%20Overview%20Market%20Analysis.xlsx)
+[Gesamtauswertung der Analyse als Excel](./Resources/20250324%20Overview%20Market%20Analysis.xlsx)
 
 ### Regulatorisch getriebene Standards
 
@@ -88,7 +88,7 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 
 - **Governance:** Vollständig mandatorisch für alle lizenzierten Finanzinstitute mit phasenweisem Rollout und strengen Compliance-Anforderungen.
 - **Technologie:** FAPI 1.0 Advanced als Sicherheitsstandard, umfassende Dynamic Client Registration (DCR), Integration mit nationaler digitaler Identität (CPF).
-- **Erfolgsfaktoren und Innovation:** Integration des PIX Payment Systems als nationales Instant-Payment-Backbone, phased Rollout über verschiedene Pr- oduktkategorien (Banking, Credit, Investments, Insurance).
+- **Erfolgsfaktoren und Innovation:** Integration des PIX Payment Systems als nationales Instant-Payment-Backbone, phased Rollout über verschiedene Produktkategorien (Banking, Credit, Investments, Insurance).
 - **Status:** Phase 4 Implementation abgeschlossen, über 30 Millionen Consent-Erteilungen, führend in Lateinamerika für Open Finance Adoption.
 - **Key Takeaways:** Kombination von Open Banking mit nationaler Payment-Infrastructure schafft erhebliche Synergien und Nutzerakzeptanz.
 
@@ -146,7 +146,7 @@ Das Excel "Marktanalyse" wird als separater Anhang zur Verfügung gestellt und e
 
 ## Sechs zentrale Key Takeaways
 
-![Key Takeaways Marktanalyse](./Resources/images/Marktanalyse%20Grafiken/Key%20Takeaways%20Marktanalyse.png)
+![Key Takeaways Marktanalyse](./Resources/graphics/01-marktanalyse/Key%20Takeaways%20Marktanalyse.png)
 
 
 ### 1. Technologische Standards sind nicht global vereinheitlicht
@@ -175,8 +175,8 @@ Von App-to-App bis Decoupled Flows – es gibt keinen eindeutigen globalen Conse
 - OAuth 2.0 + OIDC: Von konsultierten Experten empfohlen
 
 #### Empfehlungen für CH-Standard:
-- Basierend auf Marktanalyse: FAPI 1.0 Advanced als Basis mit flexiblen Consent-Flow-Optionen wird von den meisten analysierten Standards verwendet.
-- Basierend auf Verifikation mit Experten: **FAPI 2.0** wird aktuell noch weiterentwickelt und kann sich evtl. noch ändern - ist aber zukunftsorientiert die bessere Lösung.
+- **FAPI 2.0 als Zielarchitektur:** Nach Verifikation mit Experten wird FAPI 2.0 als zukunftsorientierte Lösung empfohlen, auch wenn die Spezifikation noch weiterentwickelt wird.
+- **Fallback-Option:** FAPI 1.0 Advanced als bewährte Basis mit flexiblen Consent-Flow-Optionen bei den meisten analysierten Standards.
 - **OAuth 2.0 + OIDC** für Authentication und Authorization Flow.
 - Flexible Flow-Unterstützung je nach Use Case und starke Emphasis auf **Consumer Consent Transparency**.
 
@@ -234,6 +234,10 @@ Basierend auf systematischer Marktanalyse und Workshop-basierter Stakeholder-Bew
 - Cross-platform Loyalty Programs
 
 **MVP "Identifikation"** wurde als fokussierter Startpunkt zur Umsetzung definiert, da dieser Baustein die höchste Wiederverwendbarkeit über alle Use Cases hinweg bietet.
+
+![Use Cases mit Punkte Ranking](./Resources/graphics/01-marktanalyse/Use%20Cases%20mit%20Punkte%20Ranking.png)
+
+![Einordnung Customer Management API](./Resources/graphics/01-marktanalyse/Einordnung%20Customer%20Management%20API.png)
 
 ### 5. Open Finance Evolution ist im Kommen – aber uneinheitlich
 

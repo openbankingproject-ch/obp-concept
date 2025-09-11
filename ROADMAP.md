@@ -86,6 +86,8 @@ Phase 2 (ab 07/26)
 ### Phase 2: Integration & Skalierung (Monate 6-18) --> das hier ist die Sicht des MVPs - es geht um die funktionalte Weiterentwicklung mit drei Aspekten: Funktionale Erweiterung mit der Saldierung, Erweiterung der Anschlussfähigkeiten, Erweiterung für Mitarbeiter in einer Firma, dann für Firmen
 --> die weitere Nutzung obliegt über MVP's dem Neztwerk, wie das föderative System dazu gebaut wird, ist noch offen
 
+**TODO**: Phase 2 und 3 nur in 2-3 Sätzen beschreiben und dann Kommentar oben so umformulieren, dass es um die funktionale Weiterentwicklung geht und nicht um die technische und daher die weiteren Implementationsphasen noch nicht definiert sind
+
 **Ziel:** Partner Ecosystem skalieren und Use Case Abdeckung erweitern
 
 #### Partner Ecosystem Expansion
