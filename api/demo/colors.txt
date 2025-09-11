@@ -1,0 +1,61 @@
+# Color Scheme for HTML Demos
+
+Main Colors:
+Primary:            #253165   
+Primary Accent 1:   #3b4b96ff
+Primary Accent 2:   #5168ccff
+Primary Accent 3:   #8197faff
+Secondary:          #F85F3D   
+Secondary Accent 1: #f3765aff   
+Secondary Accent 2: #FA9F8A   
+Secondary Accent 3: #f3c9c1ff  
+Tertiary:           #0070C0
+Tertiary Accent 1:  #379ee7ff
+Tertiary Accent 2:  #73c3fcff
+Tertiary Accent 3:  #608baaff
+
+
+Background and Text:
+Background:         #f9fafb   
+Surface:            #ffffff   
+Text:               #1e293b   
+Muted Text:         #3a4b68ff  
+Remarks:            #6b7280 
+Highlighted Text:   #3e5f97ff
+Border:             #E5CAFF  
+
+Extra Colors for UI Elements: (like arrows, buttons, etc. for the visualizations)
+Blue:               #0070C0
+Blue bright:        #0095ffff
+Green:              #4cb867ff
+Green muted:        #7fb88dff
+Red:                #cc3a3aff
+Red dark:           #8b2424ff
+Yellow:             #FFC000
+Yellow light:       #ecd07cff
+Purple:             #B469FF
+Purple light:       #cca2f7ff
+Pink:               #ff3370ff
+Pink light:         #e28fb9ff
+
+
+Highlighting and Status:
+Error:              #ff3370ff   
+Success:            #4cb867ff  
+Warning:            #FFC000   
+Info:               #B469FF   
+
+Extra Colors for Code Elements: 
+Code Background:    #1e293b   
+Code Text:          #f9fafb  
+Code Comment:       #7a9cd6ff   
+Code Keyword:       #e28fb9ff   
+Code String:        #7fb88dff   
+Code Function:      #f0da99ff
+API Calls:          #F85F3D
+Data Highlight:     #FA9F8A (use when displaying which data is being processed)
+Data Highlight 2:   #0095ffff (use for successful data operations)
+Error:              #ff3370ff   
+Success:            #4cb867ff  
+Warning:            #FFC000   
+Info:               #B469FF  

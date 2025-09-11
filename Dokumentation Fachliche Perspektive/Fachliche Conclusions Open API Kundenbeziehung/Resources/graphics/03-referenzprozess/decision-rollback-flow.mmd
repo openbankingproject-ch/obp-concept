@@ -1,0 +1,40 @@
+flowchart TD
+    Start([Process Start]) --> Check1{Eligibility Check}
+    Check1 -->|Pass| Step3[Collect Basic Data]
+    Check1 -->|Fail| End1([Process End - Ineligible])
+    
+    Step3 --> Check2{Data Validation}
+    Check2 -->|Pass| Step5[Extended Data Collection]
+    Check2 -->|Fail| Rollback1[Request Data Correction]
+    Rollback1 --> Step3
+    
+    Step5 --> Check3{Risk Assessment}
+    Check3 -->|Pass| Step6[Identity Verification]
+    Check3 -->|Fail| Manual1[Manual Review Required]
+    Manual1 -->|Approved| Step6
+    Manual1 -->|Rejected| End2([Process End - High Risk])
+    
+    Step6 --> Check4{Identity Verified?}
+    Check4 -->|Pass| Step7[KYC Processing]
+    Check4 -->|Fail| Rollback2[Alternative ID Method]
+    Rollback2 --> Step6
+    
+    Step7 --> Check5{KYC Clear?}
+    Check5 -->|Pass| Step8[Contract & Signature]
+    Check5 -->|Fail| Manual2[Compliance Review]
+    Manual2 -->|Approved with Conditions| Step8
+    Manual2 -->|Rejected| End3([Process End - Compliance])
+    
+    Step8 --> Success([Account Activated])
+    
+    classDef process fill:#e3f2fd
+    classDef decision fill:#fff3e0
+    classDef rollback fill:#ffebee
+    classDef manual fill:#f3e5f5
+    classDef endpoint fill:#e8f5e8
+    
+    class Step3,Step5,Step6,Step7,Step8 process
+    class Check1,Check2,Check3,Check4,Check5 decision
+    class Rollback1,Rollback2 rollback
+    class Manual1,Manual2 manual
+    class End1,End2,End3,Success endpoint

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Loading Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .image-test {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .image-test img {
+            max-width: 100px;
+            max-height: 100px;
+            display: block;
+            margin: 0 auto 10px;
+            border: 1px solid #ccc;
+        }
+        .image-test.error {
+            background: #ffe6e6;
+            border-color: #ff6666;
+        }
+        .image-test.success {
+            background: #e6ffe6;
+            border-color: #66ff66;
+        }
+        .status {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .error { color: #cc0000; }
+        .success { color: #00cc00; }
+        .info { color: #0066cc; }
+    </style>
+</head>
+<body>
+    <h1>Image Loading Test - Open API Kundenbeziehung Demo</h1>
+    <p class="info">This page tests if images are loading correctly from the graphics directory.</p>
+    
+    <!-- Logo Test -->
+    <div class="test-section">
+        <h2>Logo Test</h2>
+        <div class="test-grid">
+            <div class="image-test" id="logo-test">
+                <img src="../graphics/logos/logo_obp_hoch_gross.png" alt="OBP Logo" onload="markSuccess(this)" onerror="markError(this)">
+                <div>OBP Logo</div>
+                <div class="status" id="logo-status">Loading...</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pictogram Test -->
+    <div class="test-section">
+        <h2>Pictogram Test (Process Steps)</h2>
+        <div class="test-grid" id="pictogram-grid">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Consent Participant Test -->
+    <div class="test-section">
+        <h2>Consent Participant Test</h2>
+        <div class="test-grid" id="participant-grid">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Background Image Test -->
+    <div class="test-section">
+        <h2>Background Image Test</h2>
+        <div style="width: 200px; height: 100px; background-image: url('../graphics/background/background-graphic-standard.jpg'); background-size: cover; border: 1px solid #ccc; margin: 10px auto;"></div>
+        <div style="text-align: center; margin-top: 10px;">
+            <div class="status" id="bg-status">Check if background image appears above</div>
+        </div>
+    </div>
+    
+    <!-- Path Test -->
+    <div class="test-section">
+        <h2>Path Test Results</h2>
+        <div id="path-results">
+            <p><strong>Current directory:</strong> /api/demo/api-general-functionality/</p>
+            <p><strong>Expected path to graphics:</strong> ../graphics/</p>
+            <p><strong>Full path resolution:</strong> /api/demo/graphics/</p>
+            <div id="test-summary" style="margin-top: 15px; padding: 10px; border-radius: 4px;">
+                <strong>Loading status will appear here...</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pictograms = [
+            'Initialisierung.png',
+            'Produktauswahl.png', 
+            'Selbstdeklaration.png',
+            'Basisdaten.png',
+            'erweiterte%20Daten.png',
+            'Identifikation.png',
+            'Checks.png',
+            'Abschluss.png',
+            'Signatur.png',
+            'Verteilung.png'
+        ];
+        
+        const participants = [
+            'Kunde.png',
+            'Bank.png',
+            'Consent%20Manager.png',
+            'Data%20Provider.png',
+            'Audit%20and%20Compliance.png'
+        ];
+        
+        let loadedCount = 0;
+        let totalImages = pictograms.length + participants.length + 1; // +1 for logo
+        let errorCount = 0;
+        
+        function markSuccess(img) {
+            const container = img.parentElement;
+            container.classList.add('success');
+            container.classList.remove('error');
+            const status = container.querySelector('.status');
+            status.textContent = 'Loaded ✓';
+            status.className = 'status success';
+            loadedCount++;
+            updateSummary();
+        }
+        
+        function markError(img) {
+            const container = img.parentElement;
+            container.classList.add('error');
+            container.classList.remove('success');
+            const status = container.querySelector('.status');
+            status.textContent = 'Failed ✗';
+            status.className = 'status error';
+            errorCount++;
+            updateSummary();
+            
+            // Log the failed path for debugging
+            console.error('Failed to load image:', img.src);
+            
+            // Try alternative path encoding
+            tryAlternativePath(img);
+        }
+        
+        function updateSummary() {
+            const summary = document.getElementById('test-summary');
+            const completed = loadedCount + errorCount;
+            if (completed === totalImages) {
+                if (errorCount === 0) {
+                    summary.innerHTML = `<strong class="success">All images loaded successfully! (${loadedCount}/${totalImages})</strong>`;
+                    summary.style.background = '#e6ffe6';
+                } else {
+                    summary.innerHTML = `<strong class="error">Some images failed to load: ${errorCount} errors, ${loadedCount} successful (${completed}/${totalImages})</strong><br><small>Check console for failed paths</small>`;
+                    summary.style.background = '#ffe6e6';
+                }
+            } else {
+                summary.innerHTML = `<strong>Loading progress: ${completed}/${totalImages} (${loadedCount} successful, ${errorCount} failed)</strong>`;
+                summary.style.background = '#fff3cd';
+            }
+        }
+        
+        // Generate pictogram tests
+        function generatePictogramTests() {
+            const grid = document.getElementById('pictogram-grid');
+            pictograms.forEach(filename => {
+                const div = document.createElement('div');
+                div.className = 'image-test';
+                div.innerHTML = `
+                    <img src="../graphics/pictograms/${filename}" alt="${filename}" onload="markSuccess(this)" onerror="markError(this)">
+                    <div>${filename.replace('.png', '')}</div>
+                    <div class="status">Loading...</div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+        
+        // Generate participant tests  
+        function generateParticipantTests() {
+            const grid = document.getElementById('participant-grid');
+            participants.forEach(filename => {
+                const div = document.createElement('div');
+                div.className = 'image-test';
+                div.innerHTML = `
+                    <img src="../graphics/pictograms/${filename}" alt="${filename}" onload="markSuccess(this)" onerror="markError(this)">
+                    <div>${filename.replace('.png', '')}</div>
+                    <div class="status">Loading...</div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+        
+        // Initialize tests
+        document.addEventListener('DOMContentLoaded', () => {
+            generatePictogramTests();
+            generateParticipantTests();
+            
+            // Initial summary
+            setTimeout(updateSummary, 100);
+            
+            // Final check after 5 seconds
+            setTimeout(() => {
+                const remaining = totalImages - (loadedCount + errorCount);
+                if (remaining > 0) {
+                    errorCount += remaining;
+                    updateSummary();
+                }
+            }, 5000);
+        });
+        
+        // Try alternative path encoding when image fails to load
+        function tryAlternativePath(img) {
+            const originalSrc = img.src;
+            const basePath = originalSrc.replace(window.location.origin, '');
+            
+            // Create path variants
+            const variants = [];
+            if (basePath.includes('%20')) {
+                variants.push(basePath.replace(/%20/g, ' '));
+            }
+            if (basePath.includes(' ')) {
+                variants.push(basePath.replace(/ /g, '%20'));
+            }
+            
+            console.log('Trying alternative paths for:', basePath);
+            console.log('Variants:', variants);
+            
+            // Try each variant
+            variants.forEach((variant, index) => {
+                setTimeout(() => {
+                    const testImg = new Image();
+                    testImg.onload = () => {
+                        console.log('Alternative path worked:', variant);
+                        img.src = window.location.origin + variant;
+                        markSuccess(img);
+                    };
+                    testImg.onerror = () => {
+                        console.log('Alternative path failed:', variant);
+                    };
+                    testImg.src = window.location.origin + variant;
+                }, index * 500);
+            });
+        }
+        
+        // Test different path formats
+        function testAlternativePaths() {
+            console.log('Testing alternative paths...');
+            console.log('Current location:', window.location.href);
+            console.log('Base path:', window.location.pathname);
+        }
+        
+        window.onload = testAlternativePaths;
+    </script>
+</body>
+</html>

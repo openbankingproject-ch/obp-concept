@@ -1,0 +1,36 @@
+flowchart LR
+    Developer[Developer<br/>Code Commit] --> SCM[Source Control<br/>Git Repository]
+    
+    SCM --> CI[CI/CD Pipeline<br/>Triggered]
+    
+    CI --> Build[Build & Package<br/>API Services]
+    Build --> UnitTest[Unit Tests<br/>Hohe Coverage angestrebt]
+    
+    UnitTest -->|Pass| IntTest[Integration Tests<br/>Contract & Service Tests]
+    UnitTest -->|Fail| Notify1[Notify Developer<br/>Fix Required]
+    
+    IntTest -->|Pass| Security[Security Tests<br/>FAPI 2.0 Compliance]
+    IntTest -->|Fail| Notify2[Integration Issues<br/>Fix Required]
+    
+    Security -->|Pass| Deploy[Deploy to<br/>Test Environment]
+    Security -->|Fail| Notify3[Security Issues<br/>Fix Required]
+    
+    Deploy --> E2E[End-to-End Tests<br/>Use Case Validation]
+    
+    E2E -->|Pass| Staging[Deploy to<br/>Staging Environment]
+    E2E -->|Fail| Notify4[E2E Issues<br/>Fix Required]
+    
+    Staging --> Manual[Manual Testing<br/>& Stakeholder Review]
+    
+    Manual -->|Approved| Production[Production<br/>Deployment]
+    Manual -->|Issues| Notify5[Manual Issues<br/>Fix Required]
+    
+    classDef process fill:#e3f2fd
+    classDef test fill:#e8f5e8
+    classDef deploy fill:#f3e5f5
+    classDef notify fill:#ffebee
+    
+    class Developer,SCM,CI,Build process
+    class UnitTest,IntTest,Security,E2E,Manual test
+    class Deploy,Staging,Production deploy
+    class Notify1,Notify2,Notify3,Notify4,Notify5 notify

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: swiss-openapi-kundenbeziehung
+  labels:
+    name: swiss-openapi-kundenbeziehung
+    project: open-api-kundenbeziehung
+    environment: production
+    compliance: fapi-2.0
+  annotations:
+    description: "Swiss Open API Kundenbeziehung - Universal Customer Relationship API"
+    version: "1.0.0"
+    maintainer: "Swiss Open API Initiative"
+    compliance-framework: "FAPI 2.0, GDPR, Swiss Data Protection Act"

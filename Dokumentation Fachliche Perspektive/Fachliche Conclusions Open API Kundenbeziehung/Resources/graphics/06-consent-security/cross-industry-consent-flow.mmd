@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant Customer as Customer
+    participant MobilityApp as Mobility Service
+    participant InsuranceCo as Insurance Provider
+    participant Bank as Bank
+    participant ConsentHub as Consent Management Hub
+    
+    Note over Customer,ConsentHub: Cross-Industry Data Sharing
+    Customer->>MobilityApp: Request car lease + insurance package
+    MobilityApp->>ConsentHub: Request multi-provider consent
+    
+    ConsentHub->>Customer: Present unified consent form
+    Note over Customer: Granular permissions:<br/>- Bank: Income verification<br/>- Insurance: Risk assessment<br/>- Mobility: Credit check
+    
+    Customer->>ConsentHub: Grant specific permissions
+    ConsentHub->>ConsentHub: Distribute consent tokens
+    
+    par Bank Data Access
+        ConsentHub->>Bank: Request income data with token
+        Bank->>ConsentHub: Provide verified income data
+    and Insurance Data Access  
+        ConsentHub->>InsuranceCo: Request risk profile with token
+        InsuranceCo->>ConsentHub: Provide risk assessment
+    end
+    
+    ConsentHub->>MobilityApp: Deliver aggregated data
+    MobilityApp->>Customer: Personalized lease + insurance offer
+    
+    Note over Customer,ConsentHub: Ongoing Management
+    ConsentHub->>Customer: Monthly consent status report
+    Customer->>ConsentHub: Modify/revoke specific permissions

@@ -1,0 +1,38 @@
+```mermaid
+sequenceDiagram
+    participant Customer as Customer
+    participant Bank as Bank/Service Provider
+    participant ConsentMgmt as Consent Management
+    participant DataProvider as Data Provider
+    participant AuditLog as Audit & Compliance
+
+    Note over Customer,AuditLog: Phase 1: Consent Request Initiation
+    Customer->>Bank: Initiate service request
+    Bank->>ConsentMgmt: Check existing consents
+    ConsentMgmt->>Bank: No valid consent found
+    
+    Bank->>ConsentMgmt: Create consent request
+    ConsentMgmt->>Customer: Present consent form
+    Note over Customer: Granular consent options:<br/>- Basic data access<br/>- Extended KYC data<br/>- Purpose limitation<br/>- Time restrictions
+    
+    Note over Customer,AuditLog: Phase 2: Consent Granting & Validation
+    Customer->>ConsentMgmt: Grant specific consents
+    ConsentMgmt->>ConsentMgmt: Validate consent completeness
+    ConsentMgmt->>AuditLog: Log consent decision
+    
+    ConsentMgmt->>Bank: Consent granted with scope
+    Bank->>DataProvider: Request data with consent token
+    
+    Note over Customer,AuditLog: Phase 3: Data Access & Usage
+    DataProvider->>ConsentMgmt: Verify consent validity
+    ConsentMgmt->>DataProvider: Consent valid for scope
+    DataProvider->>Bank: Provide requested data
+    DataProvider->>AuditLog: Log data access
+    
+    Bank->>Customer: Service delivered
+    
+    Note over Customer,AuditLog: Phase 4: Ongoing Consent Management
+    ConsentMgmt->>Customer: Consent expiry notification (if applicable)
+    Customer->>ConsentMgmt: Renew/modify/revoke consent
+    ConsentMgmt->>AuditLog: Log consent updates
+```
