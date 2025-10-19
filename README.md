@@ -3,7 +3,7 @@
 > **Konzeptionelle Entwicklung des Schweizer Standards für branchenübergreifenden Kundendatenaustausch**
 
 ## <span style="color: #F85F3D">About</span>
-Die Open API Kundenbeziehung implementiert den schweizer Standard für den branchenübergreifenden Austausch von Kundendaten zur Etablierung einer selbstbestimmten digitalen Kundenbeziehung.
+Die Open API Kundenbeziehung implementiert den Schweizer Standard für den branchenübergreifenden Austausch von Kundendaten zur Etablierung einer selbstbestimmten digitalen Kundenbeziehung.
 
 ### <span style="color: #0070C0">Unsere Vision:</span> **<span style="color: #B469FF">Das Unternehmensnetzwerk im Kontext von Open Banking zu sein</span>**
   
