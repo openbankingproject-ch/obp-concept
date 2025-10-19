@@ -574,7 +574,7 @@ Die Bankkonten-Eröffnung dient als Referenz-Use Case für die praktische Anwend
 
 #### Phase 3: Verification & Compliance (Stufen 6-7)
 **Stufe 6:** Identity Verification
-- E-ID Integration (falls verfügbar) oder Video-Ident
+- Online-Ident, Video-Ident oder E-ID Integration (ab Q3 2026)
 - Government ID Validation
 - Biometric Matching für High-Value Accounts
 
